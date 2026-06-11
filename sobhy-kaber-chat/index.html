@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobhy Kaber — Sharm El Sheikh | Legendary Egyptian Grills</title>
+  <meta name="description" content="Sobhy Kaber Sharm El Sheikh — legendary charcoal grills, Egyptian classics and Red Sea seafood. Chat with Zaki, our AI dining advisor, for recommendations and table bookings." />
+  <link rel="icon" type="image/svg+xml" href="assets/zaki-icon.svg" />
+  <style>
+    :root {
+      --ember: #e8722a;
+      --amber: #f0a04b;
+      --char: #1c1410;
+      --cream: #faf3e7;
+      --ink: #2b2118;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    .hero {
+      min-height: 72vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 80px 24px 64px;
+      background:
+        radial-gradient(1200px 500px at 50% -10%, rgba(240,160,75,.28), transparent 65%),
+        linear-gradient(160deg, var(--char) 0%, #3a2417 70%, #4a2c1a 100%);
+      color: #fff;
+    }
+    .hero .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(240,160,75,.16);
+      border: 1px solid rgba(240,160,75,.45);
+      border-radius: 999px;
+      padding: 7px 16px;
+      font-size: 13px; font-weight: 600;
+      color: var(--amber);
+      margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 800;
+      letter-spacing: .5px;
+      margin-bottom: 8px;
+    }
+    .hero h1 .ar { color: var(--amber); }
+    .hero .sub {
+      font-size: clamp(1rem, 2.4vw, 1.25rem);
+      opacity: .85;
+      max-width: 620px;
+      margin-bottom: 30px;
+    }
+    .hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .btn {
+      display: inline-block;
+      border-radius: 14px;
+      padding: 14px 26px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--ember), var(--amber));
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(232,114,42,.4);
+    }
+    .btn-ghost {
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,.3);
+    }
+    section { max-width: 1080px; margin: 0 auto; padding: 70px 24px; }
+    .kicker {
+      color: var(--ember);
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-size: 12.5px;
+      margin-bottom: 8px;
+    }
+    h2 { font-size: clamp(1.6rem, 4vw, 2.3rem); color: var(--char); margin-bottom: 14px; }
+    .lede { color: #6b5a4a; max-width: 640px; margin-bottom: 36px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+    .dish {
+      background: #fff;
+      border-radius: 18px;
+      padding: 24px 22px;
+      box-shadow: 0 6px 24px rgba(28,20,16,.07);
+      border: 1px solid rgba(232,114,42,.12);
+    }
+    .dish .emoji { font-size: 34px; }
+    .dish h3 { margin: 12px 0 4px; font-size: 17px; color: var(--char); }
+    .dish .ar-name { color: var(--ember); font-size: 14px; margin-bottom: 8px; }
+    .dish p { font-size: 14px; color: #6b5a4a; }
+    .dish .price { display: inline-block; margin-top: 12px; font-weight: 800; color: var(--ember); font-size: 15px; }
+    .zaki-strip {
+      background: linear-gradient(135deg, var(--char), #3a2417);
+      border-radius: 24px;
+      color: #fff;
+      padding: 44px 36px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .zaki-strip img { width: 84px; height: 84px; flex-shrink: 0; filter: drop-shadow(0 8px 22px rgba(232,114,42,.5)); }
+    .zaki-strip h2 { color: #fff; }
+    .zaki-strip p { opacity: .85; max-width: 560px; }
+    footer {
+      text-align: center;
+      padding: 36px 24px 46px;
+      color: #a08a72;
+      font-size: 13.5px;
+    }
+    footer b { color: var(--char); }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <span class="badge">🔥 Legendary Egyptian Grills · Since the charcoal first sparked</span>
+    <h1>Sobhy Kaber <span class="ar">صبحي كابر</span></h1>
+    <p class="sub">Charcoal grills, Egyptian classics and Red Sea seafood — now in Sharm El Sheikh. Generous plates, honest flavors, zero shortcuts.</p>
+    <div class="cta-row">
+      <button class="btn btn-primary" onclick="document.getElementById('zaki-launcher')?.click()">💬 Ask Zaki — our AI advisor</button>
+      <a class="btn btn-ghost" href="#menu">See menu highlights</a>
+    </div>
+  </header>
+
+  <section id="menu">
+    <p class="kicker">Menu Highlights</p>
+    <h2>The plates people cross the city for</h2>
+    <p class="lede">A taste of the menu — chat with <b>Zaki</b> (the orange button, bottom corner) for the full menu, personal recommendations and instant table booking.</p>
+    <div class="grid">
+      <div class="dish">
+        <span class="emoji">🍢</span>
+        <h3>Sobhy Kaber Mixed Grill</h3>
+        <div class="ar-name">مشكل مشويات صبحي كابر</div>
+        <p>Kofta, kebab, shish tawook and lamb over real charcoal — the house legend.</p>
+        <span class="price">450 EGP</span>
+      </div>
+      <div class="dish">
+        <span class="emoji">🍲</span>
+        <h3>Fattah with Veal Shank</h3>
+        <div class="ar-name">فتة بالموزة البتلو</div>
+        <p>Layers of rice, crispy bread and garlic-vinegar sauce crowned with slow-cooked moza.</p>
+        <span class="price">380 EGP</span>
+      </div>
+      <div class="dish">
+        <span class="emoji">🕊️</span>
+        <h3>Grilled Stuffed Pigeon</h3>
+        <div class="ar-name">حمام محشي مشوي</div>
+        <p>Whole pigeon stuffed with seasoned freek — a true Egyptian delicacy.</p>
+        <span class="price">300 EGP</span>
+      </div>
+      <div class="dish">
+        <span class="emoji">🦐</span>
+        <h3>Jumbo Red Sea Shrimp</h3>
+        <div class="ar-name">جمبري جامبو البحر الأحمر</div>
+        <p>Char-grilled jumbo shrimp with our spiced butter — fresh from Sharm's waters.</p>
+        <span class="price">550 EGP</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="zaki-strip">
+      <img src="assets/zaki-icon.svg" alt="Zaki — AI dining advisor icon" />
+      <div>
+        <p class="kicker" style="color:var(--amber)">Meet your advisor</p>
+        <h2>Zaki <span style="color:var(--amber)">زكي</span> — your taste guide</h2>
+        <p>Tell Zaki what you're craving — spicy, light, vegetarian, a feast for six — and he'll match you to the perfect plates in English or Arabic, then book your table in under a minute. Instant replies, no waiting.</p>
+        <br>
+        <button class="btn btn-primary" onclick="document.getElementById('zaki-launcher')?.click()">Start chatting with Zaki</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <b>Sobhy Kaber — Sharm El Sheikh</b><br />
+    Naama Bay area, Sharm El Sheikh, South Sinai · Daily 12:00 PM – 2:00 AM<br /><br />
+    <span id="year"></span> © Sobhy Kaber. All rights reserved.
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <!-- Zaki — AI dining advisor widget (self-contained) -->
+  <script src="assets/zaki-widget.js" defer></script>
+</body>
+</html>
