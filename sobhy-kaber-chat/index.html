@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sobhy Kaber — Sharm El Sheikh | Legendary Egyptian Grills</title>
-  <meta name="description" content="Sobhy Kaber Sharm El Sheikh — legendary charcoal grills, Egyptian classics and Red Sea seafood. Chat with Zaki, our AI dining advisor, for recommendations and table bookings." />
+  <title>Sobhy Kaber — Sharm El Sheikh | A True Taste of Egypt</title>
+  <meta name="description" content="Sobhy Kaber Sharm El Sheikh — authentic Egyptian charcoal grills in the Old Market, facing Al Sahaba Mosque. Chat with Zaki, our AI dining advisor, for recommendations and table bookings." />
   <link rel="icon" type="image/svg+xml" href="assets/zaki-icon.svg" />
   <style>
     :root {
-      --ember: #e8722a;
-      --amber: #f0a04b;
-      --char: #1c1410;
-      --cream: #faf3e7;
-      --ink: #2b2118;
+      --black: #14110d;
+      --black2: #2a241c;
+      --gold: #c9a232;
+      --golddark: #9a7b1c;
+      --cream: #f7f4ee;
+      --ink: #241e16;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -30,18 +31,18 @@
       text-align: center;
       padding: 80px 24px 64px;
       background:
-        radial-gradient(1200px 500px at 50% -10%, rgba(240,160,75,.28), transparent 65%),
-        linear-gradient(160deg, var(--char) 0%, #3a2417 70%, #4a2c1a 100%);
+        radial-gradient(1200px 500px at 50% -10%, rgba(201,162,50,.22), transparent 65%),
+        linear-gradient(160deg, var(--black) 0%, #1d1812 70%, #26201a 100%);
       color: #fff;
     }
     .hero .badge {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(240,160,75,.16);
-      border: 1px solid rgba(240,160,75,.45);
+      background: rgba(201,162,50,.14);
+      border: 1px solid rgba(201,162,50,.5);
       border-radius: 999px;
       padding: 7px 16px;
       font-size: 13px; font-weight: 600;
-      color: var(--amber);
+      color: var(--gold);
       margin-bottom: 22px;
     }
     .hero h1 {
@@ -50,11 +51,18 @@
       letter-spacing: .5px;
       margin-bottom: 8px;
     }
-    .hero h1 .ar { color: var(--amber); }
+    .hero h1 .ar { color: var(--gold); }
+    .hero .since {
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
     .hero .sub {
       font-size: clamp(1rem, 2.4vw, 1.25rem);
       opacity: .85;
-      max-width: 620px;
+      max-width: 640px;
       margin-bottom: 30px;
     }
     .hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
@@ -71,41 +79,42 @@
     }
     .btn:hover { transform: translateY(-2px); }
     .btn-primary {
-      background: linear-gradient(135deg, var(--ember), var(--amber));
-      color: #fff;
-      box-shadow: 0 10px 30px rgba(232,114,42,.4);
+      background: linear-gradient(135deg, var(--gold), #b08a24);
+      color: var(--black);
+      box-shadow: 0 10px 30px rgba(201,162,50,.35);
     }
     .btn-ghost {
-      background: rgba(255,255,255,.08);
+      background: rgba(255,255,255,.07);
       color: #fff;
       border: 1.5px solid rgba(255,255,255,.3);
     }
     section { max-width: 1080px; margin: 0 auto; padding: 70px 24px; }
     .kicker {
-      color: var(--ember);
+      color: var(--golddark);
       font-weight: 700;
       letter-spacing: 2.5px;
       text-transform: uppercase;
       font-size: 12.5px;
       margin-bottom: 8px;
     }
-    h2 { font-size: clamp(1.6rem, 4vw, 2.3rem); color: var(--char); margin-bottom: 14px; }
-    .lede { color: #6b5a4a; max-width: 640px; margin-bottom: 36px; }
+    h2 { font-size: clamp(1.6rem, 4vw, 2.3rem); color: var(--black); margin-bottom: 14px; }
+    .lede { color: #6b6052; max-width: 640px; margin-bottom: 36px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
     .dish {
       background: #fff;
       border-radius: 18px;
       padding: 24px 22px;
-      box-shadow: 0 6px 24px rgba(28,20,16,.07);
-      border: 1px solid rgba(232,114,42,.12);
+      box-shadow: 0 6px 24px rgba(20,17,13,.07);
+      border: 1px solid rgba(201,162,50,.25);
     }
     .dish .emoji { font-size: 34px; }
-    .dish h3 { margin: 12px 0 4px; font-size: 17px; color: var(--char); }
-    .dish .ar-name { color: var(--ember); font-size: 14px; margin-bottom: 8px; }
-    .dish p { font-size: 14px; color: #6b5a4a; }
-    .dish .price { display: inline-block; margin-top: 12px; font-weight: 800; color: var(--ember); font-size: 15px; }
+    .dish h3 { margin: 12px 0 4px; font-size: 17px; color: var(--black); }
+    .dish .ar-name { color: var(--golddark); font-size: 14px; margin-bottom: 8px; }
+    .dish p { font-size: 14px; color: #6b6052; }
+    .dish .price { display: inline-block; margin-top: 12px; font-weight: 800; color: var(--golddark); font-size: 15px; }
     .zaki-strip {
-      background: linear-gradient(135deg, var(--char), #3a2417);
+      background: linear-gradient(135deg, var(--black), var(--black2));
+      border: 1px solid rgba(201,162,50,.4);
       border-radius: 24px;
       color: #fff;
       padding: 44px 36px;
@@ -114,24 +123,26 @@
       gap: 28px;
       flex-wrap: wrap;
     }
-    .zaki-strip img { width: 84px; height: 84px; flex-shrink: 0; filter: drop-shadow(0 8px 22px rgba(232,114,42,.5)); }
+    .zaki-strip img { width: 84px; height: 84px; flex-shrink: 0; filter: drop-shadow(0 8px 22px rgba(201,162,50,.45)); }
     .zaki-strip h2 { color: #fff; }
     .zaki-strip p { opacity: .85; max-width: 560px; }
     footer {
       text-align: center;
       padding: 36px 24px 46px;
-      color: #a08a72;
+      color: #a3987f;
       font-size: 13.5px;
     }
-    footer b { color: var(--char); }
+    footer b { color: var(--black); }
+    footer a { color: var(--golddark); font-weight: 600; text-decoration: none; }
   </style>
 </head>
 <body>
 
   <header class="hero">
-    <span class="badge">🔥 Legendary Egyptian Grills · Since the charcoal first sparked</span>
+    <span class="badge">🔥 Authentic Egyptian Charcoal Grills · Old Market, Sharm El Sheikh</span>
     <h1>Sobhy Kaber <span class="ar">صبحي كابر</span></h1>
-    <p class="sub">Charcoal grills, Egyptian classics and Red Sea seafood — now in Sharm El Sheikh. Generous plates, honest flavors, zero shortcuts.</p>
+    <div class="since">A true taste of Egypt · Since 1996</div>
+    <p class="sub">Premium meats over real charcoal, Egyptian classics from the oven — in the heart of the Old Market, facing Al Sahaba Mosque.</p>
     <div class="cta-row">
       <button class="btn btn-primary" onclick="document.getElementById('zaki-launcher')?.click()">💬 Ask Zaki — our AI advisor</button>
       <a class="btn btn-ghost" href="#menu">See menu highlights</a>
@@ -141,35 +152,35 @@
   <section id="menu">
     <p class="kicker">Menu Highlights</p>
     <h2>The plates people cross the city for</h2>
-    <p class="lede">A taste of the menu — chat with <b>Zaki</b> (the orange button, bottom corner) for the full menu, personal recommendations and instant table booking.</p>
+    <p class="lede">A taste of the menu — chat with <b>Zaki</b> (the black-and-gold button, bottom corner) for the full menu, personal recommendations and instant table booking.</p>
     <div class="grid">
       <div class="dish">
         <span class="emoji">🍢</span>
-        <h3>Sobhy Kaber Mixed Grill</h3>
-        <div class="ar-name">مشكل مشويات صبحي كابر</div>
-        <p>Kofta, kebab, shish tawook and lamb over real charcoal — the house legend.</p>
-        <span class="price">450 EGP</span>
+        <h3>Kofta</h3>
+        <div class="ar-name">كفتة</div>
+        <p>Hand-minced premium beef over real charcoal — the Sobhy Kaber classic.</p>
+        <span class="price">from 330 EGP</span>
       </div>
       <div class="dish">
-        <span class="emoji">🍲</span>
-        <h3>Fattah with Veal Shank</h3>
-        <div class="ar-name">فتة بالموزة البتلو</div>
-        <p>Layers of rice, crispy bread and garlic-vinegar sauce crowned with slow-cooked moza.</p>
-        <span class="price">380 EGP</span>
+        <span class="emoji">🥩</span>
+        <h3>Lamb Chops (Reesh)</h3>
+        <div class="ar-name">ريش ضاني</div>
+        <p>Our signature lamb chops — smoky, tender, straight off the charcoal.</p>
+        <span class="price">from 450 EGP</span>
+      </div>
+      <div class="dish">
+        <span class="emoji">🍽️</span>
+        <h3>Mixed Kebab, Kofta &amp; Shish Tawook</h3>
+        <div class="ar-name">مشكل كباب وكفتة وشيش طاووق</div>
+        <p>The crowd-pleaser platter — something for everyone at the table.</p>
+        <span class="price">from 370 EGP</span>
       </div>
       <div class="dish">
         <span class="emoji">🕊️</span>
-        <h3>Grilled Stuffed Pigeon</h3>
-        <div class="ar-name">حمام محشي مشوي</div>
-        <p>Whole pigeon stuffed with seasoned freek — a true Egyptian delicacy.</p>
-        <span class="price">300 EGP</span>
-      </div>
-      <div class="dish">
-        <span class="emoji">🦐</span>
-        <h3>Jumbo Red Sea Shrimp</h3>
-        <div class="ar-name">جمبري جامبو البحر الأحمر</div>
-        <p>Char-grilled jumbo shrimp with our spiced butter — fresh from Sharm's waters.</p>
-        <span class="price">550 EGP</span>
+        <h3>Stuffed Pigeon (Hamam Mahshi)</h3>
+        <div class="ar-name">حمام محشي</div>
+        <p>Whole pigeon stuffed with seasoned grain — a true Egyptian delicacy.</p>
+        <span class="price">230 EGP</span>
       </div>
     </div>
   </section>
@@ -178,9 +189,9 @@
     <div class="zaki-strip">
       <img src="assets/zaki-icon.svg" alt="Zaki — AI dining advisor icon" />
       <div>
-        <p class="kicker" style="color:var(--amber)">Meet your advisor</p>
-        <h2>Zaki <span style="color:var(--amber)">زكي</span> — your taste guide</h2>
-        <p>Tell Zaki what you're craving — spicy, light, vegetarian, a feast for six — and he'll match you to the perfect plates in English or Arabic, then book your table in under a minute. Instant replies, no waiting.</p>
+        <p class="kicker" style="color:var(--gold)">Meet your advisor</p>
+        <h2>Zaki <span style="color:var(--gold)">زكي</span> — your taste guide</h2>
+        <p>Tell Zaki what you're craving — a feast for six, something light, the legendary tarb — and he'll match you to the perfect plates in English or Arabic, then book your table in under a minute. Instant replies, no waiting.</p>
         <br>
         <button class="btn btn-primary" onclick="document.getElementById('zaki-launcher')?.click()">Start chatting with Zaki</button>
       </div>
@@ -189,7 +200,8 @@
 
   <footer>
     <b>Sobhy Kaber — Sharm El Sheikh</b><br />
-    Naama Bay area, Sharm El Sheikh, South Sinai · Daily 12:00 PM – 2:00 AM<br /><br />
+    Old Market, facing Al Sahaba Mosque, Sharm El Sheikh, South Sinai<br />
+    Reservations: <a href="tel:+201101107542">+20 110 110 7542</a><br /><br />
     <span id="year"></span> © Sobhy Kaber. All rights reserved.
   </footer>
 

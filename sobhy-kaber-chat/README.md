@@ -1,23 +1,59 @@
 # Zaki (زكي) — AI Dining Advisor for Sobhy Kaber, Sharm El Sheikh
 
 **Zaki** is a fast, self-contained AI concierge chat widget for the Sobhy Kaber
-restaurant website. The name is a wordplay Egyptians will smile at: *Zaki* is a
-real Egyptian name that sounds like both **زاكي** ("delicious") and **ذكي**
-("smart") — exactly what a restaurant advisor should be.
+restaurant website ([sobhykabersharm.com](https://sobhykabersharm.com)). The
+name is a wordplay Egyptians will smile at: *Zaki* is a real Egyptian name that
+sounds like both **زاكي** ("delicious") and **ذكي** ("smart") — exactly what a
+restaurant advisor should be.
 
-The icon is a chef's toque with a spark on an ember-orange badge
-(`assets/zaki-icon.svg`), matching the charcoal-grill brand.
+## Branding
+
+Styled to match Sobhy Kaber's **black & white signature identity** with a
+restrained gold accent for the charcoal-grill warmth:
+
+| Token | Value | Used for |
+|---|---|---|
+| `--zk-black` | `#14110d` | Header, user bubbles, chips hover, launcher badge |
+| `--zk-black2` | `#2a241c` | Gradient partner for black surfaces |
+| `--zk-gold` | `#c9a232` | Accents, spark, typing dots, avatar ring |
+| `--zk-golddark` | `#9a7b1c` | Prices, links (readable gold on white) |
+| `--zk-cream` | `#f7f4ee` | Chat background |
+
+All five live in one `:root` line at the top of the `CSS` block in
+`zaki-widget.js` — tweak them there if the restaurant supplies exact brand hex
+codes. The icon (`assets/zaki-icon.svg`) is a white chef's toque with a gold
+spark on a black badge with a thin gold ring.
+
+> Note: the live site (sobhykabersharm.com) blocks automated access from this
+> build environment, so the palette is derived from Sobhy Kaber's documented
+> black-&-white signature logo rather than read from the site's CSS. If the
+> site uses different accent colors, update the five tokens above.
+
+## Real restaurant data (from sobhykabersharm.com, June 2026)
+
+- **Location:** Old Market (the souk), facing Al Sahaba Mosque, Sharm El Sheikh
+- **Reservations / WhatsApp:** +20 110 110 7542
+- **Menu:** real items and EGP prices with the restaurant's portion system
+  (¼ / ⅓ / ½ / kilo) — Kofta, Kebab, Tarb, Veal Cutlets (Neefa), Lamb Chops
+  (Reesh), Shish Tawook, Sausage, Grilled/Stuffed Pigeon, Hawawshi, four Mixed
+  Grill platters, and oven casseroles (Molokhia plain/with meat, Torly, Freekh)
+- Desserts and drinks aren't published on the site, so Zaki answers those
+  questions honestly ("rotate daily — ask the team") instead of inventing items
+- Opening hours aren't published either; Zaki points guests to call/WhatsApp
+
+Re-check prices after the restaurant updates its menu — they're all in the
+`MENU` array in `zaki-widget.js`.
 
 ## What Zaki does
 
 | Capability | How |
 |---|---|
-| 🍽️ **Menu advisor** | Recommends dishes from guest preferences — meat / chicken / seafood / vegetarian, spicy, light, hearty, kids-friendly, budget |
-| 🧠 **Smart sales, never pushy** | One gentle pairing suggestion per recommendation (e.g. tahina with the mixed grill), a signature-dish nudge after booking — never a wall of upsells |
-| 📅 **Table booking** | Guided flow (name → guests → date → time → confirm) ending in a one-tap WhatsApp handoff with a pre-filled reservation message |
+| 🍽️ **Menu advisor** | Recommends dishes from guest preferences — meat / chicken / pigeon, light, hearty, kids-friendly, budget, meat-free |
+| 🧠 **Smart sales, never pushy** | One gentle pairing suggestion per recommendation (e.g. a molokhia casserole beside the kofta), a signature-dish nudge after booking |
+| 📅 **Table booking** | Guided flow (name → guests → date → time → confirm) ending in a one-tap WhatsApp handoff to +20 110 110 7542 with a pre-filled reservation message |
 | 🌍 **Bilingual** | Full English + Egyptian Arabic, auto-detected from the guest's typing, with proper RTL layout; manual toggle in the header |
 | ⚡ **Instant** | The advisor engine runs 100% in the browser — replies in ~0.5 s with a natural typing animation. No backend, no API key, no cold starts |
-| 📍 **Practical answers** | Hours, address, Google Maps link, direct WhatsApp handoff to a human |
+| 📍 **Practical answers** | Address, Google Maps link, direct WhatsApp handoff to a human |
 
 ## Files
 
@@ -32,9 +68,7 @@ sobhy-kaber-chat/
 
 ## Quick start
 
-Open `sobhy-kaber-chat/index.html` in any browser — no build step, no server
-needed (a local server like `python3 -m http.server` is only needed for the
-SVG favicon to load).
+Open `sobhy-kaber-chat/index.html` in any browser — no build step needed.
 
 ## Install on Squarespace (or any site)
 
@@ -50,16 +84,14 @@ That's it — the floating chat button appears on every page.
 
 ## Customize (all in `zaki-widget.js`)
 
-1. **`CONFIG` block (top of file)** — ⚠️ set the real restaurant details:
-   - `whatsappNumber` — currently a `201000000000` placeholder. Replace with
-     the restaurant's WhatsApp number (country code, no `+`).
-   - `hours`, `address`, `mapsUrl` — verify against the actual branch.
-2. **`MENU` array** — the menu is sample data written in Sobhy Kaber's style.
-   Replace names/prices with the real menu. Each item has bilingual
-   name/description, a price, a category (`starter | grill | main | dessert |
-   drink`), preference `tags`, and an optional `pair` (the item Zaki softly
-   suggests alongside it).
+1. **`CONFIG` block (top of file)** — restaurant name, WhatsApp number,
+   address, maps link, hours copy.
+2. **`MENU` array** — each item has bilingual name/description, a base price,
+   optional `portions` pricing string, a category (`grill | mixed | main`),
+   preference `tags`, and an optional `pair` (the item Zaki softly suggests
+   alongside it).
 3. **Personality / copy** — all strings live in the `T` dictionary (`en` + `ar`).
+4. **Colors** — the `:root` line at the top of the `CSS` block.
 
 ## Optional: upgrade to a real LLM
 
@@ -73,7 +105,5 @@ runs locally so reservations stay reliable.
 
 ## Notes
 
-- Menu items, prices, hours and address are **placeholders** pending the real
-  branch details — flagged inline with TODOs where critical.
 - The widget guards against double-loading (`window.__zakiLoaded`) and escapes
   all guest input before rendering.
