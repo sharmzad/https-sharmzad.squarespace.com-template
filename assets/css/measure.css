@@ -1,0 +1,159 @@
+/* =========================================================
+   Shoe Size Scanner — measure feet with a phone + bank card
+   Self-contained, mobile-first, no dependencies.
+   ========================================================= */
+:root {
+  --bg: #0e1014;
+  --panel: #171a21;
+  --panel-2: #1f232c;
+  --line: #2a2f3a;
+  --ink: #f3f5f9;
+  --muted: #9aa3b2;
+  --accent: #3ddc97;      /* foot markers / primary */
+  --accent-ink: #06241a;
+  --card: #6aa6ff;        /* card markers */
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(1100px 520px at 80% -10%, rgba(61, 220, 151, .12), transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, rgba(106, 166, 255, .10), transparent 55%),
+    var(--bg);
+  line-height: 1.55;
+}
+
+h1, h2, h3 { font-family: "Sora", "Inter", sans-serif; line-height: 1.15; margin: 0; }
+
+.wrap { width: min(880px, 92vw); margin-inline: auto; }
+
+/* ---------- header ---------- */
+.hd {
+  position: sticky; top: 0; z-index: 5;
+  backdrop-filter: blur(10px);
+  background: rgba(14, 16, 20, .72);
+  border-bottom: 1px solid var(--line);
+}
+.hd__row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: "Sora"; font-weight: 800; }
+.brand__mark { font-size: 1.4rem; }
+.brand__name { letter-spacing: .2px; }
+.hd__tag {
+  font-size: .8rem; color: var(--accent);
+  border: 1px solid rgba(61, 220, 151, .35);
+  padding: 4px 10px; border-radius: 999px;
+}
+
+/* ---------- intro ---------- */
+.main { padding: 28px 0 64px; }
+.intro h1 { font-size: clamp(1.7rem, 5.5vw, 2.6rem); font-weight: 800; }
+.lede { color: var(--muted); font-size: 1.05rem; max-width: 60ch; margin-top: 12px; }
+.lede strong { color: var(--ink); }
+
+/* ---------- steps ---------- */
+.steps {
+  list-style: none; margin: 28px 0 0; padding: 0;
+  display: grid; gap: 12px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+.step {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 16px;
+}
+.step__n {
+  flex: none; width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center; font-weight: 700;
+  background: var(--accent); color: var(--accent-ink);
+}
+.step h3 { font-size: 1rem; margin-bottom: 4px; }
+.step p { margin: 0; color: var(--muted); font-size: .92rem; }
+.dot { display: inline-block; width: 11px; height: 11px; border-radius: 50%; vertical-align: middle; margin: 0 1px; }
+.dot--card { background: var(--card); }
+.dot--foot { background: var(--accent); }
+
+/* ---------- tool ---------- */
+.tool {
+  margin-top: 24px; background: var(--panel);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 16px; box-shadow: var(--shadow);
+}
+.tool__bar { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn {
+  appearance: none; cursor: pointer; border: 1px solid transparent;
+  font: inherit; font-weight: 600; border-radius: 12px;
+  padding: 12px 16px; display: inline-flex; align-items: center; gap: 8px;
+  transition: transform .06s ease, background .2s ease, border-color .2s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn--primary { background: var(--accent); color: var(--accent-ink); }
+.btn--primary:hover { background: #4ee9a6; }
+.btn--ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn--ghost:hover { border-color: var(--muted); }
+
+.empty {
+  margin: 16px 0 0; padding: 34px 16px; text-align: center;
+  color: var(--muted); border: 1px dashed var(--line); border-radius: var(--radius);
+  background: var(--panel-2);
+}
+.empty__ico { display: block; font-size: 2rem; margin-bottom: 8px; }
+
+/* ---------- stage (image + svg overlay) ---------- */
+.stage {
+  position: relative; margin-top: 16px; width: 100%;
+  border-radius: var(--radius); overflow: hidden;
+  background: #000; touch-action: none; user-select: none;
+  -webkit-user-select: none;
+}
+.stage img { display: block; width: 100%; height: 100%; }
+#overlay { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.handle { cursor: grab; }
+.handle:active { cursor: grabbing; }
+.handle__hit { fill: transparent; }
+.handle__ring { fill: rgba(0, 0, 0, .35); stroke-width: 0; }
+.measure-line { fill: none; stroke-linecap: round; }
+.measure-label {
+  font-family: "Sora", sans-serif; font-weight: 700;
+  paint-order: stroke; stroke: #000; stroke-linejoin: round;
+}
+
+/* ---------- result ---------- */
+.result {
+  margin-top: 16px; display: flex; flex-wrap: wrap; gap: 18px; align-items: center;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--line); border-radius: var(--radius); padding: 18px;
+}
+.result__size {
+  flex: none; text-align: center; min-width: 120px;
+  padding: 14px 18px; border-radius: 14px;
+  background: var(--accent); color: var(--accent-ink);
+}
+.result__eu { display: block; font-family: "Sora"; font-weight: 800; font-size: 2.8rem; line-height: 1; }
+.result__euLabel { font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; opacity: .85; }
+.result__meta { flex: 1 1 240px; }
+.result__len { margin: 0 0 6px; font-size: 1.05rem; }
+.result__alt { margin: 0 0 6px; color: var(--muted); font-size: .9rem; }
+.result__note { margin: 0; color: var(--muted); font-size: .85rem; }
+
+/* ---------- tips ---------- */
+.tips { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 12px; }
+.tips summary { cursor: pointer; font-weight: 600; }
+.tips ul { color: var(--muted); margin: 10px 0 0; padding-left: 18px; }
+.tips li { margin-bottom: 6px; }
+.tips strong { color: var(--ink); }
+
+/* ---------- footer ---------- */
+.ft { border-top: 1px solid var(--line); padding: 22px 0; color: var(--muted); }
+.ft p { margin: 0 0 6px; font-size: .9rem; }
+.ft code { background: var(--panel-2); padding: 2px 6px; border-radius: 6px; color: var(--ink); }
+.ft__fine { font-size: .8rem; opacity: .8; }

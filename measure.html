@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Shoe Size Scanner — Measure your feet with your phone</title>
+  <meta name="description" content="Measure your foot with your phone camera and a bank card to find your correct EU shoe size before you buy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/measure.css" />
+</head>
+<body>
+  <header class="hd">
+    <div class="wrap hd__row">
+      <div class="brand">
+        <span class="brand__mark" aria-hidden="true">👣</span>
+        <span class="brand__name">Shoe&nbsp;Size&nbsp;Scanner</span>
+      </div>
+      <span class="hd__tag">Find your EU size</span>
+    </div>
+  </header>
+
+  <main class="wrap main">
+    <section class="intro">
+      <h1>Measure your feet, find your size</h1>
+      <p class="lede">
+        Photograph your foot next to any <strong>bank / credit card</strong> and we'll work out your
+        <strong>EU shoe size</strong> — no guessing, no returns. Everything runs on your phone; your photo never leaves the device.
+      </p>
+    </section>
+
+    <!-- ---------- How it works ---------- -->
+    <ol class="steps" aria-label="How to measure">
+      <li class="step">
+        <span class="step__n">1</span>
+        <div>
+          <h3>Set up the shot</h3>
+          <p>Place your <strong>bare foot</strong> flat on the floor against a wall. Put a <strong>bank card</strong> flat on the floor right beside your foot.</p>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step__n">2</span>
+        <div>
+          <h3>Shoot from straight above</h3>
+          <p>Hold the phone <strong>directly over</strong> your foot (lens parallel to the floor) and take the photo. Keep the card and foot in the same flat plane.</p>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step__n">3</span>
+        <div>
+          <h3>Drag the markers</h3>
+          <p>Drag the two <span class="dot dot--card"></span> markers onto the <strong>long edge</strong> of the card, and the <span class="dot dot--foot"></span> markers to your <strong>heel</strong> and <strong>longest toe</strong>.</p>
+        </div>
+      </li>
+    </ol>
+
+    <!-- ---------- Tool ---------- -->
+    <section class="tool" aria-label="Measurement tool">
+      <div class="tool__bar">
+        <label class="btn btn--primary">
+          <input id="file" type="file" accept="image/*" capture="environment" hidden />
+          <span id="fileLabel">📷 Take / upload photo</span>
+        </label>
+        <button id="resetBtn" class="btn btn--ghost" type="button" hidden>↺ Reset markers</button>
+      </div>
+
+      <div id="stage" class="stage" hidden>
+        <img id="shot" alt="Your foot photo" />
+        <svg id="overlay" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"></svg>
+      </div>
+
+      <p id="empty" class="empty">
+        <span class="empty__ico" aria-hidden="true">🦶</span>
+        Your photo will appear here. For best accuracy, shoot in good light on a plain floor.
+      </p>
+
+      <!-- ---------- Result ---------- -->
+      <div id="result" class="result" hidden>
+        <div class="result__size">
+          <span class="result__eu" id="euSize">—</span>
+          <span class="result__euLabel">EU recommended</span>
+        </div>
+        <div class="result__meta">
+          <p class="result__len">Foot length: <strong id="footLen">— cm</strong></p>
+          <p class="result__alt" id="altSizes"></p>
+          <p class="result__note" id="resultNote">Adjust the markers until the lines match your card and foot.</p>
+        </div>
+      </div>
+
+      <details class="tips">
+        <summary>Tips for an accurate result</summary>
+        <ul>
+          <li>Measure <strong>both feet</strong> and go with the larger one — they're rarely identical.</li>
+          <li>Measure in the <strong>afternoon</strong>; feet swell slightly during the day.</li>
+          <li>Keep the phone <strong>flat and high</strong> — tilting the camera distorts the scale.</li>
+          <li>If you're <strong>between sizes</strong>, size up. Brand sizing varies by ±1.</li>
+          <li>The card edge used is the <strong>long</strong> one (85.6&nbsp;mm, the ISO standard for every bank card).</li>
+        </ul>
+      </details>
+    </section>
+  </main>
+
+  <footer class="ft">
+    <div class="wrap">
+      <p>Built as a self-contained tool — embed it anywhere in your store with an <code>&lt;iframe&gt;</code>.</p>
+      <p class="ft__fine">Results are an estimate to guide your purchase, not a medical measurement.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/measure.js"></script>
+</body>
+</html>
