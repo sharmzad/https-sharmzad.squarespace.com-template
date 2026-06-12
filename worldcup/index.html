@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1d12">
+  <title>Gang Cup 2026 ⚽🏆 — World Cup Prediction Game</title>
+  <meta name="description" content="Private World Cup 2026 prediction game for the gang. Predict scores, climb the leaderboard, win bragging rights.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏆</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-icon">🏆</span>
+      <div>
+        <h1>Gang Cup 2026</h1>
+        <p class="tagline">World Cup prediction battle</p>
+      </div>
+    </div>
+    <button id="playerChip" class="player-chip" title="Player">👤 Join</button>
+  </header>
+
+  <div id="banner" class="banner hidden"></div>
+
+  <main id="view"></main>
+
+  <nav class="tabbar">
+    <button class="tab active" data-tab="matches">⚽<span>Matches</span></button>
+    <button class="tab" data-tab="table">🏅<span>Table</span></button>
+    <button class="tab" data-tab="share">📲<span>WhatsApp</span></button>
+    <button class="tab" data-tab="rules">📜<span>Rules</span></button>
+  </nav>
+
+  <!-- Join / login modal -->
+  <div id="joinModal" class="modal hidden">
+    <div class="modal-card">
+      <h2>Join the Gang Cup 🎉</h2>
+      <label>Group code
+        <input id="joinCode" type="text" placeholder="Ask the group admin" autocomplete="off">
+      </label>
+      <label>Your name
+        <input id="joinName" type="text" maxlength="14" placeholder="e.g. Foad" autocomplete="off">
+      </label>
+      <label>PIN (4 digits, to protect your picks)
+        <input id="joinPin" type="tel" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off">
+      </label>
+      <label>Pick your avatar</label>
+      <div id="emojiRow" class="emoji-row"></div>
+      <p id="joinError" class="error hidden"></p>
+      <div class="modal-actions">
+        <button id="joinCancel" class="btn ghost">Cancel</button>
+        <button id="joinSubmit" class="btn primary">Let's go ⚽</button>
+      </div>
+      <p class="hint">Already joined? Enter the same name + PIN to log back in. Works on any device.</p>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="js/firebase-config.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
