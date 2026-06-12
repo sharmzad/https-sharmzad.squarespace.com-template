@@ -11,19 +11,14 @@
 
 window.GROUP_CODE = "GANG2026";
 
-window.FIREBASE_CONFIG = null;
-
-/* Example — replace with YOUR project's values from the Firebase console:
-
 window.FIREBASE_CONFIG = {
-  apiKey: "AIzaSy...",
+  apiKey: "AIzaSyA-mPxIfqPWxd6Xo1qNFPGrlp7IL3xt3-A",
   authDomain: "gang-cup-2026.firebaseapp.com",
   projectId: "gang-cup-2026",
-  storageBucket: "gang-cup-2026.appspot.com",
-  messagingSenderId: "1234567890",
-  appId: "1:1234567890:web:abc123"
+  storageBucket: "gang-cup-2026.firebasestorage.app",
+  messagingSenderId: "618744827340",
+  appId: "1:618744827340:web:4d74f6a8af830ae0f92169"
 };
-*/
 
 // Maximum number of players allowed to join
 window.MAX_PLAYERS = 10;
