@@ -48,9 +48,61 @@ init();
 async function init() {
   bindChrome();
   await initFirebase();
+  if (!me && db) await tryRestoreLogin();
   await loadMatches();
   render();
   setInterval(async () => { await loadMatches(); render(); }, POLL_MS);
+}
+
+// Persist login in localStorage + a long-lived cookie (iOS clears storage
+// more eagerly than cookies, e.g. when the app is re-added to Home Screen).
+function saveLogin() {
+  const v = JSON.stringify(me);
+  localStorage.setItem("gangcup_me", v);
+  document.cookie = `gangcup_me=${encodeURIComponent(v)};max-age=31536000;path=/;SameSite=Lax`;
+  renderChip();
+}
+
+function clearLogin() {
+  me = null;
+  localStorage.removeItem("gangcup_me");
+  document.cookie = "gangcup_me=;max-age=0;path=/";
+  renderChip();
+}
+
+// Try to recover the login without asking for name/PIN again:
+// 1. backup cookie; 2. this device's notification registration, which
+// remembers which player enabled it.
+async function tryRestoreLogin() {
+  try {
+    const c = document.cookie.match(/(?:^|;\s*)gangcup_me=([^;]+)/);
+    if (c) {
+      me = JSON.parse(decodeURIComponent(c[1]));
+      if (me?.id) { saveLogin(); return; }
+      me = null;
+    }
+    if (!window.VAPID_KEY || !("Notification" in window) || Notification.permission !== "granted") return;
+    const msgMod = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js");
+    if (!(await msgMod.isSupported())) return;
+    const reg = await navigator.serviceWorker.register("firebase-messaging-sw.js");
+    const token = await msgMod.getToken(msgMod.getMessaging(fbApp), {
+      vapidKey: window.VAPID_KEY,
+      serviceWorkerRegistration: reg,
+    });
+    if (!token) return;
+    localStorage.setItem("gangcup_fcm", token);
+    const tok = await fs.getDoc(fs.doc(db, "tokens", token));
+    const playerId = tok.exists() ? tok.data().playerId : null;
+    if (!playerId) return;
+    const ps = await fs.getDoc(fs.doc(db, "players", playerId));
+    if (ps.exists()) {
+      me = { id: playerId, name: ps.data().name, emoji: ps.data().emoji };
+      saveLogin();
+      toast(`${me.emoji} Welcome back, ${me.name}!`);
+    }
+  } catch (err) {
+    console.warn("Login restore failed", err);
+  }
 }
 
 function bindChrome() {
@@ -65,9 +117,7 @@ function bindChrome() {
   $("#playerChip").addEventListener("click", () => {
     if (me) {
       if (confirm(`Logged in as ${me.emoji} ${me.name}. Log out on this device?`)) {
-        me = null;
-        localStorage.removeItem("gangcup_me");
-        renderChip();
+        clearLogin();
         render();
       }
     } else openJoinModal();
@@ -116,9 +166,11 @@ async function enableNotifications() {
       serviceWorkerRegistration: reg,
     });
     if (!token) throw new Error("No FCM token");
+    localStorage.setItem("gangcup_fcm", token);
     await fs.setDoc(fs.doc(db, "tokens", token), {
       token,
       player: me?.name || "anonymous",
+      playerId: me?.id || null,
       updatedAt: fs.serverTimestamp(),
     });
     localStorage.setItem("gangcup_notif", "1");
@@ -715,9 +767,15 @@ async function submitJoin() {
       });
       me = { id: ref.id, name, emoji: chosenEmoji };
     }
-    localStorage.setItem("gangcup_me", JSON.stringify(me));
+    saveLogin();
+    // Link this device's notification registration to the player so the
+    // login can be restored even if the phone wipes local storage.
+    const fcm = localStorage.getItem("gangcup_fcm");
+    if (fcm) {
+      fs.setDoc(fs.doc(db, "tokens", fcm), { playerId: me.id, player: me.name }, { merge: true })
+        .catch(() => {});
+    }
     $("#joinModal").classList.add("hidden");
-    renderChip();
     render();
     toast(`${me.emoji} Welcome, ${me.name}! Go predict ⚽`);
   } catch (err) {

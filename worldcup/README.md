@@ -57,8 +57,10 @@ Everything runs on **free services** — no servers, no costs.
          allow create, update: if request.resource.data.updatedAt == request.time;
        }
        match /tokens/{id} {
-         // push-notification device tokens: writable, but not readable by clients
-         allow read: if false;
+         // push-notification device tokens: a device may fetch its own doc
+         // (it must know the token), but the list can't be enumerated
+         allow get: if true;
+         allow list: if false;
          allow create, update, delete: if true;
        }
      }
