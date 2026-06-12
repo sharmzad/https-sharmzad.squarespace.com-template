@@ -14,19 +14,11 @@ firebase.initializeApp({
   appId: "1:618744827340:web:4d74f6a8af830ae0f92169",
 });
 
-// Notification payloads sent by scripts/notify.js are displayed automatically
-// by the browser; this handler is only a fallback for data-only messages.
-const messaging = firebase.messaging();
-messaging.onBackgroundMessage((payload) => {
-  const n = payload.notification || payload.data || {};
-  if (n.title) {
-    self.registration.showNotification(n.title, {
-      body: n.body || "",
-      icon: "group.jpg",
-      badge: "group.jpg",
-    });
-  }
-});
+// Messages sent by scripts/notify.js carry a `notification` payload, which
+// the browser displays automatically — displaying it here too would show
+// every notification twice. We only keep messaging initialized for token
+// management and handle taps below.
+firebase.messaging();
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
