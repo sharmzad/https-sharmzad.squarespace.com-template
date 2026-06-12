@@ -132,6 +132,26 @@ points" — even when closed. A GitHub Actions cron (`.github/workflows/notify.y
 You can test by running the workflow manually: repo → Actions → *Match notifications* →
 **Run workflow**.
 
+### ⏱️ Punctual delivery (recommended): cron-job.org
+
+GitHub's built-in schedule is low-priority and often runs **hours late**. For on-time
+notifications, trigger the workflow from [cron-job.org](https://cron-job.org) (free):
+
+1. **GitHub token:** GitHub → Settings (your account) → Developer settings →
+   Fine-grained personal access tokens → **Generate new token**.
+   Repository access: *Only select repositories* → this repo.
+   Permissions → Repository permissions → **Actions: Read and write**. Generate & copy.
+2. **cron-job.org:** create a free account → **Create cronjob**:
+   - URL: `https://api.github.com/repos/sharmzad/https-sharmzad.squarespace.com-template/actions/workflows/notify.yml/dispatches`
+   - Schedule: every 5 minutes
+   - Advanced → Request method: **POST**, Request body: `{"ref":"master"}`
+   - Headers:
+     - `Authorization: Bearer <your token>`
+     - `Accept: application/vnd.github+json`
+     - `Content-Type: application/json`
+3. Save. Dispatched runs start within seconds; the dedupe markers make it safe to keep
+   GitHub's own schedule enabled as a backup.
+
 ### Optional: fully automatic messages
 
 WhatsApp has no free official way to post into a group automatically, but two decent options:

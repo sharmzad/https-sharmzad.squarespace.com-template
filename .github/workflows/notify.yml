@@ -2,10 +2,14 @@ name: Match notifications
 
 on:
   schedule:
-    - cron: "*/5 * * * *" # every 5 min during the tournament (goal alerts)
+    - cron: "*/5 * * * *" # backup only — GitHub delays these heavily; primary trigger is cron-job.org → workflow_dispatch
   workflow_dispatch: {}
 
 permissions: {}
+
+concurrency:
+  group: notify
+  cancel-in-progress: false
 
 jobs:
   notify:
