@@ -146,6 +146,7 @@ function normalizeEvent(ev) {
     kickoff: new Date(ev.date),
     state: status.type?.state || "pre",            // pre | in | post
     completed: !!status.type?.completed,
+    period: status.period ?? 0,                    // 1 = first half, 2 = second half
     detail: status.type?.shortDetail || "",
     group: comp.notes?.[0]?.headline || ev.season?.slug || "",
     home: side("home"),
@@ -172,12 +173,23 @@ const isOverridden = (m) =>
 const dayKey = (d) => d.toLocaleDateString("en-CA"); // YYYY-MM-DD, local time
 
 function lockTime(m) {
-  if (isOverridden(m) || dayKey(m.kickoff) === GRACE_DAY) {
+  if (dayKey(m.kickoff) === GRACE_DAY) {
     return new Date(m.kickoff.getTime() + GRACE_AFTER_MIN * 60_000);
   }
   return new Date(m.kickoff.getTime() - LOCK_MINUTES * 60_000);
 }
-const isOpen = (m) => !m.completed && Date.now() < lockTime(m).getTime();
+
+// Overridden matches use the live match status, not the clock: open before
+// kickoff, through the 1st half and the half-time break; closed once the
+// 2nd half starts.
+const overrideStillOpen = (m) =>
+  m.state === "pre" || m.period === 1 || /half\s?time/i.test(m.detail);
+
+function isOpen(m) {
+  if (m.completed) return false;
+  if (isOverridden(m)) return overrideStillOpen(m);
+  return Date.now() < lockTime(m).getTime();
+}
 
 // ---------------------------------------------------------------------------
 // Scoring — two predictions per match: winner (1X2) + exact score
@@ -195,7 +207,9 @@ function scorePrediction(pred, hs, as) {
 }
 
 // A prediction only counts if it was saved before the lock (server timestamp).
-const isValidPrediction = (pred, m) => pred.updatedAtMs <= lockTime(m).getTime();
+// Overridden matches accept every saved prediction (the UI gates saving).
+const isValidPrediction = (pred, m) =>
+  isOverridden(m) || pred.updatedAtMs <= lockTime(m).getTime();
 
 function buildStandings() {
   const rows = players.map((p) => ({ ...p, pts: 0, exact: 0, outcomes: 0, played: 0 }));
@@ -315,7 +329,7 @@ function matchCard(m) {
         <button class="save-btn" data-save="${m.id}">${mine ? "Update" : "Save"} 🎯</button>
       </div>
       <div class="lock-note">${mine ? `✅ Your bet: <b>${pickLabel(mine, m)}</b> · ` : ""}${
-        isOverridden(m) ? `🔓 Re-opened by admin — open till half time (${fmtTime(lockTime(m))})` : `🔒 Locks at ${fmtTime(lockTime(m))}`
+        isOverridden(m) ? "🔓 Re-opened by admin — closes when the 2nd half starts!" : `🔒 Locks at ${fmtTime(lockTime(m))}`
       }</div>`;
   } else if (open && db && !me) {
     body = `<div class="lock-note">👤 <a href="#" onclick="document.getElementById('playerChip').click();return false" style="color:var(--gold)">Join the game</a> to predict · 🔒 locks at ${fmtTime(lockTime(m))}</div>`;
