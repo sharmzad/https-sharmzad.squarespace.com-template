@@ -12,11 +12,11 @@ Everything runs on **free services** — no servers, no costs.
 
 | Rule | Detail |
 |---|---|
-| Prediction | Exact final score of every match |
-| 🔒 Lock | Betting closes **60 minutes before kickoff** (enforced by server timestamps) |
-| 🎯 Exact score | **5 points** |
-| 📐 Correct goal difference | **3 points** |
-| ✅ Correct result (win/draw/lose) | **2 points** |
+| Predictions | **Two per match**: who wins (1X2) **and** the exact final score |
+| 🔒 Lock | Betting closes **60 minutes before kickoff** (enforced by server timestamps). Launch day (June 12, 2026) only: open until 5 min after kickoff |
+| ✅ Correct winner/draw pick | **2 points** |
+| 🎯 Exact final score | **+5 points bonus** |
+| 👑 Both right | **7 points** max per match |
 | ❌ Wrong | 0 points 😅 |
 | Reveal | Everyone's picks are hidden until lock time, then shown |
 | Live scores | Auto-refresh every 60 seconds during matches |

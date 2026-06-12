@@ -113,10 +113,24 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
 .ko-time { font-size: 17px; font-weight: 700; }
 .clock { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
+/* winner (1X2) pick */
+.winner-row {
+  display: flex; gap: 8px; margin-top: 12px; padding-top: 12px;
+  border-top: 1px dashed var(--line);
+}
+.winner-row .wbtn {
+  flex: 1; padding: 9px 4px; border-radius: 10px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--card2); color: var(--text);
+  font-size: 13px; font-weight: 700;
+}
+.winner-row .wbtn.sel {
+  background: var(--gold); color: #2b2305; border-color: var(--gold);
+}
+
 /* prediction inputs */
 .predict {
   display: flex; align-items: center; justify-content: center; gap: 10px;
-  margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line);
+  margin-top: 10px;
 }
 .stepper { display: flex; align-items: center; gap: 6px; }
 .stepper button {
@@ -141,8 +155,8 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
   font-size: 13.5px; padding: 4px 2px;
 }
 .reveal-row .pts { font-weight: 800; }
-.pts.p5 { color: var(--gold); }
-.pts.p3 { color: var(--green); }
+.pts.p7 { color: var(--gold); }
+.pts.p5 { color: var(--green); }
 .pts.p2 { color: #7fd1ff; }
 .pts.p0 { color: var(--muted); }
 .reveal-row .late { color: var(--red); font-size: 11px; }

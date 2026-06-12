@@ -3,15 +3,20 @@
  *
  * Live scores : ESPN public scoreboard API (free, no key, CORS enabled)
  * Shared data : Firebase Firestore (free Spark tier) — players + predictions
- * Scoring     : exact score 5 | goal difference 3 | outcome 2
+ * Scoring     : correct winner (1X2) 2 pts + exact score bonus 5 pts (max 7)
  * Lock        : predictions close 60 minutes before kickoff
+ *               (launch day June 12 only: open until 5 min AFTER kickoff)
  */
 
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
-const POINTS = { EXACT: 5, DIFF: 3, OUTCOME: 2 };
+const POINTS = { EXACT: 5, WINNER: 2 };
 const LOCK_MINUTES = 60;
+// Launch-day grace: the gang joined mid-matchday, so matches on this local
+// date stay open until GRACE_AFTER_MIN minutes after kickoff.
+const GRACE_DAY = "2026-06-12";
+const GRACE_AFTER_MIN = 5;
 const TOURNAMENT_RANGE = "20260611-20260719"; // WC2026: Jun 11 – Jul 19
 const ESPN_URL =
   `https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard` +
@@ -148,17 +153,29 @@ function normalizeEvent(ev) {
   };
 }
 
-const lockTime = (m) => new Date(m.kickoff.getTime() - LOCK_MINUTES * 60_000);
-const isOpen = (m) => m.state === "pre" && Date.now() < lockTime(m).getTime();
+const dayKey = (d) => d.toLocaleDateString("en-CA"); // YYYY-MM-DD, local time
+
+function lockTime(m) {
+  if (dayKey(m.kickoff) === GRACE_DAY) {
+    return new Date(m.kickoff.getTime() + GRACE_AFTER_MIN * 60_000);
+  }
+  return new Date(m.kickoff.getTime() - LOCK_MINUTES * 60_000);
+}
+const isOpen = (m) => !m.completed && Date.now() < lockTime(m).getTime();
 
 // ---------------------------------------------------------------------------
-// Scoring
+// Scoring — two predictions per match: winner (1X2) + exact score
 // ---------------------------------------------------------------------------
+const resultOf = (hs, as) => (hs > as ? "home" : hs < as ? "away" : "draw");
+
+// older predictions may not have a winner pick — derive it from the score
+const predWinner = (pred) => pred.winner || resultOf(pred.home, pred.away);
+
 function scorePrediction(pred, hs, as) {
-  if (pred.home === hs && pred.away === as) return POINTS.EXACT;
-  if (pred.home - pred.away === hs - as) return POINTS.DIFF;
-  if (Math.sign(pred.home - pred.away) === Math.sign(hs - as)) return POINTS.OUTCOME;
-  return 0;
+  let pts = 0;
+  if (predWinner(pred) === resultOf(hs, as)) pts += POINTS.WINNER;
+  if (pred.home === hs && pred.away === as) pts += POINTS.EXACT;
+  return pts;
 }
 
 // A prediction only counts if it was saved before the lock (server timestamp).
@@ -172,12 +189,11 @@ function buildStandings() {
     for (const p of players) {
       const pred = predictions[`${m.id}_${p.id}`];
       if (!pred || !isValidPrediction(pred, m)) continue;
-      const pts = scorePrediction(pred, m.home.score, m.away.score);
       const r = byId[p.id];
       r.played++;
-      r.pts += pts;
-      if (pts === POINTS.EXACT) r.exact++;
-      if (pts > 0) r.outcomes++;
+      r.pts += scorePrediction(pred, m.home.score, m.away.score);
+      if (pred.home === m.home.score && pred.away === m.away.score) r.exact++;
+      if (predWinner(pred) === resultOf(m.home.score, m.away.score)) r.outcomes++;
     }
   }
   return rows.sort(
@@ -230,6 +246,14 @@ function renderMatches() {
   );
   view.querySelectorAll("[data-step]").forEach((b) => b.addEventListener("click", onStep));
   view.querySelectorAll("[data-save]").forEach((b) => b.addEventListener("click", onSave));
+  view.querySelectorAll("[data-winner]").forEach((b) =>
+    b.addEventListener("click", (e) => {
+      const [matchId, val] = e.currentTarget.dataset.winner.split("|");
+      draft[matchId].winner = val;
+      e.currentTarget.closest(".winner-row").querySelectorAll(".wbtn")
+        .forEach((x) => x.classList.toggle("sel", x === e.currentTarget));
+    })
+  );
 }
 
 function matchCard(m) {
@@ -254,16 +278,27 @@ function matchCard(m) {
   let body = "";
   if (open && db && me) {
     const mine = predictions[`${m.id}_${me.id}`];
-    const d = draft[m.id] || { home: mine?.home ?? 0, away: mine?.away ?? 0 };
+    const d = draft[m.id] || {
+      home: mine?.home ?? 0,
+      away: mine?.away ?? 0,
+      winner: mine ? predWinner(mine) : null,
+    };
     draft[m.id] = d;
+    const wbtn = (val, label) =>
+      `<button class="wbtn ${d.winner === val ? "sel" : ""}" data-winner="${m.id}|${val}">${label}</button>`;
     body = `
+      <div class="winner-row">
+        ${wbtn("home", `🏆 ${esc(m.home.abbr)}`)}
+        ${wbtn("draw", "🤝 Draw")}
+        ${wbtn("away", `🏆 ${esc(m.away.abbr)}`)}
+      </div>
       <div class="predict">
         ${stepper(m.id, "home", d.home)}
         <span class="vs">—</span>
         ${stepper(m.id, "away", d.away)}
         <button class="save-btn" data-save="${m.id}">${mine ? "Update" : "Save"} 🎯</button>
       </div>
-      <div class="lock-note">${mine ? `✅ Your pick: <b>${mine.home}–${mine.away}</b> · ` : ""}🔒 Locks at ${fmtTime(lockTime(m))}</div>`;
+      <div class="lock-note">${mine ? `✅ Your bet: <b>${pickLabel(mine, m)}</b> · ` : ""}🔒 Locks at ${fmtTime(lockTime(m))}</div>`;
   } else if (open && db && !me) {
     body = `<div class="lock-note">👤 <a href="#" onclick="document.getElementById('playerChip').click();return false" style="color:var(--gold)">Join the game</a> to predict · 🔒 locks at ${fmtTime(lockTime(m))}</div>`;
   } else if (!open && db) {
@@ -305,7 +340,7 @@ function revealBlock(m) {
       return `
         <div class="reveal-row ${me && p.id === me.id ? "mine" : ""}">
           <span>${p.emoji} ${esc(p.name)}</span>
-          <span><b>${pred.home}–${pred.away}</b> ${late ? '<span class="late">(late ⛔)</span>' : ""} ${ptsHtml}</span>
+          <span><b>${pickLabel(pred, m)}</b> ${late ? '<span class="late">(late ⛔)</span>' : ""} ${ptsHtml}</span>
         </div>`;
     })
     .filter(Boolean);
@@ -326,16 +361,18 @@ async function onSave(e) {
   if (!m || !me || !db) return;
   if (!isOpen(m)) { toast("🔒 Too late — predictions are locked!"); render(); return; }
   const d = draft[matchId];
+  const winner = d.winner || resultOf(d.home, d.away); // no pick? derive from score
   try {
     await fs.setDoc(fs.doc(db, "predictions", `${matchId}_${me.id}`), {
       matchId,
       playerId: me.id,
+      winner,
       home: d.home,
       away: d.away,
       kickoff: m.kickoff.toISOString(),
       updatedAt: fs.serverTimestamp(),
     });
-    toast(`🎯 Saved: ${m.home.abbr} ${d.home}–${d.away} ${m.away.abbr}`);
+    toast(`🎯 Saved: ${pickLabel({ winner, home: d.home, away: d.away }, m)}`);
   } catch (err) {
     console.error(err);
     toast("⚠️ Save failed — check your connection.");
@@ -462,8 +499,9 @@ function inviteMessage() {
   return (
     `🏆 *GANG CUP 2026 — you're invited!* 🏆\n\n` +
     `World Cup prediction battle for the gang 😁⚽\n` +
-    `🎯 Exact score = 5 pts · 📐 goal diff = 3 pts · ✅ result = 2 pts\n` +
-    `🔒 Bets close 1 hour before kickoff\n\n` +
+    `Each match: pick the *winner* + the *exact score*\n` +
+    `✅ Winner = ${POINTS.WINNER} pts · 🎯 Exact score = +${POINTS.EXACT} pts bonus\n` +
+    `🔒 Bets close 1 hour before kickoff (today only: 5 min after KO ⚡)\n\n` +
     `Join here 👇 (group code: *${window.GROUP_CODE}*)\n${location.href.split("#")[0]}`
   );
 }
@@ -489,8 +527,9 @@ function renderRules() {
     <div class="rules-card">
       <h3>🎯 How to play</h3>
       <ul>
-        <li>Predict the <b>exact score</b> of every World Cup match.</li>
+        <li>Every match = <b>2 predictions</b>: pick <b>who wins</b> (or draw) 🏆 <i>and</i> the <b>exact score</b>.</li>
         <li>🔒 Predictions <b>lock ${LOCK_MINUTES} minutes before kickoff</b> — no late bets!</li>
+        <li>⚡ <b>Launch day (June 12) only:</b> bets stay open until ${GRACE_AFTER_MIN} minutes after kickoff.</li>
         <li>Everyone's picks stay hidden until lock time, then they're revealed. 👀</li>
         <li>Knockout games: predict the score <b>after extra time</b> (penalty shootouts don't count).</li>
       </ul>
@@ -498,10 +537,10 @@ function renderRules() {
     <div class="rules-card">
       <h3>🏅 Points</h3>
       <ul>
-        <li>🎯 <b>${POINTS.EXACT} pts</b> — exact score (e.g. you said 2–1, it ended 2–1)</li>
-        <li>📐 <b>${POINTS.DIFF} pts</b> — correct goal difference (you said 2–1, it ended 3–2)</li>
-        <li>✅ <b>${POINTS.OUTCOME} pts</b> — correct result only (you said 1–0, it ended 3–1)</li>
-        <li>❌ <b>0 pts</b> — wrong result, habibi 😅</li>
+        <li>✅ <b>${POINTS.WINNER} pts</b> — correct winner/draw pick</li>
+        <li>🎯 <b>+${POINTS.EXACT} pts bonus</b> — exact final score</li>
+        <li>👑 <b>${POINTS.WINNER + POINTS.EXACT} pts max</b> per match — nail them both!</li>
+        <li>❌ <b>0 pts</b> — wrong on everything, habibi 😅</li>
       </ul>
     </div>
     <div class="rules-card">
@@ -575,6 +614,13 @@ async function submitJoin() {
 // ---------------------------------------------------------------------------
 function fmtTime(d) {
   return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
+
+// "🏆 ARG · 2–1" / "🤝 Draw · 1–1" — a player's full bet for a match
+function pickLabel(pred, m) {
+  const w = predWinner(pred);
+  const who = w === "draw" ? "🤝 Draw" : `🏆 ${esc(w === "home" ? m.home.abbr : m.away.abbr)}`;
+  return `${who} · ${pred.home}–${pred.away}`;
 }
 
 function esc(s) {
