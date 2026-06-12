@@ -86,14 +86,29 @@ async function enableNotifications() {
     toast("🔔 Notifications aren't configured yet — ask the admin!");
     return;
   }
+  // Apple only allows web push for apps installed on the Home Screen
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const standalone =
+    window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  if (isIOS && !standalone) {
+    toast("📲 iPhone: tap Share → Add to Home Screen, then open the app from the new icon and press 🔔 again!");
+    return;
+  }
   if (!("Notification" in window) || !("serviceWorker" in navigator)) {
-    toast("🔔 iPhone: first Share → Add to Home Screen, then open the app from there!");
+    toast("🔕 This browser can't do push — needs iOS 16.4+ or Chrome on Android.");
     return;
   }
   try {
-    const perm = await Notification.requestPermission();
-    if (perm !== "granted") { toast("🔕 Notifications were blocked."); return; }
     const msgMod = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js");
+    if (!(await msgMod.isSupported())) {
+      toast("🔕 Push isn't supported in this browser — try Chrome, or update iOS to 16.4+.");
+      return;
+    }
+    const perm = await Notification.requestPermission();
+    if (perm !== "granted") {
+      toast("🔕 Blocked. Enable it in Settings → Notifications → 3am Etman, then retry.");
+      return;
+    }
     const reg = await navigator.serviceWorker.register("firebase-messaging-sw.js");
     const messaging = msgMod.getMessaging(fbApp);
     const token = await msgMod.getToken(messaging, {
@@ -114,7 +129,7 @@ async function enableNotifications() {
     toast("🔔 Notifications ON — match reminders & results incoming!");
   } catch (err) {
     console.error("Notifications failed", err);
-    toast("⚠️ Couldn't enable notifications on this device.");
+    toast(`⚠️ ${err?.code || err?.message || "Couldn't enable notifications on this device."}`);
   }
 }
 
