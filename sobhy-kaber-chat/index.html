@@ -8,12 +8,14 @@
   <link rel="icon" type="image/svg+xml" href="assets/zaki-icon.svg" />
   <style>
     :root {
-      --black: #14110d;
-      --black2: #2a241c;
-      --gold: #c9a232;
-      --golddark: #9a7b1c;
-      --cream: #f7f4ee;
-      --ink: #241e16;
+      /* Sampled from the official Sobhy Kaber logo */
+      --red: #b4483c;
+      --red2: #c66746;
+      --reddark: #9c3c30;
+      --gold: #e5aa56;
+      --golddark: #a8731f;
+      --cream: #faf3e9;
+      --ink: #2b1d16;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -23,45 +25,34 @@
       line-height: 1.6;
     }
     .hero {
-      min-height: 72vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 80px 24px 64px;
+      padding: 56px 24px 64px;
       background:
-        radial-gradient(1200px 500px at 50% -10%, rgba(201,162,50,.22), transparent 65%),
-        linear-gradient(160deg, var(--black) 0%, #1d1812 70%, #26201a 100%);
-      color: #fff;
+        radial-gradient(900px 420px at 50% -8%, rgba(229,170,86,.25), transparent 65%),
+        linear-gradient(180deg, #fffdf9 0%, var(--cream) 100%);
+      border-bottom: 4px solid var(--red);
     }
-    .hero .badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(201,162,50,.14);
-      border: 1px solid rgba(201,162,50,.5);
-      border-radius: 999px;
-      padding: 7px 16px;
-      font-size: 13px; font-weight: 600;
-      color: var(--gold);
-      margin-bottom: 22px;
-    }
-    .hero h1 {
-      font-size: clamp(2.2rem, 6vw, 4rem);
-      font-weight: 800;
-      letter-spacing: .5px;
+    .hero .logo {
+      width: min(420px, 82vw);
+      height: auto;
+      filter: drop-shadow(0 16px 36px rgba(180,72,60,.25));
       margin-bottom: 8px;
     }
-    .hero h1 .ar { color: var(--gold); }
     .hero .since {
       font-size: 13px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--golddark);
+      font-weight: 700;
       margin-bottom: 14px;
     }
     .hero .sub {
-      font-size: clamp(1rem, 2.4vw, 1.25rem);
-      opacity: .85;
+      font-size: clamp(1rem, 2.4vw, 1.2rem);
+      color: #6f5b4e;
       max-width: 640px;
       margin-bottom: 30px;
     }
@@ -79,14 +70,14 @@
     }
     .btn:hover { transform: translateY(-2px); }
     .btn-primary {
-      background: linear-gradient(135deg, var(--gold), #b08a24);
-      color: var(--black);
-      box-shadow: 0 10px 30px rgba(201,162,50,.35);
+      background: linear-gradient(135deg, var(--red), var(--red2));
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(180,72,60,.35);
     }
     .btn-ghost {
-      background: rgba(255,255,255,.07);
-      color: #fff;
-      border: 1.5px solid rgba(255,255,255,.3);
+      background: #fff;
+      color: var(--reddark);
+      border: 1.5px solid rgba(180,72,60,.5);
     }
     section { max-width: 1080px; margin: 0 auto; padding: 70px 24px; }
     .kicker {
@@ -97,51 +88,57 @@
       font-size: 12.5px;
       margin-bottom: 8px;
     }
-    h2 { font-size: clamp(1.6rem, 4vw, 2.3rem); color: var(--black); margin-bottom: 14px; }
-    .lede { color: #6b6052; max-width: 640px; margin-bottom: 36px; }
+    h2 { font-size: clamp(1.6rem, 4vw, 2.3rem); color: var(--reddark); margin-bottom: 14px; }
+    .lede { color: #6f5b4e; max-width: 640px; margin-bottom: 36px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
     .dish {
       background: #fff;
       border-radius: 18px;
       padding: 24px 22px;
-      box-shadow: 0 6px 24px rgba(20,17,13,.07);
-      border: 1px solid rgba(201,162,50,.25);
+      box-shadow: 0 6px 24px rgba(60,25,18,.08);
+      border: 1px solid rgba(180,72,60,.2);
+      border-top: 3px solid var(--red);
     }
     .dish .emoji { font-size: 34px; }
-    .dish h3 { margin: 12px 0 4px; font-size: 17px; color: var(--black); }
+    .dish h3 { margin: 12px 0 4px; font-size: 17px; color: var(--reddark); }
     .dish .ar-name { color: var(--golddark); font-size: 14px; margin-bottom: 8px; }
-    .dish p { font-size: 14px; color: #6b6052; }
+    .dish p { font-size: 14px; color: #6f5b4e; }
     .dish .price { display: inline-block; margin-top: 12px; font-weight: 800; color: var(--golddark); font-size: 15px; }
     .zaki-strip {
-      background: linear-gradient(135deg, var(--black), var(--black2));
-      border: 1px solid rgba(201,162,50,.4);
+      background: linear-gradient(135deg, var(--reddark), var(--red2));
       border-radius: 24px;
+      border-bottom: 4px solid var(--gold);
       color: #fff;
       padding: 44px 36px;
       display: flex;
       align-items: center;
       gap: 28px;
       flex-wrap: wrap;
+      box-shadow: 0 18px 44px rgba(156,60,48,.3);
     }
-    .zaki-strip img { width: 84px; height: 84px; flex-shrink: 0; filter: drop-shadow(0 8px 22px rgba(201,162,50,.45)); }
+    .zaki-strip img { width: 84px; height: 84px; flex-shrink: 0; filter: drop-shadow(0 8px 22px rgba(43,16,12,.45)); }
     .zaki-strip h2 { color: #fff; }
-    .zaki-strip p { opacity: .85; max-width: 560px; }
+    .zaki-strip p { opacity: .92; max-width: 560px; }
+    .zaki-strip .btn-primary {
+      background: var(--gold);
+      color: var(--ink);
+      box-shadow: 0 10px 30px rgba(43,16,12,.3);
+    }
     footer {
       text-align: center;
       padding: 36px 24px 46px;
-      color: #a3987f;
+      color: #ab9482;
       font-size: 13.5px;
     }
-    footer b { color: var(--black); }
-    footer a { color: var(--golddark); font-weight: 600; text-decoration: none; }
+    footer b { color: var(--reddark); }
+    footer a { color: var(--red); font-weight: 600; text-decoration: none; }
   </style>
 </head>
 <body>
 
   <header class="hero">
-    <span class="badge">🔥 Authentic Egyptian Charcoal Grills · Old Market, Sharm El Sheikh</span>
-    <h1>Sobhy Kaber <span class="ar">صبحي كابر</span></h1>
-    <div class="since">A true taste of Egypt · Since 1996</div>
+    <img class="logo" src="assets/sobhy-kaber-logo.png" alt="Sobhy Kaber — كبابجي صبحي كابر — Since 1996" />
+    <div class="since">A true taste of Egypt · Since 1996 · Old Market, Sharm El Sheikh</div>
     <p class="sub">Premium meats over real charcoal, Egyptian classics from the oven — in the heart of the Old Market, facing Al Sahaba Mosque.</p>
     <div class="cta-row">
       <button class="btn btn-primary" onclick="document.getElementById('zaki-launcher')?.click()">💬 Ask Zaki — our AI advisor</button>
@@ -152,7 +149,7 @@
   <section id="menu">
     <p class="kicker">Menu Highlights</p>
     <h2>The plates people cross the city for</h2>
-    <p class="lede">A taste of the menu — chat with <b>Zaki</b> (the black-and-gold button, bottom corner) for the full menu, personal recommendations and instant table booking.</p>
+    <p class="lede">A taste of the menu — chat with <b>Zaki</b> (the red button, bottom corner) for the full menu, personal recommendations and instant table booking.</p>
     <div class="grid">
       <div class="dish">
         <span class="emoji">🍢</span>

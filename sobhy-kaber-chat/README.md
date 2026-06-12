@@ -8,26 +8,23 @@ restaurant advisor should be.
 
 ## Branding
 
-Styled to match Sobhy Kaber's **black & white signature identity** with a
-restrained gold accent for the charcoal-grill warmth:
+Colors are **sampled directly from the official Sobhy Kaber logo**
+(`assets/sobhy-kaber-logo.png` — the brick-red kebab sign with golden
+lettering and the black skewer):
 
-| Token | Value | Used for |
-|---|---|---|
-| `--zk-black` | `#14110d` | Header, user bubbles, chips hover, launcher badge |
-| `--zk-black2` | `#2a241c` | Gradient partner for black surfaces |
-| `--zk-gold` | `#c9a232` | Accents, spark, typing dots, avatar ring |
-| `--zk-golddark` | `#9a7b1c` | Prices, links (readable gold on white) |
-| `--zk-cream` | `#f7f4ee` | Chat background |
+| Token | Value | Sampled from | Used for |
+|---|---|---|---|
+| `--zk-red` | `#b4483c` | Sign field (avg `#bc4e40`) | User bubbles, chips, send button, links |
+| `--zk-red2` | `#c66746` | Sign gradient light end | Gradient partner for red surfaces |
+| `--zk-reddark` | `#9c3c30` | Sign gradient dark end | Header, headings |
+| `--zk-gold` | `#e5aa56` | "SOBHY KABER" letters | Accents, spark, typing dots, avatar ring |
+| `--zk-golddark` | `#a8731f` | — (darkened for contrast) | Prices, portion lines on white |
+| `--zk-cream` | `#faf3e9` | Logo cream text | Chat background |
 
-All five live in one `:root` line at the top of the `CSS` block in
-`zaki-widget.js` — tweak them there if the restaurant supplies exact brand hex
-codes. The icon (`assets/zaki-icon.svg`) is a white chef's toque with a gold
-spark on a black badge with a thin gold ring.
-
-> Note: the live site (sobhykabersharm.com) blocks automated access from this
-> build environment, so the palette is derived from Sobhy Kaber's documented
-> black-&-white signature logo rather than read from the site's CSS. If the
-> site uses different accent colors, update the five tokens above.
+All tokens live in one `:root` line at the top of the `CSS` block in
+`zaki-widget.js`. The icon (`assets/zaki-icon.svg`) is a white chef's toque
+with a gold spark on the logo's red sign gradient, ringed in gold. The demo
+page hero displays the actual logo PNG.
 
 ## Real restaurant data (from sobhykabersharm.com, June 2026)
 
