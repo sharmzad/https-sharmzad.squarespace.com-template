@@ -34,7 +34,14 @@ the 1st car rental destination in Sharm El Sheikh.
 index.html              # page markup
 assets/css/style.css    # all styles
 assets/js/app.js         # interactivity + WhatsApp booking logic
+worldcup/               # 🏆 Gang Cup 2026 — World Cup prediction game (see worldcup/README.md)
 ```
+
+## 🏆 Gang Cup 2026
+
+A private World Cup 2026 prediction game for the WhatsApp gang group lives in
+[`worldcup/`](worldcup/) — live scores, automatic points, leaderboard and
+one-tap WhatsApp updates. Setup guide: [`worldcup/README.md`](worldcup/README.md).
 
 ## 🚀 Run locally
 
