@@ -109,7 +109,25 @@ async function main() {
   const players = Object.fromEntries(
     (await db.collection("players").get()).docs.map((d) => [d.id, d.data()])
   );
-  const predictions = (await db.collection("predictions").get()).docs.map((d) => d.data());
+
+  // Only fetch predictions for matches today's features can touch — live ones,
+  // recent finishes, and upcoming unlocked fixtures — to keep Firestore reads
+  // well inside the free quota even with frequent cron runs.
+  const relevantIds = matches
+    .filter((m) =>
+      m.state === "in" ||
+      (m.completed && now - m.kickoff.getTime() < 24 * 3_600_000) ||
+      (m.state === "pre" && lockMs(m) > now && m.kickoff.getTime() - now < 48 * 3_600_000)
+    )
+    .map((m) => m.id);
+  const predictions = [];
+  for (let i = 0; i < relevantIds.length; i += 30) {
+    const snap = await db
+      .collection("predictions")
+      .where("matchId", "in", relevantIds.slice(i, i + 30))
+      .get();
+    predictions.push(...snap.docs.map((d) => d.data()));
+  }
 
   // claim() returns true exactly once per key across all runs
   const claim = async (key) => {
@@ -119,11 +137,12 @@ async function main() {
     } catch { return false; }
   };
 
-  const validPreds = (m) =>
-    predictions
+  const validPredsFrom = (list, m) =>
+    list
       .filter((p) => p.matchId === m.id && players[p.playerId])
       .filter((p) => isOverridden(m) || (p.updatedAt?.toMillis?.() ?? 0) <= lockMs(m))
       .map((p) => ({ ...p, name: players[p.playerId].name, emoji: players[p.playerId].emoji || "" }));
+  const validPreds = (m) => validPredsFrom(predictions, m);
 
   const sendList = []; // { title, body }
   let anyFullTime = false;
@@ -199,13 +218,15 @@ async function main() {
 
   // 👑 leader change (only worth checking when a result just landed)
   if (anyFullTime) {
+    // a result just landed — fetch the full history once for the standings
+    const allPreds = (await db.collection("predictions").get()).docs.map((d) => d.data());
     const totals = {};
     for (const name of Object.values(players).map((p) => p.name)) {
       totals[name] = bonusFor(name);
     }
     for (const m of matches) {
       if (!m.completed || m.home.score == null) continue;
-      for (const p of validPreds(m)) {
+      for (const p of validPredsFrom(allPreds, m)) {
         totals[p.name] = (totals[p.name] || 0) + scorePrediction(p, m.home.score, m.away.score);
       }
     }
