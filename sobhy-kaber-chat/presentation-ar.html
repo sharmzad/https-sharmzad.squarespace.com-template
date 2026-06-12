@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>زكي — المستشار الذكي لمطعم صبحي كابر | عرض تقديمي</title>
+  <meta name="description" content="عرض تقديمي لصاحب مطعم صبحي كابر عن زكي، المستشار الذكي للضيوف." />
+  <link rel="icon" type="image/svg+xml" href="assets/zaki-icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* ألوان مأخوذة من لوجو صبحي كابر الرسمي */
+      --red: #b4483c;
+      --red2: #c66746;
+      --reddark: #9c3c30;
+      --gold: #e5aa56;
+      --golddark: #a8731f;
+      --cream: #faf3e9;
+      --ink: #2b1d16;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Cairo', 'Segoe UI', Tahoma, system-ui, sans-serif;
+      background: var(--ink);
+      color: var(--ink);
+      overflow: hidden;
+    }
+    .deck { height: 100%; position: relative; }
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6vh 7vw 10vh;
+      background:
+        radial-gradient(900px 420px at 50% -8%, rgba(229,170,86,.22), transparent 65%),
+        linear-gradient(180deg, #fffdf9 0%, var(--cream) 100%);
+    }
+    .slide.active { display: flex; animation: fadeUp .45s ease; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .slide.dark {
+      background:
+        radial-gradient(900px 460px at 50% -10%, rgba(229,170,86,.18), transparent 60%),
+        linear-gradient(160deg, var(--reddark) 0%, var(--red2) 100%);
+      color: #fff;
+    }
+    .kicker {
+      color: var(--golddark);
+      font-weight: 800;
+      letter-spacing: 1px;
+      font-size: clamp(13px, 1.6vw, 16px);
+      margin-bottom: 10px;
+    }
+    .dark .kicker { color: var(--gold); }
+    h1 {
+      font-size: clamp(1.9rem, 5.2vw, 3.4rem);
+      font-weight: 900;
+      color: var(--reddark);
+      line-height: 1.35;
+      margin-bottom: 14px;
+    }
+    .dark h1 { color: #fff; }
+    h1 .gold { color: var(--golddark); }
+    .dark h1 .gold { color: var(--gold); }
+    .lede {
+      font-size: clamp(1rem, 2.2vw, 1.3rem);
+      color: #6f5b4e;
+      max-width: 760px;
+      line-height: 1.9;
+    }
+    .dark .lede { color: rgba(255,255,255,.92); }
+    .logo-big {
+      width: min(380px, 64vw);
+      height: auto;
+      border-radius: 22px;
+      box-shadow: 0 16px 36px rgba(180,72,60,.25);
+      margin-bottom: 18px;
+    }
+    .zaki-face {
+      width: clamp(72px, 10vw, 110px);
+      height: auto;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 10px 26px rgba(43,16,12,.35));
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      width: min(960px, 90vw);
+      margin-top: 30px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 22px 18px;
+      box-shadow: 0 6px 24px rgba(60,25,18,.08);
+      border: 1px solid rgba(180,72,60,.2);
+      border-top: 3px solid var(--red);
+      text-align: center;
+    }
+    .dark .card {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.22);
+      border-top: 3px solid var(--gold);
+      color: #fff;
+      backdrop-filter: blur(4px);
+    }
+    .card .emoji { font-size: clamp(28px, 3.4vw, 38px); }
+    .card h3 {
+      font-size: clamp(15px, 1.8vw, 18px);
+      font-weight: 800;
+      color: var(--reddark);
+      margin: 10px 0 6px;
+    }
+    .dark .card h3 { color: var(--gold); }
+    .card p { font-size: clamp(13px, 1.5vw, 15px); color: #6f5b4e; line-height: 1.8; }
+    .dark .card p { color: rgba(255,255,255,.88); }
+    .steps {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      width: min(1000px, 92vw);
+      margin-top: 30px;
+      counter-reset: step;
+    }
+    .step {
+      flex: 1 1 200px;
+      max-width: 240px;
+      background: #fff;
+      border-radius: 18px;
+      padding: 24px 16px 20px;
+      box-shadow: 0 6px 24px rgba(60,25,18,.08);
+      border: 1px solid rgba(180,72,60,.2);
+      position: relative;
+    }
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--red), var(--red2));
+      color: #fff;
+      font-weight: 900;
+      font-size: 17px;
+      margin-bottom: 10px;
+      box-shadow: 0 6px 16px rgba(180,72,60,.35);
+    }
+    .step h3 { font-size: clamp(14px, 1.7vw, 16.5px); font-weight: 800; color: var(--reddark); margin-bottom: 6px; }
+    .step p { font-size: clamp(12.5px, 1.4vw, 14px); color: #6f5b4e; line-height: 1.8; }
+    .chat-demo {
+      width: min(560px, 90vw);
+      margin-top: 26px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 14px 40px rgba(60,25,18,.15);
+      border: 1px solid rgba(180,72,60,.2);
+      overflow: hidden;
+      text-align: right;
+    }
+    .chat-demo .bar {
+      background: linear-gradient(135deg, var(--reddark), var(--red2));
+      color: #fff;
+      font-weight: 800;
+      padding: 12px 18px;
+      font-size: 15px;
+      border-bottom: 3px solid var(--gold);
+    }
+    .chat-demo .body { padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 10px; }
+    .bubble {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: clamp(13px, 1.6vw, 14.5px);
+      line-height: 1.8;
+    }
+    .bubble.guest { align-self: flex-start; background: #f0e6d8; color: var(--ink); border-bottom-right-radius: 4px; }
+    .bubble.zaki { align-self: flex-end; background: linear-gradient(135deg, var(--red), var(--red2)); color: #fff; border-bottom-left-radius: 4px; }
+    .pill {
+      display: inline-block;
+      background: rgba(229,170,86,.18);
+      border: 1px solid rgba(168,115,31,.35);
+      color: var(--golddark);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: clamp(13px, 1.6vw, 15px);
+      margin: 4px;
+    }
+    .dark .pill { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.3); color: var(--gold); }
+    .big-number {
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      font-weight: 900;
+      color: var(--golddark);
+      line-height: 1.2;
+    }
+    .contact {
+      margin-top: 26px;
+      font-size: clamp(15px, 2vw, 18px);
+      line-height: 2.2;
+    }
+    .contact b { color: var(--gold); }
+    .nav {
+      position: fixed;
+      bottom: 0; right: 0; left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 22px;
+      z-index: 10;
+    }
+    .nav button {
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 14.5px;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 22px;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--red), var(--red2));
+      color: #fff;
+      box-shadow: 0 8px 22px rgba(180,72,60,.35);
+      transition: transform .15s ease;
+    }
+    .nav button:hover { transform: translateY(-2px); }
+    .nav button:disabled { opacity: .35; cursor: default; transform: none; }
+    .dots { display: flex; gap: 7px; }
+    .dots span {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: rgba(180,72,60,.28);
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
+    .dots span.on { background: var(--red); transform: scale(1.3); }
+    .counter {
+      position: fixed;
+      top: 16px;
+      left: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(120,90,70,.65);
+      z-index: 10;
+    }
+    .hint { font-size: 12.5px; color: #ab9482; margin-top: 22px; }
+    @media (max-width: 640px) {
+      .slide { padding-bottom: 14vh; }
+      .nav button { padding: 9px 16px; font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 — الغلاف -->
+  <section class="slide active">
+    <img class="logo-big" src="assets/sobhy-kaber-logo.png" alt="صبحي كابر — كبابجي صبحي كابر — منذ 1996" />
+    <p class="kicker">عرض تقديمي لإدارة المطعم</p>
+    <h1><span class="gold">«زكي»</span> — المستشار الذكي لضيوف صبحي كابر</h1>
+    <p class="lede">مساعد ذكاء اصطناعي يعيش على موقعكم: يرحّب بالضيف، يرشّح له من المنيو الحقيقي، ويحوّله لحجز مؤكد على واتساب — في أقل من دقيقة.</p>
+    <p class="hint">استخدم الأسهم ← → أو الأزرار بالأسفل للتنقل</p>
+  </section>
+
+  <!-- 2 — ما هو زكي -->
+  <section class="slide">
+    <img class="zaki-face" src="assets/zaki-icon.svg" alt="أيقونة زكي" />
+    <p class="kicker">من هو زكي؟</p>
+    <h1>نادل خبير… متاح على موقعكم <span class="gold">٢٤ ساعة</span></h1>
+    <p class="lede">زكي زر أحمر صغير في ركن الصفحة. أي ضيف يضغط عليه يجد من يرد عليه فورًا — بالعربي أو بالإنجليزي — يعرف المنيو كاملًا بالأسعار، ويعرف العنوان ورقم الحجز، ولا يتعب ولا ينشغل أبدًا.</p>
+    <div>
+      <span class="pill">رد فوري بدون انتظار</span>
+      <span class="pill">عربي + إنجليزي تلقائيًا</span>
+      <span class="pill">يعمل من الموبايل والكمبيوتر</span>
+    </div>
+  </section>
+
+  <!-- 3 — ماذا يفعل -->
+  <section class="slide">
+    <p class="kicker">قدرات زكي</p>
+    <h1>ماذا يقدّم زكي للضيف؟</h1>
+    <div class="cards">
+      <div class="card">
+        <span class="emoji">🍢</span>
+        <h3>ترشيحات من المنيو الحقيقي</h3>
+        <p>الكفتة، الريش الضاني، المشكّل، الحمام المحشي — بالأسعار الفعلية لكل حجم (ربع، ثلث، نص، كيلو).</p>
+      </div>
+      <div class="card">
+        <span class="emoji">🗣️</span>
+        <h3>يفهم طلب الضيف</h3>
+        <p>«عايز حاجة خفيفة»، «عزومة لستة أفراد»، «إيه أشهر طبق عندكم؟» — ويجاوب بترشيح مناسب.</p>
+      </div>
+      <div class="card">
+        <span class="emoji">📲</span>
+        <h3>حجز طاولة فورًا</h3>
+        <p>يجمع الاسم والعدد والميعاد، ويرسل الحجز جاهزًا على واتساب فريقكم: 7542 110 110 20+.</p>
+      </div>
+      <div class="card">
+        <span class="emoji">🤝</span>
+        <h3>اقتراح ذكي غير ملحوح</h3>
+        <p>يقترح طبقًا مرافقًا مناسبًا (مثل ملوخية مع الكفتة) — بيع إضافي لطيف يرفع متوسط الفاتورة.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 — مثال محادثة -->
+  <section class="slide">
+    <p class="kicker">هكذا يبدو الحوار</p>
+    <h1>مثال حقيقي من زكي</h1>
+    <div class="chat-demo">
+      <div class="bar">💬 زكي — مستشارك في صبحي كابر</div>
+      <div class="body">
+        <div class="bubble guest">إحنا أربعة وعايزين أحسن حاجة في المشويات 🍖</div>
+        <div class="bubble zaki">أهلًا بيكم! 🌟 لأربعة أفراد أرشّح لكم المشكّل (كباب وكفتة وشيش طاووق) — يبدأ من 370 جنيه، ومعاه الريش الضاني تخصصنا من على الفحم من 450 جنيه. أحجزلكم طاولة؟</div>
+        <div class="bubble guest">آه احجز، النهارده الساعة 8</div>
+        <div class="bubble zaki">تمام! 🙏 اضغط الزر وهيوصل حجزكم لفريقنا على واتساب فورًا — هيأكدوا في دقائق.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 — كيف يعمل الحجز -->
+  <section class="slide">
+    <p class="kicker">مسار الحجز</p>
+    <h1>من سؤال… إلى حجز مؤكد</h1>
+    <div class="steps">
+      <div class="step">
+        <h3>الضيف يسأل</h3>
+        <p>يفتح المحادثة من زر زكي على الموقع ويكتب ما يشتهيه بأي لغة.</p>
+      </div>
+      <div class="step">
+        <h3>زكي يرشّح</h3>
+        <p>يقترح الأطباق المناسبة بالأسعار الحقيقية ويجاوب عن المواعيد والعنوان.</p>
+      </div>
+      <div class="step">
+        <h3>تفاصيل الحجز</h3>
+        <p>يجمع الاسم وعدد الأفراد واليوم والساعة في أسئلة قصيرة سريعة.</p>
+      </div>
+      <div class="step">
+        <h3>واتساب فريقكم</h3>
+        <p>رسالة حجز جاهزة ومنسّقة تصل واتساب المطعم — فريقكم يؤكد فقط.</p>
+      </div>
+    </div>
+    <p class="lede" style="margin-top:26px">لا يتغير شيء في طريقة عملكم — الحجوزات تصل على نفس رقم الواتساب الحالي.</p>
+  </section>
+
+  <!-- 6 — الفائدة للمطعم -->
+  <section class="slide dark">
+    <p class="kicker">لماذا هذا مكسب للمطعم؟</p>
+    <h1>زكي يشتغل… وأنتم تكسبون</h1>
+    <div class="cards">
+      <div class="card">
+        <span class="emoji">🌍</span>
+        <h3>سياح شرم الشيخ</h3>
+        <p>أغلب زوار الموقع أجانب — زكي يخدمهم بالإنجليزية بطلاقة ويحوّلهم لحجوزات.</p>
+      </div>
+      <div class="card">
+        <span class="emoji">🌙</span>
+        <h3>لا ضيف يضيع</h3>
+        <p>الاستفسارات في منتصف الليل أو وقت الزحمة تُجاب فورًا بدل أن تذهب لمطعم آخر.</p>
+      </div>
+      <div class="card">
+        <span class="emoji">💰</span>
+        <h3>بدون تكاليف شهرية</h3>
+        <p>يعمل بالكامل داخل الموقع — لا اشتراكات، لا سيرفرات، لا رسوم لكل رسالة.</p>
+      </div>
+      <div class="card">
+        <span class="emoji">🎨</span>
+        <h3>بهوية صبحي كابر</h3>
+        <p>الألوان مأخوذة من اللوجو الرسمي نفسه — الأحمر والذهبي — فيبدو جزءًا أصيلًا من علامتكم.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 — سهولة التركيب -->
+  <section class="slide">
+    <p class="kicker">التركيب</p>
+    <h1>سطر واحد… ويعمل</h1>
+    <p class="lede">زكي ملف واحد يُضاف لموقع Squarespace الحالي (من خاصية Code Injection) بدون تعديل التصميم ولا المساس بأي صفحة. التركيب يستغرق دقائق، وإيقافه — لو أردتم — حذف سطر واحد.</p>
+    <div class="cards" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+      <div class="card"><span class="emoji">⚡</span><h3>تركيب في دقائق</h3><p>سطر واحد في إعدادات الموقع.</p></div>
+      <div class="card"><span class="emoji">🛡️</span><h3>آمن تمامًا</h3><p>لا يجمع بيانات ولا يغيّر شيئًا في الموقع.</p></div>
+      <div class="card"><span class="emoji">📝</span><h3>تحديث المنيو سهل</h3><p>تغيّر الأسعار؟ نعدّل القائمة في الملف نفسه.</p></div>
+    </div>
+  </section>
+
+  <!-- 8 — الخطوات القادمة -->
+  <section class="slide">
+    <p class="kicker">الخطوات القادمة</p>
+    <h1>ماذا نحتاج منكم؟</h1>
+    <div class="steps">
+      <div class="step">
+        <h3>استكمال المنيو</h3>
+        <p>صورة من المنيو الكامل (مقبلات، أرز وفتّة، حلويات، مشروبات) لإضافتها لزكي.</p>
+      </div>
+      <div class="step">
+        <h3>مواعيد العمل</h3>
+        <p>ساعات الفتح والإغلاق الرسمية ليجاوب زكي عنها بدقة.</p>
+      </div>
+      <div class="step">
+        <h3>الموافقة على التشغيل</h3>
+        <p>نضيف زكي للموقع الرسمي ويبدأ استقبال الضيوف فورًا.</p>
+      </div>
+    </div>
+    <p class="lede" style="margin-top:26px">وبعدها يمكن تطوير زكي أكثر: ربطه بنموذج ذكاء اصطناعي أقوى، أو إضافته لصفحات فيسبوك وإنستجرام.</p>
+  </section>
+
+  <!-- 9 — الخاتمة -->
+  <section class="slide dark">
+    <img class="zaki-face" src="assets/zaki-icon.svg" alt="أيقونة زكي" />
+    <h1>زكي جاهز لخدمة ضيوفكم</h1>
+    <p class="lede">منذ 1996 وصبحي كابر علامة على الأصالة في السوق القديم — وزكي امتداد رقمي لنفس كرم الضيافة.</p>
+    <div class="contact">
+      📍 السوق القديم، أمام مسجد الصحابة، شرم الشيخ<br />
+      📞 للحجز: <b dir="ltr">+20 110 110 7542</b><br />
+      ✨ جرّبوا زكي مباشرة على صفحة العرض التجريبي
+    </div>
+  </section>
+
+</div>
+
+<div class="counter" id="counter"></div>
+<nav class="nav">
+  <button id="prev">→ السابق</button>
+  <div class="dots" id="dots"></div>
+  <button id="next">التالي ←</button>
+</nav>
+
+<script>
+  (function () {
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    var dotsBox = document.getElementById('dots');
+    var counter = document.getElementById('counter');
+    var prevBtn = document.getElementById('prev');
+    var nextBtn = document.getElementById('next');
+    var i = 0;
+
+    slides.forEach(function (_, n) {
+      var d = document.createElement('span');
+      d.addEventListener('click', function () { go(n); });
+      dotsBox.appendChild(d);
+    });
+    var dots = Array.prototype.slice.call(dotsBox.children);
+
+    function go(n) {
+      i = Math.max(0, Math.min(slides.length - 1, n));
+      slides.forEach(function (s, k) { s.classList.toggle('active', k === i); });
+      dots.forEach(function (d, k) { d.classList.toggle('on', k === i); });
+      counter.textContent = (i + 1) + ' / ' + slides.length;
+      prevBtn.disabled = i === 0;
+      nextBtn.disabled = i === slides.length - 1;
+    }
+
+    prevBtn.addEventListener('click', function () { go(i - 1); });
+    nextBtn.addEventListener('click', function () { go(i + 1); });
+    document.addEventListener('keydown', function (e) {
+      /* في الاتجاه RTL: السهم الأيسر يتقدم والأيمن يرجع */
+      if (e.key === 'ArrowLeft' || e.key === ' ' || e.key === 'PageDown') go(i + 1);
+      if (e.key === 'ArrowRight' || e.key === 'PageUp') go(i - 1);
+      if (e.key === 'Home') go(0);
+      if (e.key === 'End') go(slides.length - 1);
+    });
+
+    var touchX = null;
+    document.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+    document.addEventListener('touchend', function (e) {
+      if (touchX === null) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 50) go(dx > 0 ? i + 1 : i - 1); /* سحب لليمين = التالي في RTL */
+      touchX = null;
+    }, { passive: true });
+
+    go(0);
+  })();
+</script>
+</body>
+</html>
