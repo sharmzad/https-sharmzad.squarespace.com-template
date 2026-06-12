@@ -21,6 +21,10 @@ html, body {
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
+  /* no horizontal wobble on iOS */
+  overflow-x: hidden;
+  max-width: 100vw;
+  overscroll-behavior-x: none;
 }
 
 body { padding-bottom: 76px; }
