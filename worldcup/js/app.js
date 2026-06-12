@@ -650,7 +650,7 @@ function renderRules() {
       <ul>
         <li><b>🍎 iPhone:</b> open this page in <b>Safari</b> → tap <b>Share</b> (square with arrow ⬆️) → <b>Add to Home Screen</b> → Add. Then <b>close Safari and open the app from the new icon</b> — only then tap the 🔔 bell at the top and press <b>Allow</b>. (Needs iOS 16.4 or newer.)</li>
         <li><b>🤖 Android:</b> open this page in <b>Chrome</b> → tap the 🔔 bell → <b>Allow</b>. Done! Optional: menu ⋮ → <b>Add to Home screen</b> for a real app icon.</li>
-        <li>You'll get: ⏰ a reminder before betting closes + 🏁 full-time results with everyone's points.</li>
+        <li>You'll get: ⏰ bet reminders · 🥅 kickoff with everyone's picks · ⚽ goal alerts (🎯 if the score hits your pick!) · ✍️ "someone placed a bet" · 🏁 full-time results with points · 👑 new-leader alerts.</li>
         <li>No notification? Make sure you opened the app <b>from the Home Screen icon</b> (iPhone), and that notifications are allowed in your phone settings.</li>
       </ul>
     </div>

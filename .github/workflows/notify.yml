@@ -2,7 +2,7 @@ name: Match notifications
 
 on:
   schedule:
-    - cron: "*/15 * * * *" # every 15 min during the tournament
+    - cron: "*/5 * * * *" # every 5 min during the tournament (goal alerts)
   workflow_dispatch: {}
 
 permissions: {}

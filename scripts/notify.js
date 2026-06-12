@@ -1,12 +1,16 @@
 /*
  * 3am El Sheikh Etman — push notification sender
  *
- * Run by .github/workflows/notify.yml on a 15-minute cron. Sends two kinds
- * of FCM web-push notifications to every registered device token:
- *   1. "Betting closes soon" — when a match's lock time is within ~75 min
- *   2. Full-time result + points earned by each player
- * Firestore `notifications/{key}` docs deduplicate sends across runs.
+ * Run by .github/workflows/notify.yml on a cron. Sends FCM web-push to every
+ * registered device:
+ *   ⏰ "Betting closes soon"        — lock within ~75 min
+ *   🥅 Kickoff + everyone's picks   — when a match goes live
+ *   ⚽ Goal alerts                  — live score changed since last run
+ *   🏁 Full-time result + points    — with each player's score
+ *   👑 New leaderboard leader       — after results land
+ *   ✍️ Bet placed/updated           — before lock, score kept secret
  *
+ * Firestore `notifications/{key}` docs hold dedupe markers and live state.
  * Requires env FIREBASE_SERVICE_ACCOUNT = full service-account JSON.
  */
 const admin = require("firebase-admin");
@@ -68,7 +72,9 @@ function normalizeEvent(ev) {
   return {
     id: ev.id,
     kickoff: new Date(ev.date),
+    state: status.type?.state || "pre", // pre | in | post
     completed: !!status.type?.completed,
+    detail: status.type?.shortDetail || "",
     home: side("home"),
     away: side("away"),
   };
@@ -85,75 +91,151 @@ async function main() {
     credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)),
   });
   const db = admin.firestore();
+  const markers = db.collection("notifications");
+
+  // No devices yet? Do nothing, so no event gets burned.
+  const tokens = (await db.collection("tokens").get()).docs.map((d) => d.id);
+  if (!tokens.length) { console.log("No registered devices yet."); return; }
 
   const res = await fetch(ESPN_URL);
   if (!res.ok) throw new Error(`ESPN responded ${res.status}`);
   const matches = ((await res.json()).events || []).map(normalizeEvent);
   const now = Date.now();
 
-  const queue = []; // { key, title, body }
+  const players = Object.fromEntries(
+    (await db.collection("players").get()).docs.map((d) => [d.id, d.data()])
+  );
+  const predictions = (await db.collection("predictions").get()).docs.map((d) => d.data());
+
+  // claim() returns true exactly once per key across all runs
+  const claim = async (key) => {
+    try {
+      await markers.doc(key).create({ sentAt: admin.firestore.FieldValue.serverTimestamp() });
+      return true;
+    } catch { return false; }
+  };
+
+  const validPreds = (m) =>
+    predictions
+      .filter((p) => p.matchId === m.id && players[p.playerId])
+      .filter((p) => isOverridden(m) || (p.updatedAt?.toMillis?.() ?? 0) <= lockMs(m))
+      .map((p) => ({ ...p, name: players[p.playerId].name, emoji: players[p.playerId].emoji || "" }));
+
+  const sendList = []; // { title, body }
+  let anyFullTime = false;
 
   for (const m of matches) {
+    const vs = `${m.home.name} 🆚 ${m.away.name}`;
     const lock = lockMs(m);
-    if (!m.completed && lock > now && lock - now <= REMIND_WINDOW_MIN * 60_000) {
-      queue.push({
-        key: `remind_${m.id}`,
-        title: "⏰ Betting closes soon!",
-        body: `${m.home.name} 🆚 ${m.away.name} — get your bet in before ${fmtCairo(new Date(lock))} ⚽`,
-      });
+
+    // ⏰ betting reminder
+    if (!m.completed && m.state === "pre" && lock > now && lock - now <= REMIND_WINDOW_MIN * 60_000) {
+      if (await claim(`remind_${m.id}`)) {
+        sendList.push({
+          title: "⏰ Betting closes soon!",
+          body: `${vs} — get your bet in before ${fmtCairo(new Date(lock))} ⚽`,
+        });
+      }
     }
+
+    // 🥅 kickoff: reveal everyone's picks (only for recent kickoffs, no backfill)
+    if (m.state !== "pre" && now - m.kickoff.getTime() < 3 * 3_600_000) {
+      if (await claim(`ko_${m.id}`)) {
+        const picks = validPreds(m)
+          .map((p) => `${p.emoji} ${p.name}: ${p.home}–${p.away}`)
+          .join(" · ");
+        sendList.push({
+          title: `🥅 Kickoff: ${vs}`,
+          body: picks ? `The bets are in 👀 ${picks}` : "Nobody bet on this one 🙈",
+        });
+      }
+    }
+
+    // ⚽ goal alerts: compare with the score seen on the previous run
+    if (m.state === "in" && m.home.score != null) {
+      const liveRef = markers.doc(`live_${m.id}`);
+      const seen = await liveRef.get();
+      const cur = { h: m.home.score, a: m.away.score };
+      if (!seen.exists) {
+        await liveRef.set(cur); // baseline, don't notify mid-game on first sight
+      } else {
+        const old = seen.data();
+        if (old.h !== cur.h || old.a !== cur.a) {
+          await liveRef.set(cur);
+          const goal = cur.h + cur.a > old.h + old.a;
+          const exact = validPreds(m)
+            .filter((p) => p.home === cur.h && p.away === cur.a)
+            .map((p) => `${p.emoji} ${p.name}`);
+          sendList.push({
+            title: goal ? `⚽ GOOOAL! ${m.home.abbr} ${cur.h}–${cur.a} ${m.away.abbr}`
+                        : `📺 Score update: ${m.home.abbr} ${cur.h}–${cur.a} ${m.away.abbr}`,
+            body:
+              `${vs} (${m.detail})` +
+              (exact.length ? ` — 🎯 exactly ${exact.join(" & ")}'s pick! Hold on...` : ""),
+          });
+        }
+      }
+    }
+
+    // 🏁 full time + points
     if (m.completed && m.home.score != null) {
-      queue.push({ key: `ft_${m.id}`, match: m });
+      if (await claim(`ft_${m.id}`)) {
+        anyFullTime = true;
+        const lines = validPreds(m)
+          .map((p) => ({ ...p, pts: scorePrediction(p, m.home.score, m.away.score) }))
+          .sort((a, b) => b.pts - a.pts)
+          .map((r) => `${r.emoji} ${r.name} +${r.pts}`);
+        sendList.push({
+          title: `🏁 FT: ${m.home.name} ${m.home.score}–${m.away.score} ${m.away.name}`,
+          body: lines.length ? `Points: ${lines.join(" · ")}` : "Nobody predicted this one 🙈",
+        });
+      }
     }
   }
 
-  if (!queue.length) { console.log("Nothing to send this run."); return; }
+  // 👑 leader change (only worth checking when a result just landed)
+  if (anyFullTime) {
+    const totals = {};
+    for (const m of matches) {
+      if (!m.completed || m.home.score == null) continue;
+      for (const p of validPreds(m)) {
+        totals[p.name] = (totals[p.name] || 0) + scorePrediction(p, m.home.score, m.away.score);
+      }
+    }
+    const ranked = Object.entries(totals).sort((a, b) => b[1] - a[1]);
+    if (ranked.length && ranked[0][1] > 0 && (ranked.length === 1 || ranked[0][1] > ranked[1][1])) {
+      const [name, pts] = ranked[0];
+      const leaderRef = markers.doc("state_leader");
+      const prev = await leaderRef.get();
+      if (!prev.exists || prev.data().name !== name) {
+        await leaderRef.set({ name, pts });
+        sendList.push({
+          title: `👑 New leader: ${name}!`,
+          body: `${name} tops the table with ${pts} pts — check the standings 🏆`,
+        });
+      }
+    }
+  }
 
-  // No devices yet? Leave the markers unwritten so events aren't burned.
-  const tokenDocs = (await db.collection("tokens").get()).docs;
-  const tokens = tokenDocs.map((d) => d.id);
-  if (!tokens.length) { console.log("No registered devices yet."); return; }
-
-  // Deduplicate: create() fails if the marker doc already exists.
-  const toSend = [];
-  for (const item of queue) {
-    try {
-      await db.collection("notifications").doc(item.key).create({
-        sentAt: admin.firestore.FieldValue.serverTimestamp(),
+  // ✍️ bet placed/updated on upcoming matches (score stays secret until lock)
+  const matchById = Object.fromEntries(matches.map((m) => [m.id, m]));
+  for (const p of predictions) {
+    const m = matchById[p.matchId];
+    const t = p.updatedAt?.toMillis?.();
+    if (!m || !t || !players[p.playerId]) continue;
+    if (lockMs(m) <= now) continue; // match locked — kickoff alert covers reveals
+    if (await claim(`pred_${p.matchId}_${p.playerId}_${t}`)) {
+      const who = players[p.playerId];
+      sendList.push({
+        title: `✍️ ${who.emoji || ""} ${who.name} placed a bet!`,
+        body: `${m.home.name} 🆚 ${m.away.name} — the pick stays secret until lock 🤫`,
       });
-      toSend.push(item);
-    } catch {
-      /* already sent on a previous run */
     }
   }
-  if (!toSend.length) { console.log("All candidates were already sent."); return; }
 
-  // Full-time messages need predictions + player names for the points line.
-  let players = null, predictions = null;
-  for (const item of toSend) {
-    if (!item.match) continue;
-    if (!players) {
-      players = Object.fromEntries(
-        (await db.collection("players").get()).docs.map((d) => [d.id, d.data()])
-      );
-      predictions = (await db.collection("predictions").get()).docs.map((d) => d.data());
-    }
-    const m = item.match;
-    const lock = lockMs(m);
-    const lines = predictions
-      .filter((p) => p.matchId === m.id && players[p.playerId])
-      .filter((p) => isOverridden(m) || (p.updatedAt?.toMillis?.() ?? 0) <= lock)
-      .map((p) => {
-        const pts = scorePrediction(p, m.home.score, m.away.score);
-        return { name: players[p.playerId].name, emoji: players[p.playerId].emoji || "", pts };
-      })
-      .sort((a, b) => b.pts - a.pts)
-      .map((r) => `${r.emoji} ${r.name} +${r.pts}`);
-    item.title = `🏁 FT: ${m.home.name} ${m.home.score}–${m.away.score} ${m.away.name}`;
-    item.body = lines.length ? `Points: ${lines.join(" · ")}` : "Nobody predicted this one 🙈";
-  }
+  if (!sendList.length) { console.log("Nothing to send this run."); return; }
 
-  for (const item of toSend) {
+  for (const item of sendList) {
     const resp = await admin.messaging().sendEachForMulticast({
       tokens,
       notification: { title: item.title, body: item.body },
