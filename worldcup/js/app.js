@@ -271,8 +271,14 @@ function scorePrediction(pred, hs, as) {
 const isValidPrediction = (pred, m) =>
   isOverridden(m) || pred.updatedAtMs <= lockTime(m).getTime();
 
+// Admin-granted grace points (see BONUS_POINTS in firebase-config.js)
+function bonusFor(name) {
+  const b = window.BONUS_POINTS || {};
+  return b[name] !== undefined ? b[name] : (b["*"] || 0);
+}
+
 function buildStandings() {
-  const rows = players.map((p) => ({ ...p, pts: 0, exact: 0, outcomes: 0, played: 0 }));
+  const rows = players.map((p) => ({ ...p, pts: bonusFor(p.name), exact: 0, outcomes: 0, played: 0 }));
   const byId = Object.fromEntries(rows.map((r) => [r.id, r]));
   for (const m of matches) {
     if (!m.completed || m.home.score == null) continue;

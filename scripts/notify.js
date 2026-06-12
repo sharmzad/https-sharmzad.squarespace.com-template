@@ -27,6 +27,10 @@ const GRACE_DAY = "2026-06-12"; // Egypt local date, lock = KO + 50 min
 const GRACE_AFTER_MIN = 50;
 const OPEN_OVERRIDES = [["KOR", "CZE"]];
 const REMIND_WINDOW_MIN = 75; // notify when lock is at most this far away
+// Keep in sync with BONUS_POINTS in worldcup/js/firebase-config.js
+const BONUS_POINTS = { "*": 2, "Alaa": 0 };
+const bonusFor = (name) =>
+  BONUS_POINTS[name] !== undefined ? BONUS_POINTS[name] : (BONUS_POINTS["*"] || 0);
 
 function dayKeyCairo(d) {
   return d.toLocaleDateString("en-CA", { timeZone: "Africa/Cairo" });
@@ -196,6 +200,9 @@ async function main() {
   // 👑 leader change (only worth checking when a result just landed)
   if (anyFullTime) {
     const totals = {};
+    for (const name of Object.values(players).map((p) => p.name)) {
+      totals[name] = bonusFor(name);
+    }
     for (const m of matches) {
       if (!m.completed || m.home.score == null) continue;
       for (const p of validPreds(m)) {
