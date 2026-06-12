@@ -22,3 +22,8 @@ window.FIREBASE_CONFIG = {
 
 // Maximum number of players allowed to join
 window.MAX_PLAYERS = 10;
+
+// Web push notifications (Firebase Cloud Messaging).
+// Firebase console → Project settings → Cloud Messaging →
+// Web Push certificates → Generate key pair → paste the key here.
+window.VAPID_KEY = null;

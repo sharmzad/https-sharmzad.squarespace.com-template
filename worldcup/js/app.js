@@ -32,6 +32,7 @@ let players = [];          // [{id, name, emoji}]
 let predictions = {};      // { `${matchId}_${playerId}`: {matchId, playerId, home, away, updatedAtMs} }
 let me = JSON.parse(localStorage.getItem("gangcup_me") || "null");
 let db = null, fs = null;  // Firestore handle + module
+let fbApp = null;          // Firebase app (needed for messaging)
 let activeTab = "matches";
 let matchFilter = "today";
 let draft = {};            // unsaved stepper values { matchId: {home, away} }
@@ -72,6 +73,49 @@ function bindChrome() {
     } else openJoinModal();
   });
   renderChip();
+  const bell = $("#bellBtn");
+  bell.classList.toggle("on", localStorage.getItem("gangcup_notif") === "1");
+  bell.addEventListener("click", enableNotifications);
+}
+
+// ---------------------------------------------------------------------------
+// Push notifications (Firebase Cloud Messaging)
+// ---------------------------------------------------------------------------
+async function enableNotifications() {
+  if (!db || !window.VAPID_KEY) {
+    toast("🔔 Notifications aren't configured yet — ask the admin!");
+    return;
+  }
+  if (!("Notification" in window) || !("serviceWorker" in navigator)) {
+    toast("🔔 iPhone: first Share → Add to Home Screen, then open the app from there!");
+    return;
+  }
+  try {
+    const perm = await Notification.requestPermission();
+    if (perm !== "granted") { toast("🔕 Notifications were blocked."); return; }
+    const msgMod = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js");
+    const reg = await navigator.serviceWorker.register("firebase-messaging-sw.js");
+    const messaging = msgMod.getMessaging(fbApp);
+    const token = await msgMod.getToken(messaging, {
+      vapidKey: window.VAPID_KEY,
+      serviceWorkerRegistration: reg,
+    });
+    if (!token) throw new Error("No FCM token");
+    await fs.setDoc(fs.doc(db, "tokens", token), {
+      token,
+      player: me?.name || "anonymous",
+      updatedAt: fs.serverTimestamp(),
+    });
+    localStorage.setItem("gangcup_notif", "1");
+    $("#bellBtn").classList.add("on");
+    msgMod.onMessage(messaging, (p) => {
+      if (p.notification?.title) toast(`${p.notification.title} — ${p.notification.body || ""}`);
+    });
+    toast("🔔 Notifications ON — match reminders & results incoming!");
+  } catch (err) {
+    console.error("Notifications failed", err);
+    toast("⚠️ Couldn't enable notifications on this device.");
+  }
 }
 
 function renderChip() {
@@ -92,7 +136,8 @@ async function initFirebase() {
   try {
     const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
     fs = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
-    db = fs.getFirestore(initializeApp(window.FIREBASE_CONFIG));
+    fbApp = initializeApp(window.FIREBASE_CONFIG);
+    db = fs.getFirestore(fbApp);
 
     fs.onSnapshot(fs.collection(db, "players"), (snap) => {
       players = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
@@ -451,6 +496,15 @@ function renderShare() {
     ${shareCard("🔴 Live & results", "Current scores of live matches plus today's finished results.", "live")}
     ${shareCard("🏅 Leaderboard", "Current standings with medals — perfect after each match day.", "table")}
     <div class="share-card">
+      <h3>🔔 Push notifications</h3>
+      <p>Get "betting closes soon" reminders and full-time results with points, even with the app closed.
+      <b>iPhone:</b> first Share → <b>Add to Home Screen</b>, then open the app from the new icon and tap the button.
+      <b>Android:</b> just tap and allow.</p>
+      <div class="share-actions">
+        <button class="btn primary" data-notif>Enable on this device 🔔</button>
+      </div>
+    </div>
+    <div class="share-card">
       <h3>🔗 Invite link</h3>
       <p>Pin this app link + the group code in your WhatsApp group description so everyone can join.</p>
       <div class="share-actions">
@@ -466,6 +520,7 @@ function renderShare() {
   );
   view.querySelector("[data-share-invite]").addEventListener("click", () => openWhatsApp(inviteMessage()));
   view.querySelector("[data-copy-invite]").addEventListener("click", () => copyText(inviteMessage()));
+  view.querySelector("[data-notif]").addEventListener("click", enableNotifications);
 }
 
 function shareCard(title, desc, kind) {

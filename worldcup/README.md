@@ -56,6 +56,11 @@ Everything runs on **free services** — no servers, no costs.
          // server timestamp required, so the lock check can't be faked
          allow create, update: if request.resource.data.updatedAt == request.time;
        }
+       match /tokens/{id} {
+         // push-notification device tokens: writable, but not readable by clients
+         allow read: if false;
+         allow create, update, delete: if true;
+       }
      }
    }
    ```
@@ -103,6 +108,29 @@ The **WhatsApp tab** has one-tap buttons that open WhatsApp with a ready-made me
 - **🏅 Leaderboard** — standings with 🥇🥈🥉 medals
 
 Tap → pick the gang group → send. Two seconds.
+
+## 🔔 Push notifications (setup, ~5 minutes)
+
+The app can send real push notifications — "⏰ betting closes soon" and "🏁 FT result +
+points" — even when closed. A GitHub Actions cron (`.github/workflows/notify.yml`, every
+15 min) checks fixtures and sends via Firebase Cloud Messaging. Free. To activate:
+
+1. **VAPID key:** Firebase console → ⚙️ Project settings → **Cloud Messaging** →
+   *Web Push certificates* → **Generate key pair** → copy the key into
+   `worldcup/js/firebase-config.js` as `window.VAPID_KEY = "B...";`
+2. **Service account:** same Project settings page → **Service accounts** →
+   **Generate new private key** (downloads a JSON file).
+3. **GitHub secret:** repo → Settings → Secrets and variables → **Actions** →
+   **New repository secret** → name `FIREBASE_SERVICE_ACCOUNT`, value = the *entire
+   contents* of that JSON file.
+4. **Firestore rules:** re-paste the rules block above (it now includes `tokens`)
+   and Publish.
+5. Each player taps the **🔔 bell** in the app (or the button in the 📲 tab).
+   **iPhone:** must first *Share → Add to Home Screen* and open the app from that icon
+   (Apple requirement). **Android:** works directly in Chrome.
+
+You can test by running the workflow manually: repo → Actions → *Match notifications* →
+**Run workflow**.
 
 ### Optional: fully automatic messages
 
