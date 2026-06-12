@@ -34,7 +34,11 @@ body { padding-bottom: 76px; }
   border-bottom: 1px solid var(--line);
 }
 .brand { display: flex; align-items: center; gap: 10px; }
-.brand-icon { font-size: 30px; }
+.brand-icon { font-size: 30px; display: flex; align-items: center; }
+.brand-icon img {
+  width: 42px; height: 42px; border-radius: 50%; object-fit: cover;
+  border: 2px solid var(--gold);
+}
 .brand h1 { font-size: 19px; letter-spacing: .3px; }
 .tagline { font-size: 11px; color: var(--muted); }
 

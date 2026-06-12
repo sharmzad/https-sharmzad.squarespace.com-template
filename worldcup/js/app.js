@@ -14,9 +14,9 @@
 const POINTS = { EXACT: 5, WINNER: 2 };
 const LOCK_MINUTES = 60;
 // Launch-day grace: the gang joined mid-matchday, so matches on this local
-// date stay open until GRACE_AFTER_MIN minutes after kickoff.
+// date stay open until ~end of the first half (45 min + stoppage).
 const GRACE_DAY = "2026-06-12";
-const GRACE_AFTER_MIN = 5;
+const GRACE_AFTER_MIN = 50;
 const TOURNAMENT_RANGE = "20260611-20260719"; // WC2026: Jun 11 – Jul 19
 const ESPN_URL =
   `https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard` +
@@ -455,8 +455,8 @@ function buildMessage(kind) {
 
   if (kind === "today") {
     const list = matches.filter((m) => sameDay(m.kickoff) && m.state === "pre");
-    if (!list.length) return `🏆 *GANG CUP 2026* 🏆\n\nNo more matches today 😴 — rest day for the gang!\n\n${appUrl}`;
-    let msg = `🏆 *GANG CUP 2026* 🏆\n📅 *Today's matches — place your bets!*\n\n`;
+    if (!list.length) return `🏆 *3AM EL SHEIKH ETMAN CUP* 🏆\n\nNo more matches today 😴 — rest day for the gang!\n\n${appUrl}`;
+    let msg = `🏆 *3AM EL SHEIKH ETMAN CUP* 🏆\n📅 *Today's matches — place your bets!*\n\n`;
     for (const m of list) {
       msg += `⚽ *${m.home.name}* 🆚 *${m.away.name}*\n   🕐 ${fmtTime(m.kickoff)} · 🔒 betting closes ${fmtTime(lockTime(m))}\n\n`;
     }
@@ -467,7 +467,7 @@ function buildMessage(kind) {
   if (kind === "live") {
     const live = matches.filter((m) => m.state === "in");
     const done = matches.filter((m) => sameDay(m.kickoff) && m.completed);
-    let msg = `🏆 *GANG CUP 2026* 🏆\n\n`;
+    let msg = `🏆 *3AM EL SHEIKH ETMAN CUP* 🏆\n\n`;
     if (live.length) {
       msg += `🔴 *LIVE NOW*\n`;
       for (const m of live) msg += `⚽ ${m.home.name} *${m.home.score}–${m.away.score}* ${m.away.name} (${m.detail})\n`;
@@ -485,7 +485,7 @@ function buildMessage(kind) {
 
   // leaderboard
   const rows = buildStandings();
-  let msg = `🏆 *GANG CUP 2026 — STANDINGS* 🏆\n\n`;
+  let msg = `🏆 *3AM EL SHEIKH ETMAN — STANDINGS* 🏆\n\n`;
   if (!rows.length) msg += `Nobody has joined yet — be the first! 🎉\n\n`;
   rows.forEach((r, i) => {
     const medal = ["🥇", "🥈", "🥉"][i] || ` ${i + 1}.`;
@@ -497,11 +497,11 @@ function buildMessage(kind) {
 
 function inviteMessage() {
   return (
-    `🏆 *GANG CUP 2026 — you're invited!* 🏆\n\n` +
+    `🏆 *3AM EL SHEIKH ETMAN CUP — you're invited!* 🏆\n\n` +
     `World Cup prediction battle for the gang 😁⚽\n` +
     `Each match: pick the *winner* + the *exact score*\n` +
     `✅ Winner = ${POINTS.WINNER} pts · 🎯 Exact score = +${POINTS.EXACT} pts bonus\n` +
-    `🔒 Bets close 1 hour before kickoff (today only: 5 min after KO ⚡)\n\n` +
+    `🔒 Bets close 1 hour before kickoff (today only: open till end of 1st half ⚡)\n\n` +
     `Join here 👇 (group code: *${window.GROUP_CODE}*)\n${location.href.split("#")[0]}`
   );
 }
@@ -529,7 +529,7 @@ function renderRules() {
       <ul>
         <li>Every match = <b>2 predictions</b>: pick <b>who wins</b> (or draw) 🏆 <i>and</i> the <b>exact score</b>.</li>
         <li>🔒 Predictions <b>lock ${LOCK_MINUTES} minutes before kickoff</b> — no late bets!</li>
-        <li>⚡ <b>Launch day (June 12) only:</b> bets stay open until ${GRACE_AFTER_MIN} minutes after kickoff.</li>
+        <li>⚡ <b>Launch day (June 12) only:</b> bets stay open until the <b>end of the 1st half</b> (${GRACE_AFTER_MIN} min after kickoff).</li>
         <li>Everyone's picks stay hidden until lock time, then they're revealed. 👀</li>
         <li>Knockout games: predict the score <b>after extra time</b> (penalty shootouts don't count).</li>
       </ul>
