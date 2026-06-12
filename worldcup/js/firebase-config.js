@@ -24,6 +24,4 @@ window.FIREBASE_CONFIG = {
 window.MAX_PLAYERS = 10;
 
 // Web push notifications (Firebase Cloud Messaging).
-// Firebase console → Project settings → Cloud Messaging →
-// Web Push certificates → Generate key pair → paste the key here.
-window.VAPID_KEY = null;
+window.VAPID_KEY = "BJeCjL3Ge6h9UzWfSzM0hFIgO5EBvwdyY2ADVkBjwqXfdyQfBA4304ljAFb1hDx-pYcEFjXtoR6B3HIELHgG11o";
