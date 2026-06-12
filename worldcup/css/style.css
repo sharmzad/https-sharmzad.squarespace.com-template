@@ -30,6 +30,8 @@ body { padding-bottom: 76px; }
   position: sticky; top: 0; z-index: 20;
   display: flex; align-items: center; justify-content: space-between;
   padding: 12px 16px;
+  /* keep the header below the iPhone notch / status bar when installed */
+  padding-top: calc(12px + env(safe-area-inset-top, 0px));
   background: linear-gradient(180deg, #0e2415, var(--bg));
   border-bottom: 1px solid var(--line);
 }
