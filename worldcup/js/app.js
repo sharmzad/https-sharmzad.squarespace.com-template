@@ -153,6 +153,21 @@ function normalizeEvent(ev) {
   };
 }
 
+// Admin overrides: matches listed here stay open for betting until full time,
+// ignoring the normal lock. Match by team abbreviation or name (both must hit).
+const OPEN_OVERRIDES = [
+  ["KOR", "CZE"], // South Korea vs Czechia — opened on the gang's request
+];
+
+const isOverridden = (m) =>
+  OPEN_OVERRIDES.some((pair) =>
+    pair.every((t) =>
+      [m.home.abbr, m.home.name, m.away.abbr, m.away.name].some(
+        (n) => n && n.toLowerCase().includes(t.toLowerCase())
+      )
+    )
+  );
+
 const dayKey = (d) => d.toLocaleDateString("en-CA"); // YYYY-MM-DD, local time
 
 function lockTime(m) {
@@ -161,7 +176,8 @@ function lockTime(m) {
   }
   return new Date(m.kickoff.getTime() - LOCK_MINUTES * 60_000);
 }
-const isOpen = (m) => !m.completed && Date.now() < lockTime(m).getTime();
+const isOpen = (m) =>
+  !m.completed && (Date.now() < lockTime(m).getTime() || isOverridden(m));
 
 // ---------------------------------------------------------------------------
 // Scoring — two predictions per match: winner (1X2) + exact score
@@ -178,8 +194,10 @@ function scorePrediction(pred, hs, as) {
   return pts;
 }
 
-// A prediction only counts if it was saved before the lock (server timestamp).
-const isValidPrediction = (pred, m) => pred.updatedAtMs <= lockTime(m).getTime();
+// A prediction only counts if it was saved before the lock (server timestamp),
+// unless the match was re-opened by an admin override.
+const isValidPrediction = (pred, m) =>
+  isOverridden(m) || pred.updatedAtMs <= lockTime(m).getTime();
 
 function buildStandings() {
   const rows = players.map((p) => ({ ...p, pts: 0, exact: 0, outcomes: 0, played: 0 }));
@@ -298,7 +316,9 @@ function matchCard(m) {
         ${stepper(m.id, "away", d.away)}
         <button class="save-btn" data-save="${m.id}">${mine ? "Update" : "Save"} 🎯</button>
       </div>
-      <div class="lock-note">${mine ? `✅ Your bet: <b>${pickLabel(mine, m)}</b> · ` : ""}🔒 Locks at ${fmtTime(lockTime(m))}</div>`;
+      <div class="lock-note">${mine ? `✅ Your bet: <b>${pickLabel(mine, m)}</b> · ` : ""}${
+        isOverridden(m) ? "🔓 Re-opened by admin — open until full time!" : `🔒 Locks at ${fmtTime(lockTime(m))}`
+      }</div>`;
   } else if (open && db && !me) {
     body = `<div class="lock-note">👤 <a href="#" onclick="document.getElementById('playerChip').click();return false" style="color:var(--gold)">Join the game</a> to predict · 🔒 locks at ${fmtTime(lockTime(m))}</div>`;
   } else if (!open && db) {
