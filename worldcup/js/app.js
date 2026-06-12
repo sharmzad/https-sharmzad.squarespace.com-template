@@ -648,7 +648,7 @@ function renderRules() {
     <div class="rules-card">
       <h3>🏆 Winning</h3>
       <ul>
-        <li>Most points after the final wins the Gang Cup. 👑</li>
+        <li>Most points after the final wins the 3am Etman Cup. 👑</li>
         <li>Tiebreakers: most exact scores 🎯, then most correct results.</li>
         <li>Prize: decided by the gang... loser buys dinner? 😁</li>
       </ul>
