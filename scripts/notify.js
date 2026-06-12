@@ -109,6 +109,11 @@ async function main() {
 
   if (!queue.length) { console.log("Nothing to send this run."); return; }
 
+  // No devices yet? Leave the markers unwritten so events aren't burned.
+  const tokenDocs = (await db.collection("tokens").get()).docs;
+  const tokens = tokenDocs.map((d) => d.id);
+  if (!tokens.length) { console.log("No registered devices yet."); return; }
+
   // Deduplicate: create() fails if the marker doc already exists.
   const toSend = [];
   for (const item of queue) {
@@ -147,10 +152,6 @@ async function main() {
     item.title = `🏁 FT: ${m.home.name} ${m.home.score}–${m.away.score} ${m.away.name}`;
     item.body = lines.length ? `Points: ${lines.join(" · ")}` : "Nobody predicted this one 🙈";
   }
-
-  const tokenDocs = (await db.collection("tokens").get()).docs;
-  const tokens = tokenDocs.map((d) => d.id);
-  if (!tokens.length) { console.log("No registered devices yet."); return; }
 
   for (const item of toSend) {
     const resp = await admin.messaging().sendEachForMulticast({
