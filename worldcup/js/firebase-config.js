@@ -40,14 +40,11 @@ window.VAPID_KEY = "BJeCjL3Ge6h9UzWfSzM0hFIgO5EBvwdyY2ADVkBjwqXfdyQfBA4304ljAFb1
 //   cta     : button text (e.g. "Book now")
 //   prize   : line shown in Rules → Winning (the sponsor's prize)
 // -----------------------------------------------------------------------------
-window.SPONSOR = null;
-/* Example:
 window.SPONSOR = {
-  name: "Easy Move Car Rental",
-  tagline: "Sharm El Sheikh · best rates, zero hidden fees",
-  logo: "sponsor.png",
-  link: "https://wa.me/201006690316",
+  name: "Euro Car",
+  tagline: "Premium Car Rental",   // ← confirm/replace with their real tagline
+  logo: null,                       // ← set to "sponsor.png" once the logo is uploaded
+  link: null,                       // ← website or wa.me/<number>
   cta: "Book now",
-  prize: "🏆 The champion wins a FREE weekend rental from Easy Move!"
+  prize: null,                      // ← e.g. "🏆 Champion wins a free 3-day rental from Euro Car!"
 };
-*/

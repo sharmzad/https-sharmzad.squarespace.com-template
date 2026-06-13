@@ -74,25 +74,40 @@ function setupSponsor() {
   const dock = document.querySelector(".bottom-dock");
   if (dock) document.body.style.paddingBottom = `${dock.offsetHeight + 12}px`;
 
-  // splash card, once per calendar day
-  const todayKey = `sponsor_splash_${new Date().toLocaleDateString("en-CA")}`;
-  if (!localStorage.getItem(todayKey)) {
-    if (s.logo) {
-      const lg = $("#sponsorModalLogo");
-      lg.src = s.logo;
-      lg.onerror = () => lg.classList.add("hidden");
-      lg.classList.remove("hidden");
-    }
-    $("#sponsorModalName").textContent = s.name;
-    $("#sponsorModalTagline").textContent = s.tagline || "";
-    const cta = $("#sponsorModalCta");
-    cta.textContent = s.cta || "Visit";
-    if (s.link) cta.href = s.link; else cta.classList.add("hidden");
-    $("#sponsorModal").classList.remove("hidden");
-    const close = () => { $("#sponsorModal").classList.add("hidden"); localStorage.setItem(todayKey, "1"); };
-    $("#sponsorModalClose").onclick = close;
-    cta.addEventListener("click", () => localStorage.setItem(todayKey, "1"));
+  playSponsorIntro(s);
+}
+
+// Animated motion-graphics intro, once per app launch (per browser session)
+function playSponsorIntro(s) {
+  if (sessionStorage.getItem("sponsor_intro_seen")) return;
+  const intro = $("#sponsorIntro");
+  if (!intro) return;
+  sessionStorage.setItem("sponsor_intro_seen", "1");
+
+  // logo if provided, otherwise an animated two-tone wordmark from the name
+  if (s.logo) {
+    const lg = $("#introLogo");
+    lg.src = s.logo;
+    lg.onerror = () => { lg.classList.add("hidden"); $("#introWordmark").classList.remove("hidden"); };
+    lg.classList.remove("hidden");
+    $("#introWordmark").classList.add("hidden");
+  } else {
+    const parts = s.name.trim().split(/\s+/);
+    const head = esc(parts.shift());
+    const tail = esc(parts.join(" "));
+    $("#introWordmark").innerHTML = `<span class="a">${head}</span>${tail ? ` <span class="b">${tail}</span>` : ""}`;
   }
+  $("#introTagline").textContent = s.tagline || "";
+
+  intro.classList.remove("hidden");
+  let dismissed = false;
+  const dismiss = () => {
+    if (dismissed) return; dismissed = true;
+    intro.classList.add("done");
+    setTimeout(() => intro.classList.add("hidden"), 600);
+  };
+  const timer = setTimeout(dismiss, 3600);
+  $("#introSkip").onclick = () => { clearTimeout(timer); dismiss(); };
 }
 
 // one-line sponsor footer for WhatsApp messages ("" when no sponsor)

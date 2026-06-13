@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="group.jpg">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="stylesheet" href="css/style.css?v=14">
+  <link rel="stylesheet" href="css/style.css?v=15">
 </head>
 <body>
 
@@ -43,18 +43,21 @@
     </nav>
   </div>
 
-  <!-- Sponsor splash (shown once per day) -->
-  <div id="sponsorModal" class="modal hidden">
-    <div class="modal-card sponsor-card">
-      <p class="sponsor-kicker">🤝 Proudly sponsored by</p>
-      <img id="sponsorModalLogo" class="sponsor-modal-logo hidden" alt="">
-      <h2 id="sponsorModalName"></h2>
-      <p id="sponsorModalTagline" class="sponsor-modal-tagline"></p>
-      <div class="modal-actions" style="justify-content:center">
-        <button id="sponsorModalClose" class="btn ghost">Maybe later</button>
-        <a id="sponsorModalCta" class="btn primary" target="_blank" rel="noopener"></a>
+  <!-- Sponsor motion intro (plays on app open) -->
+  <div id="sponsorIntro" class="intro hidden">
+    <div class="intro-glow"></div>
+    <div class="intro-inner">
+      <div class="intro-brand">El 3eshّa World Cup 26 ⚽</div>
+      <div class="intro-present">proudly sponsored by</div>
+      <div class="intro-stage">
+        <img id="introLogo" class="intro-logo hidden" alt="">
+        <div id="introWordmark" class="intro-wordmark"></div>
       </div>
+      <div id="introTagline" class="intro-tagline"></div>
+      <div class="intro-road"><div class="intro-car">🚗</div></div>
+      <div class="intro-bar"><i></i></div>
     </div>
+    <button id="introSkip" class="intro-skip">Skip ›</button>
   </div>
 
   <!-- Join / login modal -->
@@ -83,7 +86,7 @@
 
   <div id="toast" class="toast hidden"></div>
 
-  <script src="js/firebase-config.js?v=14"></script>
-  <script type="module" src="js/app.js?v=14"></script>
+  <script src="js/firebase-config.js?v=15"></script>
+  <script type="module" src="js/app.js?v=15"></script>
 </body>
 </html>
