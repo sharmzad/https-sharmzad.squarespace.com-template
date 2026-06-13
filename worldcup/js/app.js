@@ -156,7 +156,7 @@ async function enableNotifications() {
     }
     const perm = await Notification.requestPermission();
     if (perm !== "granted") {
-      toast("🔕 Blocked. Enable it in Settings → Notifications → 3am Etman, then retry.");
+      toast("🔕 Blocked. Enable it in Settings → Notifications → El 3eshّa WC26, then retry.");
       return;
     }
     const reg = await navigator.serviceWorker.register("firebase-messaging-sw.js");
@@ -615,8 +615,8 @@ function buildMessage(kind) {
 
   if (kind === "today") {
     const list = matches.filter((m) => sameDay(m.kickoff) && m.state === "pre");
-    if (!list.length) return `🏆 *3AM EL SHEIKH ETMAN CUP* 🏆\n\nNo more matches today 😴 — rest day for the gang!\n\n${appUrl}`;
-    let msg = `🏆 *3AM EL SHEIKH ETMAN CUP* 🏆\n📅 *Today's matches — place your bets!*\n\n`;
+    if (!list.length) return `🏆 *EL 3ESHّA WORLD CUP 26* 🏆\n\nNo more matches today 😴 — rest day for the gang!\n\n${appUrl}`;
+    let msg = `🏆 *EL 3ESHّA WORLD CUP 26* 🏆\n📅 *Today's matches — place your bets!*\n\n`;
     for (const m of list) {
       msg += `⚽ *${m.home.name}* 🆚 *${m.away.name}*\n   🕐 ${fmtTime(m.kickoff)} · 🔒 betting closes ${fmtTime(lockTime(m))}\n\n`;
     }
@@ -627,7 +627,7 @@ function buildMessage(kind) {
   if (kind === "live") {
     const live = matches.filter((m) => m.state === "in");
     const done = matches.filter((m) => sameDay(m.kickoff) && m.completed);
-    let msg = `🏆 *3AM EL SHEIKH ETMAN CUP* 🏆\n\n`;
+    let msg = `🏆 *EL 3ESHّA WORLD CUP 26* 🏆\n\n`;
     if (live.length) {
       msg += `🔴 *LIVE NOW*\n`;
       for (const m of live) msg += `⚽ ${m.home.name} *${m.home.score}–${m.away.score}* ${m.away.name} (${m.detail})\n`;
@@ -645,7 +645,7 @@ function buildMessage(kind) {
 
   // leaderboard
   const rows = buildStandings();
-  let msg = `🏆 *3AM EL SHEIKH ETMAN — STANDINGS* 🏆\n\n`;
+  let msg = `🏆 *EL 3ESHّA WC26 — STANDINGS* 🏆\n\n`;
   if (!rows.length) msg += `Nobody has joined yet — be the first! 🎉\n\n`;
   rows.forEach((r, i) => {
     const medal = ["🥇", "🥈", "🥉"][i] || ` ${i + 1}.`;
@@ -657,7 +657,7 @@ function buildMessage(kind) {
 
 function inviteMessage() {
   return (
-    `🏆 *3AM EL SHEIKH ETMAN CUP — you're invited!* 🏆\n\n` +
+    `🏆 *EL 3ESHّA WORLD CUP 26 — you're invited!* 🏆\n\n` +
     `World Cup prediction battle for the gang 😁⚽\n` +
     `Each match: pick the *winner* + the *exact score*\n` +
     `✅ Winner = ${POINTS.WINNER} pts · 🎯 Exact score = +${POINTS.EXACT} pts bonus\n` +
@@ -715,7 +715,7 @@ function renderRules() {
     <div class="rules-card">
       <h3>🏆 Winning</h3>
       <ul>
-        <li>Most points after the final wins the 3am Etman Cup. 👑</li>
+        <li>Most points after the final wins El 3eshّa World Cup 26. 👑</li>
         <li>Tiebreakers: most exact scores 🎯, then most correct results.</li>
         <li>Prize: decided by the gang... loser buys dinner? 😁</li>
       </ul>
