@@ -46,5 +46,5 @@ window.SPONSOR = {
   logo: "sponsor.png",
   link: "https://wa.me/201001186668",
   cta: "Book now",
-  prize: "🏆 The champion wins a prize from Euro Car!",  // ← placeholder, confirm
+  prize: "🏆 Prizes will be announced in rolling updates — stay tuned!",
 };
