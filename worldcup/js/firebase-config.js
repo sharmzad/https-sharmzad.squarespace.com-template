@@ -40,11 +40,14 @@ window.VAPID_KEY = "BJeCjL3Ge6h9UzWfSzM0hFIgO5EBvwdyY2ADVkBjwqXfdyQfBA4304ljAFb1
 //   cta     : button text (e.g. "Book now")
 //   prize   : line shown in Rules → Winning (the sponsor's prize)
 // -----------------------------------------------------------------------------
-window.SPONSOR = {
+// Off until the Euro Car logo + details are ready. To re-enable, restore the
+// object below (set name, tagline, logo "sponsor.png", link, cta, prize).
+window.SPONSOR = null;
+/* window.SPONSOR = {
   name: "Euro Car",
-  tagline: "Premium Car Rental",   // ← confirm/replace with their real tagline
-  logo: null,                       // ← set to "sponsor.png" once the logo is uploaded
-  link: null,                       // ← website or wa.me/<number>
+  tagline: "Premium Car Rental",
+  logo: "sponsor.png",
+  link: null,
   cta: "Book now",
-  prize: null,                      // ← e.g. "🏆 Champion wins a free 3-day rental from Euro Car!"
-};
+  prize: null,
+}; */
