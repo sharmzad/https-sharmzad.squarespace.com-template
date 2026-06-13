@@ -43,8 +43,8 @@ window.VAPID_KEY = "BJeCjL3Ge6h9UzWfSzM0hFIgO5EBvwdyY2ADVkBjwqXfdyQfBA4304ljAFb1
 window.SPONSOR = {
   name: "Euro Car",
   tagline: "Premium Car Rental",   // ← confirm/replace with their real tagline
-  logo: "sponsor.jpg",
-  link: null,                       // ← website or wa.me/<number>
+  logo: "sponsor.png",
+  link: "https://wa.me/201001186668",
   cta: "Book now",
   prize: "🏆 The champion wins a prize from Euro Car!",  // ← placeholder, confirm
 };

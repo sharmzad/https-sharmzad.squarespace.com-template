@@ -396,3 +396,38 @@ body::before {
   padding: 2px 0;
 }
 .topbar { top: 17px; }
+
+/* ---- custom SVG car (faces & drives right), speed lines, bob ---- */
+.intro-car { top: -19px; font-size: 0; }
+.intro-car svg { display: block; animation: carBob .45s ease-in-out infinite alternate; }
+.car-body  { fill: #19b6e6; }
+.car-glass { fill: #bff0ff; }
+.car-wheel { fill: #06222e; stroke: #bff0ff; stroke-width: 2; }
+@keyframes carBob { from { transform: translateY(0); } to { transform: translateY(-2px); } }
+.intro-car::before, .intro-car::after {
+  content: ""; position: absolute; right: 100%; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #19b6e6); margin-right: 5px;
+  animation: speedLine .45s linear infinite;
+}
+.intro-car::before { top: 7px;  width: 20px; }
+.intro-car::after  { top: 13px; width: 13px; animation-delay: .15s; }
+@keyframes speedLine {
+  0%   { opacity: 0; transform: translateX(6px)  scaleX(.6); }
+  50%  { opacity: .85; }
+  100% { opacity: 0; transform: translateX(-5px) scaleX(1); }
+}
+
+/* ---- animate the Euro Car logo: neon power-on flicker + glow pulse ---- */
+@keyframes neonOn {
+  0%  { opacity: 0; transform: scale(.82); }
+  10% { opacity: .6; } 14% { opacity: .15; } 22% { opacity: .9; } 28% { opacity: .4; }
+  40%, 100% { opacity: 1; transform: scale(1); }
+}
+@keyframes neonGlow {
+  from { filter: drop-shadow(0 0 3px rgba(120,223,255,.35)); }
+  to   { filter: drop-shadow(0 0 16px rgba(25,182,230,.85)); }
+}
+.intro-logo {
+  animation: neonOn 1.2s ease .7s both,
+             neonGlow 1.9s ease-in-out 1.9s infinite alternate;
+}
