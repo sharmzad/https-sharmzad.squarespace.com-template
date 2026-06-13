@@ -30,3 +30,24 @@ window.BONUS_POINTS = { "*": 2, "Alaa": 0 };
 
 // Web push notifications (Firebase Cloud Messaging).
 window.VAPID_KEY = "BJeCjL3Ge6h9UzWfSzM0hFIgO5EBvwdyY2ADVkBjwqXfdyQfBA4304ljAFb1hDx-pYcEFjXtoR6B3HIELHgG11o";
+
+// -----------------------------------------------------------------------------
+// Sponsor (set to null to hide all sponsor branding everywhere).
+//   name    : shown in the strip, splash, WhatsApp footer
+//   tagline : short one-liner under the name (optional)
+//   logo    : image filename placed in the worldcup/ folder (optional)
+//   link    : tapped destination — a website or a wa.me/<number> link
+//   cta     : button text (e.g. "Book now")
+//   prize   : line shown in Rules → Winning (the sponsor's prize)
+// -----------------------------------------------------------------------------
+window.SPONSOR = null;
+/* Example:
+window.SPONSOR = {
+  name: "Easy Move Car Rental",
+  tagline: "Sharm El Sheikh · best rates, zero hidden fees",
+  logo: "sponsor.png",
+  link: "https://wa.me/201006690316",
+  cta: "Book now",
+  prize: "🏆 The champion wins a FREE weekend rental from Easy Move!"
+};
+*/

@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="group.jpg">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="stylesheet" href="css/style.css?v=13">
+  <link rel="stylesheet" href="css/style.css?v=14">
 </head>
 <body>
 
@@ -33,12 +33,29 @@
 
   <main id="view"></main>
 
-  <nav class="tabbar">
-    <button class="tab active" data-tab="matches">⚽<span>Matches</span></button>
-    <button class="tab" data-tab="table">🏅<span>Table</span></button>
-    <button class="tab" data-tab="share">📲<span>WhatsApp</span></button>
-    <button class="tab" data-tab="rules">📜<span>Rules</span></button>
-  </nav>
+  <div class="bottom-dock">
+    <a id="sponsorStrip" class="sponsor-strip hidden" target="_blank" rel="noopener"></a>
+    <nav class="tabbar">
+      <button class="tab active" data-tab="matches">⚽<span>Matches</span></button>
+      <button class="tab" data-tab="table">🏅<span>Table</span></button>
+      <button class="tab" data-tab="share">📲<span>WhatsApp</span></button>
+      <button class="tab" data-tab="rules">📜<span>Rules</span></button>
+    </nav>
+  </div>
+
+  <!-- Sponsor splash (shown once per day) -->
+  <div id="sponsorModal" class="modal hidden">
+    <div class="modal-card sponsor-card">
+      <p class="sponsor-kicker">🤝 Proudly sponsored by</p>
+      <img id="sponsorModalLogo" class="sponsor-modal-logo hidden" alt="">
+      <h2 id="sponsorModalName"></h2>
+      <p id="sponsorModalTagline" class="sponsor-modal-tagline"></p>
+      <div class="modal-actions" style="justify-content:center">
+        <button id="sponsorModalClose" class="btn ghost">Maybe later</button>
+        <a id="sponsorModalCta" class="btn primary" target="_blank" rel="noopener"></a>
+      </div>
+    </div>
+  </div>
 
   <!-- Join / login modal -->
   <div id="joinModal" class="modal hidden">
@@ -66,7 +83,7 @@
 
   <div id="toast" class="toast hidden"></div>
 
-  <script src="js/firebase-config.js?v=13"></script>
-  <script type="module" src="js/app.js?v=13"></script>
+  <script src="js/firebase-config.js?v=14"></script>
+  <script type="module" src="js/app.js?v=14"></script>
 </body>
 </html>
