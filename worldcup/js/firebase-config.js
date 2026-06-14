@@ -30,3 +30,21 @@ window.BONUS_POINTS = { "*": 2, "Alaa": 0 };
 
 // Web push notifications (Firebase Cloud Messaging).
 window.VAPID_KEY = "BJeCjL3Ge6h9UzWfSzM0hFIgO5EBvwdyY2ADVkBjwqXfdyQfBA4304ljAFb1hDx-pYcEFjXtoR6B3HIELHgG11o";
+
+// -----------------------------------------------------------------------------
+// Sponsor (set to null to hide all sponsor branding everywhere).
+//   name    : shown in the strip, splash, WhatsApp footer
+//   tagline : short one-liner under the name (optional)
+//   logo    : image filename placed in the worldcup/ folder (optional)
+//   link    : tapped destination — a website or a wa.me/<number> link
+//   cta     : button text (e.g. "Book now")
+//   prize   : line shown in Rules → Winning (the sponsor's prize)
+// -----------------------------------------------------------------------------
+window.SPONSOR = {
+  name: "Euro Car",
+  tagline: "Premium Car Rental",   // ← confirm/replace with their real tagline
+  logo: "sponsor.png",
+  link: "https://wa.me/201001186668",
+  cta: "Book now",
+  prize: "🏆 Prizes will be announced in rolling updates — stay tuned!",
+};

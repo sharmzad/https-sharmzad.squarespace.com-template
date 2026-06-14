@@ -47,11 +47,76 @@ init();
 
 async function init() {
   bindChrome();
+  setupSponsor();
   await initFirebase();
   if (!me && db) await tryRestoreLogin();
   await loadMatches();
   render();
   setInterval(async () => { await loadMatches(); render(); }, POLL_MS);
+}
+
+// ---------------------------------------------------------------------------
+// Sponsor branding (see SPONSOR in firebase-config.js; hidden when null)
+// ---------------------------------------------------------------------------
+function setupSponsor() {
+  const s = window.SPONSOR;
+  if (!s || !s.name) return;
+
+  // slim strip above the tab menu
+  const strip = $("#sponsorStrip");
+  if (s.link) strip.href = s.link;
+  strip.innerHTML =
+    (s.logo ? `<img src="${esc(s.logo)}" alt="" onerror="this.remove()">` : "🚗") +
+    `<span>Sponsored by <b>${esc(s.name)}</b></span>` +
+    (s.cta ? `<span class="cta">${esc(s.cta)}</span>` : "");
+  strip.classList.remove("hidden");
+  // keep page content clear of the taller bottom dock
+  const dock = document.querySelector(".bottom-dock");
+  if (dock) document.body.style.paddingBottom = `${dock.offsetHeight + 12}px`;
+
+  playSponsorIntro(s);
+}
+
+// Animated motion-graphics intro, once per app launch (per browser session)
+function playSponsorIntro(s) {
+  // show once per calendar day per device
+  const key = `sponsor_intro_${new Date().toLocaleDateString("en-CA")}`;
+  if (localStorage.getItem(key)) return;
+  const intro = $("#sponsorIntro");
+  if (!intro) return;
+  localStorage.setItem(key, "1");
+
+  // logo if provided, otherwise an animated two-tone wordmark from the name
+  if (s.logo) {
+    const lg = $("#introLogo");
+    lg.src = s.logo;
+    lg.onerror = () => { lg.classList.add("hidden"); $("#introWordmark").classList.remove("hidden"); };
+    lg.classList.remove("hidden");
+    $("#introWordmark").classList.add("hidden");
+  } else {
+    const parts = s.name.trim().split(/\s+/);
+    const head = esc(parts.shift());
+    const tail = esc(parts.join(" "));
+    $("#introWordmark").innerHTML = `<span class="a">${head}</span>${tail ? ` <span class="b">${tail}</span>` : ""}`;
+  }
+  $("#introTagline").textContent = s.tagline || "";
+
+  intro.classList.remove("hidden");
+  let dismissed = false;
+  const dismiss = () => {
+    if (dismissed) return; dismissed = true;
+    intro.classList.add("done");
+    setTimeout(() => intro.classList.add("hidden"), 600);
+  };
+  const timer = setTimeout(dismiss, 3600);
+  $("#introSkip").onclick = () => { clearTimeout(timer); dismiss(); };
+}
+
+// one-line sponsor footer for WhatsApp messages ("" when no sponsor)
+function sponsorFooter() {
+  const s = window.SPONSOR;
+  if (!s || !s.name) return "";
+  return `\n\n🚗 Powered by *${s.name}*${s.link ? ` · ${s.link}` : ""}`;
 }
 
 // Persist login in localStorage + a long-lived cookie (iOS clears storage
@@ -667,15 +732,16 @@ function inviteMessage() {
 }
 
 function openWhatsApp(text) {
-  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
+  window.open(`https://wa.me/?text=${encodeURIComponent(text + sponsorFooter())}`, "_blank");
 }
 
 async function copyText(text) {
+  const full = text + sponsorFooter();
   try {
-    await navigator.clipboard.writeText(text);
+    await navigator.clipboard.writeText(full);
     toast("📋 Copied — paste it in the group!");
   } catch {
-    prompt("Copy this message:", text);
+    prompt("Copy this message:", full);
   }
 }
 
@@ -717,9 +783,18 @@ function renderRules() {
       <ul>
         <li>Most points after the final wins El 3eshّa World Cup 26. 👑</li>
         <li>Tiebreakers: most exact scores 🎯, then most correct results.</li>
-        <li>Prize: decided by the gang... loser buys dinner? 😁</li>
+        ${window.SPONSOR?.prize
+          ? `<li>${esc(window.SPONSOR.prize)}</li>`
+          : `<li>Prize: decided by the gang... loser buys dinner? 😁</li>`}
       </ul>
-    </div>`;
+    </div>
+    ${window.SPONSOR?.name ? `
+    <div class="rules-card" style="text-align:center">
+      <h3>🤝 Official Sponsor</h3>
+      ${window.SPONSOR.logo ? `<img src="${esc(window.SPONSOR.logo)}" alt="${esc(window.SPONSOR.name)}" style="max-width:60%;max-height:90px;border-radius:10px;margin:4px auto 10px;display:block" onerror="this.remove()">` : ""}
+      ${window.SPONSOR.tagline ? `<p style="color:var(--muted);font-size:13px">${esc(window.SPONSOR.tagline)}</p>` : ""}
+      ${window.SPONSOR.link ? `<div class="share-actions" style="justify-content:center;margin-top:12px"><a class="btn wa" href="${esc(window.SPONSOR.link)}" target="_blank" rel="noopener">${esc(window.SPONSOR.cta || "Visit")}</a></div>` : ""}
+    </div>` : ""}`;
 }
 
 // ---------------------------------------------------------------------------
