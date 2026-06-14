@@ -1,0 +1,398 @@
+deals.html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Exclusive Travel Deals & Flash Offers | EgTravelMarket</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Save on flights, hotels, tours, and diving in Egypt. Limited-time flash offers and evergreen deals curated by EgTravelMarket." />
+  <link rel="stylesheet" href="deals.css" />
+  <!-- Optional: your global styles & fonts -->
+  <!-- <link rel="stylesheet" href="styles.css" /> -->
+</head>
+<body>
+  <!-- ===== HEADER (REUSE YOURS) =====
+       Replace the placeholder below with your existing site header/nav
+  -->
+  <header id="site-header">
+    <!-- PASTE YOUR EXISTING HEADER/NAV HTML HERE -->
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Exclusive Travel Deals & Flash Offers</h1>
+      <p>Save more on flights, hotels, tours, and diving experiences across Egypt.</p>
+      <div class="hero-cta">
+        <a href="#flash-offers" class="btn">View Flash Offers</a>
+        <a href="#all-deals" class="btn btn-ghost">Browse All Deals</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FLASH OFFERS ===== -->
+  <section id="flash-offers" class="section">
+    <div class="section-head">
+      <h2>⚡ Flash Offers</h2>
+      <p>Limited-time promotions. Book before the timer hits zero.</p>
+    </div>
+
+    <!-- Slider (scroll-snap) -->
+    <div class="flash-track" data-autoplay="true" data-interval="6000">
+      <!-- Card 1 -->
+      <article class="flash-card">
+        <span class="badge">Ends Soon</span>
+        <h3>Cairo by Flight — Round Trip</h3>
+        <p class="desc">Day tour from Sharm El-Sheikh including Museum & Giza Plateau. <strong>Save $20</strong> this week.</p>
+        <div class="countdown" data-deadline="2025-11-05T20:00:00+02:00" aria-live="polite">Ends in —</div>
+        <div class="actions">
+          <a href="/tours/cairo-by-flight.html" class="btn">Book Now</a>
+          <a href="/tours/cairo-by-flight.html#details" class="link">Details</a>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="flash-card">
+        <span class="badge">Trip of the Week</span>
+        <h3>Luxor by Flight — Special</h3>
+        <p class="desc">Karnak, Valley of the Kings & Hatshepsut. <strong>Save $25</strong> on select dates.</p>
+        <div class="countdown" data-deadline="2025-11-08T23:59:00+02:00" aria-live="polite">Ends in —</div>
+        <div class="actions">
+          <a href="/tours/luxor-by-flight.html" class="btn">Book Now</a>
+          <a href="/tours/luxor-by-flight.html#details" class="link">Details</a>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="flash-card">
+        <span class="badge">Diving Deal</span>
+        <h3>Red Sea Diving — 3+1 Free</h3>
+        <p class="desc">Book 3 dive days, get the 4th day free. Nabq & Ras Mohammed sites.</p>
+        <div class="countdown" data-deadline="2025-11-12T18:00:00+02:00" aria-live="polite">Ends in —</div>
+        <div class="actions">
+          <a href="/diving/packages.html" class="btn">Book Now</a>
+          <a href="/diving/packages.html#details" class="link">Details</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== ALL DEALS ===== -->
+  <section id="all-deals" class="section">
+    <div class="section-head">
+      <h2>🏷️ Deals by Category</h2>
+      <p>Permanent deals & best-value picks, updated regularly.</p>
+    </div>
+
+    <!-- FLIGHTS -->
+    <div class="deal-block">
+      <div class="deal-head">
+        <h3>✈️ Flight Deals to Egypt</h3>
+        <p>Cheapest fares to Cairo, Sharm El-Sheikh, and Hurghada.</p>
+      </div>
+      <div class="deal-body">
+        <!-- Replace with your Aviasales or WayAway widget -->
+        <!-- Example placeholder: -->
+        <div class="widget-placeholder">
+          <p><strong>Flight widget placeholder</strong></p>
+          <p>Paste your Aviasales/WayAway script here.</p>
+        </div>
+        <!-- Your script goes here:
+        <script async src="...YOUR_AVIASALES_OR_WAYAWAY_WIDGET..."></script>
+        -->
+      </div>
+    </div>
+
+    <!-- HOTELS -->
+    <div class="deal-block">
+      <div class="deal-head">
+        <h3>🏨 Hotel Deals</h3>
+        <p>Top discounts in Sharm, Hurghada, and Cairo.</p>
+      </div>
+      <div class="deal-body">
+        <!-- Replace with your Booking/Travelpayouts hotel widget -->
+        <div class="widget-placeholder">
+          <p><strong>Hotel widget placeholder</strong></p>
+          <p>Paste your Booking/Travelpayouts script here.</p>
+        </div>
+        <!-- Your script goes here -->
+      </div>
+    </div>
+
+    <!-- TOURS & PACKAGES -->
+    <div class="deal-block">
+      <div class="deal-head">
+        <h3>🎟️ Tours & Packages</h3>
+        <p>Handpicked offers on our most popular experiences.</p>
+      </div>
+      <div class="deal-grid">
+        <!-- Example tour cards: link to your existing pages -->
+        <article class="card">
+          <h4>Cairo by Flight</h4>
+          <p class="card-desc">Museum & Pyramids — save $20 this week.</p>
+          <a href="/tours/cairo-by-flight.html" class="btn btn-sm">View Offer</a>
+        </article>
+        <article class="card">
+          <h4>Luxor by Flight</h4>
+          <p class="card-desc">Valley of the Kings special fare.</p>
+          <a href="/tours/luxor-by-flight.html" class="btn btn-sm">View Offer</a>
+        </article>
+        <article class="card">
+          <h4>Pirates Boat to Ras Mohammed</h4>
+          <p class="card-desc">Limited seats — early-bird price.</p>
+          <a href="/tours/pirates-ras-mohammed.html" class="btn btn-sm">View Offer</a>
+        </article>
+        <article class="card">
+          <h4>Jeep Safari — Nabq</h4>
+          <p class="card-desc">Combo add-on discount available.</p>
+          <a href="/tours/jeep-safari-nabq.html" class="btn btn-sm">View Offer</a>
+        </article>
+      </div>
+    </div>
+
+    <!-- DIVING -->
+    <div class="deal-block">
+      <div class="deal-head">
+        <h3>🤿 Diving & Adventure</h3>
+        <p>Seasonal bundles & multi-day savings.</p>
+      </div>
+      <div class="deal-grid">
+        <article class="card">
+          <h4>3-Day Dive Pack</h4>
+          <p class="card-desc">Free equipment rental on select dates.</p>
+          <a href="/diving/packages.html" class="btn btn-sm">View Offer</a>
+        </article>
+        <article class="card">
+          <h4>Ras Mohammed & Thistlegorm</h4>
+          <p class="card-desc">Bundle & save on both trips.</p>
+          <a href="/diving/red-sea-specials.html" class="btn btn-sm">View Offer</a>
+        </article>
+      </div>
+    </div>
+
+    <!-- AFFILIATE PROMOS -->
+    <div class="deal-block">
+      <div class="deal-head">
+        <h3>🤝 Partner Promotions</h3>
+        <p>Extra savings from our affiliate partners.</p>
+      </div>
+      <div class="deal-grid">
+        <article class="card">
+          <h4>WayAway Sale</h4>
+          <p class="card-desc">Cashback & extra discounts on flights.</p>
+          <a href="YOUR_PARTNER_LINK" class="btn btn-sm" rel="nofollow sponsored">Get Deal</a>
+        </article>
+        <article class="card">
+          <h4>Booking.com Seasonal Offers</h4>
+          <p class="card-desc">Up to 25% off select stays.</p>
+          <a href="YOUR_PARTNER_LINK" class="btn btn-sm" rel="nofollow sponsored">Get Deal</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="section cta">
+    <h3>Get New Deals First</h3>
+    <p>Subscribe to receive exclusive flash offers and price drops.</p>
+    <form class="subscribe" action="#" method="post" onsubmit="event.preventDefault(); alert('Thanks! You’ll get our next deals email.');">
+      <input type="email" name="email" placeholder="Enter your email" required />
+      <button class="btn" type="submit">Subscribe</button>
+    </form>
+  </section>
+
+  <!-- ===== FOOTER (REUSE YOURS) ===== -->
+  <footer id="site-footer">
+    <!-- PASTE YOUR EXISTING FOOTER HTML HERE -->
+    <!-- Ensure links to /privacy.html and /cookies.html exist -->
+  </footer>
+
+  <script src="flash-offer.js"></script>
+</body>
+</html>
+
+deals.css
+:root{
+  --bg: #0b1220;
+  --bg-soft: #0f1a2e;
+  --card: #121d34;
+  --text: #eaf0ff;
+  --muted: #a9b7d6;
+  --brand1: #2c7df0;
+  --brand2: #00d4ff;
+  --ring: rgba(44,125,240,.35);
+  --shadow: 0 10px 30px rgba(0,0,0,.25);
+  --radius: 16px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:linear-gradient(135deg,var(--bg),#08101c 40%,#070e1a);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+a{color:var(--brand2);text-decoration:none}
+a:hover{text-decoration:underline}
+
+#site-header, #site-footer { background: transparent; }
+
+.hero{
+  position:relative;
+  padding:72px 20px 56px;
+  background:
+    radial-gradient(1200px 400px at 10% -10%, rgba(0,212,255,.25), transparent 60%),
+    radial-gradient(900px 300px at 90% 0%, rgba(44,125,240,.18), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.hero-inner{max-width:1100px;margin:0 auto;text-align:center}
+.hero h1{font-size:clamp(28px,3.5vw,44px);margin:0 0 10px}
+.hero p{color:var(--muted);margin:0 0 24px}
+.hero .hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{
+  background:linear-gradient(135deg,var(--brand1),var(--brand2));
+  color:#031021;border:0;padding:12px 16px;border-radius:999px;font-weight:600;
+  box-shadow:var(--shadow);display:inline-block
+}
+.btn:hover{filter:brightness(1.05)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18)}
+.btn-sm{padding:10px 14px;border-radius:12px}
+
+.section{max-width:1100px;margin:40px auto;padding:0 20px}
+.section-head h2{font-size:clamp(22px,3vw,30px);margin:0 0 6px}
+.section-head p{margin:0;color:var(--muted)}
+
+.flash-track{
+  margin-top:18px;display:grid;grid-auto-flow:column;gap:16px;overflow-x:auto;
+  scroll-snap-type:x mandatory;padding-bottom:4px
+}
+.flash-track::-webkit-scrollbar{height:8px}
+.flash-track::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:999px}
+
+.flash-card{
+  scroll-snap-align:start;min-width:320px;max-width:360px;background:linear-gradient(180deg,var(--card),#0d1930);
+  border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)
+}
+.flash-card h3{margin:6px 0 6px}
+.flash-card .desc{color:var(--muted);margin:0 0 10px}
+.badge{
+  display:inline-block;background:rgba(0,212,255,.18);border:1px solid rgba(0,212,255,.4);
+  color:#9fe9ff;font-size:12px;padding:6px 10px;border-radius:999px
+}
+.countdown{
+  margin:8px 0 14px;padding:10px;border-radius:12px;background:#0b1730;
+  border:1px solid rgba(44,125,240,.35);box-shadow:0 0 0 3px var(--ring) inset;font-weight:600
+}
+.actions{display:flex;gap:10px;align-items:center}
+.actions .link{color:var(--muted)}
+
+.deal-block{
+  background:linear-gradient(180deg,#0c1528,#0a1426);
+  border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:18px;margin-top:18px
+}
+.deal-head h3{margin:0 0 6px}
+.deal-head p{margin:0;color:var(--muted)}
+
+.widget-placeholder{
+  display:grid;place-items:center;text-align:center;gap:4px;
+  border:1px dashed rgba(255,255,255,.25);border-radius:12px;padding:26px;color:var(--muted)
+}
+
+.deal-grid{
+  margin-top:14px;display:grid;gap:12px;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr))
+}
+.card{
+  background:linear-gradient(180deg,var(--card),#0e1a31);
+  border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;box-shadow:var(--shadow)
+}
+.card h4{margin:0 0 6px}
+.card .card-desc{margin:0 0 12px;color:var(--muted)}
+
+.cta{
+  text-align:center;margin-top:48px;background:linear-gradient(135deg,rgba(44,125,240,.15),rgba(0,212,255,.15));
+  border-radius:var(--radius);padding:28px
+}
+.subscribe{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.subscribe input{
+  background:#0a1529;border:1px solid rgba(255,255,255,.15);color:var(--text);
+  padding:12px 14px;border-radius:12px;min-width:260px
+}
+.subscribe input:focus{outline:none;box-shadow:0 0 0 3px var(--ring)}
+
+flash-offer.js
+// ===== Countdown for all .countdown elements with [data-deadline] =====
+(function () {
+  const els = Array.from(document.querySelectorAll('.countdown[data-deadline]'));
+  function two(n){ return n < 10 ? '0' + n : '' + n; }
+
+  function tick() {
+    const now = new Date().getTime();
+    els.forEach(el => {
+      const deadlineStr = el.getAttribute('data-deadline');
+      const end = new Date(deadlineStr).getTime();
+      const diff = end - now;
+
+      if (isNaN(end)) { el.textContent = '—'; return; }
+
+      if (diff <= 0) {
+        el.textContent = 'Offer ended';
+        el.closest('.flash-card')?.classList.add('is-ended');
+        return;
+      }
+
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+
+      el.textContent = `Ends in ${two(d)}d ${two(h)}h ${two(m)}m`;
+    });
+  }
+
+  tick();
+  setInterval(tick, 30 * 1000); // update every 30s (minutes precision is enough)
+})();
+
+// ===== Simple auto-scroll for the flash slider (optional) =====
+(function () {
+  const track = document.querySelector('.flash-track[data-autoplay="true"]');
+  if (!track) return;
+
+  const interval = parseInt(track.getAttribute('data-interval') || '6000', 10);
+  const cards = Array.from(track.children);
+  if (cards.length <= 1) return;
+
+  let index = 0;
+  function goNext() {
+    index = (index + 1) % cards.length;
+    cards[index].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+  }
+
+  let timer = setInterval(goNext, interval);
+
+  // Pause on user interaction
+  track.addEventListener('pointerenter', () => clearInterval(timer));
+  track.addEventListener('pointerleave', () => (timer = setInterval(goNext, interval)));
+})();
+
+How to plug it in (quick)
+
+Create the files on Replit:
+
+New file deals.html (paste HTML above)
+
+New file deals.css (paste CSS)
+
+New file flash-offer.js (paste JS)
+
+Reuse your header & footer
+
+In deals.html, replace the placeholders in <header id="site-header"> and <footer id="site-footer"> with your existing header/footer HTML (exactly as used on your homepage).
+
+Link it from your menu icon
+
+In your nav, set the Deals icon link to /deals.html.
+
+Add your widgets
+
+Replace the “widget placeholder” boxes with your Aviasales/WayAway flight script and Booking/Travelpayouts hotel script.
+
+Edit deadlines & links
+
+In the Flash cards, change each data-deadline (ISO format with your timezone, e.g. +02:00) and update the Book Now links to your real pages.

@@ -1,0 +1,223 @@
+/* ============================================================
+   SKELETON LOADER COMPONENT - Reusable for Guides, Divers, Mentors, etc.
+   ============================================================ */
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.skeleton-card {
+  background: var(--card, #0f1e47);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow, 0 10px 30px rgba(0,0,0,.35));
+  display: flex;
+  flex-direction: column;
+  min-height: 380px;
+}
+
+.skeleton-card .skeleton-thumb {
+  height: 180px;
+  background: rgba(255,255,255,.08);
+  position: relative;
+}
+
+.skeleton-card .skeleton-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.12);
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-card .skeleton-badge {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 80px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.1s;
+}
+
+.skeleton-card .skeleton-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.skeleton-card .skeleton-name {
+  height: 22px;
+  width: 70%;
+  background: rgba(255,255,255,.12);
+  border-radius: 6px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+.skeleton-card .skeleton-rating {
+  height: 16px;
+  width: 50%;
+  background: rgba(255,255,255,.08);
+  border-radius: 4px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+.skeleton-card .skeleton-location {
+  height: 14px;
+  width: 45%;
+  background: rgba(255,255,255,.08);
+  border-radius: 4px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.4s;
+}
+
+.skeleton-card .skeleton-tags {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.skeleton-card .skeleton-tag {
+  height: 24px;
+  width: 70px;
+  background: rgba(255,255,255,.06);
+  border-radius: 12px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.skeleton-card .skeleton-tag:nth-child(2) {
+  width: 85px;
+  animation-delay: 0.6s;
+}
+
+.skeleton-card .skeleton-bio {
+  height: 32px;
+  width: 100%;
+  background: rgba(255,255,255,.06);
+  border-radius: 4px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.7s;
+}
+
+.skeleton-card .skeleton-actions {
+  padding: 12px 14px 16px;
+  margin-top: auto;
+}
+
+.skeleton-card .skeleton-btn {
+  height: 42px;
+  width: 100%;
+  background: rgba(46,166,255,.2);
+  border-radius: 12px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+
+/* ============================================================
+   FIXED CARD HEIGHTS - Prevent Cumulative Layout Shift (CLS)
+   ============================================================ */
+
+.grid .card,
+.grid .skeleton-card {
+  min-height: 380px;
+}
+
+.grid .card .thumb,
+.grid .skeleton-card .skeleton-thumb {
+  height: 180px;
+  flex-shrink: 0;
+}
+
+.grid .card .body {
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+}
+
+.grid .card .actions {
+  margin-top: auto;
+}
+
+/* ============================================================
+   LOAD MORE BUTTON
+   ============================================================ */
+
+.load-more-container {
+  text-align: center;
+  padding: 24px 0 48px;
+}
+
+.load-more-btn {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent, #2ea6ff), var(--accent-2, #6ec1ff));
+  border: none;
+  color: #002349;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.load-more-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(46,166,255,.35);
+}
+
+.load-more-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.load-more-btn .spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(0,35,73,.3);
+  border-top-color: #002349;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.no-more-results {
+  color: var(--muted, #bcd3ff);
+  font-size: 14px;
+  padding: 24px 0;
+}
+
+/* ============================================================
+   IMAGE LAZY LOAD PLACEHOLDER
+   ============================================================ */
+
+.card .thumb img {
+  background: rgba(255,255,255,.05);
+  transition: opacity 0.3s ease;
+}
+
+.card .thumb img[data-loading="true"] {
+  opacity: 0;
+}
+
+.card .thumb img.loaded {
+  opacity: 1;
+}

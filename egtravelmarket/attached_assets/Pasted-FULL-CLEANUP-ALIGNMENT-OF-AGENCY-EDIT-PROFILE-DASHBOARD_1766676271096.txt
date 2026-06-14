@@ -1,0 +1,414 @@
+FULL CLEANUP & ALIGNMENT OF AGENCY EDIT PROFILE (DASHBOARD) — NO LOGIC BREAKING
+
+1️⃣ PAGE SCOPE (CRITICAL – READ FIRST)
+
+Page to work on:
+Agency Dashboard → Edit Profile
+
+This task is ONLY about:
+
+Cleaning duplicated/legacy fields
+
+Aligning Edit Profile with Agency Signup
+
+Fixing UI visibility/readability issues
+
+❌ DO NOT TOUCH:
+
+Authentication / login
+
+Signup logic
+
+Jobs system
+
+Payments / bank account
+
+Expert trips
+
+Any backend workflow not related to profile update
+
+❌ DO NOT:
+
+Rename existing DB keys
+
+Create new tables
+
+Refactor backend logic
+
+This task is STRUCTURE + UI ONLY.
+
+2️⃣ GOAL OF EDIT PROFILE (IMPORTANT CONTEXT)
+
+The Edit Profile page must:
+
+Reflect exactly the same data collected at signup
+
+Allow the agency to edit and enrich that data
+
+Store clean, structured, non-duplicated data
+
+Be future-ready for:
+
+Jobs
+
+Agency public cards
+
+Filters
+
+B2B handling
+
+Edit Profile is NOT for:
+
+Job posting
+
+Pricing
+
+Commission
+
+Guarantee logic
+
+3️⃣ CURRENT PROBLEMS FOUND (FROM SCREENSHOTS)
+❌ PROBLEM A: DUPLICATED FIELDS
+
+There are legacy fields still visible that duplicate new structured fields.
+
+This causes:
+
+Confusing UI
+
+Conflicting data
+
+Broken filters later
+
+❌ PROBLEM B: UNREADABLE FIELDS
+
+Dropdowns (country, business type) not readable
+
+Text blends with background due to dark theme
+
+This is a CSS issue, not backend.
+
+4️⃣ FIELDS THAT MUST BE REMOVED COMPLETELY (VERY IMPORTANT)
+❌ REMOVE: LEGACY “OPERATING AREAS”
+
+Remove ALL old destination/location fields such as:
+
+“Operating Areas”
+
+“Cities or regions where you operate”
+
+Old city checkbox lists:
+
+Cairo
+
+Giza
+
+Sharm El Sheikh
+
+Hurghada
+
+Luxor
+
+Aswan
+
+etc.
+
+👉 These are now duplicated by the new structured section.
+
+✅ ONLY ONE destination selector must exist:
+Egypt Destination Focus → Egypt Destinations You Operate In
+
+❌ REMOVE: LEGACY “SERVICES OFFERED” (TEXT / COMMA SEPARATED)
+
+Remove any old services field like:
+
+Text input with values such as:
+“Tours & Packages, Diving, Hotels, Transportation, MICE, Flights…”
+
+❌ This field must NOT exist anymore.
+
+Reason:
+
+Not structured
+
+Not filterable
+
+Already replaced
+
+❌ REMOVE: “SPECIALTIES” FREE TEXT (IF PRESENT)
+
+If there is a free-text field like:
+
+“Specialties (Luxury tours, Adventure travel, etc.)”
+
+Remove it if it duplicates services/products.
+
+We must avoid:
+
+Services
+
+Products
+
+Specialties
+…doing the same job in 3 places.
+
+5️⃣ FIELDS THAT MUST STAY (DO NOT REMOVE)
+
+These fields are valid and must remain editable:
+
+✅ Company & Contact
+
+Company Name
+
+Company Description
+
+Years in Business
+
+Website URL
+
+Contact Email
+
+WhatsApp Number
+
+✅ Branding
+
+Company Logo (upload OR URL)
+
+Profile Photo (optional)
+
+Cover Photo (optional)
+
+✅ Social Media
+
+Facebook URL
+
+Instagram URL
+(LinkedIn optional later)
+
+6️⃣ STRUCTURED SECTIONS THAT MUST EXIST (ALIGN WITH SIGNUP)
+🔹 SECTION A: BUSINESS LOCATION
+
+These fields MUST exist and be editable:
+
+Country of Registration
+
+Dropdown
+
+ALL countries (full list, not partial)
+
+City of Registration
+
+Text input
+
+Example placeholder: “e.g. Cairo, London, Berlin”
+
+Company Based In
+
+Radio buttons:
+
+Egypt
+
+Outside Egypt
+
+🔹 SECTION B: BUSINESS CLASSIFICATION
+
+Business Type (Dropdown – REQUIRED)
+
+Travel Agency
+
+Tour Operator
+
+DMC (Local Handling Agent)
+
+License Number
+
+Text input
+
+Upload Business License
+
+Optional
+
+PDF / JPG / PNG
+
+🔹 SECTION C: EGYPT DESTINATION FOCUS (CORE SECTION)
+
+This section REPLACES ALL legacy operating areas.
+
+Fields:
+
+Egypt Destinations You Operate In (Multi-select):
+
+Cairo
+
+Giza
+
+Alexandria
+
+Sharm El Sheikh
+
+Hurghada
+
+Dahab
+
+Marsa Alam
+
+Luxor
+
+Aswan
+
+Abu Simbel
+
+Siwa Oasis
+
+Nile Cruises
+
+Red Sea (General)
+
+Other (text input)
+
+⚠️ This must be the ONLY destination selector.
+
+🔹 SECTION D: PRODUCTS & SERVICES OFFERED (STRUCTURED ONLY)
+
+Use checkboxes only, no free text (except “Other”).
+
+Options:
+
+Classic sightseeing tours
+
+Private / tailor-made tours
+
+Group packages
+
+Luxury travel
+
+Budget travel
+
+Day tours & excursions
+
+Nile cruises
+
+Diving packages (as reseller)
+
+Safari & adventure trips
+
+Transportation services
+
+Airport transfers
+
+MICE / Groups / Incentives
+
+Religious tourism
+
+Medical tourism
+
+Educational / cultural trips
+
+Cruise shore excursions
+
+Other (text input)
+
+🔹 SECTION E: LANGUAGES OPERATED IN
+
+Multi-select:
+
+English
+
+Arabic
+
+German
+
+Russian
+
+French
+
+Italian
+
+Spanish
+
+Chinese
+
+Other (text input)
+
+7️⃣ UI / READABILITY FIX (MANDATORY – DO NOT SKIP)
+
+All dropdowns and options MUST be readable on dark theme.
+
+Apply this CSS globally or scoped to agency dashboard forms:
+
+select,
+select option {
+  background-color: #0f1f2f;
+  color: #ffffff;
+}
+
+select:focus {
+  outline: none;
+  border-color: #00c2ff;
+}
+
+
+This fix applies to:
+
+Country dropdown
+
+Business Type dropdown
+
+Any <select> field
+
+8️⃣ DATA HANDLING RULES (VERY IMPORTANT)
+
+Edit Profile must UPDATE the SAME fields created at signup
+
+Do NOT create new DB keys if they already exist
+
+Do NOT rename existing keys
+
+Expected fields (example):
+
+company_name
+company_description
+country
+city
+company_based_in
+business_type
+license_number
+egypt_destinations[]
+products_offered[]
+languages[]
+logo
+profile_photo
+cover_photo
+social_links
+
+9️⃣ WHAT MUST NOT BE ADDED
+
+❌ No job posting fields
+❌ No pricing or commission
+❌ No bank account fields
+❌ No guarantee / representative logic
+
+Edit Profile = Identity + Capabilities only
+
+10️⃣ FINAL EXPECTED RESULT
+
+After this task:
+
+✔ No duplicated fields
+✔ Clean and structured agency profile
+✔ All fields readable and visible
+✔ Same data structure as signup
+✔ Safe foundation for:
+
+Jobs
+
+Filters
+
+Agency public cards
+
+🔴 FINAL WARNING
+
+This is a CLEANUP + ALIGNMENT task.
+If anything breaks, ROLL BACK immediately and reapply carefully.
+
+✅ END OF TASK

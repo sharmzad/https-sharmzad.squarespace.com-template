@@ -1,0 +1,237 @@
+Build Admin Controls for Travel Mentors
+
+Important:
+
+No design change
+
+Reuse existing admin dashboard structure
+
+Focus on visibility, approval, and control
+
+1️⃣ ADMIN → MENTOR MANAGEMENT (NEW SECTION)
+
+Add a new admin section:
+
+Admin Menu Item
+
+Travel Mentors
+
+Admin should see a list with:
+
+Mentor Name
+
+Email
+
+Country (Egypt / Abroad)
+
+Status:
+
+Pending Approval
+
+Approved
+
+Suspended
+
+Number of Offers
+
+Total Earnings
+
+Date Joined
+
+Admin actions:
+
+Approve mentor
+
+Reject mentor
+
+Suspend mentor
+
+View mentor profile
+
+View mentor offers
+
+⚠️ Mentor accounts must NOT go live until approved.
+
+2️⃣ ADMIN → MENTOR PROFILE REVIEW
+
+Admin must be able to review:
+
+Bio
+
+Specialties
+
+Destinations
+
+Languages
+
+Uploaded proof (if any)
+
+Admin controls:
+
+Approve profile
+
+Request changes
+
+Reject profile
+
+3️⃣ ADMIN → MENTOR OFFER APPROVAL (VERY IMPORTANT)
+
+Every mentor offer must follow this flow:
+
+Draft → Pending Approval → Approved / Rejected
+
+Admin checks:
+
+No execution promises
+
+No hotel / transport booking claims
+
+Correct wording (“Planning / Consultation only”)
+
+Fair pricing (not misleading)
+
+Admin actions:
+
+Approve offer
+
+Reject offer (with reason)
+
+Disable offer
+
+⚠️ Mentor offers must NOT be visible publicly without admin approval.
+
+4️⃣ ADMIN → BOOKING & EXECUTION CONTROL
+
+When a traveler books a mentor offer:
+
+Admin dashboard must show:
+
+Booking ID
+
+Mentor name
+
+Offer type:
+
+Planning
+
+Online Consultation
+
+Traveler details
+
+Status:
+
+Pending
+
+Confirmed
+
+In Progress
+
+Completed
+
+Cancelled
+
+Admin-only actions:
+
+Assign execution to:
+
+Internal DMC
+
+Approved agency
+
+Guide / dive center
+
+Change booking status
+
+Cancel booking
+
+Handle refunds
+
+🚫 Mentor must NOT be able to:
+
+Assign execution
+
+Choose suppliers
+
+Modify booking flow
+
+5️⃣ ADMIN → MENTOR PAYMENTS (CONTROL LAYER)
+
+Admin should control:
+
+Planning fee release
+
+Commission release
+
+Hold payment (disputes / cancellations)
+
+Admin can:
+
+Set mentor payment rule:
+
+Fixed planning fee
+
+% commission
+
+Hybrid (later)
+
+Override payout
+
+Block payout on violation
+
+⚠️ Payments released ONLY by admin action or rule.
+
+6️⃣ ADMIN → COMMUNICATION MONITORING (BASIC)
+
+Admin should be able to:
+
+View mentor–traveler messages (read-only)
+
+Flag violations:
+
+External payment request
+
+External supplier promotion
+
+WhatsApp redirection
+
+Admin actions:
+
+Warning
+
+Temporary suspension
+
+Permanent ban
+
+7️⃣ ADMIN → MENTOR VIOLATION POLICY (LOGIC)
+
+Add internal rule (no UI needed yet):
+
+Mentor violation examples:
+
+Redirecting traveler off-platform
+
+Offering external execution
+
+Collecting money outside EgTravelMarket
+
+Admin actions:
+
+Freeze earnings
+
+Suspend mentor
+
+Terminate account
+
+✅ WHAT STEP 4 ACHIEVES (IMPORTANT)
+
+After Step 4:
+
+Mentors are fully controlled
+
+Execution is 100% yours
+
+Money flow is safe
+
+Platform is investor-ready
+
+No legal grey zones

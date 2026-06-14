@@ -1,0 +1,84 @@
+We need to ADD “Languages Spoken” to Dive Center SIGN UP.
+Currently, languages exist only in Edit Profile and Search, but NOT in signup.
+This creates missing data for new dive centers.
+
+--------------------------------------------------
+SCOPE
+--------------------------------------------------
+Page: /divecenter-signup.html
+
+Languages must:
+- Be selected during signup
+- Be saved with the dive center profile
+- Appear pre-filled in Edit Profile
+- Work correctly with existing Search filters
+
+NO admin changes required.
+
+--------------------------------------------------
+ADD FIELD TO SIGNUP: LANGUAGES SPOKEN
+--------------------------------------------------
+
+Field type:
+- Multi-select (checkboxes or multi-select dropdown)
+- Same UX pattern used for Guides / Experts languages
+
+Label:
+- Languages Spoken *
+
+Standard options:
+- English
+- Arabic
+- German
+- French
+- Italian
+- Spanish
+- Russian
+- Polish
+- Dutch
+- Chinese
+- Other
+
+At least ONE language must be selected.
+
+--------------------------------------------------
+FIX “OTHER” LANGUAGE BEHAVIOR
+--------------------------------------------------
+
+If user selects “Other”:
+- Show an additional text input:
+  Label: “Specify other language(s)”
+- Allow free text (comma-separated)
+- Save this text with the dive center profile
+
+--------------------------------------------------
+DATA HANDLING
+--------------------------------------------------
+- Save selected standard languages as array
+- Save “other_language_text” only if “Other” is selected
+- Do NOT overwrite existing language data
+- Keep backward compatibility with current profiles
+
+--------------------------------------------------
+EDIT PROFILE
+--------------------------------------------------
+- Selected languages must appear checked
+- If “Other” was selected, show saved text in input field
+- Field must be readable and visible
+
+--------------------------------------------------
+SEARCH FILTER BEHAVIOR
+--------------------------------------------------
+- Search uses STANDARD languages only
+- “Other” must NOT appear as a filter option
+- Dive centers with “Other” language:
+  - Are searchable ONLY by standard languages
+  - “Other” is informational only
+
+--------------------------------------------------
+IMPORTANT
+--------------------------------------------------
+- Do NOT add new tables
+- Do NOT remove existing fields
+- Do NOT change search logic
+- This task is ONLY to add missing signup field and complete language handling

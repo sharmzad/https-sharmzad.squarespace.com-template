@@ -1,0 +1,120 @@
+💾 File: package-k.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Package K – 2 Trips | EgyTravelMarket</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header id="header"></header>
+
+  <main class="package-page">
+    <section class="package-hero gradient-bg">
+      <h1>✈️🌍 Package K – The Ultimate Egyptian Immersion</h1>
+      <p>
+        Experience the best of Egypt — from Red Sea wonders to Cairo’s timeless treasures.
+        Two unforgettable journeys in one discounted package.
+      </p>
+    </section>
+
+    <!-- Booking Form -->
+    <section class="booking-form">
+      <h2>Book This Package</h2>
+      <p class="note">🔒 Access Code Required to Unlock Booking</p>
+      <form id="bookingForm">
+        <input type="text" placeholder="Full Name" required />
+        <input type="email" placeholder="Email Address" required />
+        <input type="password" placeholder="Access Code" required />
+        <input type="date" required />
+        <div class="row">
+          <input type="number" min="1" value="1" placeholder="Adults" required />
+          <input type="number" min="0" value="0" placeholder="Children" />
+        </div>
+        <button type="submit" class="btn-primary">Submit Booking</button>
+      </form>
+    </section>
+
+    <!-- Pricing -->
+    <section class="price-box">
+      <h2>💰 Package Price Breakdown & Savings</h2>
+      <table class="price-table">
+        <tr>
+          <th>Traveler Type</th>
+          <th>You Pay</th>
+          <th>Was</th>
+          <th>Savings</th>
+        </tr>
+        <tr>
+          <td>Adult</td>
+          <td>$285 USD</td>
+          <td>$350 USD</td>
+          <td>$65 OFF</td>
+        </tr>
+        <tr>
+          <td>Child</td>
+          <td>$270 USD</td>
+          <td>$340 USD</td>
+          <td>$70 OFF</td>
+        </tr>
+      </table>
+      <p class="offer">⭐ Save up to $70 Per Person + Free SIM Card (20 GB Data) ⭐</p>
+    </section>
+
+    <!-- Trip 1 -->
+    <section class="trip-section">
+      <h2>🌊 Trip 1 – Sea Scope Semi-Submarine</h2>
+      <p>
+        Glide beneath the waves in an air-conditioned viewing cabin and witness the vibrant coral
+        gardens of the Red Sea without getting wet.
+      </p>
+      <ul>
+        <li>Panoramic underwater windows & comfortable seating</li>
+        <li>Colorful marine life and natural reef formations</li>
+        <li>Perfect for families and non-swimmers</li>
+        <li>Complimentary soft drinks on board</li>
+      </ul>
+    </section>
+
+    <!-- Trip 2 -->
+    <section class="trip-section">
+      <h2>✈️ Trip 2 – Cairo by Flight (Pyramids & Grand Museum)</h2>
+      <p>
+        Fly to Cairo for a day filled with history, culture and legendary sights — led by a
+        licensed Egyptologist guide.
+      </p>
+      <ul>
+        <li>See the Pyramids of Giza & the Great Sphinx</li>
+        <li>Visit the new Grand Egyptian Museum (GEM)</li>
+        <li>Lunch at a quality local restaurant</li>
+        <li>Optional Nile Cruise (payable locally)</li>
+      </ul>
+      <p class="note">
+        * Visa fee ($30 per person) not included – payable on arrival at Cairo Airport.
+      </p>
+    </section>
+
+    <section class="final-call">
+      <h3>Ready to Explore Both Land & Sea?</h3>
+      <p>
+        Secure your spot today and enjoy the perfect blend of adventure and culture with huge savings.
+      </p>
+    </section>
+  </main>
+
+  <footer id="footer"></footer>
+  <script src="app.js"></script>
+</body>
+</html>
+
+🏠 HOME PAGE CARD (for “2 Trips” section)
+<!-- Package K Card -->
+<div class="package-card">
+  <img src="images/package-k.jpg" alt="Package K – The Ultimate Egyptian Immersion">
+  <h3>Package K – The Ultimate Egyptian Immersion</h3>
+  <p>🌊 Sea Scope Semi-Submarine + ✈️ Cairo by Flight</p>
+  <p><strong>Adult:</strong> $285 (Was $350)  •  <strong>Child:</strong> $270 (Was $340)</p>
+  <p class="offer">⭐ Save Up to $70 Per Person ⭐</p>
+  <a href="package-k.html" class="btn-primary">View & Book Now</a>
+</div>

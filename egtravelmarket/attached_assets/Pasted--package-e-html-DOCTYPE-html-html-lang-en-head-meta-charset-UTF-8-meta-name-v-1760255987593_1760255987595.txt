@@ -1,0 +1,270 @@
+🧱 package-e.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E Package 2 Trips | EgyTravelMarket</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="app.js" defer></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+      color: #222;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+      url('images/e-package.webp') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 120px 20px;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+    }
+
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      margin-top: 40px;
+    }
+
+    h2 {
+      color: #0a66c2;
+      border-left: 5px solid #0a66c2;
+      padding-left: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #0a66c2;
+      color: white;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+
+    .booking-form {
+      background: #f2f7fc;
+      padding: 25px;
+      border-radius: 12px;
+      margin-top: 30px;
+    }
+
+    .booking-form input,
+    .booking-form textarea,
+    .booking-form select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .booking-form button {
+      background: #0a66c2;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .booking-form button:hover {
+      background: #084b8a;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .popup-content {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 350px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      background: #0a66c2;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      margin: 40px 0 20px;
+      transition: background 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #084b8a;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- HERO SECTION -->
+  <div class="hero">
+    <h1>💎 The Ultimate Red Sea "Land & Sea" E-Package 💎</h1>
+    <p>Two Signature Adventures. One Exclusive Price. Instant $15 Savings!</p>
+  </div>
+
+  <section>
+    <p>
+      Stop choosing between the pristine reefs of the Red Sea and the magic of the Sinai desert.
+      Our exclusive E-Package 2 Trip combines the two most iconic experiences in Sharm El Sheikh,
+      giving you the full Egyptian adventure while locking in an unbeatable discount.
+    </p>
+
+    <h2>💰 E-Package Price: Lock In Your Savings Today</h2>
+    <table>
+      <tr>
+        <th>Category</th>
+        <th>E-Package Price</th>
+        <th>Regular Price (Combined)</th>
+        <th>Your Savings</th>
+      </tr>
+      <tr>
+        <td>Adult</td>
+        <td>$65 USD</td>
+        <td>$80 USD</td>
+        <td>$15 USD</td>
+      </tr>
+      <tr>
+        <td>Child</td>
+        <td>$45 USD</td>
+        <td>$50 USD</td>
+        <td>$5 USD</td>
+      </tr>
+    </table>
+
+    <h2>🌊 Trip 1: Ras Mohamed National Park & The White Island (Full Day Boat Cruise)</h2>
+    <img src="images/ras-mohamed.webp" alt="Ras Mohamed Boat Trip" loading="lazy">
+    <p>
+      Dive into one of the world's most protected and diverse marine environments.
+      This is your chance to swim through a real-life aquarium!
+    </p>
+    <ul>
+      <li><b>The Cruise:</b> Full-day journey 08:00–17:00 to the best parts of the national park.</li>
+      <li><b>Underwater Magic:</b> Three snorkeling stops at famed Red Sea spots where the Gulf of Suez and Aqaba meet.</li>
+      <li><b>The White Island:</b> A temporary sandy strip perfect for incredible photos and a quick beach break.</li>
+      <li><b>Included:</b> Lunch onboard + A/C transportation.</li>
+      <li><b>Note:</b> National Park Fee of $5 USD per person not included.</li>
+    </ul>
+    <p><i>(Separate Trip Price: Adult $40 / Child $25)</i></p>
+
+    <h2>🏜️ Trip 2: 5*1 Desert Rose Safari, BBQ & Stargazing (Evening Thrills)</h2>
+    <img src="images/desert-rose.webp" alt="Desert Rose Safari" loading="lazy">
+    <ul>
+      <li><b>The Thrills:</b> Quad Runner (ATV) ride across the dunes + traditional Camel Ride at sunset.</li>
+      <li><b>Bedouin Feast:</b> Authentic Bedouin Dinner (BBQ style) with traditional bread and herbal mint tea.</li>
+      <li><b>The Show:</b> Oriental evening show with Belly Dancing and/or Tanoura performances.</li>
+      <li><b>Cosmic Finale:</b> Stargazing experience with an astronomy guide and telescope (where available).</li>
+      <li><b>Duration:</b> 14:00 to 20:00.</li>
+      <li><b>Included:</b> All activities, dinner, and transportation.</li>
+    </ul>
+    <p><i>(Separate Trip Price: Adult $40 / Child $25)</i></p>
+
+    <p><b>Don't wait!</b> Secure your two most unforgettable Egyptian memories now and save with the E-Package price.</p>
+
+    <h2>📝 Book Your Package</h2>
+    <form class="booking-form" onsubmit="event.preventDefault(); showPopup();">
+      <input type="text" placeholder="Full Name" required>
+      <input type="email" placeholder="Email Address" required>
+      <input type="tel" placeholder="Phone Number" required>
+      <div style="display: flex; gap: 10px;">
+        <input type="number" placeholder="Adults" min="1" required>
+        <input type="number" placeholder="Children" min="0">
+      </div>
+      <input type="date" required>
+      <textarea rows="4" placeholder="Message or Special Requests"></textarea>
+      <button type="submit">Book Now</button>
+    </form>
+
+    <div class="popup" id="popup">
+      <div class="popup-content">
+        <h3>Thank you! Our team will contact you shortly.</h3>
+        <button onclick="closePopup()">Close</button>
+      </div>
+    </div>
+
+    <div style="text-align:center;">
+      <a href="/package-tours.html" class="back-btn">🔙 Back to All Packages</a>
+    </div>
+  </section>
+
+  <script>
+    function showPopup() {
+      document.getElementById('popup').style.display = 'flex';
+    }
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
+
+🏠 Home Page Card Snippet
+
+Add this inside your homepage “Packages” section:
+
+<div class="package-card">
+  <img src="images/e-package.webp" alt="E Package 2 Trips" loading="lazy">
+  <h3>E Package 2 Trips — Land & Sea Experience</h3>
+  <p>Combine <b>Ras Mohamed & Desert Rose Safari</b> for one unbeatable price! Save $15 instantly.</p>
+  <p><b>Starting from:</b> $65 Adult / $45 Child</p>
+  <a href="/package-e.html" class="btn">View Details</a>
+</div>
+
+🗺️ Package Tours Page Card Snippet
+
+Add this to your package-tours.html list/grid of available packages:
+
+<div class="package-card">
+  <img src="images/e-package.webp" alt="E Package 2 Trips" loading="lazy">
+  <h3>E Package 2 Trips — Land & Sea Experience</h3>
+  <p>Two signature adventures — <b>Ras Mohamed & Desert Rose Safari</b>. Save $15 instantly!</p>
+  <a href="/package-e.html" class="btn">View Details</a>
+</div>

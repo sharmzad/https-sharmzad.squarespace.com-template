@@ -1,0 +1,139 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EgTravelMarket | The Voice of Egypt – Music & Opera</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{background:#fdfaf6;color:#222;line-height:1.7;}
+    a{text-decoration:none;color:#0a3d62;}
+    img{max-width:100%;display:block;}
+
+    /* ===== HERO ===== */
+    .hero{
+      background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+                 url('https://images.unsplash.com/photo-1531325728029-22e0d6d1c41f') center/cover no-repeat;
+      height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+      text-align:center;color:#fff;padding:0 15px;
+    }
+    .hero h1{font-size:2.8rem;margin-bottom:10px;}
+    .hero p{max-width:700px;color:#ddd;}
+
+    /* ===== ARTICLE ===== */
+    .article{padding:60px 10%;max-width:900px;margin:auto;}
+    .article h2{color:#0a3d62;margin-bottom:20px;}
+    .article p{margin-bottom:20px;font-size:1.05rem;color:#333;}
+
+    /* ===== RELATED TRIPS ===== */
+    .related-trips{background:#fff;padding:50px 10%;text-align:center;}
+    .related-trips h2{color:#0a3d62;margin-bottom:30px;}
+    .trips{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;}
+    .trip-card{background:#f9f9f9;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);overflow:hidden;transition:.3s;}
+    .trip-card:hover{transform:translateY(-5px);}
+    .trip-card img{height:180px;object-fit:cover;width:100%;}
+    .trip-card h3{color:#0a3d62;font-size:1.1rem;margin:15px;}
+    .trip-card a{display:inline-block;background:#0a3d62;color:#fff;margin:0 0 15px;padding:8px 15px;border-radius:6px;transition:.3s;}
+    .trip-card a:hover{background:#062f4e;}
+
+    footer{background:#0a3d62;color:#fff;text-align:center;padding:30px 15px;font-size:.9rem;margin-top:50px;}
+    footer p{margin:5px 0;}
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <h1>The Voice of Egypt – Music & Opera</h1>
+    <p>From desert drums to opera stages, Egypt’s melody tells stories of love, faith, and freedom.</p>
+  </section>
+
+  <!-- ===== ARTICLE CONTENT ===== -->
+  <section class="article">
+    <h2>Melodies Older Than Time</h2>
+    <p>
+      Music in Egypt is as ancient as its pyramids. Archaeologists have uncovered harps, flutes, and percussion
+      instruments from over 4,000 years ago — proof that rhythm and harmony have always been woven into Egyptian life.
+      Even in temples, music was used to honor gods and heal souls.
+    </p>
+
+    <h2>The Golden Voices</h2>
+    <p>
+      The 20th century gave birth to Egypt’s musical icons — voices that transcended generations.
+      <strong>Umm Kulthum</strong>, known as “The Star of the East,” filled concert halls with emotion;
+      <strong>Abdel Halim Hafez</strong> sang of love and hope;
+      and composers like <strong>Mohamed Abdel Wahab</strong> built the bridge between traditional
+      and modern sound.
+    </p>
+
+    <p>
+      Their songs are not nostalgia — they are living poems that still echo in taxis, cafés,
+      and hearts across the Arab world. Each melody carries Egypt’s warmth, patience, and romantic soul.
+    </p>
+
+    <h2>Modern Harmony</h2>
+    <p>
+      Today, Egypt’s music thrives in all forms: classical orchestras at the Cairo Opera House,
+      indie bands along the Nile, and Sufi gatherings where voices rise in devotion.
+      This diversity reflects the Egyptian spirit — open, creative, and endlessly expressive.
+    </p>
+
+    <p>
+      At EgTravelMarket, travelers can experience this living heritage firsthand —
+      from elegant evenings of opera to intimate desert concerts under the stars.
+    </p>
+  </section>
+
+  <!-- ===== RELATED TRIPS ===== -->
+  <section class="related-trips">
+    <h2>Related Experiences</h2>
+    <div class="trips">
+      <div class="trip-card">
+        <img src="/assets/trips/opera-night.jpg" alt="Opera Night">
+        <h3>Cairo Opera House Evening</h3>
+        <a href="/trip-opera-night.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/nile-music.jpg" alt="Nile Music Cruise">
+        <h3>Oriental Music Night on the Nile</h3>
+        <a href="/trip-nile-music.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/sufi-night.jpg" alt="Sufi Night">
+        <h3>Sufi Spiritual Evening in Cairo</h3>
+        <a href="/trip-sufi-night.html">View Trip</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 EgTravelMarket – All Rights Reserved</p>
+    <p>Backed & Managed by GoMundo Travel</p>
+  </footer>
+
+</body>
+</html>
+✅ Step 3 – Upload (optional) Images
+Place in /assets/trips/ folder:
+
+Copy code
+opera-night.jpg  
+nile-music.jpg  
+sufi-night.jpg  
+✅ Step 4 – Link from Discover Egypt Page
+In discover-egypt.html, find
+
+html
+Copy code
+<h3>Music & Opera</h3>
+and wrap it:
+
+html
+Copy code
+<a href="/music-opera.html">
+  <h3>Music & Opera</h3>
+</a>
+✅ Step 5 – Run & Preview
+Click Run → open /music-opera.html
+You’ll see a beautiful page mixing music history, emotion, and travel experiences.

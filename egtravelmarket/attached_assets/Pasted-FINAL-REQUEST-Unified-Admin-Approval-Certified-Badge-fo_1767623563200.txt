@@ -1,0 +1,42 @@
+FINAL REQUEST – Unified Admin Approval + Certified Badge for ALL User Types
+
+We need to close the full admin approval cycle for ALL user types (guides, divers, agencies, dive centers, experts, mentors, travelers, etc.) — not guides only.
+
+1) SIGN UP APPROVAL TAB (Admin)
+- The admin must be able to view the FULL signup data exactly as entered by the user (read-only), including all role-specific fields and all uploaded documents.
+- Add a clear action button for each user: "View Full Data" (or "Review Signup").
+- This detailed review view should show:
+  A) Common fields: name, email, phone, location, user type, signup date, email_verified status
+  B) Role-specific fields dynamically (based on user type)
+  C) Legal confirmations: terms_accepted, license_confirmed, verification_consent (if exists for that type)
+  D) Uploaded documents: view/download links (license images/files, etc.)
+
+2) APPROVE / REJECT ACTIONS
+- From the detailed review view, admin can:
+  ✅ Approve
+  ❌ Reject (with optional rejection reason saved)
+- On Approve:
+  - set signup_approved = true
+  - set approved_at = NOW()
+  - set approved_by = admin user id/email
+  - set certification_status = 'certified'
+- On Reject:
+  - set signup_approved = false
+  - set certification_status = 'rejected'
+  - save rejection_reason
+
+3) PUBLIC VISIBILITY + ACCESS RULES
+- Only users with signup_approved = true (or certification_status='certified') should appear publicly (profiles/listings).
+- Direct access to unapproved profiles should return 404 (as implemented for guides).
+- The same rule must apply for ALL user types that have public profiles.
+
+4) CERTIFIED BADGE (UI)
+- After admin approval, show a visible badge on:
+  - public cards/listings
+  - public profile pages
+  - dashboard header/status area
+Badge text:
+"Certified" or "Verified & Certified" (choose best UX)
+- If pending: show “Pending Admin Approval” on dashboard (not public).
+
+Goal: a single unified admin approval engine that works for every signup type now and in the future, with a certified badge after approval.

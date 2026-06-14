@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Flash Offers Admin | EgTravelMarket</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="admin-flash.css" />
+</head>
+<body>
+  <div id="lock-screen" class="lock-screen">
+    <div class="lock-box">
+      <h1>🔐 Admin Access</h1>
+      <p>Enter password to manage flash offers</p>
+      <input type="password" id="lock-pass" placeholder="Password" autofocus />
+      <button id="lock-btn" class="btn btn-primary">Unlock</button>
+      <p id="lock-msg" class="error-msg"></p>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <h1>⚡ Flash Offers Admin</h1>
+    <div class="actions">
+      <button id="btn-new" class="btn">+ New Offer</button>
+      <input type="file" id="file-import" accept="application/json" hidden />
+      <button id="btn-import" class="btn btn-ghost">Import JSON</button>
+      <button id="btn-export" class="btn">Download JSON</button>
+      <button id="btn-save" class="btn btn-primary">Save to Browser</button>
+      <button id="btn-publish" class="btn btn-ghost">Copy JSON to Clipboard</button>
+      <button onclick="etmLogout()" class="btn btn-ghost">Logout</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel">
+      <h2>Current Offers</h2>
+      <p class="muted">These are your active/queued flash offers. Edit inline or use the form ➜</p>
+      <div class="table-wrap">
+        <table id="offers-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Badge</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Link</th>
+              <th>Deadline</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="offers-tbody">
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <aside class="form-panel">
+      <h2 id="form-title">Add / Edit Offer</h2>
+      <form id="offer-form">
+        <input type="hidden" name="index" value="-1" />
+
+        <label>Badge
+          <input type="text" name="badge" placeholder="Ends Soon / Trip of the Week / Diving Deal" />
+        </label>
+
+        <label>Title *
+          <input type="text" name="title" placeholder="Cairo by Flight — Round Trip" required />
+        </label>
+
+        <label>Description *
+          <textarea name="desc" rows="4" placeholder="Day tour from Sharm including Museum & Giza Plateau. Save $20 this week." required></textarea>
+        </label>
+
+        <label>Link (URL to your page) *
+          <input type="url" name="link" placeholder="cairo-by-flight.html" required />
+        </label>
+
+        <label>Deadline (date & time)
+          <input type="datetime-local" name="deadlineLocal" />
+        </label>
+
+        <label>Or paste full ISO deadline (optional)
+          <input type="text" name="deadlineISO" placeholder="2025-11-05T20:00:00+02:00" />
+        </label>
+
+        <div class="hint">
+          Tip: If you use the date/time picker, we'll convert it to ISO automatically when exporting.
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Save Offer</button>
+          <button type="button" id="btn-cancel" class="btn btn-ghost">Cancel</button>
+          <button type="button" id="btn-delete" class="btn btn-danger">Delete</button>
+        </div>
+      </form>
+
+      <div class="note">
+        <p><strong>How to publish:</strong> Click <em>Download JSON</em> to get <code>flash-offers.json</code>, then replace the file in your project root on Replit.</p>
+        <p><strong>Password:</strong> ETM2025! (change in admin-flash.js if needed)</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="foot">
+    <small>EgTravelMarket — Admin Panel • Password Protected • Session expires after 6 hours</small>
+  </footer>
+
+  <script src="admin-flash.js"></script>
+</body>
+</html>

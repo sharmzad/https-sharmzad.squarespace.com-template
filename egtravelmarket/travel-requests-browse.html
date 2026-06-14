@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Browse Travel Requests - Find Travel Opportunities | EgTravelMarket</title>
+  <meta name="description" content="Browse open travel requests from tourists seeking guides, diving trips, private tours, safaris, and transfers across Egypt. Experts can bid on requests and grow their travel business with verified customers.">
+  <meta name="keywords" content="travel requests Egypt, booking opportunities, tourist inquiries, guide jobs, diving packages, private tours, safari bookings, travel leads, expert bidding, local guides opportunities" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/header.css" />
+  <style>
+    .page-wrap { max-width: 1050px; margin: 2rem auto; padding: 1.5rem; padding-top: 8rem; background: var(--card); border-radius: 1rem; box-shadow: var(--shadow); }
+    .page-wrap h1 { margin-bottom: 0.5rem; color: var(--accent); }
+    .page-wrap .subtitle { color: var(--text); font-size: 1.05rem; margin-bottom: 0.5rem; }
+    .page-wrap p { color: var(--muted); margin-bottom: 1rem; }
+    .filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; margin-bottom: 0.5rem; background: var(--bg-soft); padding: 1rem; border-radius: 0.75rem; }
+    .filters label { font-size: 0.8rem; color: #e5e7eb; margin-bottom: 0.25rem; display: block; font-weight: 500; }
+    .filters select, .filters input { 
+      width: 100%; 
+      padding: 0.45rem 0.6rem; 
+      border-radius: 0.5rem; 
+      border: 1px solid #cbd5e1; 
+      background: #ffffff; 
+      color: #0f172a; 
+      font-size: 0.85rem; 
+    }
+    .filters select option {
+      background-color: #ffffff;
+      color: #0f172a;
+    }
+    .filters button { padding: 0.5rem 1.2rem; border-radius: 999px; border: none; cursor: pointer; background: var(--brand); color: #fff; font-size: 0.85rem; align-self: end; }
+    .filters button:hover { background: var(--accent); color: #000; }
+    .filter-helper { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.5rem; }
+    
+    .requests-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .request-card { background: var(--bg-soft); border-radius: 0.75rem; padding: 1rem; border: 1px solid rgba(255,255,255,0.1); position: relative; }
+    .request-card:hover { border-color: var(--brand); }
+    .request-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
+    .request-card-title { font-weight: 600; color: var(--text); font-size: 1rem; margin-bottom: 0.25rem; }
+    .request-card-code { font-size: 0.75rem; color: var(--muted); }
+    .request-card-posted { font-size: 0.75rem; color: var(--muted); }
+    .request-card-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+    .meta-tag { background: rgba(255,255,255,0.05); padding: 0.2rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; color: var(--muted); }
+    .meta-tag-highlight { background: rgba(46, 166, 255, 0.15); color: #2ea6ff; }
+    .request-card-details { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.75rem; line-height: 1.4; }
+    .request-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1); }
+    .btn-offer { padding: 0.45rem 1rem; font-size: 0.85rem; border-radius: 999px; border: none; cursor: pointer; background: var(--brand); color: #fff; transition: background 0.2s; }
+    .btn-offer:hover { background: var(--accent); color: #000; }
+    .btn-offer-disabled { background: #666; cursor: default; }
+    .offer-helper { font-size: 0.7rem; color: var(--muted); }
+    .badge-open { background: rgba(183, 235, 143, 0.1); border-radius: 999px; padding: 0.15rem 0.5rem; font-size: 0.7rem; border: 1px solid #b7eb8f; color: #b7eb8f; }
+    .badge-quality { position: absolute; top: 0.5rem; right: 0.5rem; padding: 0.15rem 0.5rem; border-radius: 0.25rem; font-size: 0.65rem; font-weight: 500; }
+    .badge-detailed { background: rgba(46, 166, 255, 0.15); color: #2ea6ff; }
+    .badge-basic { background: rgba(255, 255, 255, 0.1); color: var(--muted); }
+    
+    .empty-state { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+    .empty-state h3 { color: var(--text); margin-bottom: 0.5rem; }
+    .loading-state { text-align: center; padding: 2rem; color: var(--muted); }
+
+    @media (max-width: 768px) {
+      .page-wrap {
+        margin: 1rem auto;
+        padding: 1rem;
+      }
+
+      .page-wrap h1 {
+        font-size: 1.4rem;
+      }
+
+      .page-wrap p, .page-wrap .subtitle {
+        font-size: 0.9rem;
+      }
+
+      .filters {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+        padding: 0.75rem;
+      }
+
+      .filters label {
+        font-size: 0.8rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .filters select, .filters input {
+        padding: 0.6rem 0.7rem;
+        font-size: 16px;
+        min-height: 44px;
+        border-radius: 0.5rem;
+      }
+
+      .filters button {
+        padding: 0.65rem 1.2rem;
+        font-size: 0.9rem;
+        min-height: 44px;
+        width: 100%;
+      }
+
+      .requests-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .request-card {
+        padding: 0.85rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-wrap {
+        margin: 0.5rem auto;
+        padding: 0.75rem;
+      }
+
+      .page-wrap h1 {
+        font-size: 1.2rem;
+      }
+
+      .filters {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 0.5rem;
+      }
+
+      .filters label {
+        font-size: 0.75rem;
+      }
+
+      .filters select, .filters input {
+        padding: 0.55rem 0.6rem;
+        font-size: 16px;
+        border-radius: 0.4rem;
+      }
+
+      .filters button {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9Z2B97VS02"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9Z2B97VS02');
+  </script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="page-wrap">
+    <h1>Browse Traveler Requests</h1>
+    <p class="subtitle">Find active traveler requests and send tailored offers. Faster responses increase your chances of being selected.</p>
+    <p id="loginPrompt" style="display:none;">Please <a href="/guide-login.html" style="color: var(--accent); text-decoration: underline;">login as an expert</a> to send offers.</p>
+
+    <div class="filters">
+      <div>
+        <label for="filterLocation">Destination / Area</label>
+        <input type="text" id="filterLocation" placeholder="e.g., Sharm El-Sheikh, Cairo..." />
+      </div>
+      <div>
+        <label for="filterCategory">Request Type</label>
+        <select id="filterCategory">
+          <option value="all">All Types</option>
+          <option value="Boat Trip">Boat Trip</option>
+          <option value="Diving">Diving</option>
+          <option value="Tour">Tour / Sightseeing</option>
+          <option value="Desert Safari">Desert Safari</option>
+          <option value="Cultural Experience">Cultural Experience</option>
+          <option value="Transfer">Transfer / Transport</option>
+          <option value="Custom Package">Custom Package</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div>
+        <label for="filterLanguage">Preferred Language</label>
+        <select id="filterLanguage">
+          <option value="all">All Languages</option>
+          <option value="en">English</option>
+          <option value="de">German</option>
+          <option value="fr">French</option>
+          <option value="ru">Russian</option>
+          <option value="it">Italian</option>
+          <option value="es">Spanish</option>
+          <option value="ar">Arabic</option>
+          <option value="pl">Polish</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div>
+        <label for="filterBudgetMin">Budget Min (USD)</label>
+        <input type="number" id="filterBudgetMin" placeholder="e.g., 100" min="0" />
+      </div>
+      <div>
+        <label for="filterBudgetMax">Budget Max (USD)</label>
+        <input type="number" id="filterBudgetMax" placeholder="e.g., 1000" min="0" />
+      </div>
+      <div>
+        <label for="filterDateFrom">Date From</label>
+        <input type="date" id="filterDateFrom" />
+      </div>
+      <div>
+        <label for="filterDateTo">Date To</label>
+        <input type="date" id="filterDateTo" />
+      </div>
+      <div>
+        <button id="btnApplyFilters">Apply Filters</button>
+      </div>
+    </div>
+    <p class="filter-helper">Use filters to quickly find requests that match your expertise.</p>
+
+    <div id="requestsContainer" class="requests-grid">
+      <div class="loading-state">Loading requests...</div>
+    </div>
+  </main>
+
+  <script src="/js/api-client.js"></script>
+  <script>
+    fetch('/header.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('header-placeholder').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = '/header.js';
+        document.body.appendChild(script);
+      });
+
+    const containerEl = document.getElementById('requestsContainer');
+
+    function escapeHtml(unsafe) {
+      if (!unsafe) return '';
+      const div = document.createElement('div');
+      div.textContent = unsafe;
+      return div.innerHTML;
+    }
+
+    function getTimeAgo(dateString) {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      const now = new Date();
+      const diffMs = now - date;
+      const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+      const diffDays = Math.floor(diffHours / 24);
+      
+      if (diffHours < 1) return 'Posted just now';
+      if (diffHours < 24) return `Posted ${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+      if (diffDays < 7) return `Posted ${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+      return `Posted on ${date.toLocaleDateString()}`;
+    }
+
+    function getQualityBadge(request) {
+      const detailsLength = (request.details || '').length;
+      const hasMultipleFields = request.budget && request.travelers && request.location;
+      
+      if (detailsLength > 100 || hasMultipleFields) {
+        return '<span class="badge-quality badge-detailed">Detailed request</span>';
+      }
+      return '<span class="badge-quality badge-basic">Basic request</span>';
+    }
+
+    function getLanguageLabel(langCode) {
+      const langs = {
+        'en': '🇬🇧 English', 'de': '🇩🇪 German', 'fr': '🇫🇷 French', 
+        'ru': '🇷🇺 Russian', 'it': '🇮🇹 Italian', 'es': '🇪🇸 Spanish',
+        'ar': '🇸🇦 Arabic', 'pl': '🇵🇱 Polish', 'nl': '🇳🇱 Dutch',
+        'sv': '🇸🇪 Swedish', 'no': '🇳🇴 Norwegian', 'da': '🇩🇰 Danish',
+        'cs': '🇨🇿 Czech', 'ro': '🇷🇴 Romanian', 'tr': '🇹🇷 Turkish',
+        'zh': '🇨🇳 Chinese', 'ja': '🇯🇵 Japanese', 'ko': '🇰🇷 Korean',
+        'any': '🌐 Any', 'other': '❓ Other'
+      };
+      return langs[langCode] || langCode || '-';
+    }
+
+    function getCategoryLabel(category) {
+      const categories = {
+        'City Tour': '🏛️ Sightseeing & Culture',
+        'Safari': '🏜️ Desert & Safari',
+        'Diving': '🤿 Diving',
+        'Snorkeling': '🤿 Snorkeling',
+        'Boat Trip': '🚤 Boat Trip',
+        'Custom Package': '✨ Custom Package',
+        'Transfer': '🚗 Transfer',
+        'Other': '❓ Other'
+      };
+      return categories[category] || category || 'Request';
+    }
+
+    async function loadRequests(filters = {}) {
+      try {
+        const token = apiClient.getAuthToken();
+        const isLoggedIn = !!token;
+        
+        if (!isLoggedIn) {
+          document.getElementById('loginPrompt').style.display = 'block';
+        }
+
+        const params = new URLSearchParams();
+        if (filters.category && filters.category !== 'all') params.append('category', filters.category);
+        if (filters.location) params.append('location', filters.location);
+        if (filters.language && filters.language !== 'all') params.append('language', filters.language);
+        if (filters.dateFrom) params.append('dateFrom', filters.dateFrom);
+        if (filters.dateTo) params.append('dateTo', filters.dateTo);
+        if (filters.budgetMin) params.append('budgetMin', filters.budgetMin);
+        if (filters.budgetMax) params.append('budgetMax', filters.budgetMax);
+
+        const url = `/api/travel-requests${params.toString() ? '?' + params.toString() : ''}`;
+        const headers = {};
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        }
+        
+        const res = await fetch(url, { headers });
+
+        if (!res.ok) {
+          if (res.status === 401 || res.status === 403) {
+            containerEl.innerHTML = '<div class="empty-state"><h3>Login Required</h3><p>Please <a href="/guide-login.html" style="color: var(--brand);">login as an expert</a> to view detailed requests and send offers.</p></div>';
+            return;
+          }
+          throw new Error('Server error');
+        }
+
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message || 'Error');
+
+        const list = data.requests || [];
+        if (list.length === 0) {
+          containerEl.innerHTML = `
+            <div class="empty-state" style="grid-column: 1 / -1;">
+              <h3>No matching requests right now.</h3>
+              <p>Try adjusting filters or check back soon — new requests are posted daily.</p>
+            </div>
+          `;
+          return;
+        }
+
+        containerEl.innerHTML = '';
+        list.forEach(r => {
+          const card = document.createElement('div');
+          card.className = 'request-card';
+          
+          const actionButton = isLoggedIn 
+            ? `<button class="btn-offer" onclick="sendOffer(${r.id})">Send Offer / Bid</button>`
+            : `<button class="btn-offer btn-offer-disabled" onclick="window.location.href='/guide-login.html'">Login to Offer</button>`;
+
+          const budgetDisplay = r.budget ? `💰 ${escapeHtml(r.budget)}` : '💰 Not specified';
+          const travelersDisplay = r.travelers ? `👥 ${r.travelers} traveler${r.travelers > 1 ? 's' : ''}` : '';
+          const languageDisplay = r.language ? getLanguageLabel(r.language) : '';
+          const dateFlexibility = r.date_flexibility === 'flexible' || r.date_flexibility === 'fully_flexible' ? '📅 Flexible' : '📅 Fixed';
+          const privacyDisplay = r.trip_privacy === 'private' ? '🔒 Private' : r.trip_privacy === 'shared' ? '👥 Shared' : '';
+            
+          card.innerHTML = `
+            ${getQualityBadge(r)}
+            <div class="request-card-header">
+              <div>
+                <div class="request-card-title">${escapeHtml(r.title)}</div>
+                <div class="request-card-code">Code: ${escapeHtml(r.code) || `#${r.id}`}</div>
+              </div>
+              <div class="request-card-posted">${getTimeAgo(r.created_at)}</div>
+            </div>
+            <div class="request-card-meta">
+              <span class="meta-tag meta-tag-highlight">📍 ${escapeHtml(r.location) || 'Egypt'}</span>
+              <span class="meta-tag">${getCategoryLabel(r.category)}</span>
+              ${languageDisplay ? `<span class="meta-tag">${languageDisplay}</span>` : ''}
+            </div>
+            <div class="request-card-meta">
+              ${travelersDisplay ? `<span class="meta-tag">${travelersDisplay}</span>` : ''}
+              <span class="meta-tag">${dateFlexibility}</span>
+              <span class="meta-tag">${budgetDisplay}</span>
+              ${privacyDisplay ? `<span class="meta-tag">${privacyDisplay}</span>` : ''}
+            </div>
+            <div class="request-card-details">
+              ${escapeHtml((r.details || '').slice(0, 150))}${r.details && r.details.length > 150 ? '…' : ''}
+            </div>
+            <div class="request-card-footer">
+              <span class="badge-open">${escapeHtml(r.status) || 'open'}</span>
+              <div style="text-align: right;">
+                ${actionButton}
+                <div class="offer-helper">You can send one tailored offer per request.</div>
+              </div>
+            </div>
+          `;
+          containerEl.appendChild(card);
+        });
+      } catch (err) {
+        console.error(err);
+        containerEl.innerHTML = '<div class="empty-state"><h3>Error loading requests</h3><p>Please try again later.</p></div>';
+      }
+    }
+
+    function sendOffer(requestId) {
+      const token = apiClient.getAuthToken();
+      if (!token) {
+        alert('Please login first.');
+        window.location.href = '/guide-login.html';
+        return;
+      }
+
+      const currentUser = apiClient.getCurrentUserFromStorage();
+      if (!currentUser) {
+        alert('Please login first.');
+        window.location.href = '/guide-login.html';
+        return;
+      }
+
+      // Check expertType first (for guide, diver, mentor), then fall back to role (for agency, divecenter)
+      const providerType = currentUser.expertType || currentUser.role;
+      
+      const dashboardMap = {
+        'agency': '/agency-dashboard.html',
+        'dive_center': '/dive-center-dashboard.html',
+        'divecenter': '/dive-center-dashboard.html',
+        'guide': '/guide-dashboard.html',
+        'diver': '/diver-dashboard.html',
+        'mentor': '/mentor-dashboard.html'
+      };
+
+      const dashboardUrl = dashboardMap[providerType];
+      if (!dashboardUrl) {
+        console.log('Provider type not found:', providerType, 'User data:', currentUser);
+        alert('Your account type does not support sending offers. Please contact support.');
+        return;
+      }
+
+      window.location.href = `${dashboardUrl}?tab=travel-requests&requestId=${requestId}`;
+    }
+
+    document.getElementById('btnApplyFilters').addEventListener('click', () => {
+      const filters = {
+        category: document.getElementById('filterCategory').value,
+        location: document.getElementById('filterLocation').value,
+        language: document.getElementById('filterLanguage').value,
+        dateFrom: document.getElementById('filterDateFrom').value,
+        dateTo: document.getElementById('filterDateTo').value,
+        budgetMin: document.getElementById('filterBudgetMin').value,
+        budgetMax: document.getElementById('filterBudgetMax').value
+      };
+      loadRequests(filters);
+    });
+
+    loadRequests();
+  </script>
+
+<!-- SEO FOOTER -->
+<footer class="seo-footer" style="background:#0a3d62;color:#fff;padding:40px 20px;margin-top:80px;border-top:3px solid #ffc107;"><div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;padding-bottom:20px;"><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Services</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./book-your-trip.html" style="color:#f0f0f0;text-decoration:none;">Book</a></li><li style="margin-bottom:3px;"><a href="./deals.html" style="color:#f0f0f0;text-decoration:none;">Deals</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Experts</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./guides.html" style="color:#f0f0f0;text-decoration:none;">Guides</a></li><li style="margin-bottom:3px;"><a href="./divers.html" style="color:#f0f0f0;text-decoration:none;">Divers</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Trips</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./cairo-by-flight.html" style="color:#f0f0f0;text-decoration:none;">Cairo</a></li><li style="margin-bottom:3px;"><a href="./luxor-by-flight.html" style="color:#f0f0f0;text-decoration:none;">Luxor</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Discover</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./discover-egypt.html" style="color:#f0f0f0;text-decoration:none;">Egypt</a></li><li style="margin-bottom:3px;"><a href="./culture-art.html" style="color:#f0f0f0;text-decoration:none;">Culture</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Company</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./about.html" style="color:#f0f0f0;text-decoration:none;">About</a></li><li style="margin-bottom:3px;"><a href="./contact.html" style="color:#f0f0f0;text-decoration:none;">Contact</a></li></ul></div></div><div style="text-align:center;padding-top:15px;border-top:1px solid rgba(255,255,255,0.1);font-size:0.7rem;color:#aaa;">&copy; 2025 EgTravelMarket. All rights reserved.</div>  <div style="max-width:1000px;margin:0 auto;padding:20px;text-align:center;color:#9aa4c6;font-size:0.75rem;line-height:1.6;border-top:1px solid rgba(255,255,255,0.1);">
+    <p style="margin:0 0 10px 0;"><strong style="color:#ffc107;">Platform Disclaimer</strong></p>
+    <p style="margin:0;">EgTravelMarket is an international technology platform that facilitates connections between travelers and independent service providers. EgTravelMarket does not operate tours, travel services, or diving activities directly. All on-ground travel services in Egypt are executed by independent licensed partners such as GoMundo Travel, while all diving and water activities are provided by independent licensed dive centers such as Megalodon Diving Club. Contracts, service execution, and operational responsibility are solely between travelers and the respective service providers.</p>
+  </div>
+</footer>
+
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

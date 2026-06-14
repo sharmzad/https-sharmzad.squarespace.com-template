@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- PRIMARY OG IMAGE -->
+  <meta property="og:title" content="EgTravelMarket – Your Gateway to Explore Egypt" />
+  <meta property="og:description" content="Discover trips, experts, diving, MICE, medical services, and full travel experiences across Egypt." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.egtravelmarket.com/" />
+  <meta property="og:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+
+  <!-- TELL CRAWLERS TO REFRESH OG IMAGE -->
+  <meta property="og:image:secure_url" content="https://www.egtravelmarket.com/static/images/og-image.jpg?v=2" />
+  <title>Nabeq National Park Jeep Safari Adventure — EgyTravelMarket</title>
+  <meta name="description" content="Nabeq desert safari adventure from Sharm! 4x4 jeep canyon tour, camel riding, quad biking & traditional Bedouin lunch. From $60. Book your Sinai desert experience now!">
+  <meta name="copyright" content="© 2025 EgTravelMarket. All rights reserved.">
+  
+  <!-- Open Graph / Facebook -->
+  <!-- Twitter -->
+  <link rel="canonical" href="https://egytravelmarket.com/nabeq-jeep-safari.html">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="header.css?v=20251125-latest">
+  <style>
+    :root{
+      --brand-start:#0a66c2; --brand-end:#19a1f7; --bg:#0b1220; --text:#e9f2ff;
+      --muted:#9fb5d1; --card:#121a2b; --border:rgba(255,255,255,.12);
+      --accent:#ffb02e; --success:#22c55e; --danger:#ef4444; --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:18px; --radius-sm:12px; --max:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+
+    /* Global containers */
+    .container{max-width:var(--max);margin:auto;padding:1rem}
+
+    /* Floating mail icon */
+    .email-fab{position:fixed;right:18px;bottom:18px;z-index:900;display:grid;place-items:center;width:54px;height:54px;border-radius:999px;background:linear-gradient(135deg,var(--brand-start),var(--brand-end));box-shadow:var(--shadow)}
+    .email-fab svg{color:#fff}
+
+    /* HERO */
+    .hero{position:relative;min-height:56vh;display:grid;align-items:end}
+    .hero__bg{position:absolute;inset:0;background:url('images/nabeq-jeep-safari.webp') center/cover no-repeat}
+    .hero__overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,22,40,.35),rgba(10,22,40,.75) 40%,rgba(10,22,40,.95))}
+    .hero__content{position:relative;z-index:1;padding:2rem 1rem}
+    .hero__title{font-size:clamp(1.6rem,3vw,2.6rem);font-weight:900;margin:0 0 .5rem}
+    .hero__sub{color:var(--muted);margin:.25rem 0 1rem}
+    .badges{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .7rem;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,.06);color:var(--text)}
+    .cta{display:flex;gap:.6rem;margin-top:1rem}
+    .btn{padding:.7rem 1rem;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.08);color:var(--text);font-weight:700}
+    .btn--primary{background:linear-gradient(135deg,var(--brand-start),var(--brand-end));border-color:transparent}
+
+    /* Layout: main + booking */
+    .layout{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1rem}
+    @media(min-width:1024px){.layout{grid-template-columns:minmax(0,1fr) 360px;align-items:start}}
+
+    /* Highlights strip */
+    .strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem;margin:1rem 0}
+    .pill{display:flex;align-items:center;gap:.6rem;padding:.7rem .8rem;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:var(--radius-sm)}
+    @media(min-width:700px){.strip{grid-template-columns:repeat(5,1fr)}}
+
+    /* Tabs */
+    .tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
+    .tab{padding:.6rem .9rem;border-radius:999px;border:2px solid var(--border);background:rgba(255,255,255,.08);cursor:pointer;transition:all .3s ease;font-weight:600}
+    .tab:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2)}
+    .tab[aria-selected="true"]{background:linear-gradient(135deg,rgba(10,102,194,.5),rgba(25,161,247,.4));border-color:var(--brand-start);font-weight:700;box-shadow:0 0 0 3px rgba(10,102,194,.15)}
+    .panel{margin-top:1rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem}
+
+    /* Itinerary timeline */
+    .timeline{display:grid;gap:.8rem}
+    .time-item{display:grid;grid-template-columns:90px 1fr;gap:1rem;padding:.6rem;border-bottom:1px dashed var(--border)}
+    .time-item:last-child{border-bottom:0}
+    .time-slot{color:var(--muted);font-weight:700}
+
+    /* Pricing table */
+    .pricing-table{width:100%;border-collapse:collapse;margin-top:.5rem}
+    .pricing-table th{background:rgba(255,255,255,.08);padding:.7rem;text-align:left;border:1px solid var(--border)}
+    .pricing-table td{padding:.7rem;border:1px solid var(--border)}
+
+    /* Lists */
+    .feature-list{list-style:none;padding:0;margin:.5rem 0}
+    .feature-list li{padding:.4rem 0;display:flex;align-items:start;gap:.5rem}
+    .feature-list li:before{content:'✓';color:var(--success);font-weight:700}
+
+    /* Booking widget */
+    .booking{position:sticky;top:14px;background:rgba(12,18,32,.9);backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;box-shadow:var(--shadow)}
+    .booking h3{margin:.2rem 0 1rem}
+    .booking__toggle{display:none}
+    .field{display:grid;gap:.35rem;margin:.6rem 0}
+    .field label{color:var(--muted);font-size:.95rem}
+    .field input, .field select{padding:.65rem .7rem;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--text)}
+    .field select, .field select option{background:#fff;color:#0b1220}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+    .price{display:flex;align-items:center;justify-content:space-between;margin-top:.8rem;padding:.7rem .8rem;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--border)}
+    .notice{font-size:.9rem;color:var(--muted);margin-top:.6rem}
+    .help{display:flex;align-items:center;gap:.5rem;margin-top:.6rem}
+
+    /* Important info */
+    .callout{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);padding:.9rem;border-radius:12px}
+    .callout--warn{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.35)}
+    .callout--info{background:rgba(59,130,246,.08);border-color:rgba(59,130,246,.35)}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,15,.65);backdrop-filter:blur(3px);z-index:1200}
+    .modal.show{display:flex}
+    .modal__card{background:var(--card);border:1px solid var(--border);border-radius:16px;max-width:520px;margin:1rem;padding:1rem 1.2rem}
+    .modal__actions{display:flex;justify-content:flex-end;margin-top:1rem}
+
+    /* Footer gap */
+    .spacer{height:80px}
+    @media(max-width:1023px){
+      .booking{position:fixed;left:0;right:0;bottom:0;border-radius:16px 16px 0 0;padding:.9rem 1rem;z-index:1000;max-height:90vh;overflow-y:auto;transition:transform .3s ease}
+      .booking.collapsed{transform:translateY(calc(100% - 70px))}
+      .booking.collapsed .booking__content{display:none}
+      .booking__toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:.8rem;padding:.6rem;background:rgba(255,255,255,.05);border-radius:8px}
+      .booking__toggle-icon{transition:transform .3s ease}
+      .booking.collapsed .booking__toggle-icon{transform:rotate(180deg)}
+      .spacer{height:80px}
+      .email-fab{bottom:90px}
+    }
+
+    /* Trust Badges */
+    .etm-trust-badges{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0;padding:12px;background:rgba(255,255,255,.03);border-radius:12px}
+    .etm-badge{display:flex;align-items:center;gap:6px;padding:8px 10px;background:linear-gradient(90deg,#005b96,#007acc);border-radius:8px;font-size:.8rem;color:#fff;transition:transform .2s ease,box-shadow .2s ease}
+    .etm-badge i{color:#ffd700;font-size:1rem}
+    .etm-badge:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,91,150,.3)}
+    @media(max-width:768px){
+      .etm-trust-badges{grid-template-columns:repeat(2,1fr);gap:6px;padding:10px}
+      .etm-badge{font-size:.75rem;padding:6px 8px}
+      .etm-badge i{font-size:.9rem}
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9Z2B97VS02"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9Z2B97VS02');
+  </script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+  <!-- Header include -->
+  <div id="site-header"></div>
+  <script>
+    fetch("header.html").then(r=>r.text()).then(h=>{document.getElementById("site-header").innerHTML=h;const s=document.createElement("script");s.src="header.min.js";document.body.appendChild(s);});
+  </script>
+
+  <!-- Floating support email button -->
+  <a class="email-fab" href="mailto:support@egtravelmarket.com" title="Email Support" aria-label="Email support">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg"><path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="white" stroke-width="1.7"/><path d="M22 8l-8.6 5.4a2 2 0 0 1-2.2 0L2 8" stroke="white" stroke-width="1.7"/></svg>
+  </a>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__overlay"></div>
+    <div class="container hero__content">
+      <h1 class="hero__title">Nabeq National Park Jeep Safari Adventure — Your Ultimate Desert Experience</h1>
+      <p class="hero__sub">4.7 ★ · Duration: 7 Hours (08:00-15:00) · From $60 / person</p>
+      <div class="badges">
+        <span class="badge">🚙 4x4 Canyon Exploration</span>
+        <span class="badge">🐪 Authentic Camel Ride</span>
+        <span class="badge">🏍️ Quad Biking Adventure</span>
+        <span class="badge">🍽️ Traditional Lunch</span>
+        <span class="badge">👨‍🏫 Expert Bedouin Guides</span>
+      </div>
+      <div class="cta">
+        <a class="btn btn--primary" href="#booking">Book Now</a>
+        <a class="btn" href="https://wa.me/201023889959?text=Hi%2C%20I%20have%20a%20question%20about%20Nabeq%20Safari" target="_blank">Ask a Question</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <!-- Highlights strip -->
+    <div class="strip" aria-label="Tour highlights">
+      <div class="pill">🚙 Canyon Jeep Tour</div>
+      <div class="pill">🐪 Bedouin Camel Ride</div>
+      <div class="pill">🏍️ Quad Bike Racing</div>
+      <div class="pill">🍽️ Bedouin Lunch</div>
+      <div class="pill">👨‍🏫 Expert Guides</div>
+    </div>
+
+    <div class="layout">
+      <!-- MAIN CONTENT -->
+      <main>
+        <!-- Tabs -->
+        <div class="tabs" role="tablist" aria-label="Tour information tabs">
+          <button class="tab" role="tab" aria-selected="true" data-tab="overview">Overview</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="itinerary">Itinerary</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="pricing">Pricing</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="included">Included / Not Included</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="info">Important Information</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="reviews">Reviews</button>
+        </div>
+
+        <!-- Panels -->
+        <section id="panel-overview" class="panel" role="tabpanel">
+          <h3 style="margin-top:0">Discover the Untamed Beauty of Egypt's Sinai Peninsula</h3>
+          <p>
+            Escape the ordinary and immerse yourself in one of Egypt's most spectacular protected areas with an exhilarating full-day jeep safari through <strong>Nabeq National Park</strong>. This action-packed desert adventure combines stunning natural landscapes, authentic Bedouin culture, and heart-pumping activities that will create memories to last a lifetime.
+          </p>
+          <p>
+            Nabeq National Park stretches across 600 square kilometers of pristine desert wilderness, where dramatic canyons meet golden sand dunes and ancient Bedouin traditions thrive in harmony with nature.
+          </p>
+
+          <h4>🌟 What Makes This Safari Unforgettable?</h4>
+          <ul class="feature-list">
+            <li>Thrilling Canyon Exploration by 4x4 Jeep through breathtaking geological wonders</li>
+            <li>Authentic Camel Ride with traditional Bedouin hosts sharing ancient desert wisdom</li>
+            <li>Adrenaline-Pumping Quad Biking across open desert terrain and golden dunes</li>
+            <li>Delicious Traditional Lunch served Bedouin-style with refreshing mineral water</li>
+            <li>Expert Guidance ensuring safety and entertainment throughout your journey</li>
+            <li>Full Access to Nabeq National Park with all entrance fees included</li>
+          </ul>
+
+          <div class="callout" style="margin-top:.8rem">
+            <strong>🎯 Perfect For:</strong> Adventure enthusiasts seeking genuine experiences, families looking for safe yet exciting activities, nature lovers and photography enthusiasts, anyone wanting to escape crowded tourist spots, and cultural explorers interested in Bedouin heritage.
+          </div>
+
+          <div class="callout" style="margin-top:.8rem">
+            <strong>🌟 Why Choose Nabeq National Park Safari?</strong> Unlike typical tourist attractions, Nabeq National Park offers an authentic desert experience where conservation meets adventure. This protected area is home to unique desert ecosystems, rare plant species, and traditional Bedouin communities who have called this wilderness home for generations.
+          </div>
+        </section>
+
+        <section id="panel-itinerary" class="panel" role="tabpanel" hidden>
+          <h3 style="margin-top:0">📅 Your 7-Hour Desert Adventure</h3>
+          <div class="timeline">
+            <div class="time-item"><div class="time-slot">08:00 AM</div><div><strong>Hotel Pickup</strong><br>Your desert adventure begins with pickup from your hotel in our comfortable, air-conditioned vehicle. Relax as we transport you to the starting point of your safari.</div></div>
+            <div class="time-item"><div class="time-slot">09:00 AM</div><div><strong>Nabeq National Park Entry</strong><br>Arrive at the spectacular Nabeq National Park entrance and prepare for your thrilling desert expedition.</div></div>
+            <div class="time-item"><div class="time-slot">09:30 AM</div><div><strong>Canyon Jeep Exploration</strong><br>Board your rugged 4x4 jeep and journey deep into the heart of Nabeq's breathtaking canyon systems. Navigate through winding passages carved by millions of years of natural forces, where towering rock walls create a mesmerizing natural cathedral. Your expert guide will reveal hidden geological wonders and share fascinating stories about this remarkable landscape.</div></div>
+            <div class="time-item"><div class="time-slot">11:00 AM</div><div><strong>Authentic Camel Ride Experience</strong><br>Step back in time as you mount a traditional "desert ship" and experience travel the way nomadic tribes have for centuries. Your friendly Bedouin guides will lead you through stunning desert vistas while sharing insights into their ancient culture, survival wisdom, and the secrets of desert life.</div></div>
+            <div class="time-item"><div class="time-slot">12:00 PM</div><div><strong>Traditional Bedouin Lunch</strong><br>Refuel with an authentic meal served in traditional Bedouin style, complete with refreshing mineral water to keep you hydrated throughout your desert expedition. Enjoy local flavors while surrounded by breathtaking desert scenery.</div></div>
+            <div class="time-item"><div class="time-slot">01:00 PM</div><div><strong>Quad Biking Adventure</strong><br>Feel the rush as you command your own quad bike across open desert terrain! Race over sand dunes, navigate rocky paths, and experience the raw power of the desert landscape from a completely new perspective. Perfect for adventure seekers of all skill levels with full safety equipment provided.</div></div>
+            <div class="time-item"><div class="time-slot">02:30 PM</div><div><strong>Return Journey</strong><br>Begin the scenic drive back, taking in the stunning desert landscapes one last time while reflecting on your incredible adventure.</div></div>
+            <div class="time-item"><div class="time-slot">03:00 PM</div><div><strong>Hotel Drop-off</strong><br>Arrive back at your hotel refreshed and full of amazing desert stories to share with friends and family.</div></div>
+          </div>
+        </section>
+
+        <section id="panel-pricing" class="panel" role="tabpanel" hidden>
+          <h3 style="margin-top:0">💰 Pricing</h3>
+          <table class="pricing-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Adults</td>
+                <td><strong>60 USD per person</strong></td>
+              </tr>
+              <tr>
+                <td>Children (up to 12 years)</td>
+                <td><strong>40 USD per child</strong></td>
+              </tr>
+              <tr>
+                <td>Infants (1 day - 2 years)</td>
+                <td><strong>FREE</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="callout" style="margin-top:1rem">
+            <strong>💎 Exceptional Value:</strong> This all-inclusive price covers hotel transfers, expert guides, national park entrance fees, all activities (jeep safari, camel ride, quad biking), traditional lunch, and mineral water throughout the day.
+          </div>
+        </section>
+
+        <section id="panel-included" class="panel" role="tabpanel" hidden>
+          <div style="display:grid;gap:1rem">
+            <div>
+              <h3 style="margin-top:0">✅ What's Included</h3>
+              <ul class="feature-list">
+                <li>Round-trip hotel transfers in comfortable, air-conditioned vehicle</li>
+                <li>Full-day desert safari experience</li>
+                <li>4x4 Jeep canyon exploration with professional driver</li>
+                <li>Authentic camel riding experience with Bedouin guides</li>
+                <li>Quad biking adventure across desert dunes</li>
+                <li>Traditional Bedouin-style lunch</li>
+                <li>Mineral water throughout the day</li>
+                <li>Expert tour guide sharing knowledge and ensuring safety</li>
+                <li>Nabeq National Park entrance fees</li>
+                <li>All safety equipment for quad biking</li>
+              </ul>
+            </div>
+            <div>
+              <h3>❌ What's NOT Included</h3>
+              <ul>
+                <li>💵 Personal expenses and souvenirs</li>
+                <li>🥤 Additional beverages beyond provided mineral water</li>
+                <li>💵 Tipping for guides and drivers (optional but appreciated)</li>
+                <li>📸 Professional photo packages (available for purchase)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="panel-info" class="panel" role="tabpanel" hidden>
+          <h3 style="margin-top:0">📝 Important Information</h3>
+          
+          <div class="callout callout--warn" style="margin-bottom:.8rem">
+            <strong>🛂 Passport Required:</strong> Please bring your valid passport - it's mandatory for entering Nabeq National Park.
+          </div>
+
+          <div class="callout callout--info" style="margin-bottom:.8rem">
+            <strong>👕 What to Bring & Wear:</strong>
+            <ul style="margin:.5rem 0;padding-left:1.5rem">
+              <li><strong>Footwear:</strong> Comfortable closed-toe shoes suitable for desert terrain (no sandals or flip-flops)</li>
+              <li><strong>Clothing:</strong> Long trousers for camel riding and sun protection</li>
+              <li><strong>Accessories:</strong> Sunglasses, sunscreen, and hat recommended</li>
+              <li><strong>Camera:</strong> Don't forget to capture unforgettable desert moments!</li>
+            </ul>
+          </div>
+
+          <div class="callout" style="margin-bottom:.8rem">
+            <strong>🕐 Pickup Confirmation:</strong> Your exact pickup time (approximately 08:00 AM) will be confirmed by 5:00 PM the day before your safari.
+          </div>
+
+          <div class="callout callout--info">
+            <strong>📋 Additional Details:</strong>
+            <ul style="margin:.5rem 0;padding-left:1.5rem">
+              <li><strong>Duration:</strong> 7 hours (08:00 - 15:00)</li>
+              <li><strong>Available Days:</strong> Tuesday through Friday</li>
+              <li><strong>Suitable for:</strong> All ages and fitness levels</li>
+              <li><strong>Group Size:</strong> Small groups for personalized experience</li>
+              <li><strong>Language:</strong> Guides speak English, Arabic, and other major languages</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="panel-reviews" class="panel" role="tabpanel" hidden>
+          <h3 style="margin-top:0">⭐ Guest Reviews</h3>
+          
+          <!-- Review 1 -->
+          <div class="callout" style="background:linear-gradient(135deg, #fff9e6 0%, #fff 100%);border-left:4px solid #ffc107;margin-bottom:1.2rem;padding:1.2rem;">
+            <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;">
+              <div style="background:#ffc107;color:#fff;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;">AC</div>
+              <div>
+                <strong style="font-size:1.05rem;color:#1d2f4f;">Amanda Collins</strong>
+                <div style="color:#666;font-size:.9rem;">🇬🇧 United Kingdom • March 2025</div>
+                <div style="color:#ffc107;font-size:1.1rem;">⭐⭐⭐⭐⭐</div>
+              </div>
+            </div>
+            <p style="margin:0;color:#1d2f4f;line-height:1.6;font-style:italic;">
+              "Absolutely incredible experience! The canyon exploration in the 4x4 was breathtaking - like nothing I've ever seen before. Our Bedouin guide Mohammed was so knowledgeable and friendly, sharing stories about desert life and making everyone feel welcome. The quad biking was thrilling, and riding the camel was a dream come true! The lunch was delicious and authentic. This was the highlight of our Egypt trip - highly recommend!"
+            </p>
+          </div>
+
+          <!-- Review 2 -->
+          <div class="callout" style="background:linear-gradient(135deg, #e6f7ff 0%, #fff 100%);border-left:4px solid #0066cc;margin-bottom:1.2rem;padding:1.2rem;">
+            <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;">
+              <div style="background:#0066cc;color:#fff;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;">MF</div>
+              <div>
+                <strong style="font-size:1.05rem;color:#1d2f4f;">Marcus Fischer</strong>
+                <div style="color:#666;font-size:.9rem;">🇩🇪 Germany • February 2025</div>
+                <div style="color:#ffc107;font-size:1.1rem;">⭐⭐⭐⭐⭐</div>
+              </div>
+            </div>
+            <p style="margin:0;color:#1d2f4f;line-height:1.6;font-style:italic;">
+              "Best safari adventure we've done anywhere! The combination of activities was perfect - jeep safari through stunning canyons, authentic camel experience, and adrenaline-pumping quad biking. The Bedouin hosts were warm and welcoming, and the traditional lunch under the desert sky was magical. Great value for money with everything included. Our guide ensured everyone's safety while keeping the excitement level high. A must-do in Sharm!"
+            </p>
+          </div>
+
+          <!-- Review 3 -->
+          <div class="callout" style="background:linear-gradient(135deg, #ffe6f0 0%, #fff 100%);border-left:4px solid #e91e63;margin-bottom:1.2rem;padding:1.2rem;">
+            <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;">
+              <div style="background:#e91e63;color:#fff;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;">LM</div>
+              <div>
+                <strong style="font-size:1.05rem;color:#1d2f4f;">Laura & Mike Thompson</strong>
+                <div style="color:#666;font-size:.9rem;">🇺🇸 United States • January 2025</div>
+                <div style="color:#ffc107;font-size:1.1rem;">⭐⭐⭐⭐⭐</div>
+              </div>
+            </div>
+            <p style="margin:0;color:#1d2f4f;line-height:1.6;font-style:italic;">
+              "Perfect family adventure! Our kids (ages 9 and 12) absolutely loved every minute. The guides were patient and made sure everyone was comfortable, especially during the camel ride. The canyon scenery was spectacular - felt like we were in a movie! Quad biking was safe but exciting, and the Bedouin lunch was a cultural experience the kids will never forget. Pickup was punctual and everything ran smoothly. Worth every penny!"
+            </p>
+          </div>
+
+          <!-- Review 4 -->
+          <div class="callout" style="background:linear-gradient(135deg, #e8f5e9 0%, #fff 100%);border-left:4px solid #4caf50;margin-bottom:1.2rem;padding:1.2rem;">
+            <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;">
+              <div style="background:#4caf50;color:#fff;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;">SB</div>
+              <div>
+                <strong style="font-size:1.05rem;color:#1d2f4f;">Sophie Beaumont</strong>
+                <div style="color:#666;font-size:.9rem;">🇫🇷 France • December 2024</div>
+                <div style="color:#ffc107;font-size:1.1rem;">⭐⭐⭐⭐⭐</div>
+              </div>
+            </div>
+            <p style="margin:0;color:#1d2f4f;line-height:1.6;font-style:italic;">
+              "Une expérience inoubliable! The desert landscape was absolutely stunning - so different from the beach resorts. Riding through the canyons felt like exploring another planet. The Bedouin culture experience was authentic and respectful, not touristy at all. I was nervous about quad biking but the instructors were excellent and made me feel safe. The lunch was delicious with fresh bread and tea. This is the real Egypt experience - don't miss it!"
+            </p>
+          </div>
+
+          <!-- Review 5 -->
+          <div class="callout" style="background:linear-gradient(135deg, #f3e5f5 0%, #fff 100%);border-left:4px solid #9c27b0;margin-bottom:1.2rem;padding:1.2rem;">
+            <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;">
+              <div style="background:#9c27b0;color:#fff;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;">RK</div>
+              <div>
+                <strong style="font-size:1.05rem;color:#1d2f4f;">Robert Kowalski</strong>
+                <div style="color:#666;font-size:.9rem;">🇵🇱 Poland • November 2024</div>
+                <div style="color:#ffc107;font-size:1.1rem;">⭐⭐⭐⭐⭐</div>
+              </div>
+            </div>
+            <p style="margin:0;color:#1d2f4f;line-height:1.6;font-style:italic;">
+              "Outstanding desert adventure! The variety of activities kept everyone in our group entertained - from the thrilling jeep ride through narrow canyons to the peaceful camel experience and exciting quad bikes. The Bedouin guides shared fascinating insights about desert survival and their nomadic lifestyle. Great photo opportunities everywhere! The organization was flawless from start to finish. Best desert safari in Sinai - highly recommended!"
+            </p>
+          </div>
+
+          <!-- Summary Stats -->
+          <div style="background:#f8f9fa;border-radius:12px;padding:1.5rem;margin-top:1.5rem;text-align:center;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1.5rem;">
+              <div>
+                <div style="font-size:2.5rem;font-weight:700;color:#ffc107;">4.7/5</div>
+                <div style="color:#666;margin-top:.3rem;">Average Rating</div>
+              </div>
+              <div>
+                <div style="font-size:2.5rem;font-weight:700;color:#0066cc;">1,623</div>
+                <div style="color:#666;margin-top:.3rem;">Total Reviews</div>
+              </div>
+              <div>
+                <div style="font-size:2.5rem;font-weight:700;color:#4caf50;">96%</div>
+                <div style="color:#666;margin-top:.3rem;">Recommend</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- BOOKING WIDGET -->
+      <aside class="booking collapsed" id="booking">
+        <div class="booking__toggle">
+          <h3 style="margin:0">Book Your Safari</h3>
+          <span class="booking__toggle-icon">▲</span>
+        </div>
+        <div class="booking__content">
+          <section class="etm-trust-badges">
+            <div class="etm-badge"><i class="fa fa-lock"></i> Secure Checkout</div>
+            <div class="etm-badge"><i class="fa fa-map-marker-alt"></i> Verified Egyptian DMC</div>
+            <div class="etm-badge"><i class="fa fa-globe"></i> Traveler Trusted 2025</div>
+            <div class="etm-badge"><i class="fa fa-headset"></i> 24/7 Customer Support</div>
+            <div class="etm-badge"><i class="fa fa-star"></i> Top Rated Trips</div>
+            <div class="etm-badge"><i class="fa fa-shield-alt"></i> DMCA & GDPR Protected</div>
+          </section>
+          
+          <form id="booking-form">
+            <div class="field">
+              <label for="full-name">Full Name *</label>
+              <input type="text" id="full-name" name="full-name" required placeholder="John Doe">
+            </div>
+            <div class="field">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" required placeholder="your@email.com">
+              <div id="email-message"></div>
+            </div>
+            <div class="field">
+              <label for="phone">Phone / WhatsApp *</label>
+              <input type="tel" id="phone" name="phone" required placeholder="+1234567890">
+            </div>
+            <div class="field">
+              <label for="hotel">Hotel Name</label>
+              <input type="text" id="hotel" name="hotel" placeholder="Your hotel in Sharm">
+            </div>
+            <div class="field">
+              <label for="date">Preferred Date *</label>
+              <input type="date" id="date" name="date" required>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="adults">Adults</label>
+                <input id="adults" name="adults" type="number" min="1" max="20" value="2">
+              </div>
+              <div class="field">
+                <label for="children">Children (≤12y)</label>
+                <input id="children" name="children" type="number" min="0" max="20" value="0">
+              </div>
+            </div>
+            <div class="field">
+              <label for="message">Special Requests (optional)</label>
+              <input type="text" id="message" name="message" placeholder="Any special requirements?">
+            </div>
+            <div class="price">
+              <span>Estimated Price:</span>
+              <strong id="total-price">$120</strong>
+            </div>
+            <div id="summaryArea"></div>
+            <button id="bookBtn" class="btn btn--primary" style="width:100%;margin-top:0.9rem;display:none">💳 Pay Now with Stripe</button>
+            <p class="notice">You'll receive confirmation within 24 hours. Free cancellation up to 24h before tour.</p>
+            <div class="help">
+              <span>Need help?</span>
+              <a href="https://wa.me/201023889959" target="_blank" style="color:var(--brand-end)">WhatsApp Us</a>
+            </div>
+          </form>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Related Adventures Section -->
+  <section class="container" id="related-trips" style="padding:2rem 1rem">
+    <h2 style="font-size:1.8rem;font-weight:800;margin-bottom:1.5rem;text-align:center">✨ You Might Also Like</h2>
+    <div class="cards-grid" style="max-width:900px;margin:0 auto;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+      <article class="card">
+        <img loading="lazy" src="images/dahab-discovery-trip.webp" alt="Dahab Discovery Trip" loading="lazy">
+        <div class="card-body">
+          <h3 style="margin-bottom:.8rem">Dahab Discovery Trip</h3>
+          <p style="margin-bottom:1rem;line-height:1.5">Experience authentic Egypt! Combine submarine viewing, snorkeling in crystal waters, and exploration of charming Dahab town with its markets and beachfront cafes.</p>
+          <div class="price" style="margin-top:auto;margin-bottom:.8rem">From $40/child · $60/adult</div>
+          <a class="btn" href="dahab-discovery-trip.html" style="display:block;margin-top:.6rem">Book Now</a>
+        </div>
+      </article>
+      <article class="card">
+        <img loading="lazy" src="images/pirates-boat-ras-mohamed.webp" alt="Pirates Boat to Ras Mohamed" loading="lazy">
+        <div class="card-body">
+          <h3 style="margin-bottom:.8rem">Pirates Boat to Ras Mohamed</h3>
+          <p style="margin-bottom:1rem;line-height:1.5">Set sail on a Viking-themed adventure! Three stunning snorkeling stops at Ras Mohamed's pristine reefs, with lunch, drinks, and an unforgettable pirate experience.</p>
+          <div class="price" style="margin-top:auto;margin-bottom:.8rem">From $35/child · $60/adult</div>
+          <a class="btn" href="pirates-boat-ras-mohamed.html" style="display:block;margin-top:.6rem">Book Now</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="spacer"></div>
+
+  <!-- Modal for confirmation -->
+  <div class="modal" id="success-modal">
+    <div class="modal__card">
+      <h3 style="margin-top:0">🎉 Booking Request Submitted!</h3>
+      <p>Thank you for your booking request. We'll confirm your Nabeq Safari within 24 hours via email or WhatsApp.</p>
+      <p style="color:var(--muted);font-size:.9rem">Check your inbox and WhatsApp for updates.</p>
+      <div class="modal__actions">
+        <button class="btn btn--primary" onclick="closeModal()">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/email-validator.js"></script>
+  <script src="js/stripe-payment-helper.js?v=3"></script>
+  <script src="nabeq-jeep-safari-script.js?v=2"></script>
+  <script>
+    // Setup email validation
+    document.addEventListener('DOMContentLoaded', function() {
+      const emailInput = document.getElementById('email');
+      const emailMessage = document.getElementById('email-message');
+      if (emailInput && emailMessage) {
+        setupEmailValidation(emailInput, emailMessage);
+      }
+    });
+
+    // Tab switching
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.panel');
+    tabs.forEach(t => {
+      t.addEventListener('click', () => {
+        tabs.forEach(x => x.setAttribute('aria-selected', 'false'));
+        panels.forEach(p => p.hidden = true);
+        t.setAttribute('aria-selected', 'true');
+        document.getElementById('panel-' + t.dataset.tab).hidden = false;
+      });
+    });
+
+    // Booking widget toggle (mobile)
+    const booking = document.querySelector('.booking');
+    const toggle = document.querySelector('.booking__toggle');
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        booking.classList.toggle('collapsed');
+      });
+    }
+
+    // Price calculator
+    const adultsEl = document.getElementById('adults');
+    const childrenEl = document.getElementById('children');
+    const priceEl = document.getElementById('total-price');
+    function updatePrice() {
+      const adults = parseInt(adultsEl.value) || 0;
+      const children = parseInt(childrenEl.value) || 0;
+      const total = (adults * 60) + (children * 40);
+      priceEl.textContent = `$${total}`;
+    }
+    adultsEl.addEventListener('change', updatePrice);
+    childrenEl.addEventListener('change', updatePrice);
+    updatePrice();
+
+    // Form submission
+    const form = document.getElementById('booking-form');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      
+      // Validate email format
+      const emailInput = document.getElementById('email');
+      if(!isValidEmail(emailInput.value)){
+        const error = getEmailError(emailInput.value);
+        alert('Invalid email: ' + error);
+        emailInput.focus();
+        return;
+      }
+      
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+      
+      // Build WhatsApp message
+      const msg = `Hi! I'd like to book Nabeq National Park Jeep Safari:%0A%0AName: ${data['full-name']}%0AEmail: ${data.email}%0APhone: ${data.phone}%0AHotel: ${data.hotel}%0ADate: ${data.date}%0AAdults: ${data.adults}%0AChildren: ${data.children}%0ASpecial Requests: ${data.message || 'None'}%0A%0ATotal: ${priceEl.textContent}`;
+      
+      // Open WhatsApp
+      window.open(`https://wa.me/201023889959?text=${msg}`, '_blank');
+      
+      // Show modal
+      document.getElementById('success-modal').classList.add('show');
+      form.reset();
+      updatePrice();
+    });
+
+    function closeModal() {
+      document.getElementById('success-modal').classList.remove('show');
+    }
+  </script>
+
+<!-- SEO FOOTER -->
+<footer class="seo-footer" style="background:#0a3d62;color:#fff;padding:40px 20px;margin-top:80px;border-top:3px solid #ffc107;"><div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;padding-bottom:20px;"><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Trips</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./cairo-by-flight.html" style="color:#f0f0f0;text-decoration:none;">Cairo</a></li><li style="margin-bottom:3px;"><a href="./luxor-by-flight.html" style="color:#f0f0f0;text-decoration:none;">Luxor</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Services</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./book-diving.html" style="color:#f0f0f0;text-decoration:none;">Dive</a></li><li style="margin-bottom:3px;"><a href="./deals.html" style="color:#f0f0f0;text-decoration:none;">Deals</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Experts</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./guides.html" style="color:#f0f0f0;text-decoration:none;">Guides</a></li><li style="margin-bottom:3px;"><a href="./divers.html" style="color:#f0f0f0;text-decoration:none;">Divers</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Discover</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./diving-nature.html" style="color:#f0f0f0;text-decoration:none;">Diving</a></li><li style="margin-bottom:3px;"><a href="./hidden-egypt.html" style="color:#f0f0f0;text-decoration:none;">Hidden</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Company</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./about.html" style="color:#f0f0f0;text-decoration:none;">About</a></li><li style="margin-bottom:3px;"><a href="./faq.html" style="color:#f0f0f0;text-decoration:none;">FAQ</a></li></ul></div></div><div style="border-top:1px solid rgba(255,255,255,0.2);padding-top:10px;text-align:center;color:#bbb;font-size:0.7rem;"><p style="margin:0;">&copy; 2025 EgTravelMarket | <a href="./index.html" style="color:#ffc107;">Home</a> | <a href="./sitemap.xml" style="color:#ffc107;">Sitemap</a></p></div>  <div style="max-width:1000px;margin:0 auto;padding:20px;text-align:center;color:#9aa4c6;font-size:0.75rem;line-height:1.6;border-top:1px solid rgba(255,255,255,0.1);">
+    <p style="margin:0 0 10px 0;"><strong style="color:#ffc107;">Platform Disclaimer</strong></p>
+    <p style="margin:0;">EgTravelMarket is an international technology platform that facilitates connections between travelers and independent service providers. EgTravelMarket does not operate tours, travel services, or diving activities directly. All on-ground travel services in Egypt are executed by independent licensed partners such as GoMundo Travel, while all diving and water activities are provided by independent licensed dive centers such as Megalodon Diving Club. Contracts, service execution, and operational responsibility are solely between travelers and the respective service providers.</p>
+  </div>
+</footer>
+
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

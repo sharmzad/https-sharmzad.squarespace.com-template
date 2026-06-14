@@ -1,0 +1,96 @@
+Hi,
+
+We want to enhance the Expert Trips Marketplace search & filters without changing the existing trip creation forms or breaking current logic.
+
+Please follow these rules carefully:
+
+1️⃣ Core Rule (Very Important)
+
+Search filters must ONLY use fields that already exist and are reliably filled in the trip creation forms.
+
+❌ Do NOT create filters based on:
+
+Optional fields
+
+Free-text fields
+
+Fields that some roles (guide / agency / mentor / dive center) do not fill
+
+If a field is not guaranteed to exist → it must NOT be used as a filter.
+
+2️⃣ Allowed (Safe) Filters – Keep / Improve Only These
+
+These fields exist for all trips and are safe:
+
+Location
+
+Price range
+
+Duration
+
+Expert type (guide / diver / mentor / agency / dive center)
+
+You may:
+
+Reorder them for better UX
+
+Improve dropdown readability
+
+Improve responsiveness
+
+But do not change their logic.
+
+3️⃣ UX Enhancement for Filters (Allowed)
+
+Ensure selected values inside dropdowns are clearly visible
+
+Placeholder text should disappear once a value is selected
+
+Dropdown text must not be cut off or hidden
+
+If no results match filters, show a clear message:
+
+“No experiences match your filters. Please adjust your selection.”
+
+Do NOT show a blank page.
+
+4️⃣ Do NOT Add New Filters Unless Explicitly Approved
+
+Examples of filters NOT allowed now:
+
+Experience type (unless made mandatory with default value)
+
+Included / excluded services
+
+Language
+
+Diving level
+
+Hotel / transport included
+
+These fields are not mandatory for all creators and will cause empty or incorrect results.
+
+5️⃣ Trip Cards (Minor Enhancement Only)
+
+Keep the same unified trip card design
+
+Improve visual hierarchy only (CSS spacing / font size)
+
+Do NOT change data fields or booking flow
+
+6️⃣ Very Important – No Backend Refactor Now
+
+No database restructuring
+
+No changes to trip creation forms
+
+No role logic changes
+
+This task is UI/UX + safe filtering only
+
+Goal
+
+Improve traveler experience and search clarity
+WITHOUT introducing risk or breaking existing live features.
+
+Thank you.

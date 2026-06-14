@@ -1,0 +1,211 @@
+{
+  "trip_of_week": [
+    { "date": "2025-11-12", "seats_left": 20, "price_adult": 180, "price_child": 160 },
+    { "date": "2025-11-19", "seats_left": 15, "price_adult": 180, "price_child": 160 },
+    { "date": "2025-11-26", "seats_left": 0, "price_adult": 180, "price_child": 160 }
+  ],
+  "package_a_jeep_safari": [
+    { "date": "2025-11-10", "seats_left": 12 },
+    { "date": "2025-11-13", "seats_left": 8 },
+    { "date": "2025-11-17", "seats_left": 15 },
+    { "date": "2025-11-20", "seats_left": 10 },
+    { "date": "2025-11-24", "seats_left": 6 }
+  ],
+  "package_a_sea_scope": [
+    { "date": "2025-11-11", "seats_left": 18 },
+    { "date": "2025-11-14", "seats_left": 12 },
+    { "date": "2025-11-18", "seats_left": 20 },
+    { "date": "2025-11-21", "seats_left": 14 },
+    { "date": "2025-11-25", "seats_left": 9 }
+  ],
+  "package_a_cairo_flight": [
+    { "date": "2025-11-12", "seats_left": 25 },
+    { "date": "2025-11-15", "seats_left": 18 },
+    { "date": "2025-11-19", "seats_left": 22 },
+    { "date": "2025-11-22", "seats_left": 16 },
+    { "date": "2025-11-26", "seats_left": 20 }
+  ],
+  "package_b_cairo": [
+    { "date": "2025-11-12", "seats_left": 20 },
+    { "date": "2025-11-15", "seats_left": 16 },
+    { "date": "2025-11-19", "seats_left": 18 },
+    { "date": "2025-11-22", "seats_left": 14 },
+    { "date": "2025-11-26", "seats_left": 20 }
+  ],
+  "package_b_ras_mohamed": [
+    { "date": "2025-11-11", "seats_left": 25 },
+    { "date": "2025-11-14", "seats_left": 20 },
+    { "date": "2025-11-18", "seats_left": 22 },
+    { "date": "2025-11-21", "seats_left": 18 },
+    { "date": "2025-11-25", "seats_left": 15 }
+  ],
+  "package_b_quad_safari": [
+    { "date": "2025-11-10", "seats_left": 30 },
+    { "date": "2025-11-13", "seats_left": 25 },
+    { "date": "2025-11-17", "seats_left": 28 },
+    { "date": "2025-11-20", "seats_left": 24 },
+    { "date": "2025-11-24", "seats_left": 26 }
+  ],
+  "package_c_dahab": [
+    { "date": "2025-11-11", "seats_left": 22 },
+    { "date": "2025-11-14", "seats_left": 18 },
+    { "date": "2025-11-18", "seats_left": 25 },
+    { "date": "2025-11-21", "seats_left": 20 },
+    { "date": "2025-11-25", "seats_left": 16 }
+  ],
+  "package_c_luxor": [
+    { "date": "2025-11-12", "seats_left": 20 },
+    { "date": "2025-11-15", "seats_left": 18 },
+    { "date": "2025-11-19", "seats_left": 22 },
+    { "date": "2025-11-22", "seats_left": 16 },
+    { "date": "2025-11-26", "seats_left": 20 }
+  ],
+  "package_c_desert_rose": [
+    { "date": "2025-11-10", "seats_left": 28 },
+    { "date": "2025-11-13", "seats_left": 24 },
+    { "date": "2025-11-17", "seats_left": 30 },
+    { "date": "2025-11-20", "seats_left": 26 },
+    { "date": "2025-11-24", "seats_left": 22 }
+  ],
+  "package_d_pirates_boat": [
+    { "date": "2025-11-11", "seats_left": 35 },
+    { "date": "2025-11-14", "seats_left": 30 },
+    { "date": "2025-11-18", "seats_left": 38 },
+    { "date": "2025-11-21", "seats_left": 32 },
+    { "date": "2025-11-25", "seats_left": 28 }
+  ],
+  "package_d_jeep_safari": [
+    { "date": "2025-11-10", "seats_left": 26 },
+    { "date": "2025-11-13", "seats_left": 22 },
+    { "date": "2025-11-17", "seats_left": 30 },
+    { "date": "2025-11-20", "seats_left": 24 },
+    { "date": "2025-11-24", "seats_left": 20 }
+  ],
+  "package_k_sea_scope": [
+    { "date": "2025-11-11", "seats_left": 18 },
+    { "date": "2025-11-14", "seats_left": 14 },
+    { "date": "2025-11-18", "seats_left": 20 },
+    { "date": "2025-11-21", "seats_left": 16 },
+    { "date": "2025-11-25", "seats_left": 12 }
+  ],
+  "package_k_cairo_flight": [
+    { "date": "2025-11-12", "seats_left": 22 },
+    { "date": "2025-11-15", "seats_left": 18 },
+    { "date": "2025-11-19", "seats_left": 24 },
+    { "date": "2025-11-22", "seats_left": 20 },
+    { "date": "2025-11-26", "seats_left": 16 }
+  ],
+  "package_e_ras_mohamed": [
+    { "date": "2025-11-11", "seats_left": 25 },
+    { "date": "2025-11-14", "seats_left": 20 },
+    { "date": "2025-11-18", "seats_left": 22 },
+    { "date": "2025-11-21", "seats_left": 18 },
+    { "date": "2025-11-25", "seats_left": 15 },
+    { "date": "2025-11-28", "seats_left": 24 },
+    { "date": "2025-12-02", "seats_left": 26 }
+  ],
+  "package_e_desert_safari": [
+    { "date": "2025-11-10", "seats_left": 28 },
+    { "date": "2025-11-13", "seats_left": 24 },
+    { "date": "2025-11-17", "seats_left": 30 },
+    { "date": "2025-11-20", "seats_left": 26 },
+    { "date": "2025-11-24", "seats_left": 22 },
+    { "date": "2025-11-27", "seats_left": 28 },
+    { "date": "2025-12-01", "seats_left": 25 }
+  ],
+  "petra_by_boat": [
+    { "date": "2025-11-10", "seats_left": 18 },
+    { "date": "2025-11-15", "seats_left": 12 },
+    { "date": "2025-11-20", "seats_left": 15 },
+    { "date": "2025-11-25", "seats_left": 10 },
+    { "date": "2025-11-30", "seats_left": 20 },
+    { "date": "2025-12-05", "seats_left": 14 },
+    { "date": "2025-12-10", "seats_left": 16 },
+    { "date": "2025-12-15", "seats_left": 8 },
+    { "date": "2025-12-20", "seats_left": 12 }
+  ],
+  "cairo_by_flight": [
+    { "date": "2025-11-08", "seats_left": 25 },
+    { "date": "2025-11-12", "seats_left": 18 },
+    { "date": "2025-11-16", "seats_left": 22 },
+    { "date": "2025-11-20", "seats_left": 16 },
+    { "date": "2025-11-24", "seats_left": 20 },
+    { "date": "2025-11-28", "seats_left": 14 },
+    { "date": "2025-12-02", "seats_left": 24 },
+    { "date": "2025-12-06", "seats_left": 19 },
+    { "date": "2025-12-10", "seats_left": 21 },
+    { "date": "2025-12-14", "seats_left": 17 }
+  ],
+  "luxor_by_flight": [
+    { "date": "2025-11-09", "seats_left": 22 },
+    { "date": "2025-11-13", "seats_left": 18 },
+    { "date": "2025-11-17", "seats_left": 20 },
+    { "date": "2025-11-21", "seats_left": 15 },
+    { "date": "2025-11-25", "seats_left": 24 },
+    { "date": "2025-11-29", "seats_left": 16 },
+    { "date": "2025-12-03", "seats_left": 19 },
+    { "date": "2025-12-07", "seats_left": 21 },
+    { "date": "2025-12-11", "seats_left": 14 },
+    { "date": "2025-12-15", "seats_left": 18 }
+  ],
+  "pirates_boat_ras_mohamed": [
+    { "date": "2025-11-08", "seats_left": 35 },
+    { "date": "2025-11-11", "seats_left": 30 },
+    { "date": "2025-11-14", "seats_left": 38 },
+    { "date": "2025-11-18", "seats_left": 32 },
+    { "date": "2025-11-21", "seats_left": 28 },
+    { "date": "2025-11-25", "seats_left": 40 },
+    { "date": "2025-11-28", "seats_left": 36 },
+    { "date": "2025-12-02", "seats_left": 34 },
+    { "date": "2025-12-05", "seats_left": 30 },
+    { "date": "2025-12-09", "seats_left": 38 }
+  ],
+  "nabeq_jeep_safari": [
+    { "date": "2025-11-08", "seats_left": 26 },
+    { "date": "2025-11-10", "seats_left": 22 },
+    { "date": "2025-11-13", "seats_left": 30 },
+    { "date": "2025-11-15", "seats_left": 24 },
+    { "date": "2025-11-17", "seats_left": 28 },
+    { "date": "2025-11-20", "seats_left": 20 },
+    { "date": "2025-11-22", "seats_left": 32 },
+    { "date": "2025-11-24", "seats_left": 26 },
+    { "date": "2025-11-27", "seats_left": 30 },
+    { "date": "2025-11-29", "seats_left": 24 }
+  ],
+  "ras_mohamed_snorkeling": [
+    { "date": "2025-11-09", "seats_left": 25 },
+    { "date": "2025-11-11", "seats_left": 20 },
+    { "date": "2025-11-14", "seats_left": 22 },
+    { "date": "2025-11-16", "seats_left": 18 },
+    { "date": "2025-11-18", "seats_left": 24 },
+    { "date": "2025-11-21", "seats_left": 15 },
+    { "date": "2025-11-23", "seats_left": 28 },
+    { "date": "2025-11-25", "seats_left": 20 },
+    { "date": "2025-11-28", "seats_left": 22 },
+    { "date": "2025-11-30", "seats_left": 26 }
+  ],
+  "dahab_discovery_trip": [
+    { "date": "2025-11-10", "seats_left": 22 },
+    { "date": "2025-11-12", "seats_left": 18 },
+    { "date": "2025-11-15", "seats_left": 25 },
+    { "date": "2025-11-17", "seats_left": 20 },
+    { "date": "2025-11-19", "seats_left": 24 },
+    { "date": "2025-11-22", "seats_left": 16 },
+    { "date": "2025-11-24", "seats_left": 28 },
+    { "date": "2025-11-26", "seats_left": 22 },
+    { "date": "2025-11-29", "seats_left": 20 },
+    { "date": "2025-12-01", "seats_left": 26 }
+  ],
+  "goodbye_sharm": [
+    { "date": "2025-11-12", "seats_left": 30 },
+    { "date": "2025-11-13", "seats_left": 28 },
+    { "date": "2025-11-19", "seats_left": 32 },
+    { "date": "2025-11-20", "seats_left": 30 },
+    { "date": "2025-11-26", "seats_left": 35 },
+    { "date": "2025-11-27", "seats_left": 33 },
+    { "date": "2025-12-03", "seats_left": 30 },
+    { "date": "2025-12-04", "seats_left": 28 },
+    { "date": "2025-12-10", "seats_left": 34 },
+    { "date": "2025-12-11", "seats_left": 32 }
+  ]
+}

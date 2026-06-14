@@ -1,0 +1,238 @@
+Rename your correct image (the one you uploaded earlier — showing “Sharm Transfers” welcome sign) to:
+
+private-transfer.jpg
+
+
+and put it inside your /images/ folder.
+
+Open Replit → private-transfer.html
+Delete everything inside and paste the full code below.
+
+Click Run — you’ll see the right image on top, proper form, and no other package cards visible.
+
+🧩 private-transfer.html — Final Version
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Private Transfer + Complimentary SIM | EgyTravelMarket</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #f4f9ff;
+      color: #003366;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .package-hero {
+      position: relative;
+      text-align: center;
+      color: white;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 51, 102, 0.6);
+      padding: 20px 30px;
+      border-radius: 10px;
+    }
+
+    .hero-overlay h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      color: #fff;
+    }
+
+    .package-details {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .package-details h2, .package-details h3 {
+      color: #003366;
+    }
+
+    .package-details p, li {
+      color: #002244;
+      line-height: 1.6;
+    }
+
+    /* Form styling */
+    form {
+      margin-top: 25px;
+      background: #f8fbff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    form label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #003366;
+    }
+
+    form input, form select, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      color: #000;
+      background-color: #fff;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .form-row div {
+      flex: 1;
+    }
+
+    form button {
+      margin-top: 20px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    form button:hover {
+      background-color: #004999;
+    }
+
+    .success-message {
+      display: none;
+      background: #e6f9e6;
+      border: 1px solid #00aa00;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+      color: #006600;
+      text-align: center;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <!-- Keep your same header -->
+  </header>
+
+  <section class="package-hero">
+    <img src="images/private-transfer.jpg" alt="Private Transfer Sharm El Sheikh" class="hero-image" />
+    <div class="hero-overlay">
+      <h1>Private Transfer + Complimentary SIM Card</h1>
+      <p>Direct Airport Transfer — Free 20GB Data SIM Included</p>
+    </div>
+  </section>
+
+  <section class="package-details">
+    <h2>About This Service</h2>
+    <p>
+      Simplify your Sharm El Sheikh arrival and departure with our exclusive private transfer service!
+      Upon your arrival at Sharm Airport, forget the hassle of waiting and embark on a seamless journey directly to your hotel in Naema Bay, Hadaba, or Nabq.
+      Our private transfer ensures you reach your destination swiftly and comfortably.
+    </p>
+
+    <h3>What You Get</h3>
+    <ul>
+      <li><strong>Private, direct transfer:</strong> No stops, no delays – just you and your party heading straight to your hotel.</li>
+      <li><strong>Complimentary 20 GB SIM card:</strong> Stay connected from the moment you land! This free SIM card with generous data is exclusively for arrival transfers.</li>
+      <li><strong>Fixed Low Price:</strong> Flat <strong>$40 USD</strong> per private vehicle (up to 8 people), or <strong>$5 USD per person</strong> in a group of eight.</li>
+    </ul>
+
+    <h3>Itinerary</h3>
+    <ol>
+      <li><strong>Arrival:</strong> Your driver meets you at the airport arrival hall holding a “Sharm Transfers” sign.</li>
+      <li><strong>SIM Card Delivery:</strong> Receive your complimentary 20 GB data SIM at pickup.</li>
+      <li><strong>Direct Transfer:</strong> Smooth ride to your hotel in Naema Bay, Hadaba, or Nabq.</li>
+      <li><strong>Drop-off:</strong> Assistance with luggage at your hotel.</li>
+      <li><strong>Return Option:</strong> Same private transfer for your return flight.</li>
+    </ol>
+
+    <h3>Book Your Transfer</h3>
+
+    <form id="transferForm" onsubmit="handleSubmit(event)">
+      <label for="arrivalCountry">Arrival Country</label>
+      <input type="text" id="arrivalCountry" name="arrivalCountry" placeholder="Enter country of arrival" value="Egypt" />
+
+      <label for="arrivalAirport">Arrival Airport</label>
+      <input type="text" id="arrivalAirport" name="arrivalAirport" placeholder="e.g. Sharm El Sheikh Airport" value="Sharm El Sheikh Airport" />
+
+      <label for="departureCountry">Departure Country</label>
+      <input type="text" id="departureCountry" name="departureCountry" placeholder="Enter departure country" />
+
+      <label for="departureAirport">Departure Airport</label>
+      <input type="text" id="departureAirport" name="departureAirport" placeholder="Enter departure airport" />
+
+      <label for="flightNumber">Flight Number</label>
+      <input type="text" id="flightNumber" name="flightNumber" placeholder="e.g. MS1234" />
+
+      <label for="arrivalTime">Arrival Time</label>
+      <input type="time" id="arrivalTime" name="arrivalTime" />
+
+      <label for="pickupTime">Pickup Time (for departure)</label>
+      <input type="time" id="pickupTime" name="pickupTime" />
+
+      <div class="form-row">
+        <div>
+          <label for="adults">Adults</label>
+          <input type="number" id="adults" name="adults" min="1" max="8" placeholder="e.g. 2" />
+        </div>
+        <div>
+          <label for="children">Children</label>
+          <input type="number" id="children" name="children" min="0" max="8" placeholder="e.g. 1" />
+        </div>
+      </div>
+
+      <label for="notes">Additional Notes</label>
+      <textarea id="notes" name="notes" rows="3" placeholder="Add any special requests..."></textarea>
+
+      <button type="submit">Book Now</button>
+
+      <div class="success-message" id="successMessage">
+        ✅ Your booking details have been submitted successfully. We’ll contact you shortly!
+      </div>
+    </form>
+  </section>
+
+  <footer>
+    <!-- Your footer -->
+  </footer>
+
+  <script>
+    function handleSubmit(event) {
+      event.preventDefault();
+      const successMessage = document.getElementById("successMessage");
+      successMessage.style.display = "block";
+      document.getElementById("transferForm").reset();
+      setTimeout(() => {
+        successMessage.style.display = "none";
+      }, 5000);
+    }
+  </script>
+</body>
+</html>

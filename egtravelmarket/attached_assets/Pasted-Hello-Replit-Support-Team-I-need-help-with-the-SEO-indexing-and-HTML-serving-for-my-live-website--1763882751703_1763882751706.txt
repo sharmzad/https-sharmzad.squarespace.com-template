@@ -1,0 +1,216 @@
+Hello Replit Support Team,
+I need help with the SEO indexing and HTML serving for my live website:
+
+https://www.egtravelmarket.com
+
+Everything works correctly in the development environment, but the production deployment is not delivering the required SEO files, metadata, or static files, which prevents Google from indexing the site.
+
+Below is my complete diagnosis and the exact fixes needed from your side.
+
+🚨 1. PRODUCTION BUILD IS NOT DELIVERING SEO-CRITICAL FILES
+
+Google cannot index the website because these files are not being served from root in production:
+
+❌ robots.txt
+❌ sitemap.xml
+❌ JSON-LD Schema
+❌ Meta tags (title, description, OG, Twitter)
+❌ Google verification tag
+
+These are all visible in my development environment, but production either strips them, caches old versions, or does not serve them correctly.
+
+🚨 2. SEARCH CONSOLE SHOWS “NO INDEXING – EMPTY PAGE / SOFT 404”
+
+Google Search Console reports:
+
+“Crawled but not indexed”
+
+“Soft 404 – empty page”
+
+“No metadata detected”
+
+“No sitemap accessible”
+
+This means the production environment is not delivering the full HTML content consistently.
+
+This affects pages such as:
+
+/index.html
+
+/travelers-request.html
+
+/job-posting.html
+
+/dive-center.html
+
+/agency.html
+
+/experts.html
+
+/book-trips-by-local-experts.html
+
+🚨 3. PRODUCTION BUILD IS NOT MATCHING DEVELOPMENT BUILD
+
+On development everything works:
+
+Dynamic content loads
+
+HTML metadata appears
+
+JSON-LD is included
+
+Static files load normally
+
+But on production:
+
+Some pages show empty sections
+
+Metadata disappears
+
+Dynamic content sometimes returns empty
+
+Static assets behave inconsistently
+
+This issue has been confirmed by your team before:
+Replit production deployment sometimes gets stuck with an outdated build and doesn’t sync.
+
+🚨 4. WHAT YOU NEED TO FIX ON REPLIT SIDE
+
+Please apply the following fixes:
+
+✅ A. Force a FULL production rebuild + clear all build caching
+
+We need the production server to serve the exact same files as development.
+
+✅ B. Ensure these files are served from root directory:
+1. robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://www.egtravelmarket.com/sitemap.xml
+
+2. sitemap.xml
+
+This must be accessible at exactly:
+
+https://www.egtravelmarket.com/sitemap.xml
+
+
+It should include pages such as:
+
+https://www.egtravelmarket.com/
+https://www.egtravelmarket.com/book-trips-by-local-experts.html
+https://www.egtravelmarket.com/travelers-request.html
+https://www.egtravelmarket.com/job-posting.html
+https://www.egtravelmarket.com/agency.html
+https://www.egtravelmarket.com/dive-center.html
+https://www.egtravelmarket.com/experts.html
+
+✅ C. Ensure production does NOT remove meta tags inside <head>
+
+Specifically:
+
+<title>…</title>
+
+<meta name="description">
+
+OpenGraph tags
+
+Twitter Card tags
+
+Google site verification tag
+
+Canonical tag
+
+These are required for indexing.
+
+✅ D. Ensure JSON-LD Schema is served
+
+This must remain inside <head> and NOT be removed.
+
+Example:
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TravelAgency",
+  "name": "EgTravelMarket",
+  "url": "https://www.egtravelmarket.com",
+  "description": "Egypt travel marketplace for trips, guides, divers and experts.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "71-75 Shelton Street, Covent Garden",
+    "addressLocality": "London",
+    "postalCode": "WC2H 9JQ",
+    "addressCountry": "UK"
+  },
+  "email": "info@egtravelmarket.com"
+}
+</script>
+
+✅ E. Ensure static files and images load correctly
+
+Some pages rely on images and static assets.
+If they fail to load, Google sees pages as empty.
+
+Please confirm:
+
+/assets/*
+
+/images/*
+
+/content/*
+are served correctly.
+
+🚨 5. WHY THIS IS URGENT
+
+Right now Google sees:
+
+No sitemap
+
+No robots.txt
+
+No metadata
+
+No structured data
+
+Empty or soft-404 pages
+
+Missing content
+
+Dynamic data not loading
+
+Incorrect HTML output
+
+This completely blocks indexing.
+
+When these issues are fixed, the following will appear on Google:
+
+✔ Website name
+✔ Business address
+✔ Description under name
+✔ All pages in search
+✔ Rich snippets
+✔ “Book Trips by Local Experts”
+✔ “Travelers Request”
+✔ “Job Posting for Experts”
+✔ “B2B Agencies”
+✔ “Dive Center Signup”
+
+📌 REQUEST (ACTION NEEDED FROM REPLIT SUPPORT)
+
+Please:
+
+Perform a full production rebuild / resync
+
+Clear build cache fully
+
+Ensure static files are being served
+
+Ensure SEO files and metadata remain in production
+
+Ensure sitemap.xml & robots.txt are accessible at root
+
+Ensure JSON-LD is not removed
+
+Ensure Google verification tag stays in <head>

@@ -1,0 +1,690 @@
+Below is Option A fully implemented:
+
+✅ SQL for jobs table
+
+✅ Express backend API (/api/jobs)
+
+✅ post-job.html page (for agencies to post jobs)
+
+✅ jobs.html page (for experts to browse and apply)
+
+You can copy–paste step by step into Replit.
+
+1️⃣ Database – create jobs table
+
+In your Postgres (where you created your other tables), run this SQL once:
+
+CREATE TABLE IF NOT EXISTS jobs (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    job_type VARCHAR(50) NOT NULL, -- 'guide' | 'diver' | 'mentor'
+    location VARCHAR(255) NOT NULL,
+    salary VARCHAR(255),
+    whatsapp VARCHAR(50),
+    email VARCHAR(255),
+    description TEXT NOT NULL,
+    posted_by VARCHAR(255) NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    status VARCHAR(50) DEFAULT 'approved' -- keep it simple: auto-approved
+);
+
+
+If you have a schema.sql file in Replit, add this there too.
+
+2️⃣ Backend – Jobs API (Express + pg)
+
+I’ll assume you already have:
+
+const express = require('express');
+
+app = express();
+
+app.use(express.json());
+
+A DB helper like:
+
+// db.js
+const { Pool } = require('pg');
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+module.exports = {
+  query: (text, params) => pool.query(text, params),
+};
+
+2.1 Create routes/jobs.js
+
+In Replit, create a new file: routes/jobs.js and paste:
+
+// routes/jobs.js
+const express = require('express');
+const router = express.Router();
+const db = require('../db'); // adjust the path if your db file is somewhere else
+
+// POST /api/jobs  -> create a new job (public)
+router.post('/', async (req, res) => {
+  try {
+    const {
+      title,
+      jobType,
+      location,
+      salary,
+      whatsapp,
+      email,
+      description,
+      postedBy,
+    } = req.body;
+
+    // Basic validation
+    if (!title || !jobType || !location || !description || !postedBy) {
+      return res.status(400).json({ error: 'Missing required fields.' });
+    }
+
+    const result = await db.query(
+      `INSERT INTO jobs
+        (title, job_type, location, salary, whatsapp, email, description, posted_by)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+       RETURNING *`,
+      [title, jobType, location, salary || '', whatsapp || '', email || '', description, postedBy]
+    );
+
+    res.status(201).json({ success: true, job: result.rows[0] });
+  } catch (err) {
+    console.error('Error inserting job:', err);
+    res.status(500).json({ error: 'Server error while creating job.' });
+  }
+});
+
+// GET /api/jobs  -> list approved jobs with optional filters
+router.get('/', async (req, res) => {
+  try {
+    const { type, location } = req.query;
+
+    let sql = `SELECT id, title, job_type, location, salary, whatsapp, email, description, posted_by, created_at
+               FROM jobs
+               WHERE status = 'approved'`;
+    const params = [];
+
+    if (type) {
+      params.push(type);
+      sql += ` AND job_type = $${params.length}`;
+    }
+
+    if (location) {
+      params.push(`%${location}%`);
+      sql += ` AND location ILIKE $${params.length}`;
+    }
+
+    sql += ' ORDER BY created_at DESC';
+
+    const result = await db.query(sql, params);
+    res.json({ jobs: result.rows });
+  } catch (err) {
+    console.error('Error fetching jobs:', err);
+    res.status(500).json({ error: 'Server error while fetching jobs.' });
+  }
+});
+
+module.exports = router;
+
+2.2 Connect router in your main server file
+
+In server.js or app.js (where you create your Express app), add:
+
+const jobsRouter = require('./routes/jobs');
+app.use('/api/jobs', jobsRouter);
+
+
+Make sure this is after app.use(express.json()).
+
+3️⃣ Frontend – Post a Job page (post-job.html)
+
+Create a new file in your public (or main HTML folder) called post-job.html and paste:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Post a Job | EgTravelMarket</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      background: #f5f7fb;
+      color: #222;
+    }
+    header {
+      background: #003d7a;
+      color: #fff;
+      padding: 1rem 1.5rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+    main {
+      max-width: 800px;
+      margin: 1.5rem auto;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    }
+    h2 {
+      margin-top: 0;
+      color: #003d7a;
+    }
+    .field {
+      margin-bottom: 1rem;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid #d0d4e0;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+    }
+    textarea {
+      min-height: 120px;
+    }
+    button {
+      background: #0077cc;
+      color: #fff;
+      border: none;
+      padding: 0.7rem 1.4rem;
+      cursor: pointer;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    .note {
+      font-size: 0.85rem;
+      color: #666;
+    }
+    .message {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    .message.success {
+      color: #137333;
+    }
+    .message.error {
+      color: #c5221f;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EgTravelMarket – Post a Job for Guides, Divers & Mentors</h1>
+  </header>
+
+  <main>
+    <h2>Post a Job</h2>
+    <p class="note">
+      This form is for travel agencies, hotels, diving centers and companies who want to hire
+      <strong>guides, divers or mentors</strong>.
+    </p>
+
+    <form id="jobForm">
+      <div class="field">
+        <label for="postedBy">Company / Agency Name *</label>
+        <input type="text" id="postedBy" required />
+      </div>
+
+      <div class="field">
+        <label for="title">Job Title *</label>
+        <input type="text" id="title" placeholder="e.g. English-speaking Tour Guide in Sharm El-Sheikh" required />
+      </div>
+
+      <div class="field">
+        <label for="jobType">Job Category *</label>
+        <select id="jobType" required>
+          <option value="">Select one</option>
+          <option value="guide">Guide</option>
+          <option value="diver">Diver</option>
+          <option value="mentor">Mentor</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="location">Location *</label>
+        <input type="text" id="location" placeholder="e.g. Sharm El-Sheikh, Hurghada, Cairo" required />
+      </div>
+
+      <div class="field">
+        <label for="salary">Salary / Rate (optional)</label>
+        <input type="text" id="salary" placeholder="e.g. 40 USD per day" />
+      </div>
+
+      <div class="field">
+        <label for="whatsapp">WhatsApp Number (optional but recommended)</label>
+        <input type="text" id="whatsapp" placeholder="e.g. 0020XXXXXXXXXX" />
+      </div>
+
+      <div class="field">
+        <label for="email">Contact Email (optional)</label>
+        <input type="email" id="email" placeholder="e.g. jobs@yourcompany.com" />
+      </div>
+
+      <div class="field">
+        <label for="description">Job Description *</label>
+        <textarea id="description" placeholder="Describe responsibilities, requirements, languages, dates..."></textarea>
+      </div>
+
+      <button type="submit" id="submitBtn">Submit Job</button>
+      <div id="formMessage" class="message"></div>
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById('jobForm');
+    const messageDiv = document.getElementById('formMessage');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      messageDiv.textContent = '';
+      messageDiv.className = 'message';
+      submitBtn.disabled = true;
+
+      const payload = {
+        postedBy: document.getElementById('postedBy').value.trim(),
+        title: document.getElementById('title').value.trim(),
+        jobType: document.getElementById('jobType').value,
+        location: document.getElementById('location').value.trim(),
+        salary: document.getElementById('salary').value.trim(),
+        whatsapp: document.getElementById('whatsapp').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        description: document.getElementById('description').value.trim(),
+      };
+
+      if (!payload.title || !payload.jobType || !payload.location || !payload.description || !payload.postedBy) {
+        messageDiv.textContent = 'Please fill all required fields.';
+        messageDiv.classList.add('error');
+        submitBtn.disabled = false;
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/jobs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || 'Could not submit job.');
+        }
+
+        messageDiv.textContent = 'Thank you! Your job has been posted.';
+        messageDiv.classList.add('success');
+        form.reset();
+      } catch (err) {
+        console.error(err);
+        messageDiv.textContent = err.message || 'Error submitting job.';
+        messageDiv.classList.add('error');
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
+
+4️⃣ Frontend – Jobs listing page (jobs.html)
+
+Create new file jobs.html and paste:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jobs for Guides, Divers & Mentors | EgTravelMarket</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      background: #f5f7fb;
+      color: #222;
+    }
+    header {
+      background: #003d7a;
+      color: #fff;
+      padding: 1rem 1.5rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.3rem;
+    }
+    main {
+      max-width: 1100px;
+      margin: 1.5rem auto;
+      padding: 0 1rem 1.5rem;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      align-items: center;
+    }
+    .filters select,
+    .filters input {
+      padding: 0.5rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid #d0d4e0;
+      font-size: 0.9rem;
+    }
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .job-card {
+      background: #fff;
+      padding: 1rem 1rem 1.1rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .job-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+    .job-badge.guide { background: #e3f2fd; color: #0b5394; }
+    .job-badge.diver { background: #e0f7fa; color: #006064; }
+    .job-badge.mentor { background: #ede7f6; color: #4527a0; }
+
+    .job-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin: 0 0 0.25rem;
+    }
+    .job-meta {
+      font-size: 0.85rem;
+      color: #555;
+      margin-bottom: 0.5rem;
+    }
+    .job-salary {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #00695c;
+      margin-bottom: 0.4rem;
+    }
+    .job-desc {
+      font-size: 0.85rem;
+      color: #444;
+      margin-bottom: 0.6rem;
+    }
+    .job-footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: #555;
+      margin-top: auto;
+    }
+    .job-footer span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+    .btn-row {
+      margin-top: 0.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-whatsapp {
+      background: #25d366;
+      color: #fff;
+    }
+    .btn-email {
+      background: #0069c0;
+      color: #fff;
+    }
+    .empty-state {
+      margin-top: 2rem;
+      text-align: center;
+      color: #777;
+      font-size: 0.9rem;
+    }
+    .small-note {
+      font-size: 0.8rem;
+      color: #777;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Open Jobs for Guides, Divers & Mentors</h1>
+  </header>
+
+  <main>
+    <section class="filters">
+      <select id="filterType">
+        <option value="">All Categories</option>
+        <option value="guide">Guides</option>
+        <option value="diver">Divers</option>
+        <option value="mentor">Mentors</option>
+      </select>
+
+      <input
+        type="text"
+        id="filterLocation"
+        placeholder="Filter by location (e.g. Sharm, Cairo)"
+      />
+
+      <button type="button" class="btn" id="filterBtn">Search</button>
+      <button type="button" class="btn" id="clearBtn">Clear</button>
+    </section>
+
+    <section id="jobsContainer" class="jobs-grid"></section>
+    <div id="emptyState" class="empty-state" style="display:none;">
+      No jobs found. Try changing the filters.
+    </div>
+
+    <p class="small-note">
+      Tip for experts: when you contact the employer, share your EgTravelMarket profile link.
+    </p>
+  </main>
+
+  <script>
+    const jobsContainer = document.getElementById('jobsContainer');
+    const emptyState = document.getElementById('emptyState');
+    const filterType = document.getElementById('filterType');
+    const filterLocation = document.getElementById('filterLocation');
+    const filterBtn = document.getElementById('filterBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    async function fetchJobs() {
+      const params = new URLSearchParams();
+      if (filterType.value) params.append('type', filterType.value);
+      if (filterLocation.value.trim()) params.append('location', filterLocation.value.trim());
+
+      const url = '/api/jobs' + (params.toString() ? `?${params.toString()}` : '');
+
+      jobsContainer.innerHTML = '';
+      emptyState.style.display = 'none';
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || 'Failed to load jobs.');
+        }
+
+        renderJobs(data.jobs || []);
+      } catch (err) {
+        console.error(err);
+        emptyState.textContent = 'Error loading jobs. Please try again later.';
+        emptyState.style.display = 'block';
+      }
+    }
+
+    function renderJobs(jobs) {
+      jobsContainer.innerHTML = '';
+
+      if (!jobs.length) {
+        emptyState.textContent = 'No jobs found. Try changing the filters.';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+
+      jobs.forEach(job => {
+        const card = document.createElement('article');
+        card.className = 'job-card';
+
+        const badge = document.createElement('div');
+        badge.className = `job-badge ${job.job_type}`;
+        badge.textContent = job.job_type.toUpperCase();
+        card.appendChild(badge);
+
+        const titleEl = document.createElement('h2');
+        titleEl.className = 'job-title';
+        titleEl.textContent = job.title;
+        card.appendChild(titleEl);
+
+        const metaEl = document.createElement('div');
+        metaEl.className = 'job-meta';
+        metaEl.textContent = `${job.location} • Posted by ${job.posted_by}`;
+        card.appendChild(metaEl);
+
+        if (job.salary) {
+          const salaryEl = document.createElement('div');
+          salaryEl.className = 'job-salary';
+          salaryEl.textContent = job.salary;
+          card.appendChild(salaryEl);
+        }
+
+        const descEl = document.createElement('div');
+        descEl.className = 'job-desc';
+        descEl.textContent = job.description.length > 180
+          ? job.description.slice(0, 180) + '...'
+          : job.description;
+        card.appendChild(descEl);
+
+        const footer = document.createElement('div');
+        footer.className = 'job-footer';
+
+        const dateSpan = document.createElement('span');
+        const created = new Date(job.created_at);
+        dateSpan.textContent = `Posted on ${created.toLocaleDateString()}`;
+        footer.appendChild(dateSpan);
+
+        card.appendChild(footer);
+
+        const btnRow = document.createElement('div');
+        btnRow.className = 'btn-row';
+
+        if (job.whatsapp) {
+          const waBtn = document.createElement('button');
+          waBtn.className = 'btn btn-whatsapp';
+          waBtn.textContent = 'Apply via WhatsApp';
+          waBtn.addEventListener('click', () => {
+            openWhatsApp(job);
+          });
+          btnRow.appendChild(waBtn);
+        }
+
+        if (job.email) {
+          const emailBtn = document.createElement('button');
+          emailBtn.className = 'btn btn-email';
+          emailBtn.textContent = 'Apply via Email';
+          emailBtn.addEventListener('click', () => {
+            openEmail(job);
+          });
+          btnRow.appendChild(emailBtn);
+        }
+
+        card.appendChild(btnRow);
+        jobsContainer.appendChild(card);
+      });
+    }
+
+    function openWhatsApp(job) {
+      const raw = job.whatsapp || '';
+      const cleaned = raw.replace(/\D/g, ''); // keep only digits
+      if (!cleaned) return;
+
+      const text = `Hello, I am interested in the job "${job.title}" in ${job.location} that you posted on EgTravelMarket.`;
+      const url = `https://wa.me/${cleaned}?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
+
+    function openEmail(job) {
+      const subject = `Application for: ${job.title}`;
+      const body = `Hello,\n\nI am interested in the job "${job.title}" in ${job.location} that you posted on EgTravelMarket.\n\nBest regards,\n`;
+      const url = `mailto:${encodeURIComponent(job.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = url;
+    }
+
+    filterBtn.addEventListener('click', fetchJobs);
+    clearBtn.addEventListener('click', () => {
+      filterType.value = '';
+      filterLocation.value = '';
+      fetchJobs();
+    });
+
+    // Load jobs on first visit
+    fetchJobs();
+  </script>
+</body>
+</html>
+
+5️⃣ How to plug this into your existing project
+
+Create the DB table (step 1).
+
+Add routes/jobs.js (step 2.1).
+
+Register the router in server.js/app.js (step 2.2).
+
+Add post-job.html and jobs.html in the same folder where your other HTML pages live.
+
+Add links in your navigation (optional now, you can do later):
+
+“Post a Job” → /post-job.html
+
+“Jobs Marketplace” → /jobs.html
+
+Run the project on Replit and test:
+
+Submit a job via /post-job.html.
+
+Open /jobs.html and check if it appears.

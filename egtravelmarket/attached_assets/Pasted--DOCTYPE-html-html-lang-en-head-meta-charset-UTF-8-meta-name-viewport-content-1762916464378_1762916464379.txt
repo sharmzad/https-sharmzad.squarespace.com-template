@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EgTravelMarket | Hidden Egypt – Local Stories & Traditions</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{background:#fdfaf6;color:#222;line-height:1.7;}
+    a{text-decoration:none;color:#0a3d62;}
+    img{max-width:100%;display:block;}
+
+    /* ===== HERO ===== */
+    .hero{
+      background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+                 url('https://images.unsplash.com/photo-1549880338-65ddcdfd017b') center/cover no-repeat;
+      height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+      text-align:center;color:#fff;padding:0 15px;
+    }
+    .hero h1{font-size:2.8rem;margin-bottom:10px;}
+    .hero p{max-width:700px;color:#ddd;}
+
+    /* ===== ARTICLE ===== */
+    .article{padding:60px 10%;max-width:900px;margin:auto;}
+    .article h2{color:#0a3d62;margin-bottom:20px;}
+    .article p{margin-bottom:20px;font-size:1.05rem;color:#333;}
+
+    /* ===== RELATED TRIPS ===== */
+    .related-trips{background:#fff;padding:50px 10%;text-align:center;}
+    .related-trips h2{color:#0a3d62;margin-bottom:30px;}
+    .trips{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;}
+    .trip-card{background:#f9f9f9;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);overflow:hidden;transition:.3s;}
+    .trip-card:hover{transform:translateY(-5px);}
+    .trip-card img{height:180px;object-fit:cover;width:100%;}
+    .trip-card h3{color:#0a3d62;font-size:1.1rem;margin:15px;}
+    .trip-card a{display:inline-block;background:#0a3d62;color:#fff;margin:0 0 15px;padding:8px 15px;border-radius:6px;transition:.3s;}
+    .trip-card a:hover{background:#062f4e;}
+
+    footer{background:#0a3d62;color:#fff;text-align:center;padding:30px 15px;font-size:.9rem;margin-top:50px;}
+    footer p{margin:5px 0;}
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <h1>Hidden Egypt – Local Stories & Traditions</h1>
+    <p>Beyond the temples and cities lies a quieter Egypt — one of villages, oases, and ancient ways of life.</p>
+  </section>
+
+  <!-- ===== ARTICLE CONTENT ===== -->
+  <section class="article">
+    <h2>Life Beyond the Monuments</h2>
+    <p>
+      Egypt’s magic isn’t only in its pyramids or museums — it’s in its people.
+      Away from the tourist routes, time moves slower. Villages on the Nile still use clay ovens, 
+      and desert tribes keep traditions older than history itself.
+    </p>
+
+    <h2>The Craft of Time</h2>
+    <p>
+      From Siwa’s salt lamps to handmade pottery in Fayoum, Egyptian craftsmanship is an art of patience.
+      Every object tells a story — of family, land, and legacy.
+      Watching a craftsman work is like witnessing history continue one heartbeat at a time.
+    </p>
+
+    <h2>Oases of Peace</h2>
+    <p>
+      In the desert, silence speaks.  
+      The **Siwa Oasis**, surrounded by golden dunes and palm groves, is a world apart —
+      its language, architecture, and culture preserved for centuries.
+      Here, the night sky feels close enough to touch, and hospitality is sacred.
+    </p>
+
+    <p>
+      In Sinai and the Western Desert, Bedouins live by honor, generosity, and song.
+      Sharing tea by a campfire under a thousand stars is an experience words can’t describe.
+    </p>
+
+    <h2>Discover the Real Egypt</h2>
+    <p>
+      EgTravelMarket takes travelers beyond sightseeing — into authentic experiences.
+      Visit a Nubian village, learn traditional weaving, ride camels across the dunes,
+      or simply sit with locals and listen to their stories.  
+      These moments stay long after the journey ends — the heart of Hidden Egypt.
+    </p>
+  </section>
+
+  <!-- ===== RELATED TRIPS ===== -->
+  <section class="related-trips">
+    <h2>Related Experiences</h2>
+    <div class="trips">
+      <div class="trip-card">
+        <img src="/assets/trips/siwa-oasis.jpg" alt="Siwa Oasis Adventure">
+        <h3>Siwa Oasis Adventure</h3>
+        <a href="/trip-siwa-oasis.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/bedouin-camp.jpg" alt="Bedouin Camp">
+        <h3>Bedouin Desert Camp</h3>
+        <a href="/trip-bedouin-camp.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/handicrafts.jpg" alt="Handicrafts Tour">
+        <h3>Handicrafts & Local Market Tour</h3>
+        <a href="/trip-handicrafts.html">View Trip</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 EgTravelMarket – All Rights Reserved</p>
+    <p>Backed & Managed by GoMundo Travel</p>
+  </footer>
+
+</body>
+</html>
+✅ Step 3 — Add Optional Images
+Upload to /assets/trips/:
+
+Copy code
+siwa-oasis.jpg  
+bedouin-camp.jpg  
+handicrafts.jpg  
+✅ Step 4 — Connect from Discover Egypt Page
+In discover-egypt.html, find:
+
+html
+Copy code
+<h3>Hidden Egypt</h3>
+and wrap it:
+
+html
+Copy code
+<a href="/hidden-egypt.html">
+  <h3>Hidden Egypt</h3>
+</a>
+✅ Step 5 — Run & Preview
+Click Run → open /hidden-egypt.html
+You’ll see a cinematic desert hero, authentic storytelling, and real cultural trip links 🌾
+

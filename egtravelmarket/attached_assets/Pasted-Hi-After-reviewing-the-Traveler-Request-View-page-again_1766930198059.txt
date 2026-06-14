@@ -1,0 +1,101 @@
+Hi,
+
+After reviewing the Traveler Request View page again with the latest screenshots, there are still IMPORTANT issues that must be fixed. Some logic works, but UI behavior is inconsistent and confusing for users.
+
+Please carefully address ALL points below:
+
+-------------------------
+1) ACCEPT / REJECT BUTTONS – STILL MISSING OR INCONSISTENT ❌
+-------------------------
+
+Current problems observed:
+- In some offers, Accept / Reject buttons are NOT visible at all, even when the offer status is still pending.
+- In other cases, only status text appears without action buttons.
+- This creates confusion and makes the traveler think the system is broken.
+
+Required behavior (MUST be enforced consistently):
+- If NO offer is accepted yet:
+  → Every pending offer MUST show:
+     ✓ Accept Offer (green)
+     ✗ Reject Offer (red)
+- Once ONE offer is accepted:
+  → Accepted offer:
+     - Green highlight
+     - Status: “You accepted this offer”
+     - NO Accept/Reject buttons
+  → All other offers:
+     - Greyed out
+     - Status: “Not Selected – another offer was accepted”
+     - NO buttons
+
+This logic must apply consistently to:
+- Guides
+- Divers
+- Mentors
+- Agencies
+- Dive Centers
+- EgTravelMarket offers
+
+-------------------------
+2) PROCEED TO PAYMENT BUTTON – MISSING CONTEXT ❌
+-------------------------
+
+The “Proceed to Payment” button appears, but users are NOT told clearly:
+- Who collects the payment (EgTravelMarket)
+- That 20% commission is handled automatically
+- That the provider receives 80%
+- That payment is protected / escrow-style
+
+Add a short explanation under the button:
+“Payment is processed securely by EgTravelMarket. The provider is paid after confirmation. You are fully protected.”
+
+(NO backend logic change needed.)
+
+-------------------------
+3) EGTRAVELMARKET OFFER DOES NOT LOOK AUTHORITATIVE ❌
+-------------------------
+
+EgTravelMarket offers currently look like normal provider offers.
+
+Required changes:
+- Clear label: “Official EgTravelMarket Offer”
+- Subtitle: “Managed directly by EgTravelMarket Team”
+- Visual distinction (badge or border) so users immediately understand this is a platform-backed offer
+
+-------------------------
+4) “PROFILE NOT AVAILABLE” NEEDS REASSURANCE ❌
+-------------------------
+
+When an offer shows “Profile not available”, users feel unsafe.
+
+Add text like:
+“This offer is managed through EgTravelMarket. All payments and communication are fully protected.”
+
+-------------------------
+5) POST-ACCEPTANCE FLOW IS NOT CLEAR ❌
+-------------------------
+
+After accepting an offer, travelers must clearly understand:
+1. Offer is locked
+2. Provider is notified
+3. Payment is the next required step
+4. EgTravelMarket manages the transaction
+
+Add a short step-based explanation near the accepted offer.
+
+-------------------------
+6) NO MESSAGE ABOUT ADDITIONAL OFFERS ❌
+-------------------------
+
+Currently, users don’t know if more offers can still arrive.
+
+Add notice:
+“Other providers may continue sending offers until the request closes. You will be notified by email.”
+
+-------------------------
+
+IMPORTANT:
+All requested changes are UI/UX clarity and consistency fixes.
+NO system logic or database changes are required.
+
+Please confirm once ALL points above are implemented.

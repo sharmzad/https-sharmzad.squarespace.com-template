@@ -1,0 +1,169 @@
+💻 FULL CODE (HTML + CSS + JS)
+<!-- ================= Package C : Egyptian Explorer Triple Pack ================= -->
+<section id="package-c" class="package-card">
+  <div class="package-header">
+    <h2>Egyptian Explorer Triple Pack</h2>
+    <p>Unveil Three Wonders in One Bundle 🇪🇬✨</p>
+  </div>
+
+  <div class="package-pricing">
+    <p><strong>Adult:</strong> $320 
+      <span class="old-price">$370</span> 
+      <span class="save">Save $50</span>
+    </p>
+    <p><strong>Child:</strong> $285 
+      <span class="old-price">$325</span> 
+      <span class="save">Save $40</span>
+    </p>
+  </div>
+
+  <div class="package-trips">
+    <h3>Your Three Unforgettable Trips</h3>
+    <ul>
+      <li><strong>Dahab Discovery</strong> – Boat Trip • Snorkeling • Submarine • City Tour • Lunch included</li>
+      <li><strong>Luxor by Flight</strong> – Karnak Temple • Hatshepsut Temple • Kings Valley • Lunch (includes flight) 
+        <em>(Visa $30 not included)</em></li>
+      <li><strong>5-in-1 Desert Rose</strong> – Quad Bike • Camel Ride • Bedouin Dinner • Star Gazing • Oriental Show</li>
+    </ul>
+  </div>
+
+  <form class="booking-form" onsubmit="return confirmBooking(event)">
+    <label>Full Name:</label>
+    <input type="text" placeholder="Your Name" required>
+
+    <label>Email Address:</label>
+    <input type="email" placeholder="example@mail.com" required>
+
+    <label>Number of Passengers:</label>
+    <select required>
+      <option value="">Select ...</option>
+      <option>1 Adult</option>
+      <option>2 Adults</option>
+      <option>1 Adult + 1 Child</option>
+      <option>Family / Group</option>
+    </select>
+
+    <label>Preferred Start Date:</label>
+    <input type="date" required>
+
+    <label>Access Code (required to book):</label>
+    <input type="password" placeholder="Enter your access code" required>
+
+    <small class="note">
+      🔒 We ask for an access code to verify exclusive partner offers and ensure accurate pricing for registered travel agents and direct clients only.
+    </small>
+
+    <button type="submit" class="book-btn">Book Now</button>
+  </form>
+</section>
+
+<!-- ================= STYLES (reuse or merge with your main CSS) ================= -->
+<style>
+.package-card {
+  background: linear-gradient(135deg, #005eb8, #009fe3);
+  color: #fff;
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 700px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  font-family: "Poppins", sans-serif;
+}
+.package-header h2 {
+  font-size: 1.8rem;
+  margin-bottom: .3rem;
+}
+.package-header p {
+  font-size: 1rem;
+  opacity: .9;
+}
+.package-pricing {
+  background: rgba(255,255,255,0.15);
+  padding: 1rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+}
+.package-pricing p {
+  margin: .4rem 0;
+  font-size: 1rem;
+}
+.old-price {
+  text-decoration: line-through;
+  color: #ffe;
+  opacity: .8;
+  margin-left: .3rem;
+}
+.save {
+  background: #ffeb3b;
+  color: #000;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-left: .5rem;
+  font-weight: 600;
+}
+.package-trips h3 {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}
+.package-trips ul {
+  list-style: none;
+  padding-left: 0;
+}
+.package-trips li {
+  margin: .4rem 0;
+  background: rgba(255,255,255,0.1);
+  padding: .6rem;
+  border-radius: 8px;
+}
+.booking-form {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.booking-form label {
+  margin-top: .8rem;
+  font-weight: 500;
+}
+.booking-form input,
+.booking-form select {
+  padding: .6rem;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  margin-top: .3rem;
+}
+.note {
+  display: block;
+  margin-top: .8rem;
+  font-size: .85rem;
+  opacity: .9;
+}
+.book-btn {
+  margin-top: 1.5rem;
+  background: #fff;
+  color: #005eb8;
+  font-weight: 700;
+  padding: .8rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: .3s;
+}
+.book-btn:hover {
+  background: #ffeb3b;
+  color: #000;
+}
+@media(max-width:600px){
+  .package-card {padding:1.2rem;}
+  .package-header h2{font-size:1.4rem;}
+}
+</style>
+
+<!-- ================= JAVASCRIPT (simple popup confirmation) ================= -->
+<script>
+function confirmBooking(e){
+  e.preventDefault();
+  alert("✅ Thank you for choosing the Egyptian Explorer Triple Pack!\nYour booking request has been received.\nWe will contact you soon to confirm availability.");
+  return false;
+}
+</script>

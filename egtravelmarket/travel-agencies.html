@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Travel Agencies in Egypt - EgTravelMarket</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- PRIMARY OG IMAGE -->
+  <meta property="og:title" content="EgTravelMarket – Your Gateway to Explore Egypt" />
+  <meta property="og:description" content="Discover trips, experts, diving, MICE, medical services, and full travel experiences across Egypt." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.egtravelmarket.com/" />
+  <meta property="og:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+
+  <!-- TELL CRAWLERS TO REFRESH OG IMAGE -->
+  <meta property="og:image:secure_url" content="https://www.egtravelmarket.com/static/images/og-image.jpg?v=2" />
+<meta name="description" content="Discover trusted travel agencies in Egypt offering tours, packages, transfers, and travel planning services across Egypt. Connect directly—no login required.">
+<meta name="keywords" content="travel agencies Egypt, tour operators Egypt, travel companies Cairo">
+<meta name="copyright" content="© 2025 Eg Travel Market. All rights reserved.">
+<link rel="canonical" href="https://egytravelmarket.com/travel-agencies.html">
+<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/skeleton-loader.css">
+<style>
+  .filters-panel {
+    background: rgba(15, 30, 71, 0.8);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 1.5rem;
+  }
+  .filter-group {
+    margin-bottom: 20px;
+  }
+  .filter-group:last-child {
+    margin-bottom: 0;
+  }
+  .filter-group-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+  }
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 6px 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+  .checkbox-item:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.15);
+  }
+  .checkbox-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #2ea6ff;
+    cursor: pointer;
+  }
+  .checkbox-item label {
+    font-size: 13px;
+    color: #bcd3ff;
+    cursor: pointer;
+    margin: 0;
+    user-select: none;
+  }
+  .checkbox-item input:checked + label {
+    color: #fff;
+  }
+  .filter-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  @media(max-width: 900px) {
+    .filter-row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media(max-width: 560px) {
+    .filter-row {
+      grid-template-columns: 1fr;
+    }
+    .checkbox-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .search-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    align-items: stretch;
+  }
+  .search-row .input {
+    flex: 1;
+    min-width: 0;
+  }
+  @media(max-width:560px) {
+    .search-row {
+      flex-direction: column;
+    }
+    .search-row .input {
+      width: 100%;
+    }
+  }
+  .filter-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(6, 182, 212, 0.15);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-radius: 12px;
+    color: #06b6d4;
+    white-space: nowrap;
+    flex-shrink: 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .filter-toggle-btn:hover {
+    background: rgba(6, 182, 212, 0.25);
+  }
+  .filters-panel.collapsed {
+    display: none;
+  }
+  .clear-filters-btn {
+    padding: 8px 16px;
+    background: rgba(255, 77, 77, 0.15);
+    border: 1px solid rgba(255, 77, 77, 0.3);
+    border-radius: 8px;
+    color: #ff4d4d;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .clear-filters-btn:hover {
+    background: rgba(255, 77, 77, 0.25);
+  }
+  .filter-section {
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .filter-section:last-of-type {
+    margin-bottom: 0;
+  }
+  .filter-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.03);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s ease;
+  }
+  .filter-section-header:hover {
+    background: rgba(255,255,255,0.06);
+  }
+  .filter-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+  }
+  .filter-section-toggle {
+    color: #7aa8d8;
+    font-size: 12px;
+    transition: transform 0.2s ease;
+  }
+  .filter-section.collapsed .filter-section-toggle {
+    transform: rotate(-90deg);
+  }
+  .filter-section-content {
+    padding: 16px;
+    background: rgba(0,0,0,0.1);
+  }
+  .filter-section.collapsed .filter-section-content {
+    display: none;
+  }
+  .filter-helper-text {
+    font-size: 13px;
+    color: #7aa8d8;
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    background: rgba(46, 166, 255, 0.08);
+    border-radius: 8px;
+    border-left: 3px solid #2ea6ff;
+  }
+  .filter-hint {
+    font-size: 12px;
+    color: #7aa8d8;
+    margin-top: 4px;
+  }
+  .active-filters-count {
+    background: #2ea6ff;
+    color: #002349;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .business-type-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+  .badge-dmc {
+    background: rgba(155, 89, 182, 0.2);
+    color: #d7a6f0;
+    border: 1px solid rgba(155, 89, 182, 0.4);
+  }
+  .badge-tour-operator {
+    background: rgba(46, 166, 255, 0.2);
+    color: #6ec1ff;
+    border: 1px solid rgba(46, 166, 255, 0.4);
+  }
+  .badge-travel-agency {
+    background: rgba(39, 174, 96, 0.2);
+    color: #52d681;
+    border: 1px solid rgba(39, 174, 96, 0.4);
+  }
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9Z2B97VS02"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9Z2B97VS02');
+</script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+<header class="header">
+  <div class="container nav">
+    <a href="/index.html" class="brand"><div class="logo"></div><span>Eg Travel Market</span></a>
+    <nav class="menu">
+      <a href="/index.html">Home</a>
+      <a href="/index.html#tours">Tours & Activities</a>
+      <a href="/mice.html">MICE</a>
+      <a href="/investment.html">Investments</a>
+      <a href="/medical.html">Medical</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/divers.html">Divers</a>
+      <a href="/mentor.html">Mentors</a>
+      <a href="/travel-agencies.html" class="active">Agencies</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-flex">
+    <div style="flex: 1;">
+      <h1>Travel Agencies in Egypt</h1>
+      <div class="agency-top-buttons" style="display: flex; gap: 0.75rem; margin: 1rem 0 1.25rem; flex-wrap: wrap; justify-content: center;">
+        <a class="btn primary" href="/agency-signup.html" style="min-width: 160px;">🏢 Sign Up as Agency</a>
+        <a class="btn" href="/agency-login.html" style="min-width: 160px;">🔐 Agency Login</a>
+      </div>
+      <style>
+        @media (max-width: 600px) {
+          .agency-top-buttons {
+            flex-direction: column !important;
+          }
+          .agency-top-buttons .btn {
+            width: 100% !important;
+            text-align: center;
+          }
+        }
+      </style>
+      <p>Discover trusted travel agencies offering curated tours, packages, transfers, and comprehensive travel planning services. Connect directly with professional agencies—no login required.</p>
+      <p style="margin-top: 1rem; font-size: 0.95rem;">Looking for tour guides? Browse our <a href="guides.html" style="color: #0ea5e9; text-decoration: underline;">licensed guides</a>. Need diving services? Check our <a href="divers.html" style="color: #0ea5e9; text-decoration: underline;">diving instructors</a>.</p>
+      
+      <div class="search-row" style="margin-top: 1.5rem;">
+        <input id="name-filter" class="input" placeholder="Search by agency name...">
+        <button id="filter-toggle" class="filter-toggle-btn">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/></svg>
+          Advanced Filters <span id="active-filters-count" class="active-filters-count" style="display: none;">0</span>
+        </button>
+      </div>
+      <p class="filter-hint">Use filters to narrow down agencies by type, location, services, and more</p>
+      
+      <div id="filters-panel" class="filters-panel collapsed">
+        <div class="filter-helper-text">Start with Agency Type or Agency Base to narrow results quickly</div>
+        
+        <div class="filter-section" id="section-business-type">
+          <div class="filter-section-header" onclick="toggleFilterSection('section-business-type')">
+            <span class="filter-section-title">Agency Business Type</span>
+            <span class="filter-section-toggle">▼</span>
+          </div>
+          <div class="filter-section-content">
+            <div class="checkbox-grid" id="business-type-filter">
+              <div class="checkbox-item"><input type="checkbox" id="type-dmc" value="DMC"><label for="type-dmc">DMC (Local Handling Agent)</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="type-touroperator" value="Tour Operator"><label for="type-touroperator">Tour Operator</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="type-travelagency" value="Travel Agency"><label for="type-travelagency">Travel Agency</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-section" id="section-base">
+          <div class="filter-section-header" onclick="toggleFilterSection('section-base')">
+            <span class="filter-section-title">Agency Base</span>
+            <span class="filter-section-toggle">▼</span>
+          </div>
+          <div class="filter-section-content">
+            <div class="checkbox-grid" id="base-filter">
+              <div class="checkbox-item"><input type="checkbox" id="base-egypt" value="Egypt"><label for="base-egypt">Egypt-based Agency</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="base-intl" value="Outside Egypt"><label for="base-intl">International Agency</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-section collapsed" id="section-destinations">
+          <div class="filter-section-header" onclick="toggleFilterSection('section-destinations')">
+            <span class="filter-section-title">Egypt Destinations</span>
+            <span class="filter-section-toggle">▼</span>
+          </div>
+          <div class="filter-section-content">
+            <div class="checkbox-grid" id="destinations-filter">
+              <div class="checkbox-item"><input type="checkbox" id="dest-cairo" value="Cairo"><label for="dest-cairo">Cairo</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="dest-giza" value="Giza"><label for="dest-giza">Giza</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="dest-luxor" value="Luxor"><label for="dest-luxor">Luxor</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="dest-aswan" value="Aswan"><label for="dest-aswan">Aswan</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="dest-alexandria" value="Alexandria"><label for="dest-alexandria">Alexandria</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="dest-hurghada" value="Hurghada"><label for="dest-hurghada">Hurghada</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="dest-sharm" value="Sharm El Sheikh"><label for="dest-sharm">Sharm El Sheikh</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="dest-marsa" value="Marsa Alam"><label for="dest-marsa">Marsa Alam</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="dest-dahab" value="Dahab"><label for="dest-dahab">Dahab</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="dest-siwa" value="Siwa Oasis"><label for="dest-siwa">Siwa Oasis</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="dest-nile" value="Nile Cruises"><label for="dest-nile">Nile Cruises</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="dest-redsea" value="Red Sea"><label for="dest-redsea">Red Sea (General)</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-section collapsed" id="section-services">
+          <div class="filter-section-header" onclick="toggleFilterSection('section-services')">
+            <span class="filter-section-title">Products & Services</span>
+            <span class="filter-section-toggle">▼</span>
+          </div>
+          <div class="filter-section-content">
+            <div class="checkbox-grid" id="services-filter">
+              <div class="checkbox-item"><input type="checkbox" id="svc-tours" value="Tours & Packages"><label for="svc-tours">Tours & Packages</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="svc-daytours" value="Day Tours & Excursions"><label for="svc-daytours">Day Tours & Excursions</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="svc-nile" value="Nile Cruises"><label for="svc-nile">Nile Cruises</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="svc-hotels" value="Hotels / Accommodation"><label for="svc-hotels">Hotels / Accommodation</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="svc-transport" value="Transportation"><label for="svc-transport">Transportation</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="svc-diving" value="Diving Packages"><label for="svc-diving">Diving Packages</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="svc-safari" value="Safari & Adventure"><label for="svc-safari">Safari & Adventure</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="svc-mice" value="MICE / Groups / Incentives"><label for="svc-mice">MICE / Groups / Incentives</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="svc-luxury" value="Luxury Travel"><label for="svc-luxury">Luxury Travel</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="svc-budget" value="Budget Travel"><label for="svc-budget">Budget Travel</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="svc-private" value="Private / Tailor-Made Tours"><label for="svc-private">Private / Tailor-Made Tours</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="svc-group" value="Group Travel"><label for="svc-group">Group Travel</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="svc-handling" value="Ground Handling"><label for="svc-handling">Ground Handling</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-section collapsed" id="section-experience">
+          <div class="filter-section-header" onclick="toggleFilterSection('section-experience')">
+            <span class="filter-section-title">Experience Level</span>
+            <span class="filter-section-toggle">▼</span>
+          </div>
+          <div class="filter-section-content">
+            <select id="experience-filter" class="select" style="width: 100%;">
+              <option value="">Any Experience</option>
+              <option value="1-3">1–3 years</option>
+              <option value="4-7">4–7 years</option>
+              <option value="8-15">8–15 years</option>
+              <option value="15+">15+ years</option>
+            </select>
+          </div>
+        </div>
+        
+        <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+          <button id="clear-filters" class="clear-filters-btn">Clear All Filters</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="grid" id="agencies-grid">
+      <div class="skeleton-card"><div class="skeleton-thumb"><div class="skeleton-avatar"></div><div class="skeleton-badge"></div></div><div class="skeleton-body"><div class="skeleton-name"></div><div class="skeleton-rating"></div><div class="skeleton-location"></div><div class="skeleton-tags"><div class="skeleton-tag"></div><div class="skeleton-tag"></div></div><div class="skeleton-bio"></div></div><div class="skeleton-actions"><div class="skeleton-btn"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-thumb"><div class="skeleton-avatar"></div><div class="skeleton-badge"></div></div><div class="skeleton-body"><div class="skeleton-name"></div><div class="skeleton-rating"></div><div class="skeleton-location"></div><div class="skeleton-tags"><div class="skeleton-tag"></div><div class="skeleton-tag"></div></div><div class="skeleton-bio"></div></div><div class="skeleton-actions"><div class="skeleton-btn"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-thumb"><div class="skeleton-avatar"></div><div class="skeleton-badge"></div></div><div class="skeleton-body"><div class="skeleton-name"></div><div class="skeleton-rating"></div><div class="skeleton-location"></div><div class="skeleton-tags"><div class="skeleton-tag"></div><div class="skeleton-tag"></div></div><div class="skeleton-bio"></div></div><div class="skeleton-actions"><div class="skeleton-btn"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-thumb"><div class="skeleton-avatar"></div><div class="skeleton-badge"></div></div><div class="skeleton-body"><div class="skeleton-name"></div><div class="skeleton-rating"></div><div class="skeleton-location"></div><div class="skeleton-tags"><div class="skeleton-tag"></div><div class="skeleton-tag"></div></div><div class="skeleton-bio"></div></div><div class="skeleton-actions"><div class="skeleton-btn"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-thumb"><div class="skeleton-avatar"></div><div class="skeleton-badge"></div></div><div class="skeleton-body"><div class="skeleton-name"></div><div class="skeleton-rating"></div><div class="skeleton-location"></div><div class="skeleton-tags"><div class="skeleton-tag"></div><div class="skeleton-tag"></div></div><div class="skeleton-bio"></div></div><div class="skeleton-actions"><div class="skeleton-btn"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-thumb"><div class="skeleton-avatar"></div><div class="skeleton-badge"></div></div><div class="skeleton-body"><div class="skeleton-name"></div><div class="skeleton-rating"></div><div class="skeleton-location"></div><div class="skeleton-tags"><div class="skeleton-tag"></div><div class="skeleton-tag"></div></div><div class="skeleton-bio"></div></div><div class="skeleton-actions"><div class="skeleton-btn"></div></div></div>
+    </div>
+
+    <div id="load-more-container" class="load-more-container" style="display: none; text-align: center; margin: 2rem 0;">
+      <button id="load-more-btn" class="btn primary">Load More Agencies</button>
+    </div>
+
+    <div class="block" style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+      <div style="flex: 1; min-width: 300px;">
+        <h4>Are you a travel agency?</h4>
+        <p>Join our network and get direct leads from travelers worldwide.</p>
+        <a class="btn primary" href="/agency-signup.html">Join as Agency</a>
+        <a class="btn" href="/agency-login.html">Sign In</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <h5>Discover Our Products</h5>
+        <div class="list">
+          <a href="/index.html#tours">Tours & Activities</a><a href="/index.html#diving">Diving</a>
+          <a href="/mice.html">MICE & Conferences</a><a href="/investment.html">Investments</a>
+          <a href="/medical.html">Medical Services</a>
+        </div>
+      </div>
+      <div>
+        <h5>Meet Our Experts</h5>
+        <div class="list"><a href="/guides.html">Guides</a><a href="/divers.html">Divers</a><a href="/travel-agencies.html">Agencies</a></div>
+      </div>
+      <div>
+        <h5>Support & Legal</h5>
+        <div class="list"><a href="/faq.html">Help / FAQ</a><a href="/policies.html">Travel Policies</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms & Conditions</a></div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:14px">© Eg Travel Market. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+function toggleFilterSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (section) {
+    section.classList.toggle('collapsed');
+  }
+}
+</script>
+<script src="/js/agency-list.js"></script>
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

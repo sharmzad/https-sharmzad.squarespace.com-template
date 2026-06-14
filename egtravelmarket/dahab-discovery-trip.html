@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- PRIMARY OG IMAGE -->
+  <meta property="og:title" content="EgTravelMarket – Your Gateway to Explore Egypt" />
+  <meta property="og:description" content="Discover trips, experts, diving, MICE, medical services, and full travel experiences across Egypt." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.egtravelmarket.com/" />
+  <meta property="og:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+
+  <!-- TELL CRAWLERS TO REFRESH OG IMAGE -->
+  <meta property="og:image:secure_url" content="https://www.egtravelmarket.com/static/images/og-image.jpg?v=2" />
+  <title>Dahab Discovery Trip - Full Day Adventure from Sharm | EgyTravelMarket</title>
+  <meta name="description" content="Explore Dahab full day trip from Sharm El-Sheikh. Visit Blue Hole, Three Pools snorkeling, Bedouin village, camel riding, and traditional lunch. Hotel pickup/drop-off included. Small groups only.">
+  <meta name="copyright" content="© 2025 EgTravelMarket. All rights reserved.">
+  
+  <!-- Open Graph / Facebook -->
+  <!-- Twitter -->
+  <link rel="canonical" href="https://egytravelmarket.com/dahab-discovery-trip.html">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="header.css?v=20251125-latest">
+  <style>
+    :root{
+      --brand-start:#0a66c2; --brand-end:#19a1f7; --bg:#0b1220; --text:#e9f2ff;
+      --muted:#9fb5d1; --card:#121a2b; --border:rgba(255,255,255,.12);
+      --accent:#ffb02e; --success:#22c55e; --danger:#ef4444; --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:18px; --radius-sm:12px; --max:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+
+    /* Global containers */
+    .container{max-width:var(--max);margin:auto;padding:1rem}
+
+    /* Floating mail icon */
+    .email-fab{position:fixed;right:18px;bottom:18px;z-index:900;display:grid;place-items:center;width:54px;height:54px;border-radius:999px;background:linear-gradient(135deg,var(--brand-start),var(--brand-end));box-shadow:var(--shadow)}
+    .email-fab svg{color:#fff}
+
+    /* HERO */
+    .hero{position:relative;min-height:56vh;display:grid;align-items:end}
+    .hero__bg{position:absolute;inset:0;background:url('images/dahab-discovery-trip.webp') center/cover no-repeat}
+    .hero__overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,22,40,.35),rgba(10,22,40,.75) 40%,rgba(10,22,40,.95))}
+    .hero__content{position:relative;z-index:1;padding:2rem 1rem}
+    .hero__title{font-size:clamp(1.6rem,3vw,2.6rem);font-weight:900;margin:0 0 .5rem}
+    .hero__sub{color:var(--muted);margin:.25rem 0 1rem}
+    .badges{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .7rem;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,.06);color:var(--text)}
+    .cta{display:flex;gap:.6rem;margin-top:1rem}
+    .btn{padding:.7rem 1rem;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.08);color:var(--text);font-weight:700}
+    .btn--primary{background:linear-gradient(135deg,var(--brand-start),var(--brand-end));border-color:transparent}
+
+    /* Layout: main + booking */
+    .layout{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1rem}
+    @media(min-width:1024px){.layout{grid-template-columns:minmax(0,1fr) 360px;align-items:start}}
+
+    /* Highlights strip */
+    .strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem;margin:1rem 0}
+    .pill{display:flex;align-items:center;gap:.6rem;padding:.7rem .8rem;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:var(--radius-sm)}
+    @media(min-width:700px){.strip{grid-template-columns:repeat(5,1fr)}}
+
+    /* Tabs */
+    .tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
+    .tab{padding:.6rem .9rem;border-radius:999px;border:2px solid var(--border);background:rgba(255,255,255,.08);cursor:pointer;transition:all .3s ease;font-weight:600}
+    .tab:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2)}
+    .tab[aria-selected="true"]{background:linear-gradient(135deg,rgba(10,102,194,.5),rgba(25,161,247,.4));border-color:var(--brand-start);font-weight:700;box-shadow:0 0 0 3px rgba(10,102,194,.15)}
+    .panel{margin-top:1rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem}
+
+    /* Itinerary timeline */
+    .timeline{display:grid;gap:.8rem}
+    .time-item{display:grid;grid-template-columns:90px 1fr;gap:1rem;padding:.6rem;border-bottom:1px dashed var(--border)}
+    .time-item:last-child{border-bottom:0}
+    .time-slot{color:var(--muted);font-weight:700}
+
+    /* Pricing table */
+    .pricing-table{width:100%;border-collapse:collapse;margin-top:.5rem}
+    .pricing-table th{background:rgba(255,255,255,.08);padding:.7rem;text-align:left;border:1px solid var(--border)}
+    .pricing-table td{padding:.7rem;border:1px solid var(--border)}
+
+    /* Lists */
+    .feature-list{list-style:none;padding:0;margin:.5rem 0}
+    .feature-list li{padding:.4rem 0;display:flex;align-items:start;gap:.5rem}
+    .feature-list li:before{content:'✓';color:var(--success);font-weight:700}
+
+    /* Booking widget */
+    .booking{position:sticky;top:14px;background:rgba(12,18,32,.9);backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;box-shadow:var(--shadow)}
+    .booking h3{margin:.2rem 0 1rem}
+    .booking__toggle{display:none}
+    .field{display:grid;gap:.35rem;margin:.6rem 0}
+    .field label{color:var(--muted);font-size:.95rem}
+    .field input, .field select{padding:.65rem .7rem;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--text)}
+    .field select, .field select option{background:#fff;color:#0b1220}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+    .price{display:flex;align-items:center;justify-content:space-between;margin-top:.8rem;padding:.7rem .8rem;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--border)}
+    .notice{font-size:.9rem;color:var(--muted);margin-top:.6rem}
+    .help{display:flex;align-items:center;gap:.5rem;margin-top:.6rem}
+
+    /* Important info */
+    .callout{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);padding:.9rem;border-radius:12px}
+    .callout--warn{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.35)}
+    .callout--info{background:rgba(59,130,246,.08);border-color:rgba(59,130,246,.35)}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,15,.65);backdrop-filter:blur(3px);z-index:1200}
+    .modal.show{display:flex}
+    .modal__card{background:var(--card);border:1px solid var(--border);border-radius:16px;max-width:520px;margin:1rem;padding:1rem 1.2rem}
+    .modal__actions{display:flex;justify-content:flex-end;margin-top:1rem}
+
+    /* Footer gap */
+    .spacer{height:80px}
+    @media(max-width:1023px){
+      .booking{position:fixed;left:0;right:0;bottom:0;border-radius:16px 16px 0 0;padding:.9rem 1rem;z-index:1000;max-height:90vh;overflow-y:auto;transition:transform .3s ease}
+      .booking.collapsed{transform:translateY(calc(100% - 70px))}
+      .booking.collapsed .booking__content{display:none}
+      .booking__toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:.8rem;padding:.6rem;background:rgba(255,255,255,.05);border-radius:8px}
+      .booking__toggle-icon{transition:transform .3s ease}
+      .booking.collapsed .booking__toggle-icon{transform:rotate(180deg)}
+      .spacer{height:80px}
+      .email-fab{bottom:90px}
+    }
+
+    /* Trust Badges */
+    .etm-trust-badges{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0;padding:12px;background:rgba(255,255,255,.03);border-radius:12px}
+    .etm-badge{display:flex;align-items:center;gap:6px;padding:8px 10px;background:linear-gradient(90deg,#005b96,#007acc);border-radius:8px;font-size:.8rem;color:#fff;transition:transform .2s ease,box-shadow .2s ease}
+    .etm-badge i{color:#ffd700;font-size:1rem}
+    .etm-badge:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,91,150,.3)}
+    @media(max-width:768px){
+      .etm-trust-badges{grid-template-columns:repeat(2,1fr);gap:6px;padding:10px}
+      .etm-badge{font-size:.75rem;padding:6px 8px}
+      .etm-badge i{font-size:.9rem}
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9Z2B97VS02"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9Z2B97VS02');
+  </script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+  <!-- Header include -->
+  <div id="site-header"></div>
+  <script>
+    fetch("header.html").then(r=>r.text()).then(h=>{document.getElementById("site-header").innerHTML=h;const s=document.createElement("script");s.src="header.min.js";document.body.appendChild(s);});
+  </script>
+
+  <!-- Floating support email button -->
+  <a class="email-fab" href="mailto:support@egtravelmarket.com" title="Email Support" aria-label="Email support">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg"><path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="white" stroke-width="1.7"/><path d="M22 8l-8.6 5.4a2 2 0 0 1-2.2 0L2 8" stroke="white" stroke-width="1.7"/></svg>
+  </a>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__overlay"></div>
+    <div class="container hero__content">
+      <h1 class="hero__title">Dahab Discovery Trip: Your Ultimate Red Sea Adventure</h1>
+      <p class="hero__sub">⭐⭐⭐⭐⭐ · Duration: Full Day (08:00-17:00) · Adults $60 | Children $40</p>
+      <div class="badges">
+        <span class="badge">⛵ 3-Hour White Boat Cruise</span>
+        <span class="badge">🤿 2 Premium Snorkeling Stops</span>
+        <span class="badge">🚢 2-Hour Submarine Sea Scope</span>
+        <span class="badge">🏘️ Dahab Town Exploration</span>
+        <span class="badge">🍴 Lunch & Soft Drinks</span>
+      </div>
+      <div class="cta">
+        <a class="btn btn--primary" href="#booking">Book Now</a>
+        <a class="btn" href="https://wa.me/201023889959?text=Hi%2C%20I%20have%20a%20question%20about%20Dahab%20Discovery%20Trip" target="_blank">Ask a Question</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <!-- Highlights strip -->
+    <div class="strip" aria-label="Tour highlights">
+      <div class="pill">⛵ White Boat Cruise</div>
+      <div class="pill">🤿 Snorkeling x2</div>
+      <div class="pill">🍽️ Lunch Included</div>
+      <div class="pill">🚢 Submarine View</div>
+      <div class="pill">🏘️ Dahab Town Tour</div>
+    </div>
+
+    <div class="layout">
+      <!-- MAIN CONTENT -->
+      <main>
+        <!-- Tabs -->
+        <div class="tabs" role="tablist" aria-label="Tour information tabs">
+          <button class="tab" role="tab" aria-selected="true" data-tab="overview">Overview</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="itinerary">Itinerary</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="pricing">Pricing</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="included">Included / Not Included</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="info">Important Information</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="reviews">Reviews</button>
+        </div>
+
+        <!-- Panels -->
+        <section id="panel-overview" class="panel" role="tabpanel">
+          <h3 style="margin-top:0">Experience the Magic of Egypt's Hidden Coastal Paradise</h3>
+          <p>
+            Embark on an unforgettable full-day journey from Sharm El Sheikh to <strong>Dahab</strong>, one of Egypt's best-kept secrets on the Gulf of Aqaba. This comprehensive tour combines underwater wonders, cultural exploration, and relaxation in one spectacular adventure that showcases the very best of the Red Sea coast.
+          </p>
+
+          <h4>✨ What Makes This Trip Special</h4>
+          <p>
+            Dahab, meaning "gold" in Arabic, is considered the Sinai Peninsula's most treasured diving and snorkeling destination. Unlike crowded tourist resorts, this laid-back coastal town has retained its authentic Bedouin charm while offering world-class marine experiences. Our carefully curated Dahab Discovery Trip takes you beyond the ordinary, combining three unique experiences in one action-packed day.
+          </p>
+
+          <h4>🌟 Triple Experience Adventure</h4>
+          <ul class="feature-list">
+            <li><strong>White Boat Snorkeling (3 Hours):</strong> Explore pristine coral reefs at two premium snorkeling stops with lunch and unlimited soft drinks</li>
+            <li><strong>Submarine Sea Scope (2 Hours):</strong> Experience underwater wonders without getting wet in our comfortable submarine viewing vessel</li>
+            <li><strong>Dahab City Tour:</strong> Free time to explore the charming Bedouin town, shop for unique souvenirs, and soak in the authentic atmosphere</li>
+          </ul>
+
+          <h4>🐠 Underwater Paradise</h4>
+          <p>
+            The Red Sea's warm waters and excellent visibility make it perfect for snorkeling year-round. Witness hard and soft corals alongside schools of tropical fish including colorful moray eels, turtles, rays, and countless vibrant species. The crystal-clear waters provide an underwater wonderland that will leave you breathless.
+          </p>
+
+          <div class="callout" style="margin-top:.8rem">
+            <strong>🎯 Perfect For:</strong> Families seeking adventure and culture, first-time snorkelers, photography enthusiasts, culture lovers, beach and water sports fans, and anyone wanting to experience authentic Egypt beyond the typical tourist trail.
+          </div>
+
+          <div class="callout callout--info" style="margin-top:.8rem">
+            <strong>🌟 About Dahab:</strong> This coastal town on the southeast coast of the Sinai Peninsula is renowned for its exceptional snorkeling and diving experiences. The warm Red Sea waters provide the perfect environment for diverse marine species, while the charming beachfront promenade offers a unique blend of Bedouin culture and modern comfort.
+          </div>
+        </section>
+
+        <section id="panel-itinerary" class="panel" role="tabpanel" hidden>
+          <h3 style="margin-top:0">📅 Complete Itinerary: From Sunrise to Sunset</h3>
+          <div class="timeline">
+            <div class="time-item">
+              <div class="time-slot">08:00 AM</div>
+              <div><strong>Morning Departure</strong><br>Your adventure begins with comfortable air-conditioned bus transportation from Sharm El Sheikh to Dahab harbor. Sit back and enjoy the scenic 80-kilometer journey through the stunning Sinai landscape as anticipation builds for the day ahead.</div>
+            </div>
+            <div class="time-item">
+              <div class="time-slot">3 Hours</div>
+              <div><strong>White Boat Snorkeling Adventure</strong><br>Step aboard our spacious white boat for an exclusive snorkeling experience at pristine coral reefs teeming with vibrant marine life. Enjoy two premium snorkeling stops where colorful fish, moray eels, turtles, and rays glide through stunning coral formations. A delicious onboard lunch with unlimited soft drinks keeps you energized throughout this marine adventure.</div>
+            </div>
+            <div class="time-item">
+              <div class="time-slot">2 Hours</div>
+              <div><strong>Submarine Sea Scope Experience</strong><br>Descend into the depths without getting wet! Our submarine sea scope offers a unique underwater viewing experience, perfect for non-swimmers or those seeking a different perspective of the Red Sea's marine ecosystem. Watch in wonder as marine life passes by your window while you remain comfortably dry.</div>
+            </div>
+            <div class="time-item">
+              <div class="time-slot">Free Time</div>
+              <div><strong>Dahab City Tour & Exploration</strong><br>After your aquatic adventures, immerse yourself in the authentic atmosphere of Dahab town. Stroll through the vibrant beachfront promenade lined with palm trees, charming seaside restaurants, and coffee shops. Browse the famous Why Not Bazaar and other quirky shops selling handmade jewelry, Egyptian cotton clothes, organic medicines, and unique souvenirs. Experience the relaxed, laid-back atmosphere of this former Bedouin fishing village and relax at beachfront cafes with spectacular Sinai Mountain views.</div>
+            </div>
+            <div class="time-item">
+              <div class="time-slot">17:00 PM</div>
+              <div><strong>Return Journey</strong><br>Arrive back in Sharm El Sheikh with memories to last a lifetime and perhaps a bag full of treasures from Dahab's artisan shops.</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="panel-pricing" class="panel" role="tabpanel" hidden>
+          <h3 style="margin-top:0">💰 Transparent, Value-Packed Rates</h3>
+          <table class="pricing-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Adults</td>
+                <td><strong>$60 USD per person</strong></td>
+              </tr>
+              <tr>
+                <td>Children</td>
+                <td><strong>$40 USD per child</strong></td>
+              </tr>
+              <tr>
+                <td>Infants (1 day - 2 years)</td>
+                <td><strong>FREE</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h4 style="margin-top:1.5rem">What's Included in Your Price</h4>
+          <ul class="feature-list">
+            <li>Round-trip air-conditioned bus transport from Sharm El Sheikh</li>
+            <li>3-hour white boat snorkeling cruise with 2 stops</li>
+            <li>Lunch and soft drinks onboard</li>
+            <li>2-hour submarine sea scope experience</li>
+            <li>Professional snorkeling equipment</li>
+            <li>Free time for Dahab city exploration</li>
+            <li>All necessary permits and harbor fees</li>
+          </ul>
+
+          <div class="callout" style="margin-top:1rem">
+            <strong>🎯 Exceptional Value:</strong> This all-inclusive tour combines three unique experiences—snorkeling, submarine views, AND cultural exploration—all in one action-packed day at an unbeatable price!
+          </div>
+        </section>
+
+        <section id="panel-included" class="panel" role="tabpanel" hidden>
+          <div style="display:grid;gap:1rem">
+            <div>
+              <h3 style="margin-top:0">✅ What's Included</h3>
+              <ul class="feature-list">
+                <li>Round-trip air-conditioned bus transport from Sharm El Sheikh</li>
+                <li>3-hour white boat snorkeling cruise</li>
+                <li>Two premium snorkeling stops at pristine coral reefs</li>
+                <li>Delicious onboard lunch</li>
+                <li>Unlimited soft drinks throughout the day</li>
+                <li>2-hour submarine sea scope experience</li>
+                <li>Professional snorkeling equipment</li>
+                <li>Free time for Dahab city exploration and shopping</li>
+                <li>All necessary permits and harbor fees</li>
+                <li>Expert local guides</li>
+              </ul>
+            </div>
+            <div>
+              <h3>❌ What's NOT Included</h3>
+              <ul>
+                <li>💵 Personal shopping expenses in Dahab</li>
+                <li>🍹 Fresh juices and specialty beverages</li>
+                <li>💵 Gratuities for crew and guide (optional but appreciated)</li>
+                <li>📸 Personal photography equipment or underwater cameras</li>
+                <li>🏨 Hotel accommodation (day trip only)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="panel-info" class="panel" role="tabpanel" hidden>
+          <h3 style="margin-top:0">📝 Important Information</h3>
+          
+          <div class="callout callout--warn" style="margin-bottom:.8rem">
+            <strong>🛂 PASSPORT MANDATORY:</strong> Don't forget your passport - it's required for this trip. Please ensure it's valid and bring it with you on the day of the tour.
+          </div>
+
+          <div class="callout" style="margin-bottom:.8rem">
+            <strong>📋 Essential Requirements & What to Bring:</strong>
+            <ul style="margin:.5rem 0;padding-left:1.5rem">
+              <li>Valid passport (mandatory)</li>
+              <li>Sunscreen (reef-safe preferred to protect marine life)</li>
+              <li>Swimwear and towel</li>
+              <li>Camera for underwater memories (waterproof if possible)</li>
+              <li>Cash for shopping and souvenirs in Dahab</li>
+              <li>Comfortable walking shoes for city exploration</li>
+              <li>Hat and sunglasses for sun protection</li>
+            </ul>
+          </div>
+
+          <div class="callout callout--info" style="margin-bottom:.8rem">
+            <strong>📋 Trip Details:</strong>
+            <ul style="margin:.5rem 0;padding-left:1.5rem">
+              <li><strong>Duration:</strong> Full day (08:00 - 17:00)</li>
+              <li><strong>Departure Point:</strong> Sharm El Sheikh hotels</li>
+              <li><strong>Activity Level:</strong> Moderate (suitable for most fitness levels)</li>
+              <li><strong>Languages:</strong> English, Arabic (other languages available upon request)</li>
+              <li><strong>Suitable for:</strong> Families, couples, solo travelers, all ages</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <strong>🌟 Perfect For:</strong>
+            <ul style="margin:.5rem 0;padding-left:1.5rem">
+              <li>Families seeking adventure and culture</li>
+              <li>First-time snorkelers</li>
+              <li>Photography enthusiasts</li>
+              <li>Culture lovers</li>
+              <li>Beach and water sports fans</li>
+              <li>Anyone wanting to experience authentic Egypt</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="panel-reviews" class="panel" role="tabpanel" hidden>
+          <h3 style="margin-top:0">⭐ Guest Reviews</h3>
+          
+          <!-- Review 1 -->
+          <div class="callout" style="background:linear-gradient(135deg, #fff9e6 0%, #fff 100%);border-left:4px solid #ffc107;margin-bottom:1.2rem;padding:1.2rem;">
+            <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;">
+              <div style="background:#ffc107;color:#fff;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;">EM</div>
+              <div>
+                <strong style="font-size:1.05rem;color:#1d2f4f;">Emma Mitchell</strong>
+                <div style="color:#666;font-size:.9rem;">🇬🇧 United Kingdom • March 2025</div>
+                <div style="color:#ffc107;font-size:1.1rem;">⭐⭐⭐⭐⭐</div>
+              </div>
+            </div>
+            <p style="margin:0;color:#1d2f4f;line-height:1.6;font-style:italic;">
+              "The Dahab Discovery Trip was the highlight of our Egypt vacation! The combination of snorkeling, submarine viewing, and exploring the charming town made for a perfect day. The snorkeling stops were pristine with amazing coral and fish. Dahab itself is a hidden gem with such a relaxed, authentic vibe. The lunch on the boat was delicious and the whole experience was seamlessly organized. Highly recommend!"
+            </p>
+          </div>
+
+          <!-- Review 2 -->
+          <div class="callout" style="background:linear-gradient(135deg, #e6f7ff 0%, #fff 100%);border-left:4px solid #0066cc;margin-bottom:1.2rem;padding:1.2rem;">
+            <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;">
+              <div style="background:#0066cc;color:#fff;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;">TM</div>
+              <div>
+                <strong style="font-size:1.05rem;color:#1d2f4f;">Thomas Mueller</strong>
+                <div style="color:#666;font-size:.9rem;">🇩🇪 Germany • February 2025</div>
+                <div style="color:#ffc107;font-size:1.1rem;">⭐⭐⭐⭐⭐</div>
+              </div>
+            </div>
+            <p style="margin:0;color:#1d2f4f;line-height:1.6;font-style:italic;">
+              "What a fantastic day! The submarine sea scope was incredible - perfect for my wife who doesn't swim. We both loved the snorkeling stops and the marine life was spectacular. Dahab town is so different from Sharm - much more authentic and relaxed. We found some beautiful handmade souvenirs at the local shops. The whole trip was excellent value for money!"
+            </p>
+          </div>
+
+          <!-- Review 3 -->
+          <div class="callout" style="background:linear-gradient(135deg, #ffe6f0 0%, #fff 100%);border-left:4px solid #e91e63;margin-bottom:1.2rem;padding:1.2rem;">
+            <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;">
+              <div style="background:#e91e63;color:#fff;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;">SF</div>
+              <div>
+                <strong style="font-size:1.05rem;color:#1d2f4f;">Sophie Fontaine</strong>
+                <div style="color:#666;font-size:.9rem;">🇫🇷 France • January 2025</div>
+                <div style="color:#ffc107;font-size:1.1rem;">⭐⭐⭐⭐⭐</div>
+              </div>
+            </div>
+            <p style="margin:0;color:#1d2f4f;line-height:1.6;font-style:italic;">
+              "Perfect day trip from Sharm! The snorkeling was amazing with crystal clear water and beautiful coral reefs. The submarine experience was unique and let my elderly parents enjoy the underwater world too. Dahab is absolutely charming - we loved the beachfront cafes and local artisan shops. The guides were knowledgeable and friendly. A must-do experience!"
+            </p>
+          </div>
+
+          <!-- Review 4 -->
+          <div class="callout" style="background:linear-gradient(135deg, #e8f5e9 0%, #fff 100%);border-left:4px solid #4caf50;margin-bottom:1.2rem;padding:1.2rem;">
+            <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;">
+              <div style="background:#4caf50;color:#fff;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;">MC</div>
+              <div>
+                <strong style="font-size:1.05rem;color:#1d2f4f;">Marco Colombo</strong>
+                <div style="color:#666;font-size:.9rem;">🇮🇹 Italy • December 2024</div>
+                <div style="color:#ffc107;font-size:1.1rem;">⭐⭐⭐⭐⭐</div>
+              </div>
+            </div>
+            <p style="margin:0;color:#1d2f4f;line-height:1.6;font-style:italic;">
+              "Exceptional experience! Three different activities in one day - snorkeling, submarine viewing, and cultural exploration. Each part was excellent. The Red Sea marine life is truly spectacular, and Dahab has such an authentic Bedouin atmosphere. We enjoyed shopping for unique souvenirs and relaxing at a beachfront cafe with stunning mountain views. Great organization, friendly staff, and excellent value. Book this trip!"
+            </p>
+          </div>
+
+          <!-- Summary Stats -->
+          <div style="background:#f8f9fa;border-radius:12px;padding:1.5rem;margin-top:1.5rem;text-align:center;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1.5rem;">
+              <div>
+                <div style="font-size:2.5rem;font-weight:700;color:#ffc107;">4.9/5</div>
+                <div style="color:#666;margin-top:.3rem;">Average Rating</div>
+              </div>
+              <div>
+                <div style="font-size:2.5rem;font-weight:700;color:#0066cc;">892</div>
+                <div style="color:#666;margin-top:.3rem;">Total Reviews</div>
+              </div>
+              <div>
+                <div style="font-size:2.5rem;font-weight:700;color:#4caf50;">98%</div>
+                <div style="color:#666;margin-top:.3rem;">Recommend</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- BOOKING WIDGET -->
+      <aside class="booking collapsed" id="booking" aria-label="Booking widget">
+        <div class="booking__toggle" id="bookingToggle">
+          <div>
+            <strong style="font-size:1.05rem">From $40/child · $60/adult</strong>
+            <div style="font-size:.85rem;color:var(--muted)">Tap to reserve your spot</div>
+          </div>
+          <div class="booking__toggle-icon" style="font-size:1.5rem">▲</div>
+        </div>
+        <div class="booking__content">
+        <h3>Reserve Your Spot</h3>
+        
+        <section class="etm-trust-badges">
+          <div class="etm-badge"><i class="fa fa-lock"></i> Secure Checkout</div>
+          <div class="etm-badge"><i class="fa fa-map-marker-alt"></i> Verified Egyptian DMC</div>
+          <div class="etm-badge"><i class="fa fa-globe"></i> Traveler Trusted 2025</div>
+          <div class="etm-badge"><i class="fa fa-headset"></i> 24/7 Customer Support</div>
+          <div class="etm-badge"><i class="fa fa-star"></i> Top Rated Trips</div>
+          <div class="etm-badge"><i class="fa fa-shield-alt"></i> DMCA & GDPR Protected</div>
+        </section>
+        
+        <div class="field">
+          <label for="date">Date *</label>
+          <input id="date" type="date" required>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="adults">Adults</label>
+            <input id="adults" type="number" min="1" max="20" value="1">
+          </div>
+          <div class="field">
+            <label for="children">Children</label>
+            <input id="children" type="number" min="0" max="20" value="0">
+          </div>
+        </div>
+        <div class="field">
+          <label for="infants">Infants (1 day - 2 years)</label>
+          <input id="infants" type="number" min="0" max="10" value="0">
+        </div>
+        <div class="field">
+          <label for="name">Full Name *</label>
+          <input id="name" type="text" placeholder="Your full name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email Address *</label>
+          <input id="email" type="email" placeholder="name@example.com" required>
+          <div id="email-message"></div>
+        </div>
+        <div class="field">
+          <label for="phone">Phone (optional)</label>
+          <input id="phone" type="tel" placeholder="+20 ...">
+        </div>
+        <div class="field">
+          <label for="hotel">Pickup from Hotel</label>
+          <input id="hotel" type="text" placeholder="Hotel name">
+        </div>
+        <div class="price">
+          <span>Subtotal</span>
+          <strong id="subtotal">$60</strong>
+        </div>
+        <div class="notice">Passport required for this trip. Please bring it on the day of your tour.</div>
+        <div class="help"><a href="mailto:support@egtravelmarket.com">✉️ Email Support</a></div>
+        <div id="summaryArea"></div>
+        <button id="bookBtn" class="btn btn--primary" style="width:100%;margin-top:.9rem;display:none">💳 Pay Now with Stripe</button>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Related Adventures Section -->
+    <section class="container" id="related-trips" style="padding:2rem 1rem">
+      <h2 style="font-size:1.8rem;font-weight:800;margin-bottom:1.5rem;text-align:center">✨ You Might Also Like</h2>
+      <div class="cards-grid" style="max-width:900px;margin:0 auto;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+        <article class="card">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1200&auto=format&fit=crop" alt="Ras Mohamed Snorkeling Boat Trip" loading="lazy">
+          <div class="card-body">
+            <h3 style="margin-bottom:.8rem">Ras Mohamed Snorkeling Boat Trip</h3>
+            <p style="margin-bottom:1rem;line-height:1.5">Explore the Red Sea's most famous marine reserve with 3 stunning snorkeling stops, delicious onboard lunch, and crystal-clear waters teeming with colorful coral reefs.</p>
+            <div class="price" style="margin-top:auto;margin-bottom:.8rem">From $35 USD</div>
+            <a class="btn" href="ras-mohamed-snorkeling.html" style="display:block;margin-top:.6rem">Book Now</a>
+          </div>
+        </article>
+        <article class="card">
+          <img loading="lazy" src="images/pirates-boat-ras-mohamed.webp" alt="Pirates Boat to Ras Mohamed" loading="lazy">
+          <div class="card-body">
+            <h3 style="margin-bottom:.8rem">Pirates Boat to Ras Mohamed</h3>
+            <p style="margin-bottom:1rem;line-height:1.5">Set sail on a Viking-themed adventure! Three stunning snorkeling stops at Ras Mohamed's pristine reefs, with lunch, drinks, and an unforgettable pirate experience.</p>
+            <div class="price" style="margin-top:auto;margin-bottom:.8rem">From $35/child · $60/adult</div>
+            <a class="btn" href="pirates-boat-ras-mohamed.html" style="display:block;margin-top:.6rem">Book Now</a>
+          </div>
+        </article>
+        <article class="card">
+          <img loading="lazy" src="images/divers-group-1.webp" alt="Meet Our Professional Diving Instructors" loading="lazy">
+          <div class="card-body">
+            <h3 style="margin-bottom:.8rem">Meet Our Certified Divers</h3>
+            <p style="margin-bottom:1rem;line-height:1.5">Connect with PADI/SSI certified diving instructors and divemasters in Dahab and Sharm El Sheikh. Browse profiles, read reviews, and book directly.</p>
+            <div style="margin-top:auto;">
+            <a class="btn" href="divers.html" style="display:block;margin-top:.6rem">Browse Divers</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="spacer"></div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" aria-hidden="true">
+    <div class="modal__card">
+      <h3 id="confirmTitle">✅ Booking Request Submitted</h3>
+      <p id="confirmBody" style="color:var(--muted)">Thank you! Your Dahab Discovery Trip request has been received. A confirmation email will follow shortly.</p>
+      <div class="modal__actions">
+        <button id="closeModal" class="btn">Close</button>
+        <a class="btn btn--primary" href="mailto:support@egtravelmarket.com?subject=Booking%20Question%20-%20Dahab%20Discovery%20Trip">Contact Support</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/email-validator.js"></script>
+  <script src="js/stripe-payment-helper.js?v=3"></script>
+  <script src="dahab-discovery-trip-script.js?v=2"></script>
+  <script>
+    // Setup email validation
+    document.addEventListener('DOMContentLoaded', function() {
+      const emailInput = document.getElementById('email');
+      const emailMessage = document.getElementById('email-message');
+      if (emailInput && emailMessage) {
+        setupEmailValidation(emailInput, emailMessage);
+      }
+    });
+
+    // Mobile booking toggle
+    const bookingToggle = document.getElementById('bookingToggle');
+    const bookingWidget = document.getElementById('booking');
+    if(bookingToggle){
+      bookingToggle.addEventListener('click', ()=>{
+        bookingWidget.classList.toggle('collapsed');
+      });
+    }
+
+    // Simple tabs
+    const tabs=[...document.querySelectorAll('.tab')];
+    const panels={
+      overview:document.getElementById('panel-overview'),
+      itinerary:document.getElementById('panel-itinerary'),
+      pricing:document.getElementById('panel-pricing'),
+      included:document.getElementById('panel-included'),
+      info:document.getElementById('panel-info'),
+      reviews:document.getElementById('panel-reviews')
+    };
+    tabs.forEach(btn=>btn.addEventListener('click',()=>{
+      tabs.forEach(b=>b.setAttribute('aria-selected','false'));
+      btn.setAttribute('aria-selected','true');
+      Object.values(panels).forEach(p=>p.hidden=true);
+      panels[btn.dataset.tab].hidden=false;
+    }));
+
+    // Booking subtotal
+    const PRICE_ADULT=60, PRICE_CHILD=40;
+    const adults=document.getElementById('adults');
+    const children=document.getElementById('children');
+    const infants=document.getElementById('infants');
+    const subtotalEl=document.getElementById('subtotal');
+    function calc(){
+      const a=Number(adults.value||1); const c=Number(children.value||0);
+      const total=a*PRICE_ADULT + c*PRICE_CHILD;
+      subtotalEl.textContent = `$${total}`;
+    }
+    adults.addEventListener('change',calc); children.addEventListener('change',calc); calc();
+
+    // Modal confirm
+    const bookBtn=document.getElementById('bookBtn');
+    const modal=document.getElementById('confirmModal');
+    const closeModal=document.getElementById('closeModal');
+    bookBtn.addEventListener('click',()=>{
+      const date=document.getElementById('date');
+      const name=document.getElementById('name');
+      const email=document.getElementById('email');
+      if(!date.value||!name.value||!email.value){
+        alert('Please fill Date, Full Name, and Email.');
+        return;
+      }
+      // Validate email format
+      if(!isValidEmail(email.value)){
+        const error = getEmailError(email.value);
+        alert('Invalid email: ' + error);
+        email.focus();
+        return;
+      }
+      const body=document.getElementById('confirmBody');
+      body.textContent = `Thank you, ${name.value}! Your Dahab Discovery Trip request for ${date.value} has been received. You will receive an email confirmation shortly.`;
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+    });
+    [closeModal, modal].forEach(el=>el.addEventListener('click',(e)=>{
+      if(e.target===closeModal || e.target===modal){
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden','true');
+      }
+    }));
+
+    // Save email locally for UX
+    const emailInput=document.getElementById('email');
+    emailInput.addEventListener('change',()=>{ try{localStorage.setItem('egtm_email',emailInput.value)}catch{} });
+    try{ const saved=localStorage.getItem('egtm_email'); if(saved) emailInput.value=saved; }catch{}
+  </script>
+
+<!-- SEO FOOTER -->
+<footer class="seo-footer" style="background:#0a3d62;color:#fff;padding:40px 20px;margin-top:80px;border-top:3px solid #ffc107;"><div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;padding-bottom:20px;"><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Trips</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./cairo-by-flight.html" style="color:#f0f0f0;text-decoration:none;">Cairo</a></li><li style="margin-bottom:3px;"><a href="./deals.html" style="color:#f0f0f0;text-decoration:none;">All</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Services</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./book-diving.html" style="color:#f0f0f0;text-decoration:none;">Dive</a></li><li style="margin-bottom:3px;"><a href="./book-your-trip.html" style="color:#f0f0f0;text-decoration:none;">Book</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Experts</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./guides.html" style="color:#f0f0f0;text-decoration:none;">Guides</a></li><li style="margin-bottom:3px;"><a href="./divers.html" style="color:#f0f0f0;text-decoration:none;">Divers</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Discover</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./diving-nature.html" style="color:#f0f0f0;text-decoration:none;">Diving</a></li><li style="margin-bottom:3px;"><a href="./hidden-egypt.html" style="color:#f0f0f0;text-decoration:none;">Hidden</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Company</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./about.html" style="color:#f0f0f0;text-decoration:none;">About</a></li><li style="margin-bottom:3px;"><a href="./contact.html" style="color:#f0f0f0;text-decoration:none;">Contact</a></li></ul></div></div><div style="border-top:1px solid rgba(255,255,255,0.2);padding-top:10px;text-align:center;color:#bbb;font-size:0.7rem;"><p style="margin:0;">&copy; 2025 EgTravelMarket | <a href="./index.html" style="color:#ffc107;">Home</a> | <a href="./sitemap.xml" style="color:#ffc107;">Sitemap</a></p></div>  <div style="max-width:1000px;margin:0 auto;padding:20px;text-align:center;color:#9aa4c6;font-size:0.75rem;line-height:1.6;border-top:1px solid rgba(255,255,255,0.1);">
+    <p style="margin:0 0 10px 0;"><strong style="color:#ffc107;">Platform Disclaimer</strong></p>
+    <p style="margin:0;">EgTravelMarket is an international technology platform that facilitates connections between travelers and independent service providers. EgTravelMarket does not operate tours, travel services, or diving activities directly. All on-ground travel services in Egypt are executed by independent licensed partners such as GoMundo Travel, while all diving and water activities are provided by independent licensed dive centers such as Megalodon Diving Club. Contracts, service execution, and operational responsibility are solely between travelers and the respective service providers.</p>
+  </div>
+</footer>
+
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

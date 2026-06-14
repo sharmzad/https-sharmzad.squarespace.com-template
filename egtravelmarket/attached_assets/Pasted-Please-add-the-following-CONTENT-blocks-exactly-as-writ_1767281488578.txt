@@ -1,0 +1,91 @@
+Please add the following CONTENT blocks exactly as written.
+No layout redesign, no CSS changes unless required for badge display.
+
+====================================
+A) CONTENT ABOVE “TRIP OF THE WEEK”
+====================================
+
+Add this block immediately ABOVE the “Trip of the Week” section:
+
+TITLE (H2):
+Official EgTravelMarket Trips & Packages
+
+SUBTEXT (small paragraph):
+All trips and packages below are curated, priced, and operated directly by the EgTravelMarket team.
+These are fixed offers with clear itineraries, transparent pricing, and instant booking.
+They are not bidding-based and do not require traveler requests.
+
+------------------------------------
+
+====================================
+B) CONTENT ABOVE “POPULAR TOURS”
+====================================
+
+Add this short line ABOVE the Popular Tours section:
+
+Small heading / label:
+Popular Official Trips
+
+Supporting text (optional, one line):
+Our most booked EgTravelMarket experiences chosen by travelers across Egypt.
+
+------------------------------------
+
+====================================
+C) CONTENT ABOVE “PACKAGES & TOURS”
+====================================
+
+Add this block ABOVE the Packages section:
+
+Small heading:
+Egypt Travel Packages
+
+Supporting text:
+Carefully designed travel packages covering Egypt’s top destinations including Cairo, Luxor, Aswan,
+the Nile Cruise, Red Sea, and Sharm El Sheikh — managed and delivered by EgTravelMarket.
+
+------------------------------------
+
+====================================
+D) ETM OFFICIAL BADGE (FOR TRIP CARDS)
+====================================
+
+Add a small visual badge on ALL trips in:
+- Trip of the Week
+- Popular Tours
+- Packages
+
+Badge text (choose ONE and keep consistent):
+• ETM Official
+OR
+• EgTravelMarket Official
+
+Badge rules:
+- Color: brand blue / teal
+- Position: top corner of trip card
+- Size: small, non-intrusive
+- Same badge for all official trips
+
+IMPORTANT:
+- Do NOT use green (green is for requests/bidding)
+- Do NOT add different badges per section
+- One unified “official” badge only
+
+------------------------------------
+
+====================================
+GLOBAL RULE (VERY IMPORTANT)
+====================================
+
+From “Trip of the Week” until the end of all trips and packages:
+
+✔ All trips are OFFICIAL EgTravelMarket offers
+✔ Fixed price
+✔ Instant booking
+✔ No expert bidding
+✔ No custom request flow
+
+Marketplace actions (experts, agencies, bidding, custom requests)
+remain ONLY in the sections ABOVE.
+
+Do not change existing booking logic or URLs.

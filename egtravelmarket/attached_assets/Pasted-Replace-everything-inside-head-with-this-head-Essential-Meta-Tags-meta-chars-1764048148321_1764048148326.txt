@@ -1,0 +1,86 @@
+Replace everything inside <head> with this:
+
+<head>
+    <!-- Essential Meta Tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- SEO Title & Description -->
+    <title>EgTravelMarket – Egypt Trips, Diving, Medical & More</title>
+    <meta name="description" content="Book Egypt trips, diving packages, medical services, MICE events, Cairo tours, and B2B solutions. Connect with experts, guides, divers, and agencies.">
+
+    <!-- Keywords -->
+    <meta name="keywords" content="Egypt tours, Sharm El Sheikh trips, diving Egypt, Cairo trips, medical tourism Egypt, MICE Egypt, travel agency Egypt">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://www.egtravelmarket.com/">
+
+    <!-- Preload Critical Assets -->
+    <link rel="preload" href="/styles.css" as="style">
+    <link rel="preload" href="/scripts.js" as="script">
+
+    <!-- Load CSS (Non-blocking) -->
+    <link rel="stylesheet" href="/styles.css" media="all">
+
+    <!-- Google Fonts Optimized (Preconnect + Display Swap) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://www.egtravelmarket.com/images/etm-logo.png">
+
+    <!-- OpenGraph -->
+    <meta property="og:title" content="EgTravelMarket – Egypt Trips, Diving & More">
+    <meta property="og:description" content="Egypt trips, diving, MICE, medical services & more.">
+    <meta property="og:image" content="https://www.egtravelmarket.com/images/etm-logo.png">
+    <meta property="og:url" content="https://www.egtravelmarket.com/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="EgTravelMarket – Egypt Trips & Diving">
+    <meta name="twitter:description" content="Book Egypt tours, diving, medical services & more.">
+    <meta name="twitter:image" content="https://www.egtravelmarket.com/images/etm-logo.png">
+
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "EgTravelMarket",
+      "url": "https://www.egtravelmarket.com",
+      "logo": "https://www.egtravelmarket.com/images/etm-logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+201062222113",
+        "contactType": "Customer Support"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "71-75 Shelton Street, Covent Garden",
+        "addressLocality": "London",
+        "postalCode": "WC2H 9JQ",
+        "addressCountry": "UK"
+      }
+    }
+    </script>
+
+    <!-- Travel Agency Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TravelAgency",
+      "name": "EgTravelMarket",
+      "url": "https://www.egtravelmarket.com",
+      "image": "https://www.egtravelmarket.com/images/etm-logo.png",
+      "description": "Egypt trips, tours, diving experiences, MICE, and medical tourism services.",
+      "telephone": "+201062222113",
+      "email": "info@egtravelmarket.com"
+    }
+    </script>
+
+    <!-- Defer Scripts (Critical Fix for Render-Blocking) -->
+    <script src="/scripts.js" defer></script>
+</head>

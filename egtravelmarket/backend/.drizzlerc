@@ -1,0 +1,4 @@
+{
+  "migrations": "drizzle",
+  "autoMigrate": true
+}

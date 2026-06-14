@@ -1,0 +1,69 @@
+We have a serious issue on EgTravelMarket in PRODUCTION.
+
+Several dynamic pages and login areas fail with “Error loading” or do not load correctly until I manually republish/redeploy the Replit app. After republishing, everything works again temporarily, but the issue comes back later.
+
+This is happening in production, not only in development.
+
+Affected areas include:
+- Guides page
+- Divers page
+- Dive Centers page
+- Travel Agencies page
+- Travel Mentors page
+- Admin login
+
+This means the issue is not related to one specific page. It looks like a general production backend/API/database/deployment problem.
+
+Please investigate and fix the root cause, not just refresh or redeploy the app.
+
+Please check the following:
+
+1. Check all backend API routes used by these pages:
+   - /api/guides
+   - /api/divers
+   - /api/dive-centers
+   - /api/travel-agencies
+   - /api/travel-mentors
+   - /api/admin/login
+   - /api/experts if used
+
+2. Add clear server-side logging for every failed production API request, including:
+   - route name
+   - status code
+   - database error message
+   - stack trace
+   - timestamp
+
+3. Check if the backend or database connection is failing after the production app has been idle for some time.
+
+4. Make sure PostgreSQL/Neon uses a proper connection pool and does not create a new database client per request.
+
+5. If we are using Neon, please use the pooled connection string for normal production queries.
+
+6. Add a production health check endpoint:
+   GET /api/health
+
+It should return something like:
+{
+  "ok": true,
+  "server": "running",
+  "database": "connected",
+  "environment": "production"
+}
+
+7. Make sure all required production environment variables are available in Replit Deployment Secrets, especially:
+   - DATABASE_URL
+   - SESSION_SECRET or JWT_SECRET
+   - NODE_ENV
+   - STRIPE_SECRET_KEY
+   - VITE_STRIPE_PUBLIC_KEY
+   - ZEPTOMAIL_TOKEN or email service keys
+
+8. Confirm that the deployed production app is using the same required secrets as the development environment.
+
+9. Add safe error handling on the frontend so the whole page does not break if one API request fails.
+
+10. Please check if Replit Autoscale/cold start/sleep behavior is causing the backend or database connection to fail after inactivity. If yes, advise whether we should move to Reserved VM or another more stable deployment option.
+
+The main goal:
+Production must not require manual republish/redeploy to make guides, divers, agencies, dive centers, mentors, or admin login work again.

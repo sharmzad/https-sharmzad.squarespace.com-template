@@ -1,0 +1,71 @@
+Step 1 – Replace the lock script at the top of admin-flash.js with this version
+// ===== Enhanced password lock with 6-hour session =====
+(function(){
+  const PASSWORD = 'ETM2025!';
+  const screen = document.getElementById('lock-screen');
+  if (!screen) return;
+
+  const btn = document.getElementById('lock-btn');
+  const input = document.getElementById('lock-pass');
+  const msg = document.getElementById('lock-msg');
+  const LS_KEY = 'etmAdminAuth';
+
+  // --- Helper: simple encode/decode (base64) ---
+  const encode = (t)=> btoa(unescape(encodeURIComponent(t)));
+  const decode = (t)=> decodeURIComponent(escape(atob(t)));
+
+  // --- Check if valid session exists ---
+  try {
+    const stored = localStorage.getItem(LS_KEY);
+    if (stored) {
+      const data = JSON.parse(decode(stored));
+      if (Date.now() < data.expiry) {
+        screen.remove();
+        return;
+      } else {
+        localStorage.removeItem(LS_KEY);
+      }
+    }
+  } catch { /* ignore */ }
+
+  // --- Login function ---
+  btn.addEventListener('click', check);
+  input.addEventListener('keypress', e => { if (e.key === 'Enter') check(); });
+
+  function check(){
+    if (input.value === PASSWORD){
+      const expiry = Date.now() + 6*60*60*1000; // 6 hours
+      const data = encode(JSON.stringify({ expiry }));
+      localStorage.setItem(LS_KEY, data);
+      sessionStorage.setItem('etmAdminUnlocked','true');
+      screen.classList.add('fade');
+      setTimeout(()=>screen.remove(),300);
+    } else {
+      msg.textContent = 'Incorrect password. Try again.';
+      input.value = '';
+      input.focus();
+    }
+  }
+
+  // Optional logout handler (if a logout button exists later)
+  window.etmLogout = function(){
+    localStorage.removeItem(LS_KEY);
+    sessionStorage.removeItem('etmAdminUnlocked');
+    location.reload();
+  };
+})();
+
+🧩 Step 2 – Add a Logout button (optional)
+
+If you want, add this somewhere in your header (<header class="topbar"> …):
+
+<button onclick="etmLogout()" class="btn btn-ghost">Logout</button>
+
+
+When clicked, it clears the stored session and brings back the login box.
+
+🧩 Step 3 – (Optional visual polish)
+
+You can make the lock screen fade smoothly by adding this to the bottom of your admin-flash.css:
+
+#lock-screen.fade {opacity:0;pointer-events:none;transition:opacity .3s ease}

@@ -1,0 +1,104 @@
+ook Your Trip
+· html
+<!-- Booking Hub Section for EgTravelMarket Homepage -->
+<section id="booking-hub" style="background:linear-gradient(135deg,#004aad,#007bff);color:#fff;padding:60px 20px 80px;text-align:center;border-bottom-left-radius:40px;border-bottom-right-radius:40px;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+  <h2 style="font-size:2.3rem;margin-bottom:15px;">🔍 Search & Book Your Trip</h2>
+  <p style="max-width:800px;margin:auto;font-size:1.1rem;line-height:1.6;">
+    Plan your perfect Sharm El Sheikh getaway — flights, hotels, tours, and travel insurance all in one place. EgTravelMarket connects you to verified partners for the best value and seamless experiences.
+  </p>
+
+
+  <div id="booking-buttons" style="display:flex;flex-wrap:wrap;justify-content:center;gap:20px;margin-top:40px;">
+    <button class="hub-btn" data-target="flights">✈️ Flights</button>
+    <button class="hub-btn" data-target="hotels">🏨 Hotels</button>
+    <button class="hub-btn" data-target="packages">🧭 Packages</button>
+    <button class="hub-btn" data-target="insurance">💳 Insurance</button>
+  </div>
+
+
+  <div id="info-container" style="max-width:900px;margin:40px auto 0;">
+    <div class="info-card" id="info-flights">
+      <h3>✈️ Flights to Sharm El Sheikh</h3>
+      <p>Find cheap flights from any city worldwide directly to Sharm El Sheikh (SSH). Compare airlines, dates, and fares with our trusted booking partners to save more on your next trip.</p>
+      <a href="book-your-trip.html#flights" class="hub-link">Search Flights →</a>
+    </div>
+    <div class="info-card" id="info-hotels">
+      <h3>🏨 Hotels in Sharm El Sheikh</h3>
+      <p>Explore the best hotels, resorts, and apartments in Sharm El Sheikh — from beachfront luxury to affordable comfort — all bookable instantly with EgTravelMarket.</p>
+      <a href="book-your-trip.html#hotels" class="hub-link">View Hotels →</a>
+    </div>
+    <div class="info-card" id="info-packages">
+      <h3>🧭 Packages & Tours</h3>
+      <p>Discover diving adventures, desert safaris, and sightseeing tours crafted by local experts. Make your Red Sea experience unforgettable with EgTravelMarket.</p>
+      <a href="book-your-trip.html#packages" class="hub-link">Explore Packages →</a>
+    </div>
+    <div class="info-card" id="info-insurance">
+      <h3>💳 Travel Insurance</h3>
+      <p>Travel with peace of mind. Compare affordable travel insurance plans tailored for your Egypt vacation — stay safe and worry-free from departure to return.</p>
+      <a href="book-your-trip.html#insurance" class="hub-link">Compare Plans →</a>
+    </div>
+  </div>
+</section>
+
+
+<style>
+  .hub-btn {
+    background:#fff;
+    color:#004aad;
+    border:none;
+    padding:15px 35px;
+    border-radius:50px;
+    font-size:1.1rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+  }
+  .hub-btn:hover {
+    background:#e8f1ff;
+    transform:translateY(-3px);
+  }
+  .info-card {
+    display:none;
+    background:#fff;
+    color:#003366;
+    border-radius:20px;
+    padding:30px;
+    margin-top:20px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.1);
+    animation:fadeIn 0.5s ease;
+  }
+  .info-card h3 {
+    margin-top:0;
+    color:#004aad;
+  }
+  .hub-link {
+    display:inline-block;
+    margin-top:10px;
+    color:#004aad;
+    font-weight:600;
+    text-decoration:none;
+    transition:0.3s;
+  }
+  .hub-link:hover { text-decoration:underline; }
+  @keyframes fadeIn {
+    from {opacity:0;transform:translateY(10px);}
+    to {opacity:1;transform:translateY(0);}
+  }
+  @media(max-width:768px){
+    .hub-btn{width:100%;}
+    .info-card{text-align:left;}
+  }
+</style>
+
+
+<script>
+  const buttons=document.querySelectorAll('.hub-btn');
+  const cards=document.querySelectorAll('.info-card');
+  buttons.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      cards.forEach(card=>card.style.display='none');
+      const target=document.getElementById('info-'+btn.dataset.target);
+      if(target){target.style.display='block';window.scrollTo({top:target.offsetTop-100,behavior:'smooth'});}  
+    });
+  });
+</script>

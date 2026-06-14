@@ -1,0 +1,117 @@
+Subject: Traveler Requests – Admin Approval, Notifications & Offer Form UI Enhancements
+
+Hello,
+
+We have completed testing the full Traveler Request → Offer → My Offers → Admin Review flow.
+The logic is correct. Now we need to finalize admin control, notifications, and UI polish.
+Please implement the following WITHOUT changing any existing business logic.
+
+1️⃣ Admin Approval Flow (CRITICAL)
+
+When a traveler submits a request:
+
+Status = Pending Approval
+
+Request is NOT visible to guides/agencies/experts yet
+
+Admin dashboard:
+
+Admin can Approve or Reject traveler requests
+
+Only Approved requests appear on:
+
+Browse Traveler Requests
+
+Guide / Agency / Expert dashboards
+
+After admin approval:
+
+Status changes to Approved / Open
+
+Request becomes visible to all providers
+
+2️⃣ Email Notifications (REQUIRED)
+
+Please add the following email triggers:
+
+A. Admin Notification
+
+When a new traveler request is submitted
+
+Email subject:
+New Traveler Request Awaiting Approval
+
+Email content:
+
+Request title
+
+Destination
+
+Budget
+
+Date
+
+Link to admin dashboard
+
+B. Traveler Notification
+
+When admin approves the request
+
+Email message example:
+
+“Your travel request has been approved and is now visible to local experts. You will start receiving offers soon.”
+
+3️⃣ Admin Can Send Offers
+
+Admin must be able to send offers like other providers
+
+Admin offers should be clearly labeled as:
+“EgTravelMarket Offer”
+
+Admin offers appear normally in:
+
+Traveler view
+
+My Offers
+
+Bids count
+
+4️⃣ Offer Submission Modal – UI Enhancement (NO LOGIC CHANGE)
+
+Current offer modal works but needs UI improvement:
+
+Improve spacing and layout
+
+Clear labels:
+
+Offer Price (USD)
+
+Message to Traveler (what’s included, availability, notes)
+
+Better button styling (Send Offer / Cancel)
+
+Modal should feel professional and easy to read
+
+⚠️ Do NOT change how offers are stored or processed.
+
+5️⃣ Small Admin UX Rules
+
+Hide Send Offer button if request is not approved
+
+Show status labels clearly:
+
+Pending Approval
+
+Approved
+
+Rejected
+
+⚠️ IMPORTANT
+
+Do NOT change backend logic or database structure
+
+This is approval flow + UI polish only
+
+Existing offer and request system must remain unchanged
+
+Thank you.

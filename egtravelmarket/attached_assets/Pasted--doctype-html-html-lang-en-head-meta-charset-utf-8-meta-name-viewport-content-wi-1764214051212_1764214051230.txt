@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diver Dashboard | Eg Travel Market</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="/assets/styles.css">
+<script data-noptimize="1" data-cfasync="false" data-wpfc-render="false">
+  (function () {
+      var script = document.createElement("script");
+      script.async = 1;
+      script.src = 'https://emrldtp.com/NDczNTQ1.js?t=473545';
+      document.head.appendChild(script);
+  })();
+</script>
+<style>
+.dashboard-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+.dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.dashboard-card { background: white; border-radius: 12px; padding: 30px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+.profile-url-box { background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 20px 0; display: flex; justify-content: space-between; align-items: center; }
+.profile-url-box input { flex: 1; border: none; background: transparent; font-family: monospace; font-size: 14px; }
+.copy-btn { background: #0066cc; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; }
+.copy-btn:hover { background: #0052a3; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; }
+.stat-card h3 { margin: 0 0 5px 0; font-size: 32px; font-weight: 700; }
+.stat-card p { margin: 0; opacity: 0.9; font-size: 14px; }
+.profile-photo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #0066cc; }
+.profile-header { display: flex; gap: 30px; align-items: flex-start; margin-bottom: 30px; }
+.edit-mode { display: none; }
+.edit-mode.active { display: block; }
+.view-mode.active { display: block; }
+.view-mode { display: none; }
+.btn { padding: 12px 24px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; }
+.btn-primary { background: #0066cc; color: white; }
+.btn-primary:hover { background: #0052a3; }
+.btn-secondary { background: #f0f0f0; color: #333; }
+.btn-secondary:hover { background: #e0e0e0; }
+.btn-success { background: #28a745; color: white; }
+.btn-success:hover { background: #218838; }
+.btn-warning { background: #ffc107; color: #333; }
+.btn-warning:hover { background: #ffb300; }
+.btn-danger { background: #dc3545; color: white; }
+.btn-danger:hover { background: #c82333; }
+.tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #eee; flex-wrap: wrap; }
+.tab { padding: 12px 20px; background: none; border: none; font-weight: 600; color: #666; cursor: pointer; border-bottom: 3px solid transparent; }
+.tab.active { color: #0066cc; border-bottom-color: #0066cc; }
+.trips-table { width: 100%; border-collapse: collapse; }
+.trips-table th { text-align: left; padding: 12px; background: #f8f9fa; font-weight: 600; border-bottom: 2px solid #ddd; }
+.trips-table td { padding: 12px; border-bottom: 1px solid #eee; }
+.trips-table tr:hover { background: #f8f9fa; }
+.status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.status-draft { background: #e8f4f8; color: #0066cc; }
+.status-pending_approval { background: #fff3cd; color: #856404; }
+.status-approved { background: #d4edda; color: #155724; }
+.status-published { background: #d1ecf1; color: #0c5460; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.actions button { padding: 6px 12px; font-size: 12px; }
+.modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+.modal.active { display: flex; }
+.modal-content { background: white; padding: 30px; border-radius: 12px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.modal-header h2 { margin: 0; }
+.modal-close { background: none; border: none; font-size: 24px; cursor: pointer; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 8px; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; font-family: inherit; box-sizing: border-box; }
+.form-group textarea { min-height: 120px; resize: vertical; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.empty-state { text-align: center; padding: 60px 20px; color: #666; }
+.empty-state p { font-size: 16px; margin-bottom: 20px; }
+.loading { text-align: center; padding: 40px; color: #666; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container nav">
+    <a href="/index.html" class="brand"><div class="logo"></div><span>Eg Travel Market</span></a>
+    <nav class="menu">
+      <a href="/index.html">Home</a>
+      <a href="/divers.html">Find Divers</a>
+      <a href="#" id="logout-btn" style="color: #dc3545;">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <div>
+      <h1>Diver Dashboard</h1>
+      <p style="color: #666;">Manage your expert profile</p>
+    </div>
+    <button class="btn btn-primary" id="edit-profile-btn">✏️ Edit Profile</button>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3 id="profile-views">0</h3>
+      <p>Profile Views</p>
+    </div>
+    <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+      <h3 id="total-bookings">0</h3>
+      <p>Total Bookings</p>
+    </div>
+    <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+      <h3 id="profile-status">Active</h3>
+      <p>Profile Status</p>
+    </div>
+  </div>
+
+  <div class="dashboard-card">
+    <h2>Your Profile URL</h2>
+    <p style="color: #666; margin-bottom: 15px;">Share this link on social media to promote your services</p>
+    <div class="profile-url-box">
+      <input type="text" id="profile-url" readonly value="Loading...">
+      <button class="copy-btn" id="copy-url-btn">📋 Copy</button>
+    </div>
+  </div>
+
+  <div class="dashboard-card">
+    <h2>My Job Applications</h2>
+    <div id="applications-list">
+      <p style="color: #666;">Loading applications...</p>
+    </div>
+  </div>
+
+  <div class="dashboard-card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h2 style="margin: 0;">🌍 My Expert Trips</h2>
+      <button class="btn btn-primary" onclick="openCreateTrip()">+ Create New Trip</button>
+    </div>
+    
+    <div class="stats-grid" style="margin-bottom: 30px;">
+      <div class="stat-card">
+        <h3 id="draftCount">0</h3>
+        <p>Draft Trips</p>
+      </div>
+      <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+        <h3 id="publishedCount">0</h3>
+        <p>Published Trips</p>
+      </div>
+      <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+        <h3 id="bookingCount">0</h3>
+        <p>Total Bookings</p>
+      </div>
+      <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+        <h3 id="earningsAmount">$0</h3>
+        <p>Earnings (80%)</p>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="filterByStatus('all')">All Trips</button>
+      <button class="tab" onclick="filterByStatus('draft')">Draft</button>
+      <button class="tab" onclick="filterByStatus('pending_approval')">Pending</button>
+      <button class="tab" onclick="filterByStatus('approved')">Approved</button>
+      <button class="tab" onclick="filterByStatus('published')">Published</button>
+    </div>
+
+    <div id="loadingSpinner" class="loading">Loading trips...</div>
+    <div id="tripsContainer" style="display: none;">
+      <table class="trips-table">
+        <thead>
+          <tr>
+            <th>Trip Title</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Bookings</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tripsTableBody"></tbody>
+      </table>
+    </div>
+    <div id="emptyState" class="empty-state" style="display: none;">
+      <p>No trips found</p>
+    </div>
+  </div>
+
+  <div class="dashboard-card view-mode active" id="view-mode">
+    <div class="profile-header">
+      <img id="view-photo" loading="lazy" src="/attached_assets/diver-coral.webp" alt="Profile" class="profile-photo">
+      <div>
+        <h2 id="view-name">Loading...</h2>
+        <p style="color: #666; margin: 5px 0;"><strong>Location:</strong> <span id="view-location"></span></p>
+        <p style="color: #666; margin: 5px 0;"><strong>Languages:</strong> <span id="view-languages"></span></p>
+        <p style="color: #666; margin: 5px 0;"><strong>Experience:</strong> <span id="view-experience"></span> years</p>
+      </div>
+    </div>
+    <div>
+      <h3>About Me</h3>
+      <p id="view-bio" style="line-height: 1.6; color: #333;"></p>
+    </div>
+    <div style="margin-top: 20px;">
+      <h3>Certifications</h3>
+      <p id="view-certifications" style="color: #333;"></p>
+    </div>
+    <div style="margin-top: 20px;">
+      <h3>Contact</h3>
+      <p style="color: #333;"><strong>Email:</strong> <span id="view-email"></span></p>
+      <p style="color: #333;"><strong>Phone/WhatsApp:</strong> <span id="view-phone"></span></p>
+    </div>
+  </div>
+
+  <div class="dashboard-card edit-mode" id="edit-mode">
+    <h2>Edit Profile</h2>
+    <form id="edit-profile-form">
+      <div class="form-grid">
+        <div><label>Display Name</label><input class="input" name="displayName" id="edit-name" required></div>
+        <div><label>Email</label><input class="input" type="email" name="email" id="edit-email" required></div>
+        <div><label>Phone / WhatsApp</label><input class="input" name="phone" id="edit-phone"></div>
+        <div><label>Location</label><input class="input" name="location" id="edit-location"></div>
+        <div><label>Languages</label><input class="input" name="languages" id="edit-languages" placeholder="EN / AR / ES"></div>
+        <div><label>Years of Experience</label><input class="input" type="number" name="experience" id="edit-experience" min="0"></div>
+        <div style="grid-column:1/-1"><label>Certifications</label><input class="input" name="certifications" id="edit-certifications"></div>
+        <div style="grid-column:1/-1">
+          <label>Profile Photo URL</label>
+          <input class="input" name="photoUrl" id="edit-photo" placeholder="https://...">
+          <p class="note">Paste a direct image URL (use Imgur, Unsplash, or any hosting service)</p>
+        </div>
+        <div style="grid-column:1/-1"><label>Short Bio</label><textarea name="bio" id="edit-bio" rows="5"></textarea></div>
+      </div>
+      <div style="margin-top: 20px; display: flex; gap: 10px;">
+        <button type="submit" class="btn btn-primary">💾 Save Changes</button>
+        <button type="button" class="btn" id="cancel-edit-btn">Cancel</button>
+      </div>
+    </form>
+    <div class="dashboard-card">
+      <h2>🏦 Bank Account Details</h2>
+      <p style="color: #666; margin-bottom: 15px;">Add your bank account to receive 80% payouts from expert trip bookings</p>
+      <form id="bank-details-form">
+        <div class="form-group">
+          <label>Account Holder Name *</label>
+          <input type="text" id="bankAccountHolder" placeholder="Your full name" required>
+        </div>
+        <div class="form-group">
+          <label>Bank Name *</label>
+          <input type="text" id="bankName" placeholder="e.g., National Bank of Egypt" required>
+        </div>
+        <div class="form-group">
+          <label>Bank Country *</label>
+          <input type="text" id="bankCountry" placeholder="e.g., Egypt" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Account Number</label>
+            <input type="text" id="bankAccountNumber" placeholder="Your account number">
+          </div>
+          <div class="form-group">
+            <label>IBAN</label>
+            <input type="text" id="bankIban" placeholder="International Bank Account Number">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">💾 Save Bank Details</button>
+      </form>
+      <div id="bank-details-status" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; display: none;">
+        ✅ Bank details saved successfully!
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>💰 My Payouts</h2>
+      <div class="stats-grid" style="margin-bottom: 30px;">
+        <div class="stat-card">
+          <h3 id="total-paid">$0.00</h3>
+          <p>Total Paid</p>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+          <h3 id="total-pending">$0.00</h3>
+          <p>Pending</p>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+          <h3 id="total-approved">$0.00</h3>
+          <p>In Review</p>
+        </div>
+      </div>
+      <table class="trips-table">
+        <thead>
+          <tr>
+            <th>Trip</th>
+            <th>Traveler</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="payouts-tbody">
+          <tr><td colspan="5" style="text-align: center; padding: 20px;">Loading payouts...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<!-- Create Trip Modal -->
+<div id="createTripModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Create New Trip</h2>
+      <button class="modal-close" onclick="closeCreateTrip()">&times;</button>
+    </div>
+    <form onsubmit="handleCreateTrip(event)">
+      <div class="form-group">
+        <label>Trip Title *</label>
+        <input type="text" id="tripTitle" placeholder="e.g., Scuba Diving Adventure" required>
+      </div>
+      <div class="form-group">
+        <label>Trip Type *</label>
+        <select id="tripType" required>
+          <option value="">Select trip type</option>
+          <option value="Scuba Diving">Scuba Diving</option>
+          <option value="Desert Safari">Desert Safari</option>
+          <option value="Cultural Tour">Cultural Tour</option>
+          <option value="Mentorship">Mentorship Course</option>
+          <option value="Rock Climbing">Rock Climbing</option>
+          <option value="Hiking">Hiking</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Description *</label>
+        <textarea id="tripDescription" placeholder="Describe your trip in detail" required></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Location *</label>
+          <input type="text" id="tripLocation" placeholder="Cairo, Hurghada, Sharm El-Sheikh..." required>
+        </div>
+        <div class="form-group">
+          <label>Price (USD) *</label>
+          <input type="number" id="tripPrice" min="10" step="0.01" placeholder="100.00" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Duration</label>
+          <input type="text" id="tripDuration" placeholder="e.g., 3 days, Half day">
+        </div>
+        <div class="form-group">
+          <label>Max Group Size</label>
+          <input type="number" id="tripMaxGroup" min="1" placeholder="10">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Start Date</label>
+          <input type="date" id="tripStartDate">
+        </div>
+        <div class="form-group">
+          <label>End Date</label>
+          <input type="date" id="tripEndDate">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>What's Included (comma separated)</label>
+        <input type="text" id="tripIncluded" placeholder="Equipment, Meals, Guide, Transport">
+      </div>
+      <div class="form-group">
+        <label>Requirements (comma separated)</label>
+        <input type="text" id="tripRequirements" placeholder="Age 18+, Swimming ability, Health clearance">
+      </div>
+      <div class="form-group">
+        <label>Image URL</label>
+        <input type="url" id="tripImage" placeholder="https://...">
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px;">Save as Draft</button>
+    </form>
+  </div>
+</div>
+
+<!-- Trip Details Modal -->
+<div id="tripDetailsModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Trip Details</h2>
+      <button class="modal-close" onclick="closeTripDetails()">&times;</button>
+    </div>
+    <div id="tripDetailsContent"></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p class="small">© Eg Travel Market. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="/js/api-client.js"></script>
+<script src="/js/expert-dashboard.js"></script>
+<script>
+const BACKEND_URL = 'http://' + window.location.hostname + ':3000/api';
+let token = localStorage.getItem('authToken');
+let allTrips = [];
+let filteredStatus = 'all';
+
+async function loadTrips() {
+  try {
+    const response = await fetch(`${BACKEND_URL}/expert-trips/my-trips`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (!response.ok) throw new Error('Failed to load trips');
+    const data = await response.json();
+    allTrips = data.trips || [];
+    updateStats();
+    displayTrips(allTrips);
+  } catch (error) {
+    console.error('Error loading trips:', error);
+    document.getElementById('loadingSpinner').style.display = 'none';
+    document.getElementById('emptyState').style.display = 'block';
+  }
+}
+
+function updateStats() {
+  const draftCount = allTrips.filter(t => t.status === 'draft').length;
+  const publishedCount = allTrips.filter(t => t.status === 'published').length;
+  const totalBookings = allTrips.reduce((sum, t) => sum + (t.bookings || 0), 0);
+
+  document.getElementById('draftCount').textContent = draftCount;
+  document.getElementById('publishedCount').textContent = publishedCount;
+  document.getElementById('bookingCount').textContent = totalBookings;
+  document.getElementById('earningsAmount').textContent = '$' + (allTrips.reduce((sum, t) => sum + parseFloat(t.price || 0) * 0.8, 0)).toFixed(2);
+}
+
+function displayTrips(trips) {
+  const spinner = document.getElementById('loadingSpinner');
+  const container = document.getElementById('tripsContainer');
+  const empty = document.getElementById('emptyState');
+  const tbody = document.getElementById('tripsTableBody');
+
+  spinner.style.display = 'none';
+
+  if (trips.length === 0) {
+    container.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+
+  container.style.display = 'block';
+  empty.style.display = 'none';
+
+  tbody.innerHTML = trips.map(trip => `
+    <tr>
+      <td><strong>${trip.title}</strong></td>
+      <td>$${parseFloat(trip.price).toFixed(2)}</td>
+      <td><span class="status-badge status-${trip.status}">${trip.status.replace(/_/g, ' ').toUpperCase()}</span></td>
+      <td>${trip.bookings || 0}</td>
+      <td>
+        <div class="actions">
+          <button class="btn btn-secondary" onclick="viewTripDetails(${trip.id})">View</button>
+          ${trip.status === 'draft' ? `<button class="btn btn-primary" onclick="editTrip(${trip.id})">Edit</button>` : ''}
+          ${trip.status === 'draft' ? `<button class="btn btn-warning" onclick="submitTrip(${trip.id})">Submit</button>` : ''}
+          ${trip.status === 'approved' ? `<button class="btn btn-success" onclick="publishTrip(${trip.id})">Publish</button>` : ''}
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function filterByStatus(status) {
+  filteredStatus = status;
+  const filtered = status === 'all' ? allTrips : allTrips.filter(t => t.status === status);
+  displayTrips(filtered);
+
+  document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function openCreateTrip() {
+  document.getElementById('createTripModal').classList.add('active');
+}
+
+function closeCreateTrip() {
+  document.getElementById('createTripModal').classList.remove('active');
+  document.querySelector('#createTripModal form').reset();
+}
+
+async function handleCreateTrip(e) {
+  e.preventDefault();
+
+  const tripData = {
+    title: document.getElementById('tripTitle').value,
+    description: document.getElementById('tripDescription').value,
+    tripType: document.getElementById('tripType').value,
+    price: parseFloat(document.getElementById('tripPrice').value),
+    location: document.getElementById('tripLocation').value,
+    duration: document.getElementById('tripDuration').value,
+    maxGroupSize: parseInt(document.getElementById('tripMaxGroup').value) || null,
+    startDate: document.getElementById('tripStartDate').value,
+    endDate: document.getElementById('tripEndDate').value,
+    image: document.getElementById('tripImage').value,
+    includedServices: document.getElementById('tripIncluded').value.split(',').map(s => s.trim()).filter(Boolean),
+    requirements: document.getElementById('tripRequirements').value.split(',').map(s => s.trim()).filter(Boolean),
+  };
+
+  try {
+    const response = await fetch(`${BACKEND_URL}/expert-trips/create`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(tripData)
+    });
+
+    if (!response.ok) throw new Error('Failed to create trip');
+    alert('✅ Trip created successfully as draft!');
+    closeCreateTrip();
+    loadTrips();
+  } catch (error) {
+    console.error('Error creating trip:', error);
+    alert('Failed to create trip');
+  }
+}
+
+async function submitTrip(tripId) {
+  if (!confirm('Submit this trip for admin approval?')) return;
+
+  try {
+    const response = await fetch(`${BACKEND_URL}/expert-trips/${tripId}/submit-approval`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (!response.ok) throw new Error('Failed to submit');
+    alert('✅ Trip submitted for admin approval!');
+    loadTrips();
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Failed to submit trip');
+  }
+}
+
+async function publishTrip(tripId) {
+  if (!confirm('Publish this trip to the marketplace?')) return;
+
+  try {
+    const response = await fetch(`${BACKEND_URL}/expert-trips/${tripId}/publish`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (!response.ok) throw new Error('Failed to publish');
+    alert('✅ Trip is now live on the marketplace!');
+    loadTrips();
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Failed to publish trip');
+  }
+}
+
+async function viewTripDetails(tripId) {
+  const trip = allTrips.find(t => t.id === tripId);
+  if (!trip) return;
+
+  const content = document.getElementById('tripDetailsContent');
+  content.innerHTML = `
+    <p><strong>Title:</strong> ${trip.title}</p>
+    <p><strong>Status:</strong> <span class="status-badge status-${trip.status}">${trip.status.replace(/_/g, ' ').toUpperCase()}</span></p>
+    <p><strong>Price:</strong> $${parseFloat(trip.price).toFixed(2)}</p>
+    <p><strong>Location:</strong> ${trip.location}</p>
+    <p><strong>Duration:</strong> ${trip.duration || 'N/A'}</p>
+    <p><strong>Description:</strong><br>${trip.description}</p>
+  `;
+  document.getElementById('tripDetailsModal').classList.add('active');
+}
+
+function closeTripDetails() {
+  document.getElementById('tripDetailsModal').classList.remove('active');
+}
+
+function editTrip(tripId) {
+  alert('Edit functionality coming soon');
+}
+
+// Bank Details Form Handler
+document.getElementById('bank-details-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const token = localStorage.getItem('authToken');
+  try {
+    const response = await fetch('/api/expert-payouts/bank-details', {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        bankAccountHolder: document.getElementById('bankAccountHolder').value,
+        bankName: document.getElementById('bankName').value,
+        bankAccountNumber: document.getElementById('bankAccountNumber').value,
+        bankIban: document.getElementById('bankIban').value,
+        bankCountry: document.getElementById('bankCountry').value
+      })
+    });
+    if (!response.ok) throw new Error('Failed to save bank details');
+    document.getElementById('bank-details-status').style.display = 'block';
+    setTimeout(() => { document.getElementById('bank-details-status').style.display = 'none'; }, 3000);
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
+});
+
+// Load Bank Details
+async function loadBankDetails() {
+  const token = localStorage.getItem('authToken');
+  try {
+    const response = await fetch('/api/expert-payouts/bank-details', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (response.ok) {
+      const data = await response.json();
+      if (data.bankAccountHolder) {
+        document.getElementById('bankAccountHolder').value = data.bankAccountHolder;
+        document.getElementById('bankName').value = data.bankName || '';
+        document.getElementById('bankCountry').value = data.bankCountry || '';
+        document.getElementById('bankAccountNumber').value = '****' + (data.bankAccountNumber ? data.bankAccountNumber.slice(-4) : '');
+        document.getElementById('bankIban').value = data.bankIban || '';
+      }
+    }
+  } catch (error) {
+    console.error('Error loading bank details:', error);
+  }
+}
+
+// Load Payouts
+async function loadPayouts() {
+  const token = localStorage.getItem('authToken');
+  try {
+    const response = await fetch('/api/expert-payouts/my-payouts', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (response.ok) {
+      const data = await response.json();
+      const stats = data.stats || {};
+      document.getElementById('total-paid').textContent = '$' + (stats.total_paid || 0).toFixed(2);
+      document.getElementById('total-pending').textContent = '$' + (stats.total_pending || 0).toFixed(2);
+      document.getElementById('total-approved').textContent = '$' + (stats.total_approved || 0).toFixed(2);
+      const tbody = document.getElementById('payouts-tbody');
+      const payouts = data.payouts || [];
+      if (payouts.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px;">No payouts yet!</td></tr>';
+        return;
+      }
+      tbody.innerHTML = payouts.map(p => `
+        <tr>
+          <td>${p.trip_title || 'Trip'}</td>
+          <td>${p.traveler_name || 'N/A'}</td>
+          <td>$${parseFloat(p.amount).toFixed(2)}</td>
+          <td><span class="status-badge status-${p.status}">${p.status.toUpperCase()}</span></td>
+          <td>${new Date(p.created_at).toLocaleDateString()}</td>
+        </tr>
+      `).join('');
+    }
+  } catch (error) {
+    console.error('Error loading payouts:', error);
+  }
+}
+
+loadBankDetails();
+loadPayouts();
+loadTrips();
+</script>
+</body>
+</html>

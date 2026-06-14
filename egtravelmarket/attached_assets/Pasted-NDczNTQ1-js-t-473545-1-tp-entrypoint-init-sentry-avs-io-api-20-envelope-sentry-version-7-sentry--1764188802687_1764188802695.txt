@@ -1,0 +1,40 @@
+NDczNTQ1.js?t=473545:1 [tp] entrypoint init
+sentry.avs.io/api/20/envelope/?sentry_version=7&sentry_key=1c30377dafc708e9dfdf6df7e355a97c&sentry_client=sentry.javascript.browser%2F9.44.0:1  Failed to load resource: net::ERR_BLOCKED_BY_CLIENT
+chunk.D7pk0r-x.js:2 The PerformanceObserver does not support buffered flag with the entryTypes argument.
+startObserver @ chunk.D7pk0r-x.js:2
+chunk.DCRPF4lz.js:15 [tp] bb init
+api/bookings/with-payment:1  Failed to load resource: the server responded with a status of 500 ()
+chunk.DCRPF4lz.js:15 Payment error: Error: Proxy Error
+    at HTMLButtonElement.processStripePayment (trip-of-week-script.js?v=2:348:13)
+(anonymous) @ chunk.DCRPF4lz.js:15
+api/bookings/with-payment:1  Failed to load resource: the server responded with a status of 500 ()
+chunk.DCRPF4lz.js:15 Payment error: Error: Proxy Error
+    at HTMLButtonElement.processStripePayment (trip-of-week-script.js?v=2:348:13)
+(anonymous) @ chunk.DCRPF4lz.js:15
+sentry.avs.io/api/20/envelope/?sentry_version=7&sentry_key=1c30377dafc708e9dfdf6df7e355a97c&sentry_client=sentry.javascript.browser%2F9.44.0:1  Failed to load resource: net::ERR_BLOCKED_BY_CLIENT
+sentry.avs.io/api/20/envelope/?sentry_version=7&sentry_key=1c30377dafc708e9dfdf6df7e355a97c&sentry_client=sentry.javascript.browser%2F9.44.0:1  Failed to load resource: net::ERR_BLOCKED_BY_CLIENT
+chunk.DCRPF4lz.js:15  POST https://sentry.avs.io/api/20/envelope/?sentry_version=7&sentry_key=1c30377dafc708e9dfdf6df7e355a97c&sentry_client=sentry.javascript.browser%2F9.44.0 net::ERR_BLOCKED_BY_CLIENT
+s @ chunk.DCRPF4lz.js:15
+f @ chunk.DCRPF4lz.js:8
+s @ chunk.DCRPF4lz.js:8
+o @ chunk.DCRPF4lz.js:8
+sendEnvelope @ chunk.DCRPF4lz.js:7
+_flushOutcomes @ chunk.DCRPF4lz.js:8
+(anonymous) @ chunk.DCRPF4lz.js:15
+chunk.DCRPF4lz.js:15  POST https://www.egtravelmarket.com/api/bookings/with-payment 500 (Internal Server Error)
+(anonymous) @ chunk.DCRPF4lz.js:15
+processStripePayment @ trip-of-week-script.js?v=2:340
+r @ chunk.DCRPF4lz.js:15
+ Payment error: 
+(anonymous) @ chunk.DCRPF4lz.js:15
+processStripePayment @ trip-of-week-script.js?v=2:361
+await in processStripePayment
+r @ chunk.DCRPF4lz.js:15
+  POST https://sentry.avs.io/api/20/envelope/?sentry_version=7&sentry_key=1c30377dafc708e9dfdf6df7e355a97c&sentry_client=sentry.javascript.browser%2F9.44.0 net::ERR_BLOCKED_BY_CLIENT
+s @ chunk.DCRPF4lz.js:15
+f @ chunk.DCRPF4lz.js:8
+s @ chunk.DCRPF4lz.js:8
+o @ chunk.DCRPF4lz.js:8
+sendEnvelope @ chunk.DCRPF4lz.js:7
+_flushOutcomes @ chunk.DCRPF4lz.js:8
+(anonymous) @ chunk.DCRPF4lz.js:15

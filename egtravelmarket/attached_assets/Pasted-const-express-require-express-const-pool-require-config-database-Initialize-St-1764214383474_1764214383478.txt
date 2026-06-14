@@ -1,0 +1,445 @@
+const express = require('express');
+const pool = require('../config/database');
+
+// Initialize Stripe with platform account (for Stripe Connect)
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY || 'sk_test_dummy');
+const stripeConnectUserId = process.env.STRIPE_CONNECT_USER_ID;
+
+const { verifyToken } = require('../middleware/auth');
+const {
+  sendBookingConfirmationToTraveler,
+  sendBookingNotificationToExpert,
+  sendTripApprovalEmail,
+  sendTripRejectionEmail
+} = require('../utils/expert-trips-email');
+
+const router = express.Router();
+
+// Helper: Calculate 20% commission
+const calculateCommission = (amount) => {
+  const commission = parseFloat((amount * 0.2).toFixed(2));
+  const expertAmount = parseFloat((amount - commission).toFixed(2));
+  return { commission, expertAmount };
+};
+
+// CREATE Stripe payment intent for booking
+router.post('/create-payment-intent', async (req, res) => {
+  try {
+    const { bookingId, totalAmount, currency = 'USD' } = req.body;
+
+    if (!bookingId || !totalAmount) {
+      return res.status(400).json({
+        error: 'Validation Error',
+        message: 'Booking ID and total amount are required'
+      });
+    }
+
+    // Get booking details
+    const bookingResult = await pool.query(
+      `SELECT etb.*, et.id as trip_id, ep.id as expert_id, u.email, u.full_name
+       FROM expert_trip_bookings etb
+       JOIN expert_trips et ON etb.trip_id = et.id
+       JOIN expert_profiles ep ON et.expert_id = ep.id
+       JOIN users u ON et.user_id = u.id
+       WHERE etb.id = $1`,
+      [bookingId]
+    );
+
+    if (bookingResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Booking not found' });
+    }
+
+    const booking = bookingResult.rows[0];
+
+    // Create Stripe payment intent
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: Math.round(totalAmount * 100), // Convert to cents
+      currency: currency.toLowerCase(),
+      metadata: {
+        bookingId: bookingId.toString(),
+        tripId: booking.trip_id.toString(),
+        expertId: booking.expert_id.toString(),
+      },
+      description: `Expert Trip Booking #${bookingId}`
+    });
+
+    // Update booking with payment intent
+    await pool.query(
+      `UPDATE expert_trip_bookings SET payment_intent_id = $1 WHERE id = $2`,
+      [paymentIntent.id, bookingId]
+    );
+
+    res.json({
+      clientSecret: paymentIntent.client_secret,
+      paymentIntentId: paymentIntent.id,
+    });
+  } catch (error) {
+    console.error('Payment intent creation error:', error);
+    res.status(500).json({ error: 'Server Error', message: error.message });
+  }
+});
+
+// CONFIRM payment and create payment records
+router.post('/confirm-payment', async (req, res) => {
+  const client = await pool.connect();
+
+  try {
+    const { bookingId, paymentIntentId } = req.body;
+
+    if (!bookingId || !paymentIntentId) {
+      return res.status(400).json({
+        error: 'Validation Error',
+        message: 'Booking ID and payment intent ID are required'
+      });
+    }
+
+    // Retrieve payment intent from Stripe
+    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+
+    if (paymentIntent.status !== 'succeeded') {
+      return res.status(400).json({
+        error: 'Payment Not Completed',
+        message: 'Payment intent status is ' + paymentIntent.status
+      });
+    }
+
+    await client.query('BEGIN');
+
+    // Get booking details
+    const bookingResult = await client.query(
+      `SELECT etb.*, et.id as trip_id, et.price, ep.id as expert_id, u.email as expert_email, u.full_name as expert_name
+       FROM expert_trip_bookings etb
+       JOIN expert_trips et ON etb.trip_id = et.id
+       JOIN expert_profiles ep ON et.expert_id = ep.id
+       JOIN users u ON et.user_id = u.id
+       WHERE etb.id = $1`,
+      [bookingId]
+    );
+
+    if (bookingResult.rows.length === 0) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ error: 'Booking not found' });
+    }
+
+    const booking = bookingResult.rows[0];
+    const totalAmount = parseFloat(booking.total_amount);
+    const { commission, expertAmount } = calculateCommission(totalAmount);
+
+    // Update booking status
+    await client.query(
+      `UPDATE expert_trip_bookings 
+       SET booking_status = 'confirmed', payment_status = 'paid', updated_at = NOW()
+       WHERE id = $1`,
+      [bookingId]
+    );
+
+    // Create payment record
+    const paymentResult = await client.query(
+      `INSERT INTO expert_trip_payments (
+        booking_id, trip_id, expert_id, total_amount, 
+        platform_commission, expert_amount, currency, 
+        status, payment_method, stripe_payment_id
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      RETURNING *`,
+      [
+        bookingId,
+        booking.trip_id,
+        booking.expert_id,
+        totalAmount,
+        commission,
+        expertAmount,
+        booking.currency,
+        'escrow',
+        'stripe',
+        paymentIntentId
+      ]
+    );
+
+    // Create payout record for expert (80% of booking)
+    await client.query(
+      `INSERT INTO expert_payouts (
+        expert_id, booking_id, trip_id, amount, currency, status
+      ) VALUES ($1, $2, $3, $4, $5, 'pending')`,
+      [
+        booking.expert_id,
+        bookingId,
+        booking.trip_id,
+        expertAmount,
+        booking.currency
+      ]
+    );
+
+    await client.query('COMMIT');
+
+    // Send confirmation emails (async, don't wait)
+    sendBookingConfirmationToTraveler(
+      booking.traveler_email,
+      booking.traveler_name,
+      booking.title || 'Expert Trip',
+      bookingId,
+      totalAmount
+    ).catch(err => console.error('Error sending traveler email:', err));
+
+    sendBookingNotificationToExpert(
+      booking.expert_email,
+      booking.expert_name,
+      booking.title || 'Expert Trip',
+      bookingId,
+      totalAmount
+    ).catch(err => console.error('Error sending expert email:', err));
+
+    res.json({
+      message: 'Payment confirmed successfully',
+      payment: {
+        id: paymentResult.rows[0].id,
+        totalAmount,
+        commission,
+        expertAmount,
+        status: 'escrow',
+      }
+    });
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error('Payment confirmation error:', error);
+    res.status(500).json({ error: 'Server Error', message: error.message });
+  } finally {
+    client.release();
+  }
+});
+
+// Stripe webhook for payment events
+router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  if (!endpointSecret) {
+    return res.status(400).json({ error: 'Webhook secret not configured' });
+  }
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+  } catch (err) {
+    console.error('Webhook signature verification failed:', err);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  try {
+    if (event.type === 'payment_intent.succeeded') {
+      const paymentIntent = event.data.object;
+      console.log('✅ Payment succeeded:', paymentIntent.id);
+    }
+
+    if (event.type === 'payment_intent.payment_failed') {
+      const paymentIntent = event.data.object;
+      console.log('❌ Payment failed:', paymentIntent.id);
+    }
+
+    res.json({ received: true });
+  } catch (error) {
+    console.error('Webhook processing error:', error);
+    res.status(500).json({ error: 'Webhook processing error' });
+  }
+});
+
+// Approve trip and send email
+router.post('/approve-trip/:tripId', async (req, res) => {
+  try {
+    const { tripId } = req.params;
+
+    // Get trip and expert info
+    const tripResult = await pool.query(
+      `SELECT et.*, u.email, u.full_name FROM expert_trips et
+       JOIN users u ON et.user_id = u.id
+       WHERE et.id = $1`,
+      [tripId]
+    );
+
+    if (tripResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Trip not found' });
+    }
+
+    const trip = tripResult.rows[0];
+
+    // Send approval email
+    await sendTripApprovalEmail(trip.email, trip.full_name, trip.title);
+
+    res.json({
+      message: 'Trip approved and email sent',
+      trip: { id: trip.id, title: trip.title }
+    });
+  } catch (error) {
+    console.error('Error approving trip:', error);
+    res.status(500).json({ error: 'Server Error', message: error.message });
+  }
+});
+
+// Reject trip and send email
+router.post('/reject-trip/:tripId', async (req, res) => {
+  try {
+    const { tripId } = req.params;
+    const { reason } = req.body;
+
+    // Get trip and expert info
+    const tripResult = await pool.query(
+      `SELECT et.*, u.email, u.full_name FROM expert_trips et
+       JOIN users u ON et.user_id = u.id
+       WHERE et.id = $1`,
+      [tripId]
+    );
+
+    if (tripResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Trip not found' });
+    }
+
+    const trip = tripResult.rows[0];
+
+    // Send rejection email
+    await sendTripRejectionEmail(trip.email, trip.full_name, trip.title, reason);
+
+    res.json({
+      message: 'Trip rejected and email sent',
+      trip: { id: trip.id, title: trip.title }
+    });
+  } catch (error) {
+    console.error('Error rejecting trip:', error);
+    res.status(500).json({ error: 'Server Error', message: error.message });
+  }
+});
+
+// Confirm payment success (called from success page)
+router.post('/confirm-payment-success', async (req, res) => {
+  const client = await pool.connect();
+
+  try {
+    const { bookingId, sessionId } = req.body;
+
+    if (!bookingId || !sessionId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Booking ID and session ID are required'
+      });
+    }
+
+    await client.query('BEGIN');
+
+    // Get booking and trip details
+    const bookingResult = await client.query(
+      `SELECT etb.*, et.id as trip_id, et.title, et.price, ep.id as expert_id, u.email as expert_email, u.full_name as expert_name, ep.whatsapp
+       FROM expert_trip_bookings etb
+       JOIN expert_trips et ON etb.trip_id = et.id
+       JOIN expert_profiles ep ON et.expert_id = ep.id
+       JOIN users u ON et.user_id = u.id
+       WHERE etb.id = $1`,
+      [bookingId]
+    );
+
+    if (bookingResult.rows.length === 0) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ success: false, message: 'Booking not found' });
+    }
+
+    const booking = bookingResult.rows[0];
+    const totalAmount = parseFloat(booking.total_amount);
+    const { commission, expertAmount } = calculateCommission(totalAmount);
+
+    // Update booking status to confirmed
+    await client.query(
+      `UPDATE expert_trip_bookings SET booking_status = 'confirmed', payment_session_id = $1, updated_at = NOW() WHERE id = $2`,
+      [sessionId, bookingId]
+    );
+
+    // Create payment record
+    await client.query(
+      `INSERT INTO expert_trip_payments (
+        booking_id, trip_id, expert_id, total_amount, 
+        platform_commission, expert_amount, currency, 
+        status, payment_method, stripe_payment_id
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      ON CONFLICT DO NOTHING`,
+      [
+        bookingId,
+        booking.trip_id,
+        booking.expert_id,
+        totalAmount,
+        commission,
+        expertAmount,
+        booking.currency || 'USD',
+        'escrow',
+        'stripe',
+        sessionId
+      ]
+    );
+
+    await client.query('COMMIT');
+
+    // Send confirmation emails (async, don't wait)
+    await sendBookingConfirmationToTraveler(
+      booking.traveler_email,
+      booking.traveler_name,
+      booking.title || 'Expert Trip',
+      bookingId,
+      totalAmount
+    ).catch(err => console.error('Error sending traveler confirmation email:', err));
+
+    await sendBookingNotificationToExpert(
+      booking.expert_email,
+      booking.expert_name,
+      booking.title || 'Expert Trip',
+      bookingId,
+      totalAmount
+    ).catch(err => console.error('Error sending expert notification email:', err));
+
+    res.json({
+      success: true,
+      message: 'Booking confirmed and emails sent',
+      bookingId,
+      tripTitle: booking.title,
+      totalAmount,
+      travelerEmail: booking.traveler_email,
+      expertName: booking.expert_name,
+      expertEmail: booking.expert_email,
+      expertWhatsapp: booking.whatsapp
+    });
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error('Payment success confirmation error:', error);
+    res.status(500).json({ success: false, message: error.message });
+  } finally {
+    client.release();
+  }
+});
+
+// Release payment to expert (after trip completion)
+router.post('/release-payment/:paymentId', async (req, res) => {
+  try {
+    const { paymentId } = req.params;
+
+    const result = await pool.query(
+      `UPDATE expert_trip_payments 
+       SET status = 'released', release_date = NOW(), updated_at = NOW()
+       WHERE id = $1 AND status = 'escrow'
+       RETURNING *`,
+      [paymentId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Payment not found or not in escrow' });
+    }
+
+    res.json({
+      message: 'Payment released to expert',
+      payment: {
+        id: result.rows[0].id,
+        expertAmount: result.rows[0].expert_amount,
+        status: 'released'
+      }
+    });
+  } catch (error) {
+    console.error('Payment release error:', error);
+    res.status(500).json({ error: 'Server Error', message: error.message });
+  }
+});
+
+module.exports = router;

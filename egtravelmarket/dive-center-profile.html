@@ -1,0 +1,1007 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dive Center Profile — Eg Travel Market</title>
+<meta name="description" content="Professional dive center in Egypt offering diving courses, equipment rental, and diving expeditions.">
+<meta name="keywords" content="dive center, PADI courses, diving Egypt, diving expeditions, underwater diving">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta property="og:title" content="EgTravelMarket – Your Gateway to Explore Egypt" />
+<meta property="og:description" content="Discover trips, experts, diving, MICE, medical services, and full travel experiences across Egypt." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.egtravelmarket.com/" />
+<meta property="og:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+<meta property="og:image:secure_url" content="https://www.egtravelmarket.com/static/images/og-image.jpg?v=2" />
+
+<link rel="stylesheet" href="/assets/styles.css">
+<script src="/js/api-utils.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9Z2B97VS02"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9Z2B97VS02');
+</script>
+<style>
+.profile-hero {
+  background-color: rgba(15, 23, 42, 0.6);
+  border-radius: 16px;
+  padding: 60px 40px;
+  margin-bottom: 30px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.profile-hero.has-cover::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, rgba(10, 25, 41, 0.5) 0%, rgba(10, 25, 41, 0.85) 100%);
+  z-index: 0;
+}
+.profile-hero > * { position: relative; z-index: 1; }
+.profile-logo {
+  width: 130px; height: 130px;
+  border-radius: 16px;
+  object-fit: cover;
+  object-position: top center;
+  border: 4px solid #06b6d4;
+  box-shadow: 0 4px 20px rgba(6, 182, 212, 0.4);
+  margin-bottom: 20px;
+  background: #1a3a5c;
+}
+#hero-name {
+  color: #fff;
+  font-size: 34px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+.profile-badges {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: 18px 0;
+  clear: both;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 4px;
+}
+.badge.verified { 
+  background: linear-gradient(135deg, #10b981, #059669); 
+  color: white; 
+  padding: 10px 20px;
+  font-size: 14px;
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.4);
+}
+.badge.featured { background: #f59e0b; color: white; }
+.badge.location { 
+  background: rgba(59, 130, 246, 0.15); 
+  color: #60a5fa; 
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  font-size: 11px;
+  padding: 5px 12px;
+}
+.badge.location.international { 
+  background: rgba(139, 92, 246, 0.15); 
+  color: #a78bfa; 
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+.badge.business-type { 
+  background: rgba(148, 163, 184, 0.15); 
+  color: #94a3b8; 
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  font-size: 11px;
+  padding: 5px 12px;
+}
+.badge.experience { background: rgba(255,255,255,0.1); color: #94a3b8; font-size: 11px; padding: 5px 12px; }
+
+.badge-row {
+  display: block;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.hero-ctas .cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.hero-ctas .cta-whatsapp {
+  background: #25d366;
+  color: white;
+}
+.hero-ctas .cta-website {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.hero-ctas .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+
+.profile-section {
+  background: rgba(15, 31, 47, 0.8);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.profile-section h4 {
+  color: #fff;
+  font-size: 18px;
+  margin: 0 0 16px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.profile-section h4 .icon { font-size: 22px; }
+.profile-section p {
+  color: #cbd5e1;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(6, 182, 212, 0.12);
+  color: #06b6d4;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.tag.location { background: rgba(14, 165, 233, 0.12); color: #0ea5e9; }
+.tag.language { background: rgba(155, 89, 182, 0.12); color: #9b59b6; }
+.tag.works-with { background: rgba(46, 204, 113, 0.12); color: #2ecc71; }
+.tag.route { background: rgba(241, 196, 15, 0.12); color: #f1c40f; }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+.service-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.2s;
+}
+.service-card:hover { background: rgba(6, 182, 212, 0.08); border-color: rgba(6, 182, 212, 0.3); }
+.service-card .icon { font-size: 28px; margin-bottom: 8px; }
+.service-card .name { color: #e2e8f0; font-size: 13px; font-weight: 500; }
+
+.certs-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.cert-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+}
+.cert-badge.padi { background: #0066cc; }
+.cert-badge.ssi { background: #00a0e3; }
+.cert-badge.cmas { background: #27ae60; }
+.cert-badge.naui { background: #f39c12; }
+.cert-badge.tdi { background: #e74c3c; }
+.cert-badge.sdi { background: #e74c3c; }
+.cert-badge.raid { background: #8e44ad; }
+.cert-badge.other { background: rgba(255,255,255,0.1); color: #e2e8f0; }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: all 0.2s;
+}
+.contact-item:hover { background: rgba(255,255,255,0.06); }
+.contact-item .icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 20px;
+}
+.contact-item .icon.whatsapp { background: #25d366; }
+.contact-item .icon.website { background: #06b6d4; }
+.contact-item .icon.facebook { background: #1877f2; }
+.contact-item .icon.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743); }
+.contact-item .details { flex: 1; min-width: 0; }
+.contact-item .label { color: #94a3b8; font-size: 12px; margin-bottom: 2px; }
+.contact-item .value { color: #fff; font-size: 14px; }
+.contact-item .value a { color: #06b6d4; text-decoration: none; }
+.contact-item .value a:hover { text-decoration: underline; }
+
+.trips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+.trip-card {
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.2s;
+}
+.trip-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); border-color: rgba(6, 182, 212, 0.3); }
+.trip-card img { width: 100%; height: 150px; object-fit: cover; }
+.trip-card .trip-body { padding: 16px; }
+.trip-card .trip-badge {
+  display: inline-block;
+  background: #06b6d4;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.trip-card h5 { color: #fff; margin: 0 0 10px; font-size: 16px; line-height: 1.3; }
+.trip-card .trip-meta { color: #94a3b8; font-size: 12px; display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+.trip-card .trip-cta {
+  display: block;
+  text-align: center;
+  background: linear-gradient(135deg, #06b6d4, #0891b2);
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.trip-card .trip-cta:hover { background: linear-gradient(135deg, #0891b2, #0e7490); }
+
+.tabs-container { margin-bottom: 20px; }
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 20px;
+}
+.tab-btn {
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+.tab-btn:hover { color: #e2e8f0; }
+.tab-btn.active { color: #06b6d4; border-bottom-color: #06b6d4; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  border: 1px dashed rgba(255,255,255,0.1);
+}
+.empty-state .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.6; }
+.empty-state h5 { color: #e2e8f0; font-size: 16px; margin: 0 0 8px; }
+.empty-state p { color: #94a3b8; font-size: 14px; margin: 0; }
+
+@media (max-width: 768px) {
+  .profile-hero { padding: 40px 20px; }
+  #hero-name { font-size: 26px; }
+  .profile-logo { width: 100px; height: 100px; }
+  .hero-ctas { flex-direction: column; }
+  .hero-ctas .cta-btn { justify-content: center; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+}
+
+.scroll-nav {
+  position: fixed;
+  right: 24px;
+  bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+.scroll-nav button {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #06b6d4, #0891b2);
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.scroll-nav button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+}
+.scroll-nav button:active { transform: scale(0.95); }
+
+.primary-cta-section {
+  text-align: center;
+  margin: 30px 0;
+}
+.primary-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #06b6d4, #0891b2);
+  color: white;
+  border: none;
+  padding: 16px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+  transition: all 0.3s;
+}
+.primary-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+}
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<header class="header">
+  <div class="container nav">
+    <a href="/index.html" class="brand"><div class="logo"></div><span>Eg Travel Market</span></a>
+    <nav class="menu">
+      <a href="/index.html">Home</a><a href="/dive-centers-list.html">Dive Centers</a>
+      <a href="/guides.html">Guides</a><a href="/divers.html">Divers</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container" id="profile-container" style="padding-top: 30px; padding-bottom: 60px;">
+
+  <div id="profile-hero" class="profile-hero">
+    <img id="hero-logo" loading="lazy" class="profile-logo" src="/attached_assets/guides-divers.webp" alt="Dive Center Logo">
+    <h1 id="hero-name">Loading...</h1>
+    <div id="hero-badges" class="profile-badges"></div>
+    <div id="hero-ctas" class="hero-ctas"></div>
+  </div>
+
+  <div id="primary-cta-section" class="primary-cta-section">
+    <button id="request-package-btn" class="primary-cta-btn" style="display: none;">
+      🤿 Request Custom Diving Package
+    </button>
+  </div>
+
+  <section class="profile-section" id="about-section">
+    <h4><span class="icon">📋</span> About</h4>
+    <div id="about-description" style="margin-bottom: 20px;">
+      <p id="center-description">Loading dive center information...</p>
+    </div>
+    <div id="about-languages" style="display: none; margin-bottom: 16px;">
+      <h5 style="color: #94a3b8; font-size: 13px; margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.5px;">Languages Spoken</h5>
+      <div id="languages-tags" class="tags"></div>
+    </div>
+    <div id="about-works-with" style="display: none;">
+      <h5 style="color: #94a3b8; font-size: 13px; margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.5px;">Works With</h5>
+      <div id="works-with-tags" class="tags"></div>
+    </div>
+  </section>
+
+  <section class="profile-section" id="locations-section" style="display: none;">
+    <h4><span class="icon">📍</span> Locations</h4>
+    <div id="egypt-locations" style="margin-bottom: 16px;">
+      <h5 style="color: #94a3b8; font-size: 13px; margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.5px;">Egypt Diving Locations</h5>
+      <div id="locations-tags" class="tags"></div>
+    </div>
+    <div id="liveaboard-routes" style="display: none;">
+      <h5 style="color: #94a3b8; font-size: 13px; margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.5px;">Liveaboard Routes</h5>
+      <div id="routes-tags" class="tags"></div>
+    </div>
+  </section>
+
+  <section class="profile-section" id="services-section" style="display: none;">
+    <h4><span class="icon">🤿</span> Services</h4>
+    <div id="services-grid" class="services-grid"></div>
+  </section>
+
+  <section class="profile-section" id="certifications-section" style="display: none;">
+    <h4><span class="icon">🎓</span> Certifications</h4>
+    <div id="certs-grid" class="certs-grid"></div>
+  </section>
+
+  <section class="profile-section" id="contact-section">
+    <h4><span class="icon">📞</span> Contact & Social</h4>
+    <div id="contact-grid" class="contact-grid"></div>
+  </section>
+
+  <section class="profile-section" id="trips-section">
+    <h4><span class="icon">📦</span> Diving Packages</h4>
+    <div id="trips-loading" style="text-align: center; padding: 30px; color: #94a3b8;">
+      <p>Loading diving packages...</p>
+    </div>
+    <div id="trips-empty" class="empty-state" style="display: none;">
+      <div class="icon">🤿</div>
+      <h5>Custom Packages Available</h5>
+      <p>This dive center can create a personalized diving package for you.</p>
+      <button id="empty-trips-cta" style="margin-top: 16px; background: linear-gradient(135deg, #06b6d4, #0891b2); color: white; border: none; padding: 12px 28px; font-size: 15px; font-weight: 600; border-radius: 10px; cursor: pointer;">Request Custom Package</button>
+    </div>
+    <div id="trips-grid" class="trips-grid" style="display: none;"></div>
+  </section>
+
+  <section class="profile-section" id="jobs-section">
+    <h4><span class="icon">💼</span> Jobs & Requests</h4>
+    <div class="tabs-container">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="jobs-posted">Jobs Posted</button>
+        <button class="tab-btn" data-tab="partnership-requests">Partnership Requests</button>
+      </div>
+      <div id="jobs-posted" class="tab-content active">
+        <div class="empty-state">
+          <div class="icon">📋</div>
+          <h5>No Jobs Posted</h5>
+          <p>This dive center hasn't posted any job openings yet.</p>
+        </div>
+      </div>
+      <div id="partnership-requests" class="tab-content">
+        <div class="empty-state">
+          <div class="icon">🤝</div>
+          <h5>No Partnership Requests</h5>
+          <p>This dive center hasn't posted any partnership requests yet.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div style="text-align: center; margin-top: 30px;">
+    <a href="/dive-centers-list.html" class="btn" style="background: rgba(255,255,255,0.1); color: #e2e8f0; padding: 12px 30px; border-radius: 10px; text-decoration: none; display: inline-block;">← Back to Dive Centers</a>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <h5>Discover Our Products</h5>
+        <div class="list">
+          <a href="/index.html#tours">Tours & Activities</a>
+          <a href="/index.html#diving">Diving</a><a href="/mice.html">MICE & Conferences</a>
+          <a href="/investment.html">Investments</a><a href="/medical.html">Medical Services</a>
+        </div>
+      </div>
+      <div>
+        <h5>Meet Our Experts</h5>
+        <div class="list">
+          <a href="/guides.html">Guides</a><a href="/divers.html">Divers</a><a href="/travel-agencies.html">Agencies</a><a href="/dive-centers-list.html">Dive Centers</a>
+        </div>
+      </div>
+      <div>
+        <h5>Support & Legal</h5>
+        <div class="list">
+          <a href="/faq.html">Help / FAQ</a><a href="/policies.html">Travel Policies</a>
+          <a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms & Conditions</a>
+        </div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:14px">© Eg Travel Market. All rights reserved.</p>
+  </div>
+</footer>
+
+<div class="scroll-nav">
+  <button id="scroll-up-btn" title="Scroll Up">↑</button>
+  <button id="scroll-down-btn" title="Scroll Down">↓</button>
+</div>
+
+<div id="request-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; align-items: center; justify-content: center;">
+  <div style="background: #0f172a; border-radius: 16px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
+    <div style="padding: 20px 24px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 15px;">
+      <img id="modal-center-logo" src="/attached_assets/guides-divers.webp" alt="Dive Center" style="width: 50px; height: 50px; border-radius: 12px; object-fit: cover; border: 2px solid #06b6d4;">
+      <div>
+        <h3 id="modal-center-name" style="color: #fff; margin: 0 0 4px; font-size: 18px;">Dive Center Name</h3>
+        <p style="color: #94a3b8; margin: 0; font-size: 14px;">Request a custom diving package</p>
+      </div>
+      <button id="close-modal-btn" style="margin-left: auto; background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer; padding: 5px;">&times;</button>
+    </div>
+    <div style="padding: 24px;">
+      <p style="color: #cbd5e1; margin: 0 0 20px; font-size: 15px; line-height: 1.5;">Tell us what you're looking for and this dive center will contact you.</p>
+      <form id="request-form">
+        <input type="hidden" id="form-center-id" name="diveCenterId">
+        <input type="hidden" id="form-center-name" name="diveCenterName">
+        <div style="margin-bottom: 16px;">
+          <label for="traveler-name" style="display: block; color: #e2e8f0; margin-bottom: 6px; font-size: 14px; font-weight: 500;">Your Name *</label>
+          <input type="text" id="traveler-name" name="travelerName" required style="width: 100%; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.05); color: #fff; font-size: 15px; box-sizing: border-box;" placeholder="Full name">
+        </div>
+        <div style="margin-bottom: 16px;">
+          <label for="traveler-email" style="display: block; color: #e2e8f0; margin-bottom: 6px; font-size: 14px; font-weight: 500;">Your Email *</label>
+          <input type="email" id="traveler-email" name="travelerEmail" required style="width: 100%; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.05); color: #fff; font-size: 15px; box-sizing: border-box;" placeholder="your@email.com">
+        </div>
+        <div style="margin-bottom: 16px;">
+          <label for="traveler-whatsapp" style="display: block; color: #e2e8f0; margin-bottom: 6px; font-size: 14px; font-weight: 500;">WhatsApp</label>
+          <input type="tel" id="traveler-whatsapp" name="travelerWhatsapp" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.05); color: #fff; font-size: 15px; box-sizing: border-box;" placeholder="+1234567890">
+        </div>
+        <div style="margin-bottom: 20px;">
+          <label for="traveler-message" style="display: block; color: #e2e8f0; margin-bottom: 6px; font-size: 14px; font-weight: 500;">Message *</label>
+          <textarea id="traveler-message" name="message" required rows="4" style="width: 100%; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.05); color: #fff; font-size: 15px; resize: vertical; box-sizing: border-box;" placeholder="Describe your diving preferences, dates, group size..."></textarea>
+        </div>
+        <button type="submit" id="submit-btn" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #06b6d4, #0891b2); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer;">Send Request</button>
+        <div id="form-message" style="display: none; margin-top: 15px; padding: 12px; border-radius: 8px; text-align: center; font-size: 14px;"></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+  const pathParts = window.location.pathname.split('/').filter(p => p);
+  let slug = null;
+  if (pathParts.length >= 2 && pathParts[0] === 'dive-center') {
+    slug = pathParts[1];
+  } else {
+    const params = new URLSearchParams(window.location.search);
+    slug = params.get('slug');
+  }
+
+  if (!slug) {
+    document.getElementById('profile-container').innerHTML = '<p style="padding: 60px; text-align: center; color: #888;">No dive center specified</p>';
+    return;
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function ensureArray(value) {
+    if (!value) return [];
+    if (Array.isArray(value)) return value.filter(v => v && String(v).trim());
+    if (typeof value === 'string') return value.split(',').map(s => s.trim()).filter(s => s);
+    return [];
+  }
+
+  try {
+    const response = await fetch(`/api/dive-centers/${slug}`);
+    if (!response.ok) throw new Error('Dive center not found');
+
+    const center = await response.json();
+
+    document.title = `${center.centerName || 'Dive Center'} — Eg Travel Market`;
+    document.getElementById('hero-name').textContent = center.centerName || 'Dive Center';
+
+    const heroEl = document.getElementById('profile-hero');
+    if (center.coverPhoto) {
+      heroEl.style.backgroundImage = `url('${center.coverPhoto}')`;
+      heroEl.classList.add('has-cover');
+    }
+
+    if (center.logoUrl) {
+      document.getElementById('hero-logo').src = center.logoUrl;
+    }
+
+    const badgesContainer = document.getElementById('hero-badges');
+
+    const specialtiesRaw = ensureArray(center.specialties);
+    const businessTypes = [];
+    const worksWithList = [];
+    const languagesList = [];
+    
+    specialtiesRaw.forEach(spec => {
+      if (spec.startsWith('biz:')) {
+        businessTypes.push(spec.replace('biz:', ''));
+      } else if (spec.startsWith('works:')) {
+        worksWithList.push(spec.replace('works:', ''));
+      } else if (spec.startsWith('lang:')) {
+        languagesList.push(spec.replace('lang:', ''));
+      }
+    });
+
+    const isInternational = businessTypes.includes('International Dive Center');
+    
+    // Priority 0: Certified badge (Admin certification - gold)
+    if (center.isCertified) {
+      const certRow = document.createElement('div');
+      certRow.style.cssText = 'display: block; text-align: center; margin-bottom: 12px;';
+      const certBadge = document.createElement('span');
+      certBadge.style.cssText = 'display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight: 600; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);';
+      certBadge.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Certified by ETM';
+      certRow.appendChild(certBadge);
+      badgesContainer.appendChild(certRow);
+    }
+    
+    // Priority 1: Verified badge (Trust - green, dominant)
+    if (center.isVerified) {
+      const verRow = document.createElement('div');
+      verRow.style.cssText = 'display: block; text-align: center; margin-bottom: 12px;';
+      const verBadge = document.createElement('span');
+      verBadge.style.cssText = 'display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight: 600; box-shadow: 0 2px 10px rgba(16, 185, 129, 0.4);';
+      verBadge.textContent = '✓ Verified';
+      verRow.appendChild(verBadge);
+      badgesContainer.appendChild(verRow);
+    }
+    
+    // Secondary row: Location + Experience badges
+    const secondaryRow = document.createElement('div');
+    secondaryRow.style.cssText = 'display: block; text-align: center; margin-bottom: 8px;';
+    
+    const locBadge = document.createElement('span');
+    if (isInternational) {
+      locBadge.style.cssText = 'display: inline-flex; align-items: center; gap: 4px; background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.3); padding: 5px 12px; border-radius: 15px; font-size: 11px; font-weight: 500; margin: 3px;';
+      locBadge.textContent = '🌍 International';
+    } else {
+      locBadge.style.cssText = 'display: inline-flex; align-items: center; gap: 4px; background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); padding: 5px 12px; border-radius: 15px; font-size: 11px; font-weight: 500; margin: 3px;';
+      locBadge.textContent = '🇪🇬 Egypt-based';
+    }
+    secondaryRow.appendChild(locBadge);
+    
+    if (center.yearsInBusiness) {
+      const expBadge = document.createElement('span');
+      expBadge.style.cssText = 'display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.1); color: #94a3b8; padding: 5px 12px; border-radius: 15px; font-size: 11px; font-weight: 500; margin: 3px;';
+      expBadge.textContent = `📅 ${center.yearsInBusiness}+ yrs`;
+      secondaryRow.appendChild(expBadge);
+    }
+    badgesContainer.appendChild(secondaryRow);
+    
+    // Tertiary row: Business type badges (gray neutral tags)
+    const bizTypes = businessTypes.filter(bt => bt !== 'International Dive Center');
+    if (bizTypes.length > 0) {
+      const bizRow = document.createElement('div');
+      bizRow.style.cssText = 'display: block; text-align: center; margin-bottom: 8px;';
+      bizTypes.forEach(bt => {
+        const bizBadge = document.createElement('span');
+        bizBadge.style.cssText = 'display: inline-flex; align-items: center; background: rgba(148, 163, 184, 0.15); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.2); padding: 5px 12px; border-radius: 15px; font-size: 11px; font-weight: 500; margin: 3px;';
+        bizBadge.textContent = bt;
+        bizRow.appendChild(bizBadge);
+      });
+      badgesContainer.appendChild(bizRow);
+    }
+
+    const ctasContainer = document.getElementById('hero-ctas');
+    if (center.whatsapp) {
+      const waNum = String(center.whatsapp).replace(/[^0-9]/g, '');
+      ctasContainer.innerHTML += `<a href="https://wa.me/${waNum}" target="_blank" class="cta-btn cta-whatsapp"><svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>`;
+    }
+    if (center.website || center.websiteUrl) {
+      let wsUrl = center.website || center.websiteUrl;
+      if (!wsUrl.startsWith('http')) wsUrl = 'https://' + wsUrl;
+      ctasContainer.innerHTML += `<a href="${escapeHtml(wsUrl)}" target="_blank" class="cta-btn cta-website"><svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg> Website</a>`;
+    }
+
+    const descEl = document.getElementById('center-description');
+    descEl.textContent = center.bio || center.centerDescription || center.description || 'Professional dive center offering diving services in Egypt.';
+
+    if (languagesList.length > 0) {
+      document.getElementById('about-languages').style.display = 'block';
+      const langTags = document.getElementById('languages-tags');
+      languagesList.forEach(lang => {
+        langTags.innerHTML += `<span class="tag language">🗣️ ${escapeHtml(lang)}</span>`;
+      });
+    }
+
+    if (worksWithList.length > 0) {
+      document.getElementById('about-works-with').style.display = 'block';
+      const worksTags = document.getElementById('works-with-tags');
+      worksWithList.forEach(item => {
+        worksTags.innerHTML += `<span class="tag works-with">🤝 ${escapeHtml(item)}</span>`;
+      });
+    }
+
+    const diveSites = ensureArray(center.diveSites);
+    if (diveSites.length > 0 || center.location) {
+      document.getElementById('locations-section').style.display = 'block';
+      const locTags = document.getElementById('locations-tags');
+      if (center.location) {
+        locTags.innerHTML += `<span class="tag location">📍 ${escapeHtml(center.location)}</span>`;
+      }
+      diveSites.forEach(site => {
+        locTags.innerHTML += `<span class="tag location">🤿 ${escapeHtml(site)}</span>`;
+      });
+    }
+
+    const services = ensureArray(center.services);
+    if (services.length > 0) {
+      document.getElementById('services-section').style.display = 'block';
+      const servicesGrid = document.getElementById('services-grid');
+      const serviceIcons = {
+        'Fun Diving': '🤿', 'Courses': '📚', 'PADI Courses': '📚', 'SSI Courses': '📚',
+        'Liveaboard': '🚢', 'Technical Diving': '⚙️', 'Equipment Rental': '🎽',
+        'Freediving': '🏊', 'Night Diving': '🌙', 'Wreck Diving': '🚢',
+        'Intro Dives': '👋', 'Safari Trips': '🏝️', 'Photography': '📷'
+      };
+      services.forEach(service => {
+        const icon = serviceIcons[service] || '✓';
+        servicesGrid.innerHTML += `<div class="service-card"><div class="icon">${icon}</div><div class="name">${escapeHtml(service)}</div></div>`;
+      });
+    }
+
+    const certifications = [];
+    if (center.padiCenterNumber) certifications.push('PADI');
+    if (center.ssiCenterNumber) certifications.push('SSI');
+    const otherCerts = ensureArray(center.otherCertifications);
+    otherCerts.forEach(c => { if (!certifications.includes(c)) certifications.push(c); });
+
+    if (certifications.length > 0) {
+      document.getElementById('certifications-section').style.display = 'block';
+      const certsGrid = document.getElementById('certs-grid');
+      const certClasses = { 'PADI': 'padi', 'SSI': 'ssi', 'CMAS': 'cmas', 'NAUI': 'naui', 'TDI': 'tdi', 'SDI': 'sdi', 'RAID': 'raid' };
+      certifications.forEach(cert => {
+        const cls = certClasses[cert] || 'other';
+        certsGrid.innerHTML += `<span class="cert-badge ${cls}">🎓 ${escapeHtml(cert)}</span>`;
+      });
+    }
+
+    const contactGrid = document.getElementById('contact-grid');
+    let contactHtml = '';
+    if (center.whatsapp) {
+      const waNum = String(center.whatsapp).replace(/[^0-9]/g, '');
+      contactHtml += `<div class="contact-item"><div class="icon whatsapp">📱</div><div class="details"><div class="label">WhatsApp</div><div class="value"><a href="https://wa.me/${waNum}" target="_blank">${escapeHtml(center.whatsapp)}</a></div></div></div>`;
+    }
+    if (center.website || center.websiteUrl) {
+      let wsUrl = center.website || center.websiteUrl;
+      if (!wsUrl.startsWith('http')) wsUrl = 'https://' + wsUrl;
+      contactHtml += `<div class="contact-item"><div class="icon website">🌐</div><div class="details"><div class="label">Website</div><div class="value"><a href="${escapeHtml(wsUrl)}" target="_blank">Visit Website</a></div></div></div>`;
+    }
+    if (center.facebook) {
+      let fbUrl = center.facebook;
+      if (!fbUrl.startsWith('http')) fbUrl = `https://facebook.com/${fbUrl}`;
+      contactHtml += `<div class="contact-item"><div class="icon facebook">📘</div><div class="details"><div class="label">Facebook</div><div class="value"><a href="${escapeHtml(fbUrl)}" target="_blank">Facebook Page</a></div></div></div>`;
+    }
+    if (center.instagram) {
+      let igUrl = center.instagram;
+      if (!igUrl.startsWith('http')) igUrl = `https://instagram.com/${igUrl.replace(/^@/, '')}`;
+      contactHtml += `<div class="contact-item"><div class="icon instagram">📸</div><div class="details"><div class="label">Instagram</div><div class="value"><a href="${escapeHtml(igUrl)}" target="_blank">Instagram Profile</a></div></div></div>`;
+    }
+    if (!contactHtml) {
+      contactHtml = '<div class="empty-state"><div class="icon">📞</div><h5>Contact Information</h5><p>Contact details not available.</p></div>';
+    }
+    contactGrid.innerHTML = contactHtml;
+
+    const tripsLoading = document.getElementById('trips-loading');
+    const tripsEmpty = document.getElementById('trips-empty');
+    const tripsGrid = document.getElementById('trips-grid');
+
+    try {
+      const tripsResponse = await fetch(`/api/expert-trips/by-dive-center/${center.id}`);
+      tripsLoading.style.display = 'none';
+
+      if (tripsResponse.ok) {
+        const tripsData = await tripsResponse.json();
+        const trips = tripsData.trips || tripsData || [];
+        if (trips.length > 0) {
+          tripsGrid.style.display = 'grid';
+          tripsEmpty.style.display = 'none';
+          trips.forEach(trip => {
+            const currency = trip.currency || 'USD';
+            const currencySymbol = currency === 'EGP' ? 'EGP ' : '$';
+            const requirements = trip.requirements || {};
+            const divingType = requirements.divingType || 'Diving';
+            const divingLevel = requirements.divingLevel || '';
+            
+            const tripCard = document.createElement('div');
+            tripCard.className = 'trip-card';
+            tripCard.innerHTML = `
+              <img src="${trip.image || trip.imageUrl || '/attached_assets/guides-divers.webp'}" alt="${escapeHtml(trip.title)}" loading="lazy">
+              <div class="trip-body">
+                <span class="trip-badge">🤿 DIVE CENTER</span>
+                <h5>${escapeHtml(trip.title)}</h5>
+                <div class="trip-meta">
+                  <span>📍 ${escapeHtml(trip.location || 'Egypt')}</span>
+                  <span>🤿 ${escapeHtml(divingType)}</span>
+                  ${divingLevel ? `<span>📊 ${escapeHtml(divingLevel)}</span>` : ''}
+                </div>
+                <a href="/expert-trips-marketplace.html?trip=${trip.id}&book=true" class="trip-cta">View Package</a>
+              </div>
+            `;
+            tripsGrid.appendChild(tripCard);
+          });
+        } else {
+          tripsEmpty.style.display = 'block';
+        }
+      } else {
+        tripsEmpty.style.display = 'block';
+      }
+    } catch (e) {
+      console.log('No packages:', e);
+      tripsLoading.style.display = 'none';
+      tripsEmpty.style.display = 'block';
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById(this.dataset.tab).classList.add('active');
+      });
+    });
+
+    function openRequestModal() {
+      const modal = document.getElementById('request-modal');
+      document.getElementById('modal-center-logo').src = center.logoUrl || '/attached_assets/guides-divers.webp';
+      document.getElementById('modal-center-name').textContent = center.centerName || 'Dive Center';
+      document.getElementById('form-center-id').value = center.id;
+      document.getElementById('form-center-name').value = center.centerName || '';
+      modal.style.display = 'flex';
+    }
+
+    const emptyTripsCta = document.getElementById('empty-trips-cta');
+    if (emptyTripsCta) emptyTripsCta.addEventListener('click', openRequestModal);
+
+    document.getElementById('close-modal-btn').addEventListener('click', function() {
+      document.getElementById('request-modal').style.display = 'none';
+    });
+
+    document.getElementById('request-modal').addEventListener('click', function(e) {
+      if (e.target === this) this.style.display = 'none';
+    });
+
+    document.getElementById('request-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('submit-btn');
+      const formMessage = document.getElementById('form-message');
+      const originalText = submitBtn.textContent;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      formMessage.style.display = 'none';
+
+      const formData = {
+        diveCenterId: document.getElementById('form-center-id').value,
+        diveCenterName: document.getElementById('form-center-name').value,
+        travelerName: document.getElementById('traveler-name').value,
+        travelerEmail: document.getElementById('traveler-email').value,
+        travelerWhatsapp: document.getElementById('traveler-whatsapp').value,
+        message: document.getElementById('traveler-message').value
+      };
+
+      try {
+        const response = await fetch('/api/dive-center-requests', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          formMessage.style.display = 'block';
+          formMessage.style.background = 'rgba(16, 185, 129, 0.2)';
+          formMessage.style.color = '#10b981';
+          formMessage.textContent = 'Request sent! The dive center will contact you soon.';
+          document.getElementById('request-form').reset();
+          setTimeout(() => {
+            document.getElementById('request-modal').style.display = 'none';
+            formMessage.style.display = 'none';
+          }, 3000);
+        } else {
+          throw new Error(data.message || 'Failed to send request');
+        }
+      } catch (error) {
+        formMessage.style.display = 'block';
+        formMessage.style.background = 'rgba(239, 68, 68, 0.2)';
+        formMessage.style.color = '#ef4444';
+        formMessage.textContent = error.message || 'Error. Please try again.';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    });
+
+    // Show primary CTA button
+    const primaryCTABtn = document.getElementById('request-package-btn');
+    if (primaryCTABtn) {
+      primaryCTABtn.style.display = 'inline-flex';
+      primaryCTABtn.addEventListener('click', function() {
+        document.getElementById('request-modal').style.display = 'flex';
+      });
+    }
+
+    // Scroll navigation buttons
+    const scrollUpBtn = document.getElementById('scroll-up-btn');
+    const scrollDownBtn = document.getElementById('scroll-down-btn');
+    
+    if (scrollUpBtn) {
+      scrollUpBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+    
+    if (scrollDownBtn) {
+      scrollDownBtn.addEventListener('click', function() {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      });
+    }
+
+  } catch (error) {
+    console.error('Error loading dive center:', error);
+    document.getElementById('profile-container').innerHTML = `
+      <div style="text-align: center; padding: 60px 20px;">
+        <h2 style="color: #fff; margin-bottom: 20px;">Dive Center Not Found</h2>
+        <p style="color: #94a3b8; margin-bottom: 30px;">The dive center you're looking for doesn't exist or may have been removed.</p>
+        <a href="/dive-centers-list.html" class="btn primary">Browse Dive Centers</a>
+      </div>
+    `;
+  }
+});
+</script>
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

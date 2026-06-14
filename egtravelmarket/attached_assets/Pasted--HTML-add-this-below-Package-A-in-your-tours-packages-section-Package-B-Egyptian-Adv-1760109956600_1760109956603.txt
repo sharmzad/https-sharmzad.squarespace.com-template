@@ -1,0 +1,188 @@
+🧩 HTML (add this below Package A in your tours/packages section)
+<!-- ===== Package B: Egyptian Adventures ===== -->
+<section id="package-b" class="package-card">
+  <div class="package-image">
+    <img src="Gemini_Generated_Image_dudfnududfnududf.png" alt="Egyptian Adventures Package">
+  </div>
+
+  <div class="package-content">
+    <h2>3 Trips Package B – Egyptian Adventures</h2>
+    <p class="subtitle">Cairo Flight • Ras Mohamed • Quad Safari</p>
+
+    <div class="pricing-table">
+      <table>
+        <tr><th>Traveler</th><th>Pay Only</th><th>Instead Of</th><th>You Save</th></tr>
+        <tr><td>Adult</td><td>$280 USD</td><td>$315 USD</td><td>$35 USD</td></tr>
+        <tr><td>Child</td><td>$255 USD</td><td>$285 USD</td><td>$30 USD</td></tr>
+      </table>
+    </div>
+
+    <p class="desc">
+      Three unforgettable adventures—Cairo by Flight, Ras Mohamed National Park, and the Sinai Quad Safari—bundled in one
+      discounted package for travelers who want to explore Egypt’s history, sea, and desert in a single experience.
+    </p>
+
+    <button class="access-btn" onclick="openAccessPopup()">Ask for Access Code</button>
+
+    <div class="popup" id="accessPopup">
+      <div class="popup-content">
+        <span class="close" onclick="closeAccessPopup()">&times;</span>
+        <h3>Request Your Access Code</h3>
+        <p>
+          To unlock this special bundle rate, please contact our travel team.  
+          Once you receive your code, enter it at checkout to confirm your booking.
+        </p>
+        <a href="https://wa.me/00201023889959" class="whatsapp-link" target="_blank">
+          Chat via WhatsApp <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="details">
+      <h3>What's Included — History • Sea • Sand</h3>
+
+      <h4>✈️ Cairo by Flight – The Ancient Wonders</h4>
+      <ul>
+        <li>Giza Pyramids, Sphinx & Grand Egyptian Museum</li>
+        <li>Includes round-trip flights from Sharm, transfers, guide & lunch</li>
+        <li><b>Visa Note:</b> Requires Full Egyptian Entry Visa ($30 USD at Sharm Airport)</li>
+        <li><b>Program Highlights:</b> Pick-up 04:00 → Fly to Cairo → Pyramids & Sphinx → Lunch → Museum → Return 20:00</li>
+      </ul>
+
+      <h4>🌊 Ras Mohamed National Park – The Marine Paradise</h4>
+      <ul>
+        <li>Full-day yacht trip with snorkeling and diving stops</li>
+        <li>Includes White Island sandbar and lunch on board</li>
+      </ul>
+
+      <h4>🏜️ Sinai Quad Bike Safari – Adrenaline & Culture</h4>
+      <ul>
+        <li>Ride your own Quad across the Sinai dunes</li>
+        <li>Visit Echo Mountain & enjoy Bedouin tea in the desert camp</li>
+      </ul>
+
+      <div class="why">
+        <h4>✅ Why Book Package B?</h4>
+        <ul>
+          <li>Maximum Savings on 3 top excursions</li>
+          <li>One booking for a complete itinerary</li>
+          <li>Premium guides & modern vehicles for comfort</li>
+        </ul>
+      </div>
+
+      <button class="book-btn" onclick="openBookingForm('Egyptian Adventures Package')">Book Now</button>
+    </div>
+  </div>
+</section>
+
+🎨 CSS (append this to your main style.css)
+/* ===== Package B Styling ===== */
+.package-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  margin: 50px auto;
+  background: var(--card-bg, #fff);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.package-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.package-content {
+  padding: 25px 30px;
+  flex: 1 1 500px;
+}
+
+.package-content h2 {
+  color: #003366;
+  margin-bottom: 5px;
+}
+
+.package-content .subtitle {
+  color: #0077cc;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.pricing-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+.pricing-table th,
+.pricing-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+.pricing-table th {
+  background: #004c99;
+  color: #fff;
+}
+
+.access-btn, .book-btn {
+  background: #0077cc;
+  color: #fff;
+  border: none;
+  padding: 10px 25px;
+  margin-top: 15px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.access-btn:hover, .book-btn:hover {
+  background: #005fa3;
+}
+
+/* Popup */
+.popup {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  padding-top: 100px;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+.popup-content {
+  background: #fff;
+  margin: auto;
+  padding: 25px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+}
+.popup-content .close {
+  position: absolute;
+  top: 10px; right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+.whatsapp-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #25D366;
+  font-weight: 600;
+}
+
+⚙️ JS (add to app.js)
+// Popup logic for Access Code
+function openAccessPopup() {
+  document.getElementById("accessPopup").style.display = "block";
+}
+function closeAccessPopup() {
+  document.getElementById("accessPopup").style.display = "none";
+}
+
+// Placeholder booking function
+function openBookingForm(packageName) {
+  alert(`Booking form will open for: ${packageName}`);
+}

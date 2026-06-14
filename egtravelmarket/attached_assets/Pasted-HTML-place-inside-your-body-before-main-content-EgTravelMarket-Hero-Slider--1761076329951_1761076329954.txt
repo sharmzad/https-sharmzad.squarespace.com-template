@@ -1,0 +1,233 @@
+HTML (place inside your <body> before main content)
+<!-- ===== EgTravelMarket Hero Slider ===== -->
+<section id="hero-slider" class="slider">
+  <div class="slides">
+    <!-- 1️⃣ Book Your Trip -->
+    <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');">
+      <div class="slide-content">
+        <h1>Book Your Trip to Sharm El-Sheikh</h1>
+        <p>Find flights, hotels, charter packages, and travel insurance — all in one place.</p>
+        <a href="#flights" class="btn">Start Your Journey</a>
+      </div>
+    </div>
+
+    <!-- 2️⃣ Trip of the Week -->
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1549887534-3db1bd59dcca');">
+      <div class="slide-content">
+        <h1>Trip of the Week</h1>
+        <p>Discover our special weekly trip — handpicked with the best experiences in Egypt.</p>
+        <a href="#trip-week" class="btn">View This Week’s Trip</a>
+      </div>
+    </div>
+
+    <!-- 3️⃣ Package Tours -->
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1503264116251-35a269479413');">
+      <div class="slide-content">
+        <h1>Package Tours</h1>
+        <p>Save big with our exclusive Egypt packages — combining land & sea adventures.</p>
+        <a href="#package-tours" class="btn">Explore Packages</a>
+      </div>
+    </div>
+
+    <!-- 4️⃣ Diving Packages -->
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');">
+      <div class="slide-content">
+        <h1>Diving Packages</h1>
+        <p>Dive into the Red Sea — explore coral reefs, marine life, and underwater wonders.</p>
+        <a href="#diving" class="btn">Discover Diving Packages</a>
+      </div>
+    </div>
+
+    <!-- 5️⃣ Medical Services -->
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1584515933487-779824d29309');">
+      <div class="slide-content">
+        <h1>Medical Services</h1>
+        <p>24/7 medical support — clinics, pharmacies, doctor chat & insurance assistance.</p>
+        <a href="#medical" class="btn">Get Medical Support</a>
+      </div>
+    </div>
+
+    <!-- 6️⃣ Meet Guides, Divers & Mentors -->
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21');">
+      <div class="slide-content">
+        <h1>Meet Guides, Divers & Mentors</h1>
+        <p>Connect with certified guides, diving experts, and mentors ready to help you explore Egypt.</p>
+        <div class="multi-btns">
+          <a href="/guides.html" class="btn">Browse Guides</a>
+          <a href="/divers.html" class="btn">Browse Divers</a>
+          <a href="/mentor.html" class="btn">Meet Mentors</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <span class="prev">&#10094;</span>
+    <span class="next">&#10095;</span>
+  </div>
+</section>
+
+🎨 CSS (add to your styles.css)
+/* ===== Hero Slider Styling ===== */
+#hero-slider {
+  position: relative;
+  width: 100%;
+  height: 90vh;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+.slides {
+  position: relative;
+  height: 100%;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6));
+  z-index: 1;
+}
+
+.slide-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  max-width: 700px;
+  padding: 20px;
+}
+
+.slide-content h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+}
+
+.slide-content p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  display: inline-block;
+  background: #0077ff;
+  color: #fff;
+  padding: 12px 25px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin: 5px;
+}
+
+.btn:hover {
+  background: #005cd1;
+  box-shadow: 0 0 10px rgba(0,123,255,0.6);
+}
+
+.multi-btns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.controls {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  z-index: 3;
+  padding: 0 20px;
+}
+
+.controls span {
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.3s ease;
+}
+
+.controls span:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .slide-content h1 {
+    font-size: 1.8rem;
+  }
+  .slide-content p {
+    font-size: 1rem;
+  }
+  .btn {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+  }
+}
+
+⚙️ JS (add to your script.js or before </body>)
+// ===== Hero Slider Logic =====
+let currentSlide = 0;
+const slides = document.querySelectorAll("#hero-slider .slide");
+const totalSlides = slides.length;
+const next = document.querySelector(".next");
+const prev = document.querySelector(".prev");
+
+function showSlide(index) {
+  slides.forEach(slide => slide.classList.remove("active"));
+  slides[index].classList.add("active");
+}
+
+next.addEventListener("click", () => {
+  currentSlide = (currentSlide + 1) % totalSlides;
+  showSlide(currentSlide);
+});
+
+prev.addEventListener("click", () => {
+  currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+  showSlide(currentSlide);
+});
+
+// Auto slide
+setInterval(() => {
+  currentSlide = (currentSlide + 1) % totalSlides;
+  showSlide(currentSlide);
+}, 5000);
+
+
+✅ Instructions:
+
+Remove your old static hero section.
+
+Paste this HTML where it was.
+
+Add the CSS to your main stylesheet.
+
+Add the JS at the bottom of your page.
+
+Test on Replit — you’ll see all 6 slides automatically changing every 5s with fade transitions and clickable buttons 🎞️

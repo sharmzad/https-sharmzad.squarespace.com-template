@@ -1,0 +1,265 @@
+trip-of-the-week.html
+
+Replace everything inside your file with this ↓
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trip of the Week | EgTravelMarket</title>
+<meta name="description" content="Cairo by Flight — Trip of the Week with free SIM and Turkish Bath bonus.">
+<link rel="icon" href="/favicon.ico" />
+<link rel="stylesheet" href="styles.css">
+
+<style>
+:root{
+  --blue-1:#0ea5e9; --blue-2:#2563eb; --ink:#0b1220; --card:#ffffff; --muted:#6b7280; --ring: rgba(37,99,235,.25);
+}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:#f6f8fb}
+.header{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid #eef2f7;padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.header .brand{display:flex;align-items:center;gap:10px;font-weight:800}
+.header .brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--blue-1),var(--blue-2))}
+.header a{color:#1e3a8a;text-decoration:none;font-weight:700}
+.hero{background:linear-gradient(135deg,var(--blue-1),var(--blue-2));color:#fff;padding:clamp(28px,4vw,56px) 16px}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr}}
+.badge{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);color:#fff;padding:6px 12px;border-radius:999px;font-size:.92rem}
+.hero h1{margin:10px 0 8px;font-size:clamp(1.8rem,4vw,2.6rem)}
+.hero p{margin:0 0 12px;opacity:.97}
+.hero-img{width:100%;aspect-ratio:16/10;border-radius:16px;object-fit:cover;box-shadow:0 12px 30px rgba(0,0,0,.22)}
+.hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.chip{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);padding:6px 10px;border-radius:10px;font-weight:700}
+.container{max-width:1100px;margin:clamp(18px,3vw,34px) auto;padding:0 16px;display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
+@media(max-width:980px){.container{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid #e9eef5;border-radius:16px;padding:18px;box-shadow:0 10px 22px rgba(0,0,0,.06)}
+.table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:12px;border:1px solid #e5ecf7}
+.table thead th{background:#f1f5ff;color:#1e3a8a;text-align:left;padding:10px;border-bottom:1px solid #e5ecf7}
+.table tbody td{padding:10px;border-bottom:1px solid #eef3fb;vertical-align:top}
+.incl{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.incl .pill{background:#eef6ff;border:1px solid #d9e7ff;color:#1e3a8a;padding:6px 10px;border-radius:999px;font-size:.9rem}
+.footer{padding:30px 16px;color:#475569;text-align:center}
+.footer a{color:#1e3a8a;font-weight:700;text-decoration:none}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a href="/" class="brand"><span class="dot"></span> EgTravelMarket</a>
+  <nav><a href="/">Home</a></nav>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <span class="badge">⭐ Trip of the Week</span>
+      <h1>Cairo by Flight</h1>
+      <p>This week only: Free SIM (20GB) + Turkish Bath 15 min.</p>
+      <div class="hero-meta">
+        <span class="chip">Main Day: Tuesday</span>
+        <span class="chip">Air Trip</span>
+      </div>
+    </div>
+    <div>
+      <img class="hero-img" src="images/cairo-by-flight-trip.webp" alt="Cairo by Flight">
+    </div>
+  </div>
+</section>
+
+<main class="container">
+  <article class="card">
+    <h2>About & Itinerary</h2>
+    <p>
+      Fly from Sharm El-Sheikh to Cairo for a full-day guided tour including the Great Pyramids, the Sphinx, and the Grand Egyptian Museum area. Enjoy a buffet lunch by the Nile and return to Sharm in the evening. 
+      The trip also includes a free 20 GB SIM card and a 15-minute Turkish Bath session later in the week.
+    </p>
+    <table class="table"><thead><tr><th>Day</th><th>Activity</th><th>Notes</th></tr></thead>
+      <tbody id="itineraryBody"></tbody></table>
+    <div class="incl" id="includes"></div>
+  </article>
+
+  <aside class="card">
+    <h3>Book the Trip of the Week</h3>
+
+    <h3>Available Trip Dates</h3>
+    <p class="small" style="margin-bottom:10px;color:#475569;">
+      Below you’ll find all upcoming available departures for the “Trip of the Week.”  
+      Seats are limited — once a date is full, it disappears from the list.  
+      After choosing your preferred date, fill in your details and confirm your booking online.  
+      (Pickup 04:00–05:00 AM from your hotel. Return ≈ 21:00.)
+    </p>
+    <select id="tripDate" required style="width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;margin-bottom:15px;"></select>
+
+    <form id="towForm" novalidate>
+      <div class="field">
+        <label>Name</label><input id="name" required>
+      </div>
+      <div class="field">
+        <label>WhatsApp Number</label><input id="phone" required>
+      </div>
+      <div class="field">
+        <label>Email</label><input id="email" type="email" required>
+      </div>
+      <div class="field">
+        <label>Hotel Name</label><input id="hotelName">
+      </div>
+      <div class="field">
+        <label>Room Number</label><input id="roomNumber">
+      </div>
+      <div class="field">
+        <label>Adults</label><input id="adults" type="number" min="1" value="1">
+      </div>
+      <div class="field">
+        <label>Children</label><input id="children" type="number" min="0" value="0">
+      </div>
+      <button id="payBtn" class="btn" type="button">Proceed to Payment</button>
+      <div id="summaryArea" style="margin-top:10px;"></div>
+    </form>
+  </aside>
+</main>
+
+<footer class="footer">© <span id="year"></span> EgTravelMarket — <a href="/">Home</a></footer>
+<script src="trip-of-week-script.js"></script>
+</body>
+</html>
+
+🟨 2️⃣ trip-of-week-script.js
+
+Create / replace this file beside the HTML:
+
+// --- CONFIG ---
+const WEEKLY = {
+  tripName: "Cairo by Flight",
+  mainDay: "Tuesday",
+  priceAdult: 180,
+  priceChild: 160,
+  itinerary: [
+    { day:"Tuesday", title:"Transfer from Hotel to Sharm Airport", notes:"Pick-up 04:00–05:00 AM.", type:"main"},
+    { day:"Tuesday", title:"Flight to Cairo", notes:"1-hour flight / Meet guide on arrival.", type:"main"},
+    { day:"Tuesday", title:"Pyramids & Sphinx Tour", notes:"Guided visit + photo stops.", type:"main"},
+    { day:"Tuesday", title:"Lunch by the Nile", notes:"Buffet meal with river view.", type:"main"},
+    { day:"Tuesday", title:"Egyptian Museum / Grand Museum", notes:"Explore ancient treasures.", type:"main"},
+    { day:"Tuesday", title:"Return Flight to Sharm", notes:"Evening flight + hotel transfer.", type:"main"},
+    { day:"Tuesday", title:"SIM Card 20 GB (Free Bonus)", notes:"Delivered Day 1.", type:"bonus"},
+    { day:"Thursday", title:"Turkish Bath 15 min (Free Bonus)", notes:"Relaxation session.", type:"bonus"}
+  ],
+  includes: [
+    "Round-trip Flights (Sharm ↔ Cairo)",
+    "Air-conditioned Transfers",
+    "Lunch by the Nile",
+    "Entrance Fees",
+    "Professional Guide",
+    "SIM Card 20 GB (Bonus)",
+    "15-min Turkish Bath (Bonus)"
+  ]
+};
+
+// --- UTIL ---
+const $ = s => document.querySelector(s);
+
+// --- LOAD DATA ON START ---
+document.addEventListener("DOMContentLoaded", () => {
+  fillItinerary();
+  fillIncludes();
+  loadAvailableDates();
+  $("#year").textContent = new Date().getFullYear();
+  $("#payBtn").addEventListener("click", proceedToPayment);
+});
+
+// itinerary table
+function fillItinerary() {
+  const tb = $("#itineraryBody");
+  tb.innerHTML = "";
+  WEEKLY.itinerary.forEach(i => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${i.day}</td><td>${i.title}</td><td>${i.notes}</td>`;
+    tb.appendChild(tr);
+  });
+}
+
+// includes pills
+function fillIncludes() {
+  const inc = $("#includes");
+  WEEKLY.includes.forEach(t => {
+    const s = document.createElement("span");
+    s.className = "pill";
+    s.textContent = t;
+    inc.appendChild(s);
+  });
+}
+
+// --- LOAD AVAILABLE DATES FROM JSON ---
+async function loadAvailableDates() {
+  try {
+    const res = await fetch("/data/trip-availability.json");
+    const data = await res.json();
+    const dates = data.trip_of_week;
+    const sel = $("#tripDate");
+    sel.innerHTML = "";
+    dates.forEach(d => {
+      if (d.seats_left > 0) {
+        const dt = new Date(d.date);
+        const opt = document.createElement("option");
+        opt.value = d.date;
+        opt.textContent =
+          `${dt.toLocaleDateString("en-GB", {weekday:"long",day:"numeric",month:"short",year:"numeric"})} — ${d.seats_left} seats left`;
+        sel.appendChild(opt);
+      }
+    });
+    if (!sel.options.length) {
+      const o = document.createElement("option");
+      o.textContent = "No available trips this week";
+      o.disabled = true;
+      sel.appendChild(o);
+    }
+  } catch (err) {
+    console.error("Error loading dates", err);
+  }
+}
+
+// --- PAYMENT / SUMMARY ---
+function proceedToPayment() {
+  const name = $("#name").value.trim();
+  const phone = $("#phone").value.trim();
+  const date = $("#tripDate").value;
+  const A = +$("#adults").value;
+  const C = +$("#children").value;
+  if (!name || !phone) return alert("Please fill your name and WhatsApp number.");
+  if (!date) return alert("Please select a trip date.");
+
+  const total = A * WEEKLY.priceAdult + C * WEEKLY.priceChild;
+  $("#summaryArea").innerHTML = `
+    <div style="margin-top:10px;padding:10px;background:#f1f5ff;border-radius:8px;">
+      <strong>Summary</strong><br>
+      Trip: ${WEEKLY.tripName}<br>
+      Date: ${new Date(date).toLocaleDateString()}<br>
+      Adults: ${A} × $${WEEKLY.priceAdult}<br>
+      Children: ${C} × $${WEEKLY.priceChild}<br>
+      <strong>Total: $${total}</strong><br><br>
+      (Payment gateway integration coming soon)
+    </div>`;
+}
+
+🟩 3️⃣ /data/trip-availability.json
+
+Make sure you have this file (create folder data if needed):
+
+{
+  "trip_of_week": [
+    { "date": "2025-11-12", "seats_left": 20, "price_adult": 180, "price_child": 160 },
+    { "date": "2025-11-19", "seats_left": 15, "price_adult": 180, "price_child": 160 },
+    { "date": "2025-11-26", "seats_left": 0, "price_adult": 180, "price_child": 160 }
+  ]
+}
+
+✅ RESULT
+
+When you open the page:
+
+The dropdown auto-shows available trip dates (from your JSON).
+
+Sold-out dates vanish automatically.
+
+You can update the JSON anytime — the page updates instantly.
+
+The guest selects a date, enters details, sees total price, and is ready for payment integration later.

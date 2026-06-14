@@ -1,0 +1,165 @@
+Subject: Travel Request View Page – Missing Actions, UX & Control Improvements
+
+Hello,
+
+After reviewing the Traveler Request View page (where the traveler sees offers and makes a decision), we identified several critical missing elements that must be added to make the flow clear, professional, and actionable.
+
+This applies to all offers (guides, agencies, dive centers, mentors, admin offers).
+
+1️⃣ Missing Accept / Reject Actions (CRITICAL)
+Current issue:
+
+When the traveler sees offers, the status shows:
+
+“Awaiting your decision”
+
+“Accepted”
+
+❌ But there are NO ACTION BUTTONS to:
+
+Accept an offer
+
+Reject an offer
+
+Required actions per offer card:
+
+Accept Offer (primary button)
+
+Reject Offer (secondary button)
+
+Once accepted:
+
+Other offers must be locked/disabled
+
+Status updates clearly to Accepted
+
+Request moves to Awaiting Payment (handled later)
+
+2️⃣ No Way to View Provider Profiles (TRUST ISSUE)
+Current issue:
+
+Traveler sees offer cards but cannot inspect the provider.
+
+This is dangerous for trust and conversion.
+
+Required:
+
+Each offer card must include:
+
+Provider name (clickable)
+
+Provider type badge (Guide / Agency / Dive Center / Mentor / Admin)
+
+Verification badge (if verified)
+
+Link to full public profile
+
+Example:
+
+“View Profile”
+
+3️⃣ Offer Card Content Needs Clarification (UX)
+
+Each offer card should clearly show:
+
+Provider Name + Type
+
+Offer Price (USD)
+
+Provider Message
+
+Status badge:
+
+Awaiting your decision
+
+Accepted
+
+Rejected
+
+Right now the layout feels empty and unclear.
+
+4️⃣ Traveler Guidance Text (PSYCHOLOGY)
+
+Add a short guidance text at the top of the offers section:
+
+“Compare offers from verified local providers.
+Review profiles, read messages carefully, and select the best option for your trip.”
+
+This reduces hesitation and increases acceptance.
+
+5️⃣ Reject Action Behavior
+
+When traveler clicks Reject Offer:
+
+Offer status becomes rejected
+
+Provider sees it as rejected in My Offers
+
+Offer disappears or becomes visually inactive for traveler
+
+6️⃣ Accepted Offer Highlighting (VERY IMPORTANT)
+
+When traveler accepts an offer:
+
+Accepted offer card must be:
+
+Highlighted (green border or background)
+
+Show label: ✅ Accepted
+
+Other offers:
+
+Greyed out
+
+Label: Not selected
+
+7️⃣ No Direct Contact Outside Platform
+
+Ensure:
+
+No WhatsApp / email / phone shown here
+
+All communication stays inside EgTravelMarket until payment
+
+This is required for platform control and commission protection.
+
+8️⃣ Scope & Constraints
+
+✔ Apply changes to:
+
+travel-request-view.html
+✔ Applies to:
+
+Guides
+
+Agencies
+
+Dive Centers
+
+Mentors
+
+Admin offers
+
+🚫 Do NOT:
+
+Change database schema
+
+Change business logic
+
+Add payment flow yet (handled separately)
+
+This is UI + interaction completeness, not a redesign.
+
+🎯 Goal
+
+Make the Traveler Request View page:
+
+Clear
+
+Trust-driven
+
+Actionable
+
+Marketplace-ready
+
+Thank you.

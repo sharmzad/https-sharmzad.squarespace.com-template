@@ -1,0 +1,118 @@
+URGENT – GUIDE SIGNUP LEGAL & VERIFICATION UPDATE (FULL CYCLE)
+
+Please update the Guide Signup flow (frontend + backend + database) to enforce full legal verification for licensed tour guides.
+
+========================
+1) FRONTEND – guide-signup.html
+========================
+
+A) LICENSE FIELDS (ALL REQUIRED – NOT OPTIONAL)
+- Tour Guide License Number (TEXT, REQUIRED) → remove optional label
+- License Issue Date (DATE, REQUIRED)
+- License Expiry Date (DATE, REQUIRED)
+
+B) LICENSE DOCUMENT UPLOADS (ALL REQUIRED)
+Add FOUR mandatory file uploads (PDF / JPG / PNG only):
+
+1. Ministry of Tourism License – FRONT
+2. Ministry of Tourism License – BACK
+3. Syndicate License – FRONT
+4. Syndicate License – BACK
+
+Form submission must be BLOCKED if any of the above files are missing.
+
+C) REQUIRED CHECKBOXES (FORM MUST NOT SUBMIT WITHOUT ALL CHECKED)
+
+Add a new section before the submit button titled:
+"Legal Confirmation & Agreement"
+
+Add THREE required checkboxes:
+
+1) terms_accepted (REQUIRED)
+Text:
+"I agree to the Tour Guide Terms, EgTravelMarket Platform Terms, and the commission & payment policy."
+
+2) license_confirmed (REQUIRED)
+Text:
+"I confirm that all license information and documents provided are accurate and valid."
+
+3) verification_consent (REQUIRED)
+Text:
+"I consent to EgTravelMarket verifying my license information with relevant authorities if required."
+
+If any checkbox is unchecked → block submit.
+
+D) INFO NOTE (DISPLAY ON SIGNUP PAGE)
+Add note text under license section:
+
+"License documents are required for verification purposes only.
+They will not be publicly visible.
+Your guide profile will be activated only after review and approval."
+
+========================
+2) BACKEND – GUIDE SIGNUP VALIDATION
+========================
+
+On guide signup API:
+
+REJECT signup if:
+- license_number is empty
+- license_issue_date is missing
+- license_expiry_date is missing OR <= today
+- Any of the 4 license document URLs is missing
+- terms_accepted = false
+- license_confirmed = false
+- verification_consent = false
+
+Return clear error messages, e.g.:
+"All license details and confirmations are required."
+"License expired. Please upload a valid license."
+
+On successful signup:
+- Set verification_status = 'pending'
+- Guide profile MUST NOT be publicly visible until verified
+
+========================
+3) DATABASE – PostgreSQL MIGRATION
+========================
+
+Add the following columns to guide_profiles (or equivalent table):
+
+license_number TEXT NOT NULL,
+license_issue_date DATE NOT NULL,
+license_expiry_date DATE NOT NULL,
+
+ministry_license_front_url TEXT NOT NULL,
+ministry_license_back_url TEXT NOT NULL,
+syndicate_license_front_url TEXT NOT NULL,
+syndicate_license_back_url TEXT NOT NULL,
+
+terms_accepted BOOLEAN NOT NULL DEFAULT FALSE,
+license_confirmed BOOLEAN NOT NULL DEFAULT FALSE,
+verification_consent BOOLEAN NOT NULL DEFAULT FALSE,
+terms_accepted_at TIMESTAMP NULL,
+
+verification_status TEXT NOT NULL DEFAULT 'pending',  -- pending / verified / rejected
+verified_at TIMESTAMP NULL,
+verification_notes TEXT NULL
+
+========================
+4) ADMIN / VISIBILITY RULE
+========================
+
+- Guides with verification_status = 'pending' or 'rejected'
+  → MUST NOT appear on guides.html or public guide profiles.
+
+- Only guides with verification_status = 'verified'
+  → Visible publicly with "Licensed & Verified" badge.
+
+========================
+GOAL
+========================
+
+This update ensures:
+- Legal compliance for licensed tour guides
+- Explicit consent & terms acceptance
+- Full document verification (Ministry + Syndicate, front & back)
+- Clear separation between pending and verified guides
+- Platform protection as a marketplace facilitator only

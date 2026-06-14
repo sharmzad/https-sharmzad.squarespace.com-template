@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Be Your Local Agent | EgTravelMarket</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="images/favicon.png" />
+  <script src="https://kit.fontawesome.com/a2d9d5a56a.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      background: linear-gradient(180deg, #002b50 0%, #004f80 100%);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.7;
+    }
+    header {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 0.3rem;
+    }
+    .hero {
+      position: relative;
+      text-align: center;
+      background: url('images/be-your-local-agent.png') center/cover no-repeat;
+      color: white;
+      padding: 180px 20px;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+    }
+    .hero h1, .hero p {
+      position: relative;
+      z-index: 2;
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+    h2 {
+      color: #ffcc00;
+      font-size: 1.8rem;
+      margin-top: 40px;
+    }
+    .highlight {
+      color: #00d0ff;
+      font-weight: 600;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    ul li::before {
+      content: "✓";
+      color: #00d0ff;
+      margin-right: 10px;
+    }
+    form {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+      max-width: 600px;
+      margin: 40px auto;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 8px;
+    }
+    button {
+      background: #ffcc00;
+      color: #003366;
+      font-weight: bold;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #ffd633;
+    }
+    /* WhatsApp Floating Button */
+    .whatsapp-chat {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #25D366;
+      color: white;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      z-index: 999;
+      transition: transform 0.3s;
+    }
+    .whatsapp-chat:hover {
+      transform: scale(1.1);
+      background: #20b85d;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Hero Banner -->
+  <section class="hero">
+    <h1>Be Your Local Agent in Sharm El Sheikh</h1>
+    <p class="text-xl">Your Trusted Eyes, Ears & Hands on the Ground</p>
+  </section>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h2>25+ Years of Combined Local Expertise</h2>
+    <p>We are a team of experienced tour operators with deep knowledge across German, Scandinavian, Italian, Russian, British, and Swiss markets. With over 25 years of combined expertise in Sharm El Sheikh, we don’t just know the destination — <strong>we ARE the destination.</strong></p>
+
+    <h2>Why Partner With Us?</h2>
+    <ul>
+      <li><strong>Deep Multinational Market Knowledge:</strong> We understand European markets and speak your clients’ languages — literally and culturally.</li>
+      <li><strong>Quarter-Century of Local Expertise:</strong> We know which hotels truly deliver 5-star service, which dive centers are safest, and how to navigate local systems.</li>
+      <li><strong>Your Reputation is Safe in Our Hands:</strong> We act as your team on the ground, maintaining your brand standards.</li>
+      <li><strong>Cost-Effective Scalability:</strong> Pay only for services used — no fixed overheads, no risks.</li>
+    </ul>
+
+    <h2>Our Comprehensive Services</h2>
+    <ul>
+      <li>Airport Meet & Assist</li>
+      <li>Hotel Check-In/Check-Out Verification</li>
+      <li>Hotel Booking & Inspection</li>
+      <li>Tour Planning & Reservations</li>
+      <li>Medical Assistance & Coordination</li>
+      <li>Guest Relations & Concierge</li>
+      <li>Real-Time Reporting via WhatsApp & Email</li>
+    </ul>
+
+    <h2>What Makes Us Different</h2>
+    <ul>
+      <li>25+ years of experience in Sharm</li>
+      <li>Multinational team across European markets</li>
+      <li>Established partnerships with all key hotels & authorities</li>
+      <li>White-label representation: your guests never know we’re not part of your company</li>
+      <li>24/7 availability, transparent pricing, and no minimums</li>
+    </ul>
+
+    <h2>Who We Serve</h2>
+    <p>International Tour Operators, Travel Agencies, Online Travel Platforms, Corporate Travel Managers, and DMCs seeking a trusted on-ground partner in Sharm El Sheikh.</p>
+
+    <h2>Start With One Guest</h2>
+    <p>We understand trust is earned. Send us one client — experience our quality firsthand. Once confident, scale at your own pace. No long-term contracts required.</p>
+
+    <h2>Contact Us</h2>
+    <form onsubmit="event.preventDefault(); alert('Thank you! Our DMC team will contact you shortly.');">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <input type="text" placeholder="Your Company Name" required>
+      <textarea rows="5" placeholder="Tell us your needs or partnership goals"></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+  <!-- WhatsApp Chat -->
+  <a href="https://wa.me/201227903329" class="whatsapp-chat" target="_blank" title="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+</body>
+</html>

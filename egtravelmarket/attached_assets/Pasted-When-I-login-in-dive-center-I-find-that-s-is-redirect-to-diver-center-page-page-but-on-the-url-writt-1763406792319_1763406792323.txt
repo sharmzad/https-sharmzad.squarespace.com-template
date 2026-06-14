@@ -1,0 +1,33 @@
+When I login in dive center I find that’s is redirect to diver center page page but on the url written travel agency also written on the top 
+https://ad07b034-5104-4742-ab1b-5fd6a4c4c387-00-3jcgxvcz1yndv.kirk.replit.dev/agency-dashboard.html
+and I want be sure when you come to company profile or  edit profile or post new job need the form is suitable to dive center and not to  travel agency 
+
+when you login as a divers I need the profile and edit profile suitable to diver and not to the guide 
+also when you click on tab job application . and I don’t need this conten appear for guides.divers,mentores ⚠️ Unable to load your applications
+This mightif they  be a temporary connection issue. Please refresh the page or try again in a moment.
+Need proper content to let more understanding
+expert-dashboard-enhanced.html?type=diver:545 Current user data for URL: Object
+expert-dashboard-enhanced.html?type=diver:550 Slug: undefined UserType: diver
+/api/applications/my-applications:1  Failed to load resource: the server responded with a status of 403 (Forbidden)
+expert-dashboard-enhanced.html?type=diver:752 Error loading applications: Error: Failed to load applications
+    at loadApplications (expert-dashboard-enhanced.html?type=diver:676:13)
+loadApplications @ expert-dashboard-enhanced.html?type=diver:752
+
+when dive center post a job and waiting for admin approval I find its shown on dive center dashboard and same time I found on dashboard of travel agency ( how come .it suppose to be different catorgries and different name ) and when I went to admin dashboard to approve the job of dive center I didn’t find any pending job api/admin/analytics:1  Failed to load resource: the server responded with a status of 403 (Forbidden)
+admin-dashboard.html:372 Error loading analytics: Error: Failed to load analytics
+    at loadAnalytics (admin-dashboard.html:359:13)
+loadAnalytics @ admin-dashboard.html:372
+api/admin/pending-jobs:1  Failed to load resource: the server responded with a status of 403 (Forbidden)
+admin-dashboard.html:476 Error loading jobs: Error: Failed to load pending jobs
+    at loadPendingJobs (admin-dashboard.html:438:13)
+loadPendingJobs @ admin-dashboard.html:476
+api/admin/pending-signups:1  Failed to load resource: the server responded with a status of 403 (Forbidden)
+admin-dashboard.html:418 Error loading signups: Error: Failed to load pending signups
+    at loadPendingSignups (admin-dashboard.html:383:13)
+loadPendingSignups @ admin-dashboard.html:418
+api/admin/pending-jobs:1  Failed to load resource: the server responded with a status of 403 (Forbidden)
+admin-dashboard.html:476 Error loading jobs: Error: Failed to load pending jobs
+    at loadPendingJobs (admin-dashboard.html:438:13)
+loadPendingJobs @ admin-dashboard.html:476
+
+

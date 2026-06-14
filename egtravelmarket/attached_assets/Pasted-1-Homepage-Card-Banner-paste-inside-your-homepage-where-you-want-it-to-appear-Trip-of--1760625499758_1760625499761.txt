@@ -1,0 +1,519 @@
+1) Homepage – Card/Banner (paste inside your homepage where you want it to appear)
+<!-- === Trip of the Week - Homepage Card/Banner === -->
+<section class="tow-home-card">
+  <div class="tow-wrap">
+    <div class="tow-badge">⭐ Trip of the Week</div>
+    <h2 class="tow-title">Cairo by Flight</h2>
+    <p class="tow-sub">This week only: Free Turkish Bath + Local SIM Card</p>
+    <ul class="tow-pills">
+      <li>Thursday Departure</li>
+      <li>Save More This Week</li>
+      <li>Limited Spots</li>
+    </ul>
+    <a class="tow-btn" href="/trip-of-the-week.html" aria-label="Book the Trip of the Week">Book Now</a>
+  </div>
+</section>
+
+<style>
+/* Minimal, self-contained styling (keeps your site theme intact) */
+.tow-home-card{
+  margin: clamp(16px,2vw,32px) auto;
+  border-radius: 20px;
+  background: linear-gradient(135deg,#0ea5e9 0%, #2563eb 100%);
+  color:#fff;
+  padding: clamp(20px,3vw,36px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,.15);
+}
+.tow-home-card:after{
+  content:"";
+  position:absolute; inset:-20% -10% auto auto;
+  width:45%; aspect-ratio:1/1;
+  background: radial-gradient(closest-side, rgba(255,255,255,.18), rgba(255,255,255,0) 60%);
+  filter: blur(4px);
+}
+.tow-wrap{max-width:1100px; margin:0 auto;}
+.tow-badge{
+  display:inline-block; background: rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.3);
+  padding:6px 12px; border-radius:999px; font-size:.9rem; backdrop-filter: blur(6px);
+}
+.tow-title{margin:10px 0 6px; font-size: clamp(1.4rem,3.4vw,2.2rem); font-weight:800; letter-spacing:.2px;}
+.tow-sub{opacity:.95; font-size: clamp(1rem, 2.2vw, 1.15rem); margin-bottom: 10px;}
+.tow-pills{display:flex; gap:10px; flex-wrap:wrap; margin:12px 0 18px; padding:0; list-style:none;}
+.tow-pills li{
+  background: rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.3);
+  padding:6px 10px; border-radius:999px; font-size:.9rem;
+}
+.tow-btn{
+  display:inline-block; background:#fff; color:#1e3a8a; font-weight:700; text-decoration:none;
+  padding:12px 18px; border-radius:12px; transition:.2s transform ease, .2s box-shadow ease;
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+}
+.tow-btn:hover{transform: translateY(-1px); box-shadow: 0 10px 20px rgba(0,0,0,.18);}
+</style>
+<!-- === /Trip of the Week - Homepage Card/Banner === -->
+
+2) trip-of-the-week.html (create this new page)
+
+Paste this as a new file trip-of-the-week.html in your Replit project root.
+It’s self-contained (HTML+CSS+JS inside) and matches your blue theme.
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trip of the Week | EgyTravelMarket</title>
+<meta name="description" content="This week's featured trip with exclusive bonuses. Book now and save.">
+<link rel="icon" href="/favicon.ico" />
+<style>
+:root{
+  --blue-1:#0ea5e9; /* light cyan-blue */
+  --blue-2:#2563eb; /* deep royal blue */
+  --ink:#0b1220;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --ring: rgba(37,99,235,.25);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  color: var(--ink); background: #f6f8fb;
+}
+
+/* Header placeholder (use your site header if you include with template) */
+.header{
+  position:sticky; top:0; z-index:50;
+  background:#fff; border-bottom:1px solid #eef2f7;
+  padding:10px 16px; display:flex; align-items:center; gap:10px; justify-content:space-between;
+}
+.header .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px}
+.header .brand .dot{width:10px; height:10px; border-radius:50%; background: linear-gradient(135deg,var(--blue-1),var(--blue-2)); display:inline-block}
+.header a{color:#1e3a8a; text-decoration:none; font-weight:700}
+
+/* Hero */
+.hero{
+  background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+  color:#fff; padding: clamp(28px, 4vw, 56px) 16px;
+}
+.hero-inner{max-width:1100px; margin:0 auto; display:grid; grid-template-columns: 1.2fr .8fr; gap:24px; align-items:center}
+@media (max-width: 900px){ .hero-inner{grid-template-columns: 1fr} }
+.hero h1{margin:0 0 8px; font-size: clamp(1.8rem, 4vw, 2.6rem)}
+.hero p{margin:0 0 14px; opacity:.95}
+.badges{display:flex; flex-wrap:wrap; gap:10px; margin-top:8px}
+.badge{
+  background: rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.35); color:#fff;
+  padding:6px 12px; border-radius:999px; font-size:.92rem; backdrop-filter: blur(6px);
+}
+.hero-card{
+  background: rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25);
+  padding:14px; border-radius:16px;
+}
+.hero-img{
+  width:100%; aspect-ratio: 16/10; border-radius:16px; object-fit: cover; display:block;
+  box-shadow: 0 12px 30px rgba(0,0,0,.22)
+}
+
+/* Main container */
+.container{max-width:1100px; margin: clamp(18px, 3vw, 32px) auto; padding: 0 16px; display:grid; grid-template-columns: 1.2fr .8fr; gap: 24px}
+@media (max-width: 980px){ .container{grid-template-columns: 1fr} }
+
+/* Info card */
+.card{
+  background: var(--card); border:1px solid #e9eef5; border-radius:16px; padding:18px;
+  box-shadow: 0 10px 22px rgba(0,0,0,.06);
+}
+.card h2{margin: 0 0 10px; font-size: 1.3rem}
+.meta{display:flex; flex-wrap:wrap; gap:12px; color:#374151; font-size:.95rem; margin-bottom: 10px}
+.meta .dot{width:6px; height:6px; background:var(--blue-2); border-radius:50%; display:inline-block; margin: 0 6px}
+.features{display:flex; flex-wrap:wrap; gap:10px; margin: 10px 0 6px; padding:0; list-style:none}
+.features li{
+  background: #f1f5ff; color:#1e3a8a; border:1px solid #d9e4ff; padding:6px 10px; border-radius:999px; font-size:.92rem;
+}
+
+/* Form */
+.form{background: var(--card); border:1px solid #e9eef5; border-radius:16px; padding:18px; box-shadow: 0 10px 22px rgba(0,0,0,.06)}
+.form h3{margin:0 0 12px; font-size:1.2rem}
+.row{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
+@media (max-width:700px){ .row{grid-template-columns: 1fr} }
+.field{display:flex; flex-direction:column; gap:6px; margin-bottom: 12px}
+label{font-weight:700; font-size:.95rem}
+input, select, textarea{
+  padding: 11px 12px; border:1px solid #dbe3ee; border-radius:10px; font-size: 1rem; outline:none; background:#fff;
+  transition: box-shadow .2s ease, border-color .2s ease;
+}
+input:focus, select:focus, textarea:focus{border-color: var(--blue-2); box-shadow: 0 0 0 4px var(--ring)}
+textarea{min-height: 110px; resize: vertical}
+
+/* Inline price & total */
+.inline{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+.price-chip{
+  background:#0f172a; color:#fff; padding:8px 12px; border-radius:10px; font-weight:800; letter-spacing:.3px; font-size:.98rem
+}
+.total{
+  margin-left:auto; font-weight:900; color:#0b1220; font-size:1.05rem
+}
+
+/* Buttons */
+.actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:8px}
+.btn{
+  background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+  color:#fff; border:none; border-radius:12px; padding:12px 16px; font-weight:800; cursor:pointer;
+  box-shadow: 0 8px 18px rgba(37,99,235,.35); transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn:hover{transform: translateY(-1px); box-shadow: 0 12px 24px rgba(37,99,235,.4)}
+.btn-ghost{
+  background: #f1f5ff; color:#1e3a8a; border:1px solid #d9e4ff; border-radius:12px; padding:12px 16px; font-weight:800; cursor:pointer
+}
+
+/* Popup */
+.popup{
+  position: fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:100;
+  background: rgba(10, 20, 40, .55); backdrop-filter: blur(3px);
+}
+.popup.open{display:flex}
+.popup-card{
+  background:#fff; border-radius:16px; width:min(560px, 92vw); padding:18px; border:1px solid #e8eef6;
+  animation: pop .18s ease;
+}
+@keyframes pop{from{transform:scale(.96); opacity:0} to{transform:scale(1); opacity:1}}
+.popup h3{margin:0 0 6px}
+.popup p{margin:0 0 14px; color:#374151}
+.popup .ok{display:inline-block; background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+  color:#fff; text-decoration:none; padding:10px 14px; border-radius:10px; font-weight:800}
+
+/* Footer placeholder */
+.footer{padding:30px 16px; color:#475569; text-align:center}
+.footer a{color:#1e3a8a; font-weight:700; text-decoration:none}
+</style>
+</head>
+<body>
+
+<!-- Sticky header (replace with your site header include if you have it) -->
+<header class="header">
+  <div class="brand"><span class="dot"></span> EgyTravelMarket</div>
+  <nav><a href="/">Home</a></nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="badge">⭐ Trip of the Week</div>
+      <h1 id="tripTitle">Cairo by Flight</h1>
+      <p id="tripSummary">This week only: Free Turkish Bath + Local SIM Card.</p>
+
+      <div class="badges" id="bonusBadges">
+        <span class="badge">Free Turkish Bath</span>
+        <span class="badge">Local SIM Card</span>
+        <span class="badge">Thursday Departure</span>
+      </div>
+
+      <div class="hero-card" style="margin-top:14px">
+        <strong style="display:block; margin-bottom:6px">This Week’s Prices</strong>
+        <div class="inline">
+          <span class="price-chip">Adult: <span id="priceAdultLabel">$180</span></span>
+          <span class="price-chip">Child: <span id="priceChildLabel">$160</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <img id="heroImg" class="hero-img" src="https://images.unsplash.com/photo-1544989164-31dc3c645987?q=80&w=1600&auto=format&fit=crop" alt="Trip of the Week destination">
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="container">
+  <!-- LEFT: Trip info -->
+  <article class="card">
+    <h2>About This Trip</h2>
+    <div class="meta">
+      <div><strong>Trip:</strong> <span id="metaTripName">Cairo by Flight</span></div>
+      <span class="dot"></span>
+      <div><strong>Day:</strong> <span id="metaTripDay">Thursday</span></div>
+      <span class="dot"></span>
+      <div><strong>Bonuses:</strong> <span id="metaBonuses">Turkish Bath, Local SIM Card</span></div>
+    </div>
+
+    <p id="tripDescription">
+      Fly from Sharm El-Sheikh to Cairo for a day of wonder—see the Pyramids of Giza,
+      the Grand Egyptian Museum area, and enjoy a guided experience. This week, we’re
+      boosting value with a relaxing Turkish Bath and a free local SIM so you’re always connected.
+    </p>
+
+    <ul class="features">
+      <li>Professional guide</li>
+      <li>Round-trip flights</li>
+      <li>Airport assistance</li>
+      <li>Comfortable transport</li>
+    </ul>
+  </article>
+
+  <!-- RIGHT: Booking form -->
+  <aside class="form" id="booking">
+    <h3>Book the Trip of the Week</h3>
+
+    <!-- Editable weekly settings (simple for you, invisible to guests) -->
+    <form id="towForm" autocomplete="on" novalidate>
+      <!-- PRICES (Visible fields as requested: you can put Adult/Child price manually each week) -->
+      <div class="row">
+        <div class="field">
+          <label for="priceAdult">Price (Adult) — set manually</label>
+          <input type="number" id="priceAdult" name="priceAdult" min="0" step="1" value="180" required />
+        </div>
+        <div class="field">
+          <label for="priceChild">Price (Child) — set manually</label>
+          <input type="number" id="priceChild" name="priceChild" min="0" step="1" value="160" required />
+        </div>
+      </div>
+
+      <!-- DATE & PASSENGERS -->
+      <div class="row">
+        <div class="field">
+          <label for="tripDate">Select Date</label>
+          <input type="date" id="tripDate" name="tripDate" required />
+        </div>
+        <div class="field">
+          <label for="tripDay">Day (shown on site)</label>
+          <input type="text" id="tripDay" name="tripDay" value="Thursday" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="adults">Adults</label>
+          <select id="adults" name="adults">
+            <option value="1" selected>1</option><option value="2">2</option>
+            <option value="3">3</option><option value="4">4</option><option value="5">5</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="children">Children</label>
+          <select id="children" name="children">
+            <option value="0" selected>0</option><option value="1">1</option>
+            <option value="2">2</option><option value="3">3</option><option value="4">4</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="row">
+        <div class="field">
+          <label for="name">Full Name</label>
+          <input id="name" name="name" placeholder="Your name" required />
+        </div>
+        <div class="field">
+          <label for="phone">Phone (WhatsApp)</label>
+          <input id="phone" name="phone" placeholder="+20 ..." required />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required />
+        </div>
+        <div class="field">
+          <label for="access">Access Code (optional)</label>
+          <input id="access" name="access" placeholder="Enter code if you have one" />
+        </div>
+      </div>
+
+      <!-- NOTES -->
+      <div class="field">
+        <label for="notes">Special Requests (optional)</label>
+        <textarea id="notes" name="notes" placeholder="Any notes or wishes?"></textarea>
+      </div>
+
+      <!-- DYNAMIC TOTAL -->
+      <div class="inline" aria-live="polite">
+        <span class="price-chip">Calculated Total:&nbsp;<span id="calcLabel">$180</span></span>
+        <span class="total" id="totalLabel">Total: $180</span>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn">Confirm Booking</button>
+        <button type="button" class="btn-ghost" id="printSummary">Print / Save Summary</button>
+      </div>
+
+      <!-- hidden operational fields -->
+      <input type="hidden" id="tripName" name="tripName" value="Cairo by Flight" />
+      <input type="hidden" id="bonuses" name="bonuses" value="Turkish Bath, Local SIM Card" />
+    </form>
+  </aside>
+</main>
+
+<!-- POPUP -->
+<div class="popup" id="okPopup" role="dialog" aria-modal="true" aria-labelledby="popupTitle">
+  <div class="popup-card">
+    <h3 id="popupTitle">Thank you! 🎉</h3>
+    <p>Your Trip of the Week request has been received. Our team will contact you shortly to confirm details.</p>
+    <div class="inline" style="gap:8px">
+      <a href="/" class="ok">Back to Home</a>
+      <a href="/trip-of-the-week.html" class="btn-ghost" style="text-decoration:none">Make Another Booking</a>
+    </div>
+  </div>
+</div>
+
+<!-- Footer placeholder (replace with your real footer include) -->
+<footer class="footer">
+  © <span id="year"></span> EgyTravelMarket — <a href="/">Home</a>
+</footer>
+
+<script>
+/* ==========================
+   CONFIG: Edit weekly here
+   ========================== */
+const WEEKLY = {
+  tripName: "Cairo by Flight",
+  day: "Thursday",
+  bonuses: ["Free Turkish Bath", "Local SIM Card"],
+  summary: "This week only: Free Turkish Bath + Local SIM Card.",
+  heroImg: "https://images.unsplash.com/photo-1544989164-31dc3c645987?q=80&w=1600&auto=format&fit=crop",
+  description: "Fly from Sharm El-Sheikh to Cairo for a day of wonder—see the Pyramids of Giza, the Grand Egyptian Museum area, and enjoy a guided experience. This week, we’re boosting value with a relaxing Turkish Bath and a free local SIM so you’re always connected.",
+  enableWhatsApp: false, // keep false for now; set true later to open WhatsApp on submit
+  whatsappNumber: "201023889959" // digits only, no + (your WhatsApp)
+};
+
+/* ====== INIT CONTENT ====== */
+function initWeeklyContent(){
+  // Hero & meta
+  const $ = (sel)=>document.querySelector(sel);
+  $("#tripTitle").textContent = WEEKLY.tripName;
+  $("#tripSummary").textContent = WEEKLY.summary;
+  $("#heroImg").src = WEEKLY.heroImg;
+  $("#metaTripName").textContent = WEEKLY.tripName;
+  $("#metaTripDay").textContent = WEEKLY.day;
+  $("#tripDay").value = WEEKLY.day;
+  $("#metaBonuses").textContent = WEEKLY.bonuses.join(", ");
+  $("#bonuses").value = WEEKLY.bonuses.join(", ");
+  $("#tripDescription").textContent = WEEKLY.description;
+  $("#tripName").value = WEEKLY.tripName;
+
+  // Badges
+  const bb = $("#bonusBadges");
+  bb.innerHTML = "";
+  WEEKLY.bonuses.forEach(b=>{
+    const s = document.createElement("span");
+    s.className = "badge"; s.textContent = b;
+    bb.appendChild(s);
+  });
+
+  // Price labels (the inputs below are editable by you each week)
+  const pa = document.getElementById("priceAdult");
+  const pc = document.getElementById("priceChild");
+  document.getElementById("priceAdultLabel").textContent = `$${Number(pa.value||0)}`;
+  document.getElementById("priceChildLabel").textContent = `$${Number(pc.value||0)}`;
+
+  // Date - set min today
+  const today = new Date();
+  const y = today.getFullYear();
+  const m = String(today.getMonth()+1).padStart(2,"0");
+  const d = String(today.getDate()).padStart(2,"0");
+  document.getElementById("tripDate").min = `${y}-${m}-${d}`;
+
+  // Footer year
+  document.getElementById("year").textContent = y;
+
+  updateTotal();
+}
+
+/* ====== TOTAL CALC ====== */
+function updateTotal(){
+  const A = Number(document.getElementById("adults").value || 0);
+  const C = Number(document.getElementById("children").value || 0);
+  const pA = Number(document.getElementById("priceAdult").value || 0);
+  const pC = Number(document.getElementById("priceChild").value || 0);
+  const total = (A * pA) + (C * pC);
+
+  document.getElementById("calcLabel").textContent = `$${total}`;
+  document.getElementById("totalLabel").textContent = `Total: $${total}`;
+}
+
+/* ====== FORM HANDLERS ====== */
+["adults","children","priceAdult","priceChild"].forEach(id=>{
+  document.addEventListener("change", e=>{
+    if(e.target && e.target.id === id){
+      // reflect price in hero chips if price fields changed
+      if(id === "priceAdult"){
+        document.getElementById("priceAdultLabel").textContent = `$${Number(e.target.value||0)}`;
+      }
+      if(id === "priceChild"){
+        document.getElementById("priceChildLabel").textContent = `$${Number(e.target.value||0)}`;
+      }
+      updateTotal();
+    }
+  }, true);
+});
+
+document.getElementById("towForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  // Collect data (ready for backend later)
+  const fd = new FormData(e.target);
+  const payload = Object.fromEntries(fd.entries());
+
+  // Option A: Confirmation popup (as agreed)
+  document.getElementById("okPopup").classList.add("open");
+
+  // Optional (OFF): WhatsApp redirect with prefilled message
+  if(WEEKLY.enableWhatsApp){
+    const msg =
+`Trip of the Week Booking:
+Trip: ${payload.tripName}
+Date: ${payload.tripDate} (${payload.tripDay})
+Bonuses: ${payload.bonuses}
+Adults: ${payload.adults} @ $${payload.priceAdult}
+Children: ${payload.children} @ $${payload.priceChild}
+Name: ${payload.name}
+Phone: ${payload.phone}
+Email: ${payload.email}
+Notes: ${payload.notes || "-"}`;
+    const url = `https://wa.me/${WEEKLY.whatsappNumber}?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+  }
+
+  // For now we keep it client-side. Later: POST to your backend/email.
+});
+
+document.getElementById("printSummary").addEventListener("click", ()=>{
+  window.print();
+});
+
+document.getElementById("okPopup").addEventListener("click", (e)=>{
+  // close when clicking background
+  if(e.target.id === "okPopup"){ e.currentTarget.classList.remove("open"); }
+});
+
+initWeeklyContent();
+</script>
+
+</body>
+</html>
+
+How to use / weekly updates
+
+Change the weekly offer by editing the small WEEKLY config at the top of the <script>:
+
+tripName, day, bonuses, summary, heroImg, description
+
+Set the weekly price inside the form (as you asked):
+
+In the Price (Adult) and Price (Child) fields at the top of the form—just type the values for this week.
+
+Total updates automatically based on Adults/Children selected.
+
+Confirmation popup is active (Option A ✅).
+
+To enable WhatsApp handoff later, set enableWhatsApp: true.
+
+Where to place files
+
+Homepage snippet: paste in your index.html (where you want the banner).
+
+Create trip-of-the-week.html in your project root and paste the full page code above.
+
+If your site uses a common header/footer, you can replace the placeholder header/footer blocks with your includes.

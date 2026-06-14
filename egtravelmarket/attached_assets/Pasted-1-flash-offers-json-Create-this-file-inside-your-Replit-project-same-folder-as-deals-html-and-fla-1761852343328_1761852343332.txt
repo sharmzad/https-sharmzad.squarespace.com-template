@@ -1,0 +1,172 @@
+1. flash-offers.json
+
+Create this file inside your Replit project (same folder as deals.html and flash-offer.js):
+
+[
+  {
+    "title": "Cairo by Flight — Round Trip",
+    "desc": "Day tour from Sharm El-Sheikh including Museum & Giza Plateau. Save $20 this week.",
+    "link": "/tours/cairo-by-flight.html",
+    "badge": "Ends Soon",
+    "deadline": "2025-11-05T20:00:00+02:00"
+  },
+  {
+    "title": "Luxor by Flight — Special",
+    "desc": "Karnak, Valley of the Kings & Hatshepsut. Save $25 on select dates.",
+    "link": "/tours/luxor-by-flight.html",
+    "badge": "Trip of the Week",
+    "deadline": "2025-11-08T23:59:00+02:00"
+  },
+  {
+    "title": "Red Sea Diving — 3+1 Free",
+    "desc": "Book 3 dive days, get the 4th free at Nabq & Ras Mohammed.",
+    "link": "/diving/packages.html",
+    "badge": "Diving Deal",
+    "deadline": "2025-11-12T18:00:00+02:00"
+  }
+]
+
+
+➡️ You can add more offers by copying one object and changing the title, description, and deadline.
+If an offer’s deadline passes, it automatically disappears from the Flash section and the badges disappear everywhere.
+
+⚙️ 2. Updated flash-offer.js
+
+Replace your old JS file with this one 👇
+
+// ==========================
+// Load Flash Offers from JSON
+// ==========================
+(async function loadFlashOffers() {
+  try {
+    const res = await fetch('flash-offers.json');
+    const offers = await res.json();
+    const track = document.querySelector('.flash-track');
+    if (!track) return;
+
+    track.innerHTML = ''; // clear old placeholder
+
+    offers.forEach(o => {
+      const card = document.createElement('article');
+      card.className = 'flash-card';
+      card.innerHTML = `
+        <span class="badge">${o.badge || 'Flash Offer'}</span>
+        <h3>${o.title}</h3>
+        <p class="desc">${o.desc}</p>
+        <div class="countdown" data-deadline="${o.deadline}">Ends in —</div>
+        <div class="actions">
+          <a href="${o.link}" class="btn">Book Now</a>
+          <a href="${o.link}#details" class="link">Details</a>
+        </div>
+      `;
+      track.appendChild(card);
+    });
+
+    initCountdowns();
+    initSlider(track);
+    markFlashBadges(offers);
+
+  } catch (err) {
+    console.error('Could not load flash-offers.json', err);
+  }
+})();
+
+// ==========================
+// Countdown
+// ==========================
+function initCountdowns() {
+  const els = Array.from(document.querySelectorAll('.countdown[data-deadline]'));
+  function two(n){return n<10?'0'+n:n;}
+
+  function tick(){
+    const now = new Date().getTime();
+    els.forEach(el=>{
+      const end = new Date(el.dataset.deadline).getTime();
+      const diff = end - now;
+      if(isNaN(end)){el.textContent='—';return;}
+      if(diff<=0){el.textContent='Offer ended';return;}
+      const d=Math.floor(diff/86400000);
+      const h=Math.floor((diff/3600000)%24);
+      const m=Math.floor((diff/60000)%60);
+      el.textContent=`Ends in ${two(d)}d ${two(h)}h ${two(m)}m`;
+    });
+  }
+  tick();
+  setInterval(tick,30000);
+}
+
+// ==========================
+// Simple Auto Slider
+// ==========================
+function initSlider(track){
+  if(!track || track.children.length<=1) return;
+  const interval=6000;
+  const cards=Array.from(track.children);
+  let index=0;
+  function next(){
+    index=(index+1)%cards.length;
+    cards[index].scrollIntoView({behavior:'smooth',inline:'start'});
+  }
+  let timer=setInterval(next,interval);
+  track.addEventListener('pointerenter',()=>clearInterval(timer));
+  track.addEventListener('pointerleave',()=>timer=setInterval(next,interval));
+}
+
+// ==========================
+// Mark Flash Badges on other pages
+// ==========================
+function markFlashBadges(offers){
+  if(!offers || !offers.length) return;
+  const now=new Date().getTime();
+
+  offers.forEach(o=>{
+    const end=new Date(o.deadline).getTime();
+    if(end>now){
+      const linkEls=document.querySelectorAll(`a[href="${o.link}"], a[href*="${o.link}"]`);
+      linkEls.forEach(a=>{
+        if(!a.closest('.flash-badge')){
+          const badge=document.createElement('span');
+          badge.className='flash-badge';
+          badge.textContent='⚡ Flash Offer';
+          a.insertAdjacentElement('beforebegin',badge);
+        }
+      });
+    }
+  });
+}
+
+🎨 3. Add this small CSS snippet to your deals.css
+
+(You can paste it at the bottom)
+
+.flash-badge {
+  display:inline-block;
+  background:linear-gradient(135deg,#00d4ff,#2c7df0);
+  color:#031021;
+  font-weight:600;
+  font-size:13px;
+  padding:4px 8px;
+  border-radius:8px;
+  margin-right:6px;
+  vertical-align:middle;
+}
+
+✅ How it works
+
+When your website loads:
+
+flash-offer.js fetches flash-offers.json
+
+Creates Flash cards automatically inside your slider
+
+Adds countdown timers
+
+Checks all links on the page; if they match a current offer, it adds a “⚡ Flash Offer” badge next to them
+
+When an offer’s date expires:
+
+It disappears from the Flash Offers section
+
+Badges are automatically removed site-wide
+
+You can update offers anytime by editing only the JSON file — super easy.

@@ -1,0 +1,31 @@
+api-client.js:296 ✅ API Client initialized
+api-client.js:297 📡 API Base URL: https://www.egtravelmarket.com
+api/admin/analytics/comprehensive:1  Failed to load resource: the server responded with a status of 401 ()
+admin-comprehensive.html:989 ✅ Trips loaded: 0 trips
+api/admin/bookings?:1  Failed to load resource: the server responded with a status of 401 ()
+api/travel-requests/admin/all:1  Failed to load resource: the server responded with a status of 401 ()
+admin-comprehensive.html:1143 Error loading requests: Error: Unauthorized
+    at admin-comprehensive.html:1139:13
+(anonymous) @ admin-comprehensive.html:1143
+api/admin/whatsapp/messages:1  Failed to load resource: the server responded with a status of 401 ()
+admin-comprehensive.html:989 ✅ Trips loaded: 0 trips
+api/admin/bookings?:1  Failed to load resource: the server responded with a status of 401 ()
+api/travel-requests/admin/all:1  Failed to load resource: the server responded with a status of 401 ()
+admin-comprehensive.html:1143 Error loading requests: Error: Unauthorized
+    at admin-comprehensive.html:1139:13
+(anonymous) @ admin-comprehensive.html:1143
+api/admin/whatsapp/messages:1  Failed to load resource: the server responded with a status of 401 ()
+api/admin/users/search?:1  Failed to load resource: the server responded with a status of 401 ()
+api/admin/sign-ups/pending:1  Failed to load resource: the server responded with a status of 401 ()
+admin-comprehensive.html:1544 Error loading sign-ups: Error: Unauthorized
+    at admin-comprehensive.html:1540:13
+(anonymous) @ admin-comprehensive.html:1544
+api/admin/agencies?:1  Failed to load resource: the server responded with a status of 401 ()
+api/admin/dive-centers?:1  Failed to load resource: the server responded with a status of 401 ()
+api/admin/job-postings:1  Failed to load resource: the server responded with a status of 401 ()
+admin-comprehensive.html:1779 Error loading job postings: Error: Unauthorized
+    at admin-comprehensive.html:1775:13
+(anonymous) @ admin-comprehensive.html:1779
+api/admin/analytics/comprehensive?:1  Failed to load resource: the server responded with a status of 401 ()
+api/admin/settings:1  Failed to load resource: the server responded with a status of 401 ()
+admin-comprehensive.html:989 ✅ Trips loaded: 0 trips

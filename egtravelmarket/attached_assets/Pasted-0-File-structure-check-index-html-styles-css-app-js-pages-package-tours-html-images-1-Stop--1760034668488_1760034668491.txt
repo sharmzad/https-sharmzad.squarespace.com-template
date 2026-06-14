@@ -1,0 +1,152 @@
+0) File structure check
+index.html
+styles.css
+app.js
+/pages/package-tours.html
+/images/...
+
+1) Stop all 404s (Replit-safe routing)
+A) Home page: index.html → right after <head> opens
+<head>
+  <base href="./">
+  ...
+
+B) Packages page: pages/package-tours.html → right after <head> opens
+<head>
+  <base href="../">
+  ...
+
+C) Make your header/footer links relative
+
+Use these everywhere (logo, menu, deals, footer):
+
+<!-- LOGO / HOME -->
+<a class="brand" href="./">EgyTravelMarket</a>
+
+<!-- DEALS / FLASH SALE -->
+<a class="nav-deals" href="pages/package-tours.html">Deals</a>
+
+<!-- FOOTER: Tours & Activities (works from any page) -->
+<a class="nav-tours" href="index.html#tours-activities">Tours & Activities</a>
+
+D) Bullet-proof fixer script (handles any leftover “/something” links)
+
+Add this just before </body> in both index.html and pages/package-tours.html:
+
+<script>
+/* Replit 404 guard: rewrite leading-slash links to relative */
+(function () {
+  const inSub = location.pathname.includes('/pages/');
+  document.querySelectorAll('a[href^="/"]').forEach(a=>{
+    const raw = a.getAttribute('href');        // e.g. "/pages/package-tours.html" or "/"
+    if (raw === '/') { a.setAttribute('href', inSub ? '../index.html' : './'); return; }
+    if (raw.startsWith('/pages/')) { a.setAttribute('href', inSub ? '..'+raw : '.'+raw); return; }
+    a.setAttribute('href', (inSub ? '../' : './') + raw.replace(/^\//, ''));
+  });
+})();
+</script>
+
+
+This guarantees no more 404s from logo/home/deals/menu icons or footer.
+
+2) Make the Packages page blue + readable (no washed, “white windows”)
+A) pages/package-tours.html → set body class
+<body class="package-page">
+
+B) Same file, in the existing <style> tag, add:
+/* Blue backdrop */
+body.package-page {
+  background: linear-gradient(180deg, #0a3d9b 0%, #004aad 100%);
+}
+
+/* Card & text colors (force readable) */
+.pkg-card { background:#ffffff; border-radius:16px; box-shadow:0 10px 24px rgba(0,0,0,.14); }
+.pkg-card h2, .pkg-card h3 { color:#004aad !important; opacity:1 !important; }
+.pkg-card, .pkg-card p, .pkg-card li, .pkg-card .price-box { color:#1d2f4f !important; }
+
+/* Hero stays glassy but readable */
+.hero { background: rgba(255,255,255,.16); color:#fff; backdrop-filter: blur(6px); }
+.hero h1 { color:#fff; }
+
+/* Section paddings so “white boxes” look intentional and not empty */
+.pkg-card { padding:18px; margin:18px 0; }
+.pkg-card p { margin-top:8px; }
+
+/* Small buttons (trip pills) */
+.btn.btn-sm { padding:6px 10px; font-size:.86rem; border-radius:10px; }
+
+
+Those “white rounded rectangles” are your other 8 package sections. The rules above force strong colors and spacing so they don’t look empty/faded.
+
+3) Mobile orbit fix (fallback to a clean grid)
+
+On small screens the ring isn’t usable. Let’s hide it on mobile and just show the grid.
+
+In styles.css (or near your orbit styles), add:
+/* Mobile fallback for the orbit */
+@media (max-width: 768px){
+  .journey-circle{ display:none; }
+  #tours-activities .tour-grid{ margin-top:0; }
+}
+
+
+(We can later add a swipe carousel if you want; for now, this prevents the “not good” look on mobile.)
+
+4) Make the 3 trip pills open their itineraries (keep + fix)
+
+Already added before, but ensure both parts exist in pages/package-tours.html:
+
+A) The pills block (under “Included:”)
+
+<div class="pill-row" style="margin:10px 0 6px; display:flex; gap:8px; flex-wrap:wrap">
+  <a class="btn btn-sm" data-open="#accA-jeep" href="#accA-jeep">Jeep Safari</a>
+  <a class="btn btn-sm" data-open="#accA-seascope" href="#accA-seascope">Sea Scope</a>
+  <a class="btn btn-sm" data-open="#accA-cairo" href="#accA-cairo">Cairo by Flight</a>
+</div>
+
+
+B) IDs on the accordion items
+
+<div class="accordion" id="accA">
+  <div class="acc-item" id="accA-jeep"> ... </div>
+  <div class="acc-item" id="accA-seascope"> ... </div>
+  <div class="acc-item" id="accA-cairo"> ... </div>
+</div>
+
+
+C) The JS that opens + scrolls
+
+<script>
+document.querySelectorAll('.acc-btn').forEach(btn=>{
+  btn.addEventListener('click',()=> btn.closest('.acc-item').classList.toggle('open'));
+});
+document.querySelectorAll('[data-open]').forEach(el=>{
+  el.addEventListener('click', e=>{
+    const sel = el.getAttribute('data-open');
+    const target = document.querySelector(sel);
+    if(!target) return;
+    target.parentElement.querySelectorAll('.acc-item').forEach(it=>it.classList.remove('open'));
+    target.classList.add('open');
+    target.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+</script>
+
+5) Ensure each of the 9 package sections has visible content
+
+In pages/package-tours.html, keep at least a title + 1–2 lines for each:
+
+<section id="trip-of-week" class="pkg-card">
+  <h2>Trip of the Week</h2>
+  <p>Fixed on Tuesday & Saturday. Book directly—no access code.</p>
+</section>
+<!-- repeat for transfer-info, pkg3B, pkg2A, pkg2B, diving, customize, goodbye -->
+
+6) Home section also blue (if still white)
+
+Add to styles.css:
+
+#tours-activities.features-section{
+  background: linear-gradient(180deg, #0a3d9b 0%, #004aad 100%);
+}
+#tours-activities h2{ color:#fff; }

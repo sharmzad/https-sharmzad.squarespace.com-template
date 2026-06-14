@@ -1,0 +1,139 @@
+Travel Mentor Role Clarification (NO DESIGN CHANGE)
+
+Please apply the following updates without changing layout, colors, or UI design.
+Only update texts, labels, and section logic.
+
+1️⃣ mentor.html (Public – Travelers)
+🔹 ADD THIS SECTION (near top or under hero)
+
+Title: What is a Travel Mentor?
+
+Text (exact):
+
+Travel Mentors help travelers plan their trips through expert advice, itinerary design, and online consultations.
+
+All bookings, payments, and on-ground execution are handled exclusively by EgTravelMarket as the official handling agent.
+
+🔹 ADD THIS INFO BOX (below mentor cards or before CTA)
+
+Title: How It Works
+
+Bullets:
+
+✅ Mentors design itineraries & advise travelers
+
+✅ Mentors offer online consultations (Zoom / call)
+
+❌ Mentors do not execute tours
+
+❌ Mentors do not handle hotels, transport, or payments
+
+🛡 Execution & support by EgTravelMarket
+
+🔹 UPDATE ANY CTA TEXT (if exists)
+
+Replace generic “Book Trip” with:
+
+Request Planning / Consultation
+
+2️⃣ be-mentor.html (Signup Page)
+🔹 ADD THIS ROLE CLARIFICATION SECTION
+
+Title: Your Role as a Travel Mentor
+
+Text (exact):
+
+As a Travel Mentor on EgTravelMarket, your role is to design travel itineraries, provide expert advice, and offer online consultations to travelers.
+
+You do not execute tours, book hotels, or handle payments.
+All trip execution and handling are managed by EgTravelMarket.
+
+🔹 ADD THIS REQUIRED CHECKBOX (IMPORTANT)
+
+At the end of the signup form, add a required checkbox:
+
+☐ I understand that I provide planning and consultation services only, and that EgTravelMarket handles all bookings and on-ground execution.
+
+(Form cannot submit without checking this.)
+
+3️⃣ Mentor Dashboard – TEXT & LABEL CHANGES ONLY
+🔹 ADD TOP BANNER (inside mentor dashboard)
+
+Banner text (exact):
+
+You provide planning & mentorship services only.
+EgTravelMarket handles bookings, suppliers, and trip execution.
+
+🔹 RENAME SECTIONS (NO REMOVAL YET)
+Current Label	Change To
+Create Trip	Create Offer
+Trips	My Offers
+Trip Price	Planning Fee
+Bookings	Requests & Bookings
+
+⚠️ Functionality stays the same for now — labels only.
+
+4️⃣ IMPORTANT: Itinerary vs Zoom Consultation (CLARIFICATION)
+🔹 BOTH are allowed for mentors (planning only)
+A) Itinerary / Planning Offer
+
+Lives under: Create Offer
+
+Example:
+
+“7-Day Egypt Cultural Itinerary”
+
+“Luxury Egypt Trip Plan”
+
+Pricing label:
+
+Planning Fee
+
+Note shown to traveler:
+
+Execution handled by EgTravelMarket
+
+B) Zoom / Online Consultation
+
+ALSO created under: Create Offer
+
+Offer type label (dropdown or text):
+
+“Online Consultation”
+
+Duration:
+
+30 / 60 / 90 minutes
+
+Description:
+
+Zoom / Google Meet / Platform call
+
+No execution involved at all
+
+👉 For now: same offer form, different description
+(No new UI needed in Step 1)
+
+5️⃣ VERY IMPORTANT – WHAT NOT TO CHANGE
+
+❌ Do NOT change:
+
+Colors
+
+Fonts
+
+Layout
+
+Cards design
+
+Dashboard structure
+
+✅ Only:
+
+Text
+
+Labels
+
+Explanatory sections
+
+Checkbox

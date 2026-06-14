@@ -1,0 +1,35 @@
+HTML CODE (Add this block in index.html where you want it to appear):
+<!-- ===== DMC – Be Your Local Agent Section ===== -->
+<section id="dmc-local-agent" class="section-padding text-white text-center relative">
+  <div class="relative">
+    <!-- Background Image -->
+    <img src="images/be-your-local-agent.png" alt="Be Your Local Agent in Sharm El Sheikh" class="w-full h-auto object-cover opacity-90 rounded-xl shadow-lg">
+    
+    <!-- Overlay Content -->
+    <div class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-50 p-6 md:p-12">
+      <h2 class="text-4xl font-bold mb-3">Be Your Local Agent</h2>
+      <h3 class="text-xl font-semibold mb-4 italic">Professional Local Agent Services in Sharm El Sheikh</h3>
+      <p class="max-w-4xl mx-auto text-lg leading-relaxed mb-6">
+        <strong>Airport Assistance | Hotel Coordination | Tour Booking | 24/7 Support</strong>
+      </p>
+      <p class="max-w-5xl mx-auto text-base leading-relaxed">
+        Searching for a trustworthy destination management partner in <strong>Sharm El Sheikh, Egypt?</strong>  
+        We provide comprehensive local agent services for international tour operators, travel agencies, and DMCs wanting to deliver exceptional Red Sea experiences without local infrastructure.
+        <br><br>
+        With <strong>25+ years of combined experience</strong>, our multilingual team expertly handles airport meet & assist, hotel check-in/check-out verification, Red Sea diving and snorkeling tours, desert safaris, medical emergency coordination, and full concierge services for guests from Germany, Scandinavia, Italy, Russia, Britain, Switzerland, and beyond.
+        <br><br>
+        We know every hotel manager, trusted tour operator, and quality restaurant in Sharm – relationships built over decades that guarantee your clients receive authentic experiences at fair prices.
+        <br><br>
+        Our <strong>white-label service</strong> means your guests believe we're <strong>YOUR staff</strong>, protecting your brand reputation while we handle all on-ground logistics with transparency and professionalism.
+        <br><br>
+        Ready to expand into Egypt's premier beach destination risk-free?  
+        <strong>Contact us today</strong> to discuss flexible partnership terms with <strong>no minimum commitments required</strong> to start.
+      </p>
+      <div class="mt-8">
+        <a href="#contact" class="bg-white text-blue-800 font-semibold py-3 px-8 rounded-full shadow hover:bg-blue-100 transition">
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

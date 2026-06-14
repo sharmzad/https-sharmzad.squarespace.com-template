@@ -1,0 +1,56 @@
+Create the Webhook Route in Your Node Backend
+You MUST add a new route in your server.js or index.js (your main Express file).
+Here is the correct webhook code for your Node + Express backend:
+⭐ ADD THIS CODE to your server (copy/paste as is):
+// STRIPE WEBHOOK ROUTE (MUST BE BEFORE app.use(express.json))
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+app.post('/webhook/stripe', 
+  express.raw({ type: 'application/json' }), 
+  (req, res) => {
+
+    const sig = req.headers['stripe-signature'];
+
+    let event;
+
+    try {
+        event = stripe.webhooks.constructEvent(
+            req.body,
+            sig,
+            process.env.STRIPE_WEBHOOK_SECRET
+        );
+    } catch (err) {
+        console.error("❌ Stripe webhook signature verification failed:", err.message);
+        return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    // HANDLE EVENT TYPES
+    if (event.type === 'checkout.session.completed') {
+        const session = event.data.object;
+        console.log("✔ Payment Success! Session ID:", session.id);
+        // TODO: Update your database booking here
+    }
+
+    res.json({ received: true });
+});
+⚠️ VERY IMPORTANT
+This route must be placed before any app.use(express.json())
+because Stripe needs raw body, not JSON.
+
+I need to add a Stripe webhook for my Node.js backend.
+Please insert the webhook route exactly as written below, BEFORE any app.use(express.json()).
+Ensure the server serves this route publicly at:
+https://www.egtravelmarket.com/webhook/stripe
+Also confirm the route is NOT protected by any auth middleware.
+(Then paste the code block I gave you.)
+
+Add Secrets in Replit Environment Variables
+whsec_Z2IqvokncVc3WuFtIcyUu6BeeXM30teM
+
+Restart the backend server and verify /webhook/stripe endpoint is accessible.
+Then Stripe should show “Webhook received successfully.”
+Stripe will then send a test event.
+If everything is correct → you will see:
+✔ Payment Success! Session ID: xxxxx
+in your Replit logs.
+

@@ -1,0 +1,56 @@
+Copy & Paste This HTML block
+
+Place it above your booking form (right under the section heading like “Book the Trip of the Week”):
+
+<!-- WhatsApp inquiry section -->
+<h3>💬 Contact Our Advisors on WhatsApp</h3>
+<p class="small" style="margin-bottom:10px;color:#475569;">
+  You can contact one of our travel advisors below if you have any questions before booking.
+</p>
+
+<select id="advisorSelect" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;margin-bottom:10px;">
+  <option value="">Select an advisor</option>
+  <option value="https://wa.me/201227903329?text=Hi%20EgTravelMarket!%20I%20have%20a%20question%20about%20the%20Trip%20of%20the%20Week.">Ahmed Hassan (+20 122 790 3329)</option>
+  <option value="https://wa.me/201002955428?text=Hi%20EgTravelMarket!%20I%20have%20a%20question%20about%20the%20Trip%20of%20the%20Week.">Alla (+20 100 295 5428)</option>
+  <option value="https://wa.me/201119446286?text=Hi%20EgTravelMarket!%20I%20have%20a%20question%20about%20the%20Trip%20of%20the%20Week.">Ghally (+20 111 944 6286)</option>
+  <option value="https://wa.me/201001933700?text=Hi%20EgTravelMarket!%20I%20have%20a%20question%20about%20the%20Trip%20of%20the%20Week.">Hatem (+20 100 193 3700)</option>
+  <option value="https://wa.me/201094776665?text=Hi%20EgTravelMarket!%20I%20have%20a%20question%20about%20the%20Trip%20of%20the%20Week.">Salah (+20 109 477 6665)</option>
+  <option value="https://wa.me/201008455333?text=Hi%20EgTravelMarket!%20I%20have%20a%20question%20about%20the%20Trip%20of%20the%20Week.">Hesham (+20 100 845 5333)</option>
+  <option value="https://wa.me/201222100000?text=Hi%20EgTravelMarket!%20I%20have%20a%20question%20about%20the%20Trip%20of%20the%20Week.">Yasser (+20 122 210 0000)</option>
+</select>
+
+<a id="whatsAppBtn"
+   href="#"
+   target="_blank"
+   class="btn"
+   style="display:inline-block;background:#25D366;color:white;border:none;padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:700;margin-bottom:20px;">
+   💬 Chat on WhatsApp
+</a>
+
+<script>
+  // when user selects an advisor
+  const advisorSelect = document.getElementById("advisorSelect");
+  const whatsAppBtn = document.getElementById("whatsAppBtn");
+  advisorSelect.addEventListener("change", () => {
+    const link = advisorSelect.value;
+    if (link) {
+      whatsAppBtn.href = link;
+      whatsAppBtn.style.opacity = "1";
+      whatsAppBtn.textContent = "💬 Chat on WhatsApp";
+    } else {
+      whatsAppBtn.href = "#";
+      whatsAppBtn.style.opacity = ".6";
+      whatsAppBtn.textContent = "Select an advisor first";
+    }
+  });
+</script>
+
+✨ How it works
+
+The visitor chooses an advisor from the dropdown.
+
+The “💬 Chat on WhatsApp” button automatically points to that advisor’s number.
+
+When clicked, WhatsApp opens with this pre-filled message:
+
+Hi EgTravelMarket! I have a question about the Trip of the Week.

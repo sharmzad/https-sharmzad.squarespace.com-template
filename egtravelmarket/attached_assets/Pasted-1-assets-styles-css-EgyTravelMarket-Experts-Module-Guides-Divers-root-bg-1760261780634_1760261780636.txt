@@ -1,0 +1,1065 @@
+1) /assets/styles.css
+/* === EgyTravelMarket — Experts Module (Guides & Divers) === */
+:root{
+  --bg:#0a1633;           /* deep navy background */
+  --card:#0f1e47;         /* card background */
+  --accent:#2ea6ff;       /* primary blue */
+  --accent-2:#6ec1ff;     /* lighter blue */
+  --text:#e9f1ff;         /* text */
+  --muted:#bcd3ff;        /* secondary text */
+  --success:#27ae60;
+  --danger:#ff4d4d;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:linear-gradient(180deg,#07102a 0%,#0c1a3a 100%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif}
+a{color:var(--accent);text-decoration:none}
+a:hover{opacity:.9}
+
+/* Header (sticky) */
+.header{
+  position:sticky;top:0;z-index:1000;
+  background:linear-gradient(90deg,#0c1a3a 0%,#0a1530 100%);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  box-shadow:0 4px 12px rgba(0,0,0,.25);
+}
+.container{max-width:1200px;margin:0 auto;padding:0 16px}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+.brand{display:flex;gap:10px;align-items:center}
+.brand .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:var(--shadow)}
+.brand span{font-weight:700;letter-spacing:.4px}
+.menu{display:flex;gap:18px;flex-wrap:wrap}
+.menu a{padding:8px 12px;border-radius:10px;background:transparent}
+.menu a.active,.menu a:hover{background:rgba(255,255,255,.06)}
+
+/* Hero */
+.hero{padding:48px 0 24px;border-bottom:1px solid rgba(255,255,255,.08);background:radial-gradient(1200px 400px at 50% -50%, rgba(46,166,255,.25), transparent)}
+.hero h1{margin:0 0 6px;font-size:32px}
+.hero p{margin:0;color:var(--muted)}
+
+/* Filters */
+.filters{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin:18px 0 8px}
+.input, .select{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  color:var(--text);padding:12px 12px;border-radius:12px;outline:0;
+}
+.input::placeholder{color:#99b7ff}
+@media(max-width:900px){.filters{grid-template-columns:1fr 1fr}.menu{gap:10px}}
+@media(max-width:560px){.filters{grid-template-columns:1fr}.nav{flex-wrap:wrap;gap:8px}}
+
+/* Grid Cards */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:18px 0 48px}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+
+.card{
+  background:var(--card);border:1px solid rgba(255,255,255,.06);
+  border-radius:16px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column
+}
+.card .thumb{height:180px;background:#091230;position:relative;overflow:hidden}
+.card .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.badge{
+  position:absolute;left:12px;top:12px;background:rgba(10,25,55,.72);
+  border:1px solid rgba(255,255,255,.12);color:var(--muted);padding:6px 10px;border-radius:999px;font-size:12px
+}
+.card .body{padding:14px 14px 10px}
+.card h3{margin:0 0 4px;font-size:18px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:13px}
+.meta span{display:inline-flex;gap:6px;align-items:center}
+.actions{display:flex;gap:10px;padding:12px 14px 16px;margin-top:auto}
+.btn{
+  display:inline-flex;gap:8px;align-items:center;justify-content:center;
+  padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);color:var(--text);cursor:pointer
+}
+.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));border-color:transparent;color:#002349;font-weight:700}
+.btn.whatsapp{background:#1e2a3f;border-color:#2dd15a}
+.btn:hover{transform:translateY(-1px)}
+
+/* Profile Layout */
+.profile{display:grid;grid-template-columns:320px 1fr;gap:24px;margin:24px 0 60px}
+@media(max-width:920px){.profile{grid-template-columns:1fr}}
+.profile .ph{background:var(--card);border-radius:16px;border:1px solid rgba(255,255,255,.08);overflow:hidden}
+.profile .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.block{
+  background:var(--card);border-radius:16px;border:1px solid rgba(255,255,255,.08);
+  padding:16px;margin-bottom:16px
+}
+.block h4{margin:0 0 10px}
+.kv{display:grid;grid-template-columns:200px 1fr;gap:10px;font-size:15px;color:var(--muted)}
+@media(max-width:560px){.kv{grid-template-columns:1fr}}
+.tags{display:flex;gap:8px;flex-wrap:wrap}
+.tag{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);padding:6px 10px;border-radius:999px;font-size:12px}
+
+/* Signup form */
+.form{max-width:840px;margin:24px auto 60px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.form-grid{grid-template-columns:1fr}}
+label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block}
+.input, .select, textarea{
+  width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  color:var(--text);padding:12px;border-radius:12px
+}
+textarea{min-height:120px;resize:vertical}
+.note{font-size:13px;color:var(--muted);margin-top:8px}
+
+/* Chat Modal */
+.modal{position:fixed;inset:0;background:rgba(7,16,42,.65);display:none;align-items:center;justify-content:center;z-index:2000}
+.modal.open{display:flex}
+.modal .panel{
+  width:100%;max-width:520px;background:var(--card);border:1px solid rgba(255,255,255,.10);
+  border-radius:18px;box-shadow:var(--shadow);overflow:hidden
+}
+.modal .hd{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.modal .hd strong{font-size:16px}
+.modal .bd{padding:14px;display:grid;gap:10px}
+.modal .ft{padding:12px 14px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:10px}
+
+/* Footer */
+.footer{border-top:1px solid rgba(255,255,255,.08);padding:28px 0 40px;background:#0a1430}
+.footer h5{margin:0 0 10px}
+.footer .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:900px){.footer .cols{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.footer .cols{grid-template-columns:1fr}}
+.list{display:flex;flex-direction:column;gap:8px}
+.small{font-size:12px;color:var(--muted)}
+
+2) /assets/app.js
+/* === EgyTravelMarket — Experts Module (Guides & Divers) === */
+
+// Chat modal logic (frontend-only mock)
+const modal = document.getElementById('chat-modal');
+const modalTitle = document.getElementById('chat-with-name');
+const chatTargetInput = document.getElementById('chat-target');
+const openChat = (name) => {
+  if (!modal) return;
+  modal.classList.add('open');
+  if (modalTitle) modalTitle.textContent = `Chat with ${name}`;
+  if (chatTargetInput) chatTargetInput.value = name;
+}
+const closeChat = () => modal && modal.classList.remove('open');
+
+// Delegate clicks for .chat-btn
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.chat-btn');
+  if (btn){
+    const name = btn.getAttribute('data-name') || 'Expert';
+    openChat(name);
+  }
+  if (e.target.closest('[data-close-modal]')) closeChat();
+});
+
+// Fake send
+const chatForm = document.getElementById('chat-form');
+if (chatForm){
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const yourName = chatForm.querySelector('[name="your_name"]').value.trim();
+    const message = chatForm.querySelector('[name="message"]').value.trim();
+    if (!yourName || !message){
+      alert('Please enter your name and message.');
+      return;
+    }
+    // Here you will POST to backend later
+    alert('Message sent! The expert will reply soon.');
+    chatForm.reset();
+    closeChat();
+  });
+}
+
+// Helper to build WhatsApp links (if you use data-phone attributes)
+document.querySelectorAll('a[data-wa]').forEach(a=>{
+  const phone = a.getAttribute('data-wa');
+  const text = encodeURIComponent('Hello! I found your profile on EgyTravelMarket and would like to chat.');
+  a.href = `https://wa.me/${phone}?text=${text}`;
+});
+
+3) Shared Header & Footer (paste into each page)
+Header (sticky) — include at top of <body>
+<header class="header">
+  <div class="container nav">
+    <div class="brand">
+      <div class="logo"></div>
+      <span>EgyTravelMarket</span>
+    </div>
+    <nav class="menu">
+      <a href="/index.html">Home</a>
+      <a href="/tours.html">Tours & Activities</a>
+      <a href="/packages.html">Packages</a>
+      <a href="/diving.html">Diving</a>
+      <a href="/mice.html">MICE</a>
+      <a href="/investments.html">Investments</a>
+      <a href="/guides.html" class="active">Guides</a>
+      <a href="/divers.html">Divers</a>
+    </nav>
+  </div>
+</header>
+
+Footer (with “Meet Our Experts” two-line links)
+<footer class="footer">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <h5>Discover Our Products</h5>
+        <div class="list">
+          <a href="/tours.html">Tours & Activities</a>
+          <a href="/diving.html">Diving</a>
+          <a href="/mice.html">MICE & Conferences</a>
+          <a href="/investments.html">Investments</a>
+          <a href="/medical.html">Medical Services</a>
+        </div>
+      </div>
+      <div>
+        <h5>Meet Our Experts</h5>
+        <div class="list">
+          <a href="/guides.html">Guides</a>
+          <a href="/divers.html">Divers</a>
+        </div>
+      </div>
+      <div>
+        <h5>Support & Legal</h5>
+        <div class="list">
+          <a href="/faq.html">Help / FAQ</a>
+          <a href="/policies.html">Travel Policies</a>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms & Conditions</a>
+          <a href="/cookies.html">Cookies Policy</a>
+        </div>
+      </div>
+      <div>
+        <h5>Partners & Affiliates</h5>
+        <div class="list">
+          <a href="/partners.html">Our Partners</a>
+          <a href="/affiliate.html">Become an Affiliate</a>
+        </div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:14px">© EgyTravelMarket. All rights reserved.</p>
+  </div>
+</footer>
+
+Chat Modal (include just before </body> on all pages)
+<div class="modal" id="chat-modal" aria-hidden="true">
+  <div class="panel">
+    <div class="hd">
+      <strong id="chat-with-name">Chat</strong>
+      <button class="btn" data-close-modal>✖</button>
+    </div>
+    <form id="chat-form">
+      <div class="bd">
+        <input type="hidden" id="chat-target" name="target">
+        <div>
+          <label>Your Name</label>
+          <input class="input" name="your_name" placeholder="Enter your name">
+        </div>
+        <div>
+          <label>Your Message</label>
+          <textarea name="message" placeholder="Type your message..."></textarea>
+        </div>
+        <div class="note">This is a demo chat. Messages will connect to your backend later.</div>
+      </div>
+      <div class="ft">
+        <button type="button" class="btn" data-close-modal>Cancel</button>
+        <button type="submit" class="btn primary">Send Message</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/assets/app.js"></script>
+
+4) guides.html (Directory)
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Meet Our Certified Guides | EgyTravelMarket</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="container nav">
+    <div class="brand"><div class="logo"></div><span>EgyTravelMarket</span></div>
+    <nav class="menu">
+      <a href="/index.html">Home</a>
+      <a href="/tours.html">Tours & Activities</a>
+      <a href="/packages.html">Packages</a>
+      <a href="/diving.html">Diving</a>
+      <a href="/mice.html">MICE</a>
+      <a href="/investments.html">Investments</a>
+      <a href="/guides.html" class="active">Guides</a>
+      <a href="/divers.html">Divers</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>Meet Our Certified Guides</h1>
+    <p>Explore Egypt with licensed, multilingual experts. Browse and contact directly — no login needed.</p>
+
+    <div class="filters">
+      <input class="input" placeholder="Search by name">
+      <select class="select"><option>All Locations</option><option>Cairo</option><option>Luxor</option><option>Aswan</option><option>Sharm El Sheikh</option></select>
+      <select class="select"><option>All Languages</option><option>English</option><option>Arabic</option><option>Spanish</option><option>French</option><option>Italian</option></select>
+      <select class="select"><option>Specialties</option><option>Egyptology</option><option>Family Tours</option><option>Desert Safari</option><option>Museums</option></select>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="grid">
+
+      <!-- Guide Card 1 -->
+      <article class="card">
+        <div class="thumb">
+          <img src="https://images.unsplash.com/photo-1520975922076-3b2c46b88ba9?q=80&w=1200&auto=format&fit=crop" alt="Guide photo">
+          <span class="badge">Cairo</span>
+        </div>
+        <div class="body">
+          <h3>Mohamed Saeed</h3>
+          <div class="meta">
+            <span>Egyptologist • 14 yrs</span>
+            <span>EN / ES / AR</span>
+          </div>
+          <div class="meta"><span>Specialties:</span><span>Pyramids, Museum, Nile Cruise</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="/guide-profile.html">View Profile</a>
+          <button class="btn chat-btn" data-name="Mohamed Saeed">💬 Chat</button>
+          <a class="btn whatsapp" data-wa="201002388959">WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- Guide Card 2 -->
+      <article class="card">
+        <div class="thumb">
+          <img src="https://images.unsplash.com/photo-1618082430656-c21f8a3d8b8d?q=80&w=1200&auto=format&fit=crop" alt="Guide photo">
+          <span class="badge">Luxor</span>
+        </div>
+        <div class="body">
+          <h3>Hanaa El Masry</h3>
+          <div class="meta">
+            <span>Licensed Guide • 9 yrs</span>
+            <span>EN / FR</span>
+          </div>
+          <div class="meta"><span>Specialties:</span><span>Karnak, Valley of the Kings, Family Tours</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="/guide-profile.html">View Profile</a>
+          <button class="btn chat-btn" data-name="Hanaa El Masry">💬 Chat</button>
+          <a class="btn whatsapp" data-wa="201112223344">WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- Guide Card 3 -->
+      <article class="card">
+        <div class="thumb">
+          <img src="https://images.unsplash.com/photo-1558981444-8f9c46a6280f?q=80&w=1200&auto=format&fit=crop" alt="Guide photo">
+          <span class="badge">Aswan</span>
+        </div>
+        <div class="body">
+          <h3>Omar Naguib</h3>
+          <div class="meta">
+            <span>Senior Guide • 16 yrs</span>
+            <span>EN / IT / AR</span>
+          </div>
+          <div class="meta"><span>Specialties:</span><span>Philae, Abu Simbel, Nubian Culture</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="/guide-profile.html">View Profile</a>
+          <button class="btn chat-btn" data-name="Omar Naguib">💬 Chat</button>
+          <a class="btn whatsapp" data-wa="201223456789">WhatsApp</a>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="block">
+      <h4>Are you a guide?</h4>
+      <p>Join our experts network to get direct bookings from travelers.</p>
+      <a class="btn primary" href="/guide-signup.html">👤 Join as Guide</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <h5>Discover Our Products</h5>
+        <div class="list">
+          <a href="/tours.html">Tours & Activities</a>
+          <a href="/diving.html">Diving</a>
+          <a href="/mice.html">MICE & Conferences</a>
+          <a href="/investments.html">Investments</a>
+          <a href="/medical.html">Medical Services</a>
+        </div>
+      </div>
+      <div>
+        <h5>Meet Our Experts</h5>
+        <div class="list">
+          <a href="/guides.html">Guides</a>
+          <a href="/divers.html">Divers</a>
+        </div>
+      </div>
+      <div>
+        <h5>Support & Legal</h5>
+        <div class="list">
+          <a href="/faq.html">Help / FAQ</a>
+          <a href="/policies.html">Travel Policies</a>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms & Conditions</a>
+          <a href="/cookies.html">Cookies Policy</a>
+        </div>
+      </div>
+      <div>
+        <h5>Partners & Affiliates</h5>
+        <div class="list">
+          <a href="/partners.html">Our Partners</a>
+          <a href="/affiliate.html">Become an Affiliate</a>
+        </div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:14px">© EgyTravelMarket. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Chat Modal -->
+<div class="modal" id="chat-modal" aria-hidden="true">
+  <div class="panel">
+    <div class="hd">
+      <strong id="chat-with-name">Chat</strong>
+      <button class="btn" data-close-modal>✖</button>
+    </div>
+    <form id="chat-form">
+      <div class="bd">
+        <input type="hidden" id="chat-target" name="target">
+        <div>
+          <label>Your Name</label>
+          <input class="input" name="your_name" placeholder="Enter your name">
+        </div>
+        <div>
+          <label>Your Message</label>
+          <textarea name="message" placeholder="Type your message..."></textarea>
+        </div>
+        <div class="note">This is a demo chat. Messages will connect to your backend later.</div>
+      </div>
+      <div class="ft">
+        <button type="button" class="btn" data-close-modal>Cancel</button>
+        <button type="submit" class="btn primary">Send Message</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/assets/app.js"></script>
+</body>
+</html>
+
+5) divers.html (Directory) — same structure, Red Sea–focused
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Meet Our Professional Divers | EgyTravelMarket</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container nav">
+    <div class="brand"><div class="logo"></div><span>EgyTravelMarket</span></div>
+    <nav class="menu">
+      <a href="/index.html">Home</a>
+      <a href="/tours.html">Tours & Activities</a>
+      <a href="/packages.html">Packages</a>
+      <a href="/diving.html">Diving</a>
+      <a href="/mice.html">MICE</a>
+      <a href="/investments.html">Investments</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/divers.html" class="active">Divers</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>Meet Our Professional Divers</h1>
+    <p>PADI/SSI certified instructors & divemasters across the Red Sea. Contact directly—no login required.</p>
+
+    <div class="filters">
+      <input class="input" placeholder="Search by name">
+      <select class="select"><option>All Bases</option><option>Sharm El Sheikh</option><option>Dahab</option><option>Hurghada</option><option>Marsa Alam</option></select>
+      <select class="select"><option>All Languages</option><option>English</option><option>Arabic</option><option>French</option><option>German</option><option>Italian</option></select>
+      <select class="select"><option>Specialties</option><option>Beginner Training</option><option>Wreck Diving</option><option>Underwater Photo</option><option>Tech Diving</option></select>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="grid">
+
+      <!-- Diver 1 -->
+      <article class="card">
+        <div class="thumb">
+          <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200&auto=format&fit=crop" alt="Diver">
+          <span class="badge">Sharm El Sheikh</span>
+        </div>
+        <div class="body">
+          <h3>Sara El Khoury</h3>
+          <div class="meta">
+            <span>PADI MSDT • 11 yrs</span>
+            <span>EN / FR / AR</span>
+          </div>
+          <div class="meta"><span>Specialties:</span><span>Wrecks, Photo, Beginners</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="/diver-profile.html">View Profile</a>
+          <button class="btn chat-btn" data-name="Sara El Khoury">💬 Chat</button>
+          <a class="btn whatsapp" data-wa="201225569988">WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- Diver 2 -->
+      <article class="card">
+        <div class="thumb">
+          <img src="https://images.unsplash.com/photo-1521649412015-73b6d51f4d1d?q=80&w=1200&auto=format&fit=crop" alt="Diver">
+          <span class="badge">Hurghada</span>
+        </div>
+        <div class="body">
+          <h3>Marco Rossi</h3>
+          <div class="meta">
+            <span>SSI Instructor • 8 yrs</span>
+            <span>EN / IT</span>
+          </div>
+          <div class="meta"><span>Specialties:</span><span>Deep, Drift, Nitrox</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="/diver-profile.html">View Profile</a>
+          <button class="btn chat-btn" data-name="Marco Rossi">💬 Chat</button>
+          <a class="btn whatsapp" data-wa="201334455667">WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- Diver 3 -->
+      <article class="card">
+        <div class="thumb">
+          <img src="https://images.unsplash.com/photo-1516900557549-41557d405adf?q=80&w=1200&auto=format&fit=crop" alt="Diver">
+          <span class="badge">Dahab</span>
+        </div>
+        <div class="body">
+          <h3>Lina Farouk</h3>
+          <div class="meta">
+            <span>CMAS*** • 10 yrs</span>
+            <span>EN / AR / DE</span>
+          </div>
+          <div class="meta"><span>Specialties:</span><span>Blue Hole, Caves, Freedive</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="/diver-profile.html">View Profile</a>
+          <button class="btn chat-btn" data-name="Lina Farouk">💬 Chat</button>
+          <a class="btn whatsapp" data-wa="201556677889">WhatsApp</a>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="block">
+      <h4>Are you a diver?</h4>
+      <p>Join our Red Sea network and get direct leads from travelers.</p>
+      <a class="btn primary" href="/diver-signup.html">🤿 Join as Diver</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <h5>Discover Our Products</h5>
+        <div class="list">
+          <a href="/tours.html">Tours & Activities</a>
+          <a href="/diving.html">Diving</a>
+          <a href="/mice.html">MICE & Conferences</a>
+          <a href="/investments.html">Investments</a>
+          <a href="/medical.html">Medical Services</a>
+        </div>
+      </div>
+      <div>
+        <h5>Meet Our Experts</h5>
+        <div class="list">
+          <a href="/guides.html">Guides</a>
+          <a href="/divers.html">Divers</a>
+        </div>
+      </div>
+      <div>
+        <h5>Support & Legal</h5>
+        <div class="list">
+          <a href="/faq.html">Help / FAQ</a>
+          <a href="/policies.html">Travel Policies</a>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms & Conditions</a>
+          <a href="/cookies.html">Cookies Policy</a>
+        </div>
+      </div>
+      <div>
+        <h5>Partners & Affiliates</h5>
+        <div class="list">
+          <a href="/partners.html">Our Partners</a>
+          <a href="/affiliate.html">Become an Affiliate</a>
+        </div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:14px">© EgyTravelMarket. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Chat Modal -->
+<div class="modal" id="chat-modal" aria-hidden="true">
+  <div class="panel">
+    <div class="hd">
+      <strong id="chat-with-name">Chat</strong>
+      <button class="btn" data-close-modal>✖</button>
+    </div>
+    <form id="chat-form">
+      <div class="bd">
+        <input type="hidden" id="chat-target" name="target">
+        <div>
+          <label>Your Name</label>
+          <input class="input" name="your_name" placeholder="Enter your name">
+        </div>
+        <div>
+          <label>Your Message</label>
+          <textarea name="message" placeholder="Type your message..."></textarea>
+        </div>
+        <div class="note">This is a demo chat. Messages will connect to your backend later.</div>
+      </div>
+      <div class="ft">
+        <button type="button" class="btn" data-close-modal>Cancel</button>
+        <button type="submit" class="btn primary">Send Message</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/assets/app.js"></script>
+</body>
+</html>
+
+6) guide-profile.html (Template)
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Guide Profile — Mohamed Saeed | EgyTravelMarket</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="container nav">
+    <div class="brand"><div class="logo"></div><span>EgyTravelMarket</span></div>
+    <nav class="menu">
+      <a href="/index.html">Home</a><a href="/tours.html">Tours & Activities</a>
+      <a href="/packages.html">Packages</a><a href="/diving.html">Diving</a>
+      <a href="/mice.html">MICE</a><a href="/investments.html">Investments</a>
+      <a href="/guides.html" class="active">Guides</a><a href="/divers.html">Divers</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <section class="profile">
+    <div class="ph">
+      <img src="https://images.unsplash.com/photo-1520975922076-3b2c46b88ba9?q=80&w=1200&auto=format&fit=crop" alt="Guide photo">
+    </div>
+    <div>
+      <div class="block">
+        <h2 style="margin:0 0 6px">Mohamed Saeed</h2>
+        <div class="meta" style="margin-bottom:10px">Egyptologist & Licensed Tour Guide — Cairo</div>
+        <div class="actions">
+          <button class="btn chat-btn" data-name="Mohamed Saeed">💬 Chat</button>
+          <a class="btn whatsapp" data-wa="201002388959">WhatsApp</a>
+          <a class="btn primary" href="/tours.html">Request a Tour</a>
+        </div>
+      </div>
+
+      <div class="block">
+        <h4>About</h4>
+        <p>I’ve been guiding travelers across Egypt for 14 years with a focus on Cairo, Giza, and Nile Cruise itineraries. I love making history come alive with storytelling and insider access.</p>
+      </div>
+
+      <div class="block">
+        <h4>Details</h4>
+        <div class="kv">
+          <div>Languages</div><div>EN / ES / AR</div>
+          <div>Experience</div><div>14 years</div>
+          <div>Certifications</div><div>Ministry License #EG-13452</div>
+          <div>Specialties</div><div class="tags"><span class="tag">Pyramids</span><span class="tag">Museum</span><span class="tag">Nile Cruise</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h4>Gallery</h4>
+        <div class="meta">Add images later.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <h5>Discover Our Products</h5>
+        <div class="list">
+          <a href="/tours.html">Tours & Activities</a>
+          <a href="/diving.html">Diving</a><a href="/mice.html">MICE & Conferences</a>
+          <a href="/investments.html">Investments</a><a href="/medical.html">Medical Services</a>
+        </div>
+      </div>
+      <div>
+        <h5>Meet Our Experts</h5>
+        <div class="list">
+          <a href="/guides.html">Guides</a><a href="/divers.html">Divers</a>
+        </div>
+      </div>
+      <div>
+        <h5>Support & Legal</h5>
+        <div class="list">
+          <a href="/faq.html">Help / FAQ</a><a href="/policies.html">Travel Policies</a>
+          <a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms & Conditions</a><a href="/cookies.html">Cookies Policy</a>
+        </div>
+      </div>
+      <div>
+        <h5>Partners & Affiliates</h5>
+        <div class="list">
+          <a href="/partners.html">Our Partners</a><a href="/affiliate.html">Become an Affiliate</a>
+        </div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:14px">© EgyTravelMarket. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Chat Modal -->
+<div class="modal" id="chat-modal" aria-hidden="true">
+  <div class="panel">
+    <div class="hd">
+      <strong id="chat-with-name">Chat</strong>
+      <button class="btn" data-close-modal>✖</button>
+    </div>
+    <form id="chat-form">
+      <div class="bd">
+        <input type="hidden" id="chat-target" name="target">
+        <div><label>Your Name</label><input class="input" name="your_name" placeholder="Enter your name"></div>
+        <div><label>Your Message</label><textarea name="message" placeholder="Type your message..."></textarea></div>
+        <div class="note">This is a demo chat. Messages will connect to your backend later.</div>
+      </div>
+      <div class="ft">
+        <button type="button" class="btn" data-close-modal>Cancel</button>
+        <button type="submit" class="btn primary">Send Message</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/assets/app.js"></script>
+</body>
+</html>
+
+7) diver-profile.html (Template)
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Diver Profile — Sara El Khoury | EgyTravelMarket</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container nav">
+    <div class="brand"><div class="logo"></div><span>EgyTravelMarket</span></div>
+    <nav class="menu">
+      <a href="/index.html">Home</a><a href="/tours.html">Tours & Activities</a>
+      <a href="/packages.html">Packages</a><a href="/diving.html">Diving</a>
+      <a href="/mice.html">MICE</a><a href="/investments.html">Investments</a>
+      <a href="/guides.html">Guides</a><a href="/divers.html" class="active">Divers</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <section class="profile">
+    <div class="ph">
+      <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200&auto=format&fit=crop" alt="Diver photo">
+    </div>
+    <div>
+      <div class="block">
+        <h2 style="margin:0 0 6px">Sara El Khoury</h2>
+        <div class="meta" style="margin-bottom:10px">PADI MSDT — Sharm El Sheikh</div>
+        <div class="actions">
+          <button class="btn chat-btn" data-name="Sara El Khoury">💬 Chat</button>
+          <a class="btn whatsapp" data-wa="201225569988">WhatsApp</a>
+          <a class="btn primary" href="/diving.html">Request a Dive</a>
+        </div>
+      </div>
+
+      <div class="block">
+        <h4>About</h4>
+        <p>MSDT instructor with 11 years in the Red Sea. I run beginner training, wreck specialties, and underwater photography workshops.</p>
+      </div>
+
+      <div class="block">
+        <h4>Details</h4>
+        <div class="kv">
+          <div>Languages</div><div>EN / FR / AR</div>
+          <div>Experience</div><div>11 years</div>
+          <div>Certifications</div><div>PADI MSDT #46532, EFR Instructor</div>
+          <div>Specialties</div><div class="tags"><span class="tag">Wreck</span><span class="tag">Photo</span><span class="tag">Beginner</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h4>Gallery</h4>
+        <div class="meta">Add images later.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Footer & Modal same as other pages -->
+<footer class="footer">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <h5>Discover Our Products</h5>
+        <div class="list">
+          <a href="/tours.html">Tours & Activities</a>
+          <a href="/diving.html">Diving</a><a href="/mice.html">MICE & Conferences</a>
+          <a href="/investments.html">Investments</a><a href="/medical.html">Medical Services</a>
+        </div>
+      </div>
+      <div>
+        <h5>Meet Our Experts</h5>
+        <div class="list"><a href="/guides.html">Guides</a><a href="/divers.html">Divers</a></div>
+      </div>
+      <div>
+        <h5>Support & Legal</h5>
+        <div class="list">
+          <a href="/faq.html">Help / FAQ</a><a href="/policies.html">Travel Policies</a>
+          <a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms & Conditions</a><a href="/cookies.html">Cookies Policy</a>
+        </div>
+      </div>
+      <div>
+        <h5>Partners & Affiliates</h5>
+        <div class="list"><a href="/partners.html">Our Partners</a><a href="/affiliate.html">Become an Affiliate</a></div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:14px">© EgyTravelMarket. All rights reserved.</p>
+  </div>
+</footer>
+
+<div class="modal" id="chat-modal" aria-hidden="true">
+  <div class="panel">
+    <div class="hd"><strong id="chat-with-name">Chat</strong><button class="btn" data-close-modal>✖</button></div>
+    <form id="chat-form">
+      <div class="bd">
+        <input type="hidden" id="chat-target" name="target">
+        <div><label>Your Name</label><input class="input" name="your_name" placeholder="Enter your name"></div>
+        <div><label>Your Message</label><textarea name="message" placeholder="Type your message..."></textarea></div>
+        <div class="note">This is a demo chat. Messages will connect to your backend later.</div>
+      </div>
+      <div class="ft"><button type="button" class="btn" data-close-modal>Cancel</button><button type="submit" class="btn primary">Send Message</button></div>
+    </form>
+  </div>
+</div>
+
+<script src="/assets/app.js"></script>
+</body>
+</html>
+
+8) guide-signup.html and diver-signup.html
+
+(Use the same layout; change headings as needed.)
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Join as Guide | EgyTravelMarket</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container nav">
+    <div class="brand"><div class="logo"></div><span>EgyTravelMarket</span></div>
+    <nav class="menu">
+      <a href="/index.html">Home</a><a href="/guides.html" class="active">Guides</a><a href="/divers.html">Divers</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>Join as Guide</h1>
+    <p>Create your profile, get a public link, and receive direct inquiries.</p>
+  </div>
+</section>
+
+<section class="form container">
+  <form>
+    <div class="form-grid">
+      <div><label>Full Name</label><input class="input" placeholder="e.g., Mohamed Saeed"></div>
+      <div><label>Email</label><input class="input" type="email" placeholder="name@example.com"></div>
+      <div><label>Phone / WhatsApp</label><input class="input" placeholder="+20 1XX XXX XXXX"></div>
+      <div><label>Location</label><input class="input" placeholder="Cairo"></div>
+      <div><label>Languages</label><input class="input" placeholder="EN / AR / ES"></div>
+      <div><label>Years of Experience</label><input class="input" type="number" min="0" placeholder="12"></div>
+      <div style="grid-column:1/-1"><label>Certifications</label><input class="input" placeholder="Ministry License #..."></div>
+      <div style="grid-column:1/-1"><label>Profile Photo (URL for now)</label><input class="input" placeholder="https://..."></div>
+      <div style="grid-column:1/-1"><label>Short Bio</label><textarea placeholder="Tell travelers about yourself..."></textarea></div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:10px">
+      <button type="button" class="btn primary">Submit Application</button>
+      <a class="btn" href="/guides.html">Back</a>
+    </div>
+    <p class="note">After submission, our team will review and publish your profile. (Demo only for now.)</p>
+  </form>
+</section>
+
+<!-- Footer & Modal (optional here) -->
+<footer class="footer">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <h5>Discover Our Products</h5>
+        <div class="list">
+          <a href="/tours.html">Tours & Activities</a><a href="/diving.html">Diving</a>
+          <a href="/mice.html">MICE & Conferences</a><a href="/investments.html">Investments</a>
+          <a href="/medical.html">Medical Services</a>
+        </div>
+      </div>
+      <div>
+        <h5>Meet Our Experts</h5>
+        <div class="list"><a href="/guides.html">Guides</a><a href="/divers.html">Divers</a></div>
+      </div>
+      <div>
+        <h5>Support & Legal</h5>
+        <div class="list"><a href="/faq.html">Help / FAQ</a><a href="/policies.html">Travel Policies</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms & Conditions</a><a href="/cookies.html">Cookies Policy</a></div>
+      </div>
+      <div>
+        <h5>Partners & Affiliates</h5>
+        <div class="list"><a href="/partners.html">Our Partners</a><a href="/affiliate.html">Become an Affiliate</a></div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:14px">© EgyTravelMarket. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
+
+
+Duplicate this file as diver-signup.html and change the title/heading to “Join as Diver”.
+
+9) Home Page Snippets (to place where you asked)
+A) Header menu
+
+(already included above — ensures “Guides” and “Divers” appear in the top menu).
+
+B) Footer — “Meet Our Experts” 2-line list
+
+(already included above — exactly two links under the heading).
+
+C) “Explore Our Products” — add two cards (Guides & Divers)
+<!-- Place this inside your existing Explore Our Products grid -->
+<article class="card">
+  <div class="thumb">
+    <img src="https://images.unsplash.com/photo-1531736275454-adc48d079ce9?q=80&w=1200&auto=format&fit=crop" alt="Guide">
+    <span class="badge">Experts</span>
+  </div>
+  <div class="body">
+    <h3>Meet Our Guides</h3>
+    <p class="small">Certified, multilingual Egypt experts for your tours.</p>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="/guides.html">Explore Guides</a>
+  </div>
+</article>
+
+<article class="card">
+  <div class="thumb">
+    <img src="https://images.unsplash.com/photo-1544551763-7ef42080abc7?q=80&w=1200&auto=format&fit=crop" alt="Divers">
+    <span class="badge">Experts</span>
+  </div>
+  <div class="body">
+    <h3>Meet Our Divers</h3>
+    <p class="small">PADI/SSI certified Red Sea instructors & divemasters.</p>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="/divers.html">Explore Divers</a>
+  </div>
+</article>
+
+D) “Body sections like Diving / Investments / MICE”
+
+Add a small “Experts” row under those sections:
+
+<section class="container" style="margin-top:28px">
+  <div class="grid">
+    <article class="card">
+      <div class="body">
+        <h3>Need a Guide for this?</h3>
+        <p class="small">Hire a specialist to personalize your itinerary.</p>
+      </div>
+      <div class="actions"><a class="btn primary" href="/guides.html">Find a Guide</a></div>
+    </article>
+    <article class="card">
+      <div class="body">
+        <h3>Planning a Dive?</h3>
+        <p class="small">Connect with certified instructors for any level.</p>
+      </div>
+      <div class="actions"><a class="btn primary" href="/divers.html">Find a Diver</a></div>
+    </article>
+  </div>
+</section>
+
+How to use (quick):
+
+Create folders/files:
+
+/assets/styles.css
+/assets/app.js
+/guides.html
+/divers.html
+/guide-profile.html
+/diver-profile.html
+/guide-signup.html
+/diver-signup.html
+
+
+Paste code above into each file.
+
+Make sure your other pages’ header/footer include the same links.
+
+Replace the placeholder WhatsApp numbers (data-wa="2010...) with real numbers per profile.

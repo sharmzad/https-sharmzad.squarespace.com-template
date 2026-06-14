@@ -1,0 +1,109 @@
+1) Bring the traveler + orbit back on mobile (and scale it down)
+A) In styles.css add/replace these rules
+
+Give the circle CSS variables so we can resize by screen
+
+/* Journey circle base */
+.journey-circle{
+  --chips: 9;           /* number of orbiting chips */
+  --radius: 265px;      /* default desktop orbit radius */
+}
+
+
+Make orbit chips read the radius from the circle (remove any old --radius inside .orbit-chip if you have it)
+
+.orbit-chip{
+  position: absolute;
+  top: 50%; left: 50%;
+  transform:
+    rotate(calc(360deg/var(--chips) * var(--i)))
+    translate(var(--radius))
+    rotate(calc(-360deg/var(--chips) * var(--i)));
+  transform-origin: center;
+  /* ...keep the rest of your styles (bg, color, shadow, animation)... */
+}
+
+
+Mobile breakpoints: shrink the circle, center image, and chips
+(also removes the old display:none you added earlier)
+
+/* Small phones */
+@media (max-width: 480px){
+  .journey-circle{
+    display:block !important;
+    width: 280px; height: 280px; margin: 0 auto 16px;
+    --radius: 110px;                /* tighter orbit */
+  }
+  .traveler-center{ width: 80px; height: 80px; }
+  .traveler-center img{ width: 70%; }
+  .orbit-chip{ font-size: 12px; padding: 6px 8px; animation-duration: 28s; }
+}
+
+/* Large phones / small tablets */
+@media (min-width: 481px) and (max-width: 768px){
+  .journey-circle{
+    display:block !important;
+    width: 340px; height: 340px; margin: 0 auto 18px;
+    --radius: 135px;
+  }
+  .traveler-center{ width: 100px; height: 100px; }
+  .orbit-chip{ font-size: 13px; padding: 7px 10px; animation-duration: 32s; }
+}
+
+
+(Optional perf) Pause motion for users who prefer less animation
+
+@media (prefers-reduced-motion: reduce){
+  .orbit-chip{ animation: none !important; }
+}
+
+
+Tip: if your traveler image is heavy, convert it to WEBP and name it images/traveler-vector.webp, then in HTML:
+
+<img src="images/traveler-vector.webp" alt="Traveler" width="160" height="160" loading="lazy" decoding="async">
+
+2) Make the other package sections dark/glassy (no more “white windows”)
+
+We’ll keep Package A white (form readability), and make the rest dark glass to match your blue theme.
+
+In pages/package-tours.html (inside the <style> tag), append:
+/* Blue background already set with .package-page */
+#packageA.pkg-card{
+  background:#ffffff; color:#1d2f4f;
+}
+.package-page .pkg-card:not(#packageA){
+  background: rgba(8, 34, 92, 0.6);      /* deep blue glass */
+  color:#fff;
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(4px);
+}
+.package-page .pkg-card:not(#packageA) h2,
+.package-page .pkg-card:not(#packageA) h3{
+  color:#ffffff !important;
+}
+.package-page .pkg-card:not(#packageA) p{
+  opacity:.95;
+}
+
+
+If you still see faint text, you may have a global opacity somewhere — these rules force strong, readable colors.
+
+3) Keep all top links working on mobile/desktop (no 404s)
+
+You already added the <base> tags, but just in case, keep this guard script at the bottom of both index.html and pages/package-tours.html:
+
+<script>
+/* Replit 404 guard: rewrite any leading-slash links to relative */
+(function () {
+  const inSub = location.pathname.includes('/pages/');
+  document.querySelectorAll('a[href^="/"]').forEach(a=>{
+    const raw = a.getAttribute('href');
+    if (raw === '/') { a.setAttribute('href', inSub ? '../index.html' : './'); return; }
+    if (raw.startsWith('/pages/')) { a.setAttribute('href', inSub ? '..'+raw : '.'+raw); return; }
+    a.setAttribute('href', (inSub ? '../' : './') + raw.replace(/^\//, ''));
+  });
+})();
+</script>
+
+
+This guarantees Logo, Home, Deals, and every header/footer item won’t 404 from the packages page.

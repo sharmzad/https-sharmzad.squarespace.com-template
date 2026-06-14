@@ -1,0 +1,116 @@
+Task: Enhance Travel Agency Search Filter (B2B + B2C Ready)
+
+Page: travel-agencies.html
+
+Goal:
+Make agency search work for BOTH travelers and B2B partners
+(foreign agencies, tour operators, handling partners).
+
+---
+
+FILTER GROUPS TO IMPLEMENT
+
+1) Egypt Destinations Covered (PRIMARY)
+Checkboxes:
+- Cairo
+- Giza
+- Luxor
+- Aswan
+- Alexandria
+- Hurghada
+- Sharm El Sheikh
+- Marsa Alam
+- Dahab
+- Siwa Oasis
+- Nile Cruises
+- Red Sea (General)
+
+Source field:
+egypt_destinations_operated_in[]
+
+---
+
+2) Products & Services Offered
+Checkboxes:
+- Tours & Packages
+- Day Tours & Excursions
+- Nile Cruises
+- Hotels / Accommodation
+- Transportation
+- Diving Packages
+- Safari & Adventure
+- MICE / Groups / Incentives
+- Luxury Travel
+- Budget Travel
+- Private / Tailor-Made Tours
+- Group Travel
+- Ground Handling
+
+Source field:
+products_services_offered[]
+
+---
+
+3) Agency Business Type (B2B-CRITICAL)
+Checkboxes (multi-select):
+- DMC (Local Handling Agent)
+- Tour Operator
+- Travel Agency
+
+Source field:
+business_type
+
+Do NOT restrict to single select.
+
+---
+
+4) Agency Base
+- Egypt-based Agency
+- International Agency (selling Egypt)
+
+Source field:
+company_based_in
+
+---
+
+5) Experience Level (Optional)
+Dropdown:
+- Any
+- 1–3 years
+- 4–7 years
+- 8–15 years
+- 15+ years
+
+Source field:
+years_in_business
+
+---
+
+REMOVE FROM SEARCH FILTERS:
+- License number
+- Tax/VAT number
+- Website URL
+- Country of registration
+- City of registration
+- License document upload
+
+These stay profile/admin only.
+
+---
+
+FILTER BEHAVIOR REQUIREMENTS:
+- Filters must be combinable (AND logic)
+- Results update dynamically
+- All filter values must be readable/visible (dark theme safe)
+- No duplicated or overlapping filters
+
+---
+
+AGENCY CARD REQUIREMENTS:
+Each result card should show:
+- Agency name
+- Business type badge (DMC / Tour Operator / Travel Agency)
+- Egypt-based / International badge
+- Top destinations
+- Top services
+- View Profile CTA

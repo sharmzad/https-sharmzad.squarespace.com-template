@@ -1,0 +1,145 @@
+ASK: REMOVE DUPLICATION IN AGENCY EDIT PROFILE (KEEP ALL OTHER FIELDS)
+
+Page: Agency Dashboard → Edit Profile
+
+IMPORTANT RULES
+
+❌ Do NOT change backend logic
+
+❌ Do NOT rename DB keys
+
+❌ Do NOT remove working fields
+
+❌ Do NOT touch jobs, payments, auth
+
+✅ ONLY fix duplication + clarify field meaning
+
+✅ Ensure all fields remain readable & visible
+
+1️⃣ DUPLICATION FOUND (DESTINATION VS LOCATION)
+CURRENT ISSUE
+
+There is duplication between:
+
+Main Location (text field, e.g. “Cairo, Egypt”)
+
+Egypt Destination Focus → Egypt Destinations You Operate In (checkbox list)
+
+Both are currently describing where the agency operates, which is incorrect and will break filters later.
+
+2️⃣ REQUIRED FIX (VERY IMPORTANT)
+✅ KEEP BOTH FIELDS — BUT WITH CLEAR DIFFERENT MEANING
+A) Main Location
+
+KEEP the field
+
+Its meaning must be HEAD OFFICE / REGISTERED OFFICE LOCATION ONLY
+
+One city only (administrative location)
+
+Example placeholder:
+
+“e.g. Cairo, Egypt”
+
+It must NOT represent destinations or operating areas
+
+👉 If possible, update the label only (NOT DB key) to:
+
+Head Office Location or Registered Office Location
+
+B) Egypt Destination Focus → Egypt Destinations You Operate In
+
+KEEP this section exactly as it is
+
+This is the ONLY place where destinations are selected
+
+Multi-select checkboxes (Cairo, Giza, Sharm, Hurghada, Luxor, Aswan, Nile Cruises, etc.)
+
+❌ Do NOT duplicate destinations anywhere else
+
+3️⃣ SERVICES / PRODUCTS CONFIRMATION
+KEEP (NO CHANGE)
+
+Products & Services Offered (checkbox list)
+
+This is the ONLY services section.
+
+❌ Do NOT add:
+
+Services free-text
+
+Specialties free-text that duplicates services
+
+4️⃣ CONFIRM KEEPING ALL OTHER FIELDS (NO REMOVAL)
+
+Please KEEP all of the following as they are:
+
+Company Name
+
+Company Description
+
+Years in Business
+
+Country of Registration
+
+City of Registration
+
+Company Based In (Egypt / Outside Egypt)
+
+Business Type (Travel Agency / Tour Operator / DMC)
+
+License Number
+
+Upload License
+
+Tax / VAT Number
+
+Website URL
+
+Email
+
+WhatsApp
+
+Logo
+
+Profile Photo
+
+Cover Photo
+
+Social Media Links
+
+Languages Operated In
+
+None of these are duplicated — do NOT remove them.
+
+5️⃣ READABILITY / VISIBILITY (MANDATORY)
+
+Ensure all inputs, labels, and checkboxes are readable on dark theme.
+
+If not already applied, use:
+
+select,
+select option {
+  background-color: #0f1f2f;
+  color: #ffffff;
+}
+
+input,
+textarea,
+label {
+  color: #ffffff;
+}
+
+6️⃣ EXPECTED RESULT
+
+Main Location = office only
+
+Egypt Destination Focus = destinations only
+
+No duplicated meaning
+
+All other fields remain untouched
+
+No system logic affected
+
+✅ END OF TASK

@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trip Details | EgTravelMarket</title>
+  <meta name="description" content="View trip details and book your next adventure with verified travel experts and agencies in Egypt.">
+  <link rel="canonical" href="https://www.egtravelmarket.com/trip/">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <style>
+    :root {
+      --primary: #2ea6ff;
+      --accent: #00d4ff;
+      --text: #e8f1ff;
+      --muted: #a9bcd8;
+      --card: #1a2332;
+      --border: rgba(255,255,255,.08);
+      --success: #22c55e;
+      --warning: #f59e0b;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #0f1419 0%, #1a2332 100%);
+      color: var(--text);
+      min-height: 100vh;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 20px;
+      font-size: 0.95em;
+    }
+    .back-link:hover { color: var(--accent); }
+    
+    .loading-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    .loading-state .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    .error-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #ef4444;
+    }
+    
+    .trip-hero {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+    .trip-hero img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+    .trip-hero-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      padding: 30px;
+    }
+    .trip-title {
+      font-size: 2em;
+      font-weight: 700;
+      margin: 0 0 10px;
+      color: white;
+    }
+    .trip-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95em;
+    }
+    .trip-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .trip-content {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 30px;
+    }
+    @media (max-width: 900px) {
+      .trip-content { grid-template-columns: 1fr; }
+    }
+    
+    .trip-main section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .trip-main h2 {
+      font-size: 1.3em;
+      margin: 0 0 16px;
+      color: var(--accent);
+    }
+    .trip-main p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+      white-space: pre-wrap;
+    }
+    
+    .list-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .list-section li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .list-section li:last-child { border-bottom: none; }
+    .list-section .icon-check { color: var(--success); }
+    .list-section .icon-x { color: #ef4444; }
+    
+    .trip-sidebar {
+      position: sticky;
+      top: 20px;
+    }
+    
+    .booking-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .price-display {
+      font-size: 2em;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .price-display span {
+      font-size: 0.5em;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .kids-price {
+      font-size: 0.9em;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    
+    .book-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(46, 166, 255, 0.3);
+    }
+    
+    .creator-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .creator-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .creator-photo {
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .creator-info h3 {
+      margin: 0 0 4px;
+      font-size: 1.1em;
+    }
+    .creator-info .type-badge {
+      font-size: 0.75em;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    .type-badge.expert { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+    .type-badge.agency { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
+    .creator-bio {
+      color: var(--muted);
+      font-size: 0.9em;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .view-profile-btn {
+      display: block;
+      text-align: center;
+      padding: 12px;
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .view-profile-btn:hover { background: rgba(255,255,255,0.15); }
+    
+    .policy-note {
+      font-size: 0.85em;
+      color: var(--muted);
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+<div id="header-container"></div>
+
+<div class="container">
+  <a href="/expert-trips-marketplace.html" class="back-link">← Back to All Trips</a>
+  
+  <div id="loading-state" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading trip details...</p>
+  </div>
+  
+  <div id="error-state" class="error-state" style="display: none;">
+    <h2>Trip Not Found</h2>
+    <p>The trip you're looking for doesn't exist or has been removed.</p>
+    <a href="/expert-trips-marketplace.html" class="back-link" style="justify-content: center; margin-top: 20px;">Browse All Trips →</a>
+  </div>
+  
+  <div id="trip-content" style="display: none;">
+    <div class="trip-hero">
+      <img id="trip-image" src="" alt="">
+      <div class="trip-hero-overlay">
+        <h1 id="trip-title" class="trip-title"></h1>
+        <div class="trip-meta">
+          <span id="trip-location">📍 </span>
+          <span id="trip-duration">📅 </span>
+          <span id="trip-group">👥 </span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="trip-content">
+      <div class="trip-main">
+        <section>
+          <h2>About This Trip</h2>
+          <p id="trip-description"></p>
+        </section>
+        
+        <section id="highlights-section" class="list-section" style="display: none;">
+          <h2>Highlights</h2>
+          <ul id="highlights-list"></ul>
+        </section>
+        
+        <section id="included-section" class="list-section" style="display: none;">
+          <h2>What's Included</h2>
+          <ul id="included-list"></ul>
+        </section>
+        
+        <section id="excluded-section" class="list-section" style="display: none;">
+          <h2>What's Not Included</h2>
+          <ul id="excluded-list"></ul>
+        </section>
+        
+        <section id="requirements-section" class="list-section" style="display: none;">
+          <h2>Requirements</h2>
+          <ul id="requirements-list"></ul>
+        </section>
+      </div>
+      
+      <div class="trip-sidebar">
+        <div class="booking-card">
+          <div class="price-display" id="trip-price">$0 <span>per person</span></div>
+          <div class="kids-price" id="kids-price-display" style="display: none;"></div>
+          <button class="book-btn" onclick="startBooking()">Book This Trip</button>
+          <div class="policy-note" id="policy-note"></div>
+        </div>
+        
+        <div class="creator-card">
+          <div class="creator-header">
+            <img id="creator-photo" class="creator-photo" src="" alt="">
+            <div class="creator-info">
+              <h3 id="creator-name"></h3>
+              <span id="creator-type-badge" class="type-badge"></span>
+            </div>
+          </div>
+          <p id="creator-bio" class="creator-bio"></p>
+          <a id="creator-profile-link" href="" class="view-profile-btn">View Full Profile</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="footer-container"></div>
+
+<script>
+const API_BASE = window.location.hostname.includes('localhost') || window.location.hostname.includes('127.0.0.1') || window.location.hostname.includes('.replit')
+  ? ''
+  : '';
+
+let currentTrip = null;
+
+async function loadTrip() {
+  const pathParts = window.location.pathname.split('/');
+  const tripSlugOrId = pathParts[pathParts.length - 1];
+  
+  if (!tripSlugOrId) {
+    showError();
+    return;
+  }
+  
+  try {
+    // First try expert-trips API (for expert/agency created trips)
+    let response = await fetch(`${API_BASE}/api/expert-trips/${tripSlugOrId}`);
+    
+    if (response.ok) {
+      const data = await response.json();
+      currentTrip = data.trip || data;
+      currentTrip.tripSource = 'expert-trips';
+      renderTrip(currentTrip);
+      return;
+    }
+    
+    // Fall back to regular trips API (for admin-created trips with slugs)
+    response = await fetch(`${API_BASE}/api/trips/${tripSlugOrId}`);
+    
+    if (response.ok) {
+      const data = await response.json();
+      currentTrip = data.trip || data;
+      currentTrip.tripSource = 'trips';
+      renderTrip(currentTrip);
+      return;
+    }
+    
+    showError();
+  } catch (error) {
+    console.error('Failed to load trip:', error);
+    showError();
+  }
+}
+
+function renderTrip(trip) {
+  document.getElementById('loading-state').style.display = 'none';
+  document.getElementById('trip-content').style.display = 'block';
+  
+  document.title = `${trip.title} | EgTravelMarket`;
+  
+  // Handle different image field names from different APIs
+  const heroImg = document.getElementById('trip-image');
+  heroImg.src = trip.image || trip.imageUrl || trip.main_image || trip.mainImage || '/attached_assets/guides-sphinx.webp';
+  heroImg.alt = trip.title;
+  
+  document.getElementById('trip-title').textContent = trip.title;
+  document.getElementById('trip-location').textContent = `📍 ${trip.location || 'Egypt'}`;
+  
+  // Handle duration from different sources
+  const duration = trip.duration || trip.duration_text || trip.durationText || '?';
+  document.getElementById('trip-duration').textContent = `📅 ${duration}`;
+  
+  const groupSize = trip.max_group_size || trip.maxGroupSize || trip.group_size || '?';
+  document.getElementById('trip-group').textContent = `👥 Max ${groupSize} people`;
+  
+  document.getElementById('trip-description').textContent = trip.description || 'No description available.';
+  
+  const currency = trip.currency || 'USD';
+  const currencySymbol = currency === 'EGP' ? 'EGP ' : '$';
+  
+  // Handle price from different sources
+  const price = trip.price || trip.adult_price || trip.adultPrice || 0;
+  document.getElementById('trip-price').innerHTML = `${currencySymbol}${price} <span>per person</span>`;
+  
+  const kidsPrice = trip.kids_price || trip.kidsPrice || trip.child_price || trip.childPrice;
+  if (kidsPrice) {
+    document.getElementById('kids-price-display').style.display = 'block';
+    document.getElementById('kids-price-display').textContent = `Kids (under 12): ${currencySymbol}${kidsPrice}`;
+  }
+  
+  if (trip.highlights && trip.highlights.length > 0) {
+    document.getElementById('highlights-section').style.display = 'block';
+    const list = document.getElementById('highlights-list');
+    list.innerHTML = trip.highlights.map(h => `<li><span class="icon-check">✓</span> ${escapeHtml(h)}</li>`).join('');
+  }
+  
+  if (trip.included_services && trip.included_services.length > 0) {
+    document.getElementById('included-section').style.display = 'block';
+    const list = document.getElementById('included-list');
+    list.innerHTML = trip.included_services.map(s => `<li><span class="icon-check">✓</span> ${escapeHtml(s)}</li>`).join('');
+  }
+  
+  if (trip.excluded_services && trip.excluded_services.length > 0) {
+    document.getElementById('excluded-section').style.display = 'block';
+    const list = document.getElementById('excluded-list');
+    list.innerHTML = trip.excluded_services.map(s => `<li><span class="icon-x">✗</span> ${escapeHtml(s)}</li>`).join('');
+  }
+  
+  if (trip.requirements && trip.requirements.length > 0) {
+    document.getElementById('requirements-section').style.display = 'block';
+    const list = document.getElementById('requirements-list');
+    list.innerHTML = trip.requirements.map(r => `<li><span>•</span> ${escapeHtml(r)}</li>`).join('');
+  }
+  
+  if (trip.cancellation_policy) {
+    document.getElementById('policy-note').textContent = `Cancellation: ${trip.cancellation_policy}`;
+  }
+  
+  const creatorCard = document.querySelector('.creator-card');
+  const creatorPhoto = document.getElementById('creator-photo');
+  const creatorName = document.getElementById('creator-name');
+  const creatorBadge = document.getElementById('creator-type-badge');
+  const creatorBio = document.getElementById('creator-bio');
+  const profileLink = document.getElementById('creator-profile-link');
+  
+  // Check if this is from the regular trips API (no creator info)
+  if (trip.tripSource === 'trips') {
+    // Hide creator card for regular trips (admin-created, no specific creator)
+    creatorCard.innerHTML = `
+      <div style="text-align: center; padding: 20px;">
+        <div style="font-size: 2em; margin-bottom: 10px;">🏛️</div>
+        <h3 style="margin: 0 0 8px;">EgTravelMarket</h3>
+        <span class="type-badge" style="background: rgba(234, 179, 8, 0.2); color: #eab308;">CURATED TRIP</span>
+        <p style="color: var(--muted); font-size: 0.9em; margin-top: 12px;">This trip is curated by EgTravelMarket for quality travel experiences in Egypt.</p>
+      </div>
+    `;
+    return;
+  }
+  
+  const isAgency = trip.created_by_type === 'agency' || trip.createdByType === 'agency';
+  
+  if (isAgency) {
+    creatorPhoto.src = trip.creator_photo || trip.profile_photo || '/attached_assets/guides-sphinx.webp';
+    creatorName.textContent = trip.creator_name || trip.company_name || 'Travel Agency';
+    creatorBadge.textContent = 'TRAVEL AGENCY';
+    creatorBadge.className = 'type-badge agency';
+    creatorBio.textContent = trip.bio ? (trip.bio.length > 150 ? trip.bio.substring(0, 150) + '...' : trip.bio) : 'Professional travel agency';
+    profileLink.href = `/agency/${trip.creator_slug || trip.agency_id}`;
+  } else {
+    creatorPhoto.src = trip.profile_photo || trip.expertInfo?.photo || '/attached_assets/guides-sphinx.webp';
+    creatorName.textContent = trip.expert_name || trip.creator_name || trip.expertInfo?.name || 'Travel Expert';
+    
+    const expertType = trip.expert_type || '';
+    const typeLabel = expertType === 'guide' ? 'Tour Guide' : expertType === 'diver' ? 'Diving Instructor' : expertType === 'mentor' ? 'Travel Mentor' : 'Expert';
+    creatorBadge.textContent = typeLabel.toUpperCase();
+    creatorBadge.className = 'type-badge expert';
+    creatorBio.textContent = trip.bio ? (trip.bio.length > 150 ? trip.bio.substring(0, 150) + '...' : trip.bio) : 'Verified travel expert';
+    profileLink.href = `/${trip.expert_type}/${trip.creator_slug || trip.expert_slug || trip.expert_profile_id}`;
+  }
+}
+
+function showError() {
+  document.getElementById('loading-state').style.display = 'none';
+  document.getElementById('error-state').style.display = 'block';
+}
+
+function startBooking() {
+  if (!currentTrip) return;
+  
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  if (!user.token) {
+    window.location.href = `/login.html?redirect=${encodeURIComponent(window.location.pathname)}&action=book`;
+    return;
+  }
+  
+  // Different booking flow based on trip source
+  if (currentTrip.tripSource === 'trips') {
+    // Regular trips use a different booking page
+    window.location.href = `/book-your-trip.html?trip=${currentTrip.slug || currentTrip.id}`;
+  } else {
+    // Expert/agency trips use the marketplace
+    window.location.href = `/expert-trips-marketplace.html?book=${currentTrip.id}`;
+  }
+}
+
+function escapeHtml(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('/header.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('header-container').innerHTML = html;
+      const script = document.createElement('script');
+      script.src = '/header.min.js';
+      document.body.appendChild(script);
+    })
+    .catch(e => console.log('Header load error:', e));
+  
+  fetch('/footer.html')
+    .then(r => r.text())
+    .then(html => document.getElementById('footer-container').innerHTML = html)
+    .catch(e => console.log('Footer load error:', e));
+  
+  loadTrip();
+});
+</script>
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

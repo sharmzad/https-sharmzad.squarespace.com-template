@@ -1,0 +1,79 @@
+Now we start HOMEPAGE SEO optimization only.
+
+IMPORTANT:
+- Do NOT change layout, colors, or navbar
+- Do NOT move sections
+- Do NOT change CTA destinations
+- This is SEO structure & text only
+
+====================================
+1) H1 STRUCTURE (VERY IMPORTANT)
+====================================
+
+Homepage must have ONLY ONE H1:
+
+H1:
+Egypt’s All-in-One Travel Marketplace
+
+Remove or downgrade any other H1s to H2 or H3.
+
+====================================
+2) H2 STRUCTURE (KEEP EXISTING SECTIONS)
+====================================
+
+Ensure the following section titles are H2:
+
+- What is EgTravelMarket?
+- Traveler Requests — Let Experts Compete for You
+- Local Experts Marketplace
+- Travel Agencies & Dive Centers
+- B2B Ground Handling & Local Representation in Egypt
+- MICE, Corporate Travel & Team Building
+- Official EgTravelMarket Trips & Packages
+
+====================================
+3) META TITLE & DESCRIPTION
+====================================
+
+Set homepage meta title to:
+EgTravelMarket | Egypt Travel Marketplace, Trips, DMC & MICE
+
+Set meta description to:
+Plan your Egypt trip with EgTravelMarket. Book official trips, post custom travel requests, and connect with guides, dive centers, DMCs, and MICE partners.
+
+====================================
+4) FAQ SCHEMA (ADD BELOW HOMEPAGE CONTENT)
+====================================
+
+Add FAQ schema with the following questions and short answers:
+
+Q1: What is EgTravelMarket?
+A: EgTravelMarket is an Egypt-focused travel marketplace connecting travelers with official trips, local experts, agencies, dive centers, and corporate travel partners.
+
+Q2: Can I post a travel request without signing up?
+A: Yes. Travelers can post a travel request without creating an account and receive offers from verified providers.
+
+Q3: Are trips offered by EgTravelMarket official?
+A: Yes. All trips and packages shown on the homepage are curated and operated directly by EgTravelMarket with fixed pricing.
+
+Q4: How does EgTravelMarket protect payments?
+A: Payments are secured by EgTravelMarket and released to providers only after the traveler confirms satisfaction.
+
+Q5: Can agencies and companies work with EgTravelMarket?
+A: Yes. Travel agencies, dive centers, DMCs, and corporate partners can collaborate with EgTravelMarket through dedicated service pages and tailored programs.
+
+====================================
+5) INTERNAL LINKS (NO NEW LINKS)
+====================================
+
+Ensure existing homepage links remain unchanged:
+- /travel-request.html
+- /guides.html
+- /divers.html
+- /mentor.html
+- /travel-agencies.html
+- /jobs-marketplace.html
+
+Do not add new links at this stage.
+
+Once this is done, confirm and do not proceed with any other SEO changes.

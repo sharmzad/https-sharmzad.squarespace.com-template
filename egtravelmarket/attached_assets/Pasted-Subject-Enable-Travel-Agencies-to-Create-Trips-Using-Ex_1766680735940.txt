@@ -1,0 +1,220 @@
+Subject: Enable Travel Agencies to Create Trips Using Existing Expert Trip Flow (NO New System)
+
+We are implementing Trip Creation for Travel Agencies.
+
+This must be done by reusing the existing Expert Trip system exactly, with minimal and safe changes.
+
+🔒 CORE RULE (NON-NEGOTIABLE)
+
+There must be ONE unified trips system in the platform.
+
+Guides → already use it
+
+Experts → already use it
+
+Travel Agencies → must use the SAME system now
+
+❌ Do NOT create a separate “Agency Trips” system
+❌ Do NOT create new tables
+❌ Do NOT create new trip detail pages
+❌ Do NOT change approval logic
+
+1️⃣ AGENCY DASHBOARD – TRIPS
+What to add
+
+In Agency Dashboard, add access to:
+
+My Trips
+
+Create New Trip
+
+This should open the same trip creation form currently used by Experts.
+
+2️⃣ TRIP CREATION FORM (REUSE EXISTING FORM)
+UI / FORM
+
+Reuse the exact same form as “Create New Expert Trip”
+
+No redesign
+
+No field removal
+
+UI TEXT CHANGE (ONLY)
+
+When accessed by an Agency account:
+
+Change page title from:
+❌ “Create New Expert Trip”
+✅ “Create New Trip”
+
+(Experts keep their original title.)
+
+3️⃣ BACKEND LOGIC (VERY IMPORTANT)
+
+When an Agency creates a trip, automatically set:
+
+created_by_type = "agency"
+created_by_id   = agency_id
+
+
+This must be:
+
+Hidden from UI
+
+Not editable by user
+
+Set automatically based on logged-in role
+
+4️⃣ FIELDS TO KEEP (NO CHANGES)
+
+All current trip fields must remain exactly the same:
+
+Trip title
+
+Description
+
+Location / destinations
+
+Duration
+
+Price
+
+Kids price
+
+Max group size
+
+Highlights & features
+
+Itinerary / schedule
+
+What’s included
+
+What’s not included
+
+Best season
+
+Difficulty level
+
+Languages spoken
+
+Meeting point
+
+Requirements & notes
+
+Cancellation policy
+
+Trip images
+
+Draft / Pending / Approved statuses
+
+These fields are generic trip data and apply to agencies.
+
+5️⃣ APPROVAL FLOW (ADMIN)
+Admin Dashboard
+
+Agency trips must appear under Admin → Expert Trips
+
+Do NOT create a new admin tab
+
+Each trip must show:
+
+Creator type badge (Guide / Agency / Dive Center)
+
+Creator name (Agency name for agency trips)
+
+Admin actions remain the same:
+
+Approve
+
+Reject
+
+Hold
+
+6️⃣ EMAIL NOTIFICATIONS
+
+When an Agency submits a trip for approval:
+
+Use the same email notification system as Expert Trips
+
+Email must clearly include creator type
+
+Example subject:
+
+New Trip Pending Approval (Agency)
+
+Example body:
+
+A new trip has been submitted by Agency: [Agency Name] and requires approval.
+
+❌ Do NOT create a new email template system
+✔ Just extend existing one with creator type info
+
+7️⃣ ROUTING (CRITICAL – MUST FIX 404 ISSUE)
+
+All agency-created trips must:
+
+Use the same trip detail route as expert trips:
+
+/trip/:slug
+
+
+❌ Do NOT create:
+
+/agency/trip/:id
+
+
+This must fix the current issue where:
+
+Trips shown on Agency Profile → redirect to “No page found”
+
+8️⃣ VISIBILITY AFTER APPROVAL
+
+Once admin approves an agency trip, it must:
+
+Appear in public trip listings
+
+Appear under “Trips by This Agency” on agency public profile
+
+Open the standard trip detail page when clicked
+
+9️⃣ WHAT NOT TO TOUCH (IMPORTANT)
+
+❌ Do NOT modify job posting system
+
+❌ Do NOT modify requests system
+
+❌ Do NOT redesign UI
+
+❌ Do NOT change database schema unless required for creator_type flag
+
+❌ Do NOT create separate agency workflows
+
+🎯 GOAL OF THIS TASK
+
+Allow Travel Agencies to create trips
+
+Use one unified trip system
+
+Fix broken agency trip links
+
+Keep admin moderation centralized
+
+Prepare platform for scaling (dive centers, tour operators, etc.)
+
+✅ SUCCESS CHECKLIST (FOR YOU & QA)
+
+Agency can create a trip
+
+Trip saved as Draft
+
+Agency submits → status Pending
+
+Admin sees it under Expert Trips
+
+Admin approves
+
+Email notification sent
+
+Trip visible publicly
+
+Clicking trip works (no 404)

@@ -1,0 +1,79 @@
+TASK: Enhance travel-requests-browse.html (Provider UX + Psychology)
+IMPORTANT: UI + copy only. Do NOT change backend logic, permissions, or offer submission flow.
+
+====================================================
+1) PAGE INTRO (TOP)
+====================================================
+
+Add at top of page:
+
+Title:
+Browse Traveler Requests
+
+Subtitle:
+Find active traveler requests and send tailored offers. Faster responses increase your chances of being selected.
+
+====================================================
+2) FILTER BAR (LABEL & ORDER IMPROVEMENT)
+====================================================
+
+Keep existing filters, but reorder visually as:
+
+1. Destination / Area
+2. Request Type
+3. Preferred Language
+4. Budget Range
+5. Dates (Fixed / Flexible)
+6. Provider Type (if exists)
+
+Add helper text under filters:
+Use filters to quickly find requests that match your expertise.
+
+====================================================
+3) REQUEST CARD — ADD QUICK-GLANCE INFO
+====================================================
+
+For each request card, ensure it shows clearly:
+
+- Destination / Area
+- Request Code (short)
+- Posted time (e.g. “Posted 3 hours ago”)
+
+Key details (icons or text):
+- Language
+- Number of travelers
+- Date type (Fixed / Flexible)
+- Budget (Provided / Not specified)
+- Private or Shared (if available)
+
+====================================================
+4) REQUEST QUALITY BADGE (OPTIONAL, FRONTEND ONLY)
+====================================================
+
+Add a small badge on card corner:
+- “Detailed request” or
+- “Basic request”
+
+Logic can be frontend-only (based on filled fields / description length).
+
+====================================================
+5) CTA COPY
+====================================================
+
+Primary button:
+Send Offer / Bid
+
+Small helper text under button:
+You can send one tailored offer per request.
+
+====================================================
+6) EMPTY STATE MESSAGE
+====================================================
+
+If no requests match filters, show:
+
+No matching requests right now.
+Try adjusting filters or check back soon — new requests are posted daily.
+
+====================================================
+END TASK

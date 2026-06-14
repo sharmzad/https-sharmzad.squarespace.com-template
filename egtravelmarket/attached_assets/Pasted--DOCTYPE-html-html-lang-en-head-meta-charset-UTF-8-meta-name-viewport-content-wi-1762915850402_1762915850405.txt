@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EgTravelMarket | Echoes of Eternity – Temples of Luxor & Karnak</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{background:#fdfaf6;color:#222;line-height:1.7;}
+    a{text-decoration:none;color:#0a3d62;}
+    img{max-width:100%;display:block;}
+
+    /* ===== HERO ===== */
+    .hero{
+      background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+                 url('https://images.unsplash.com/photo-1587486913049-79a422a9f7a6') center/cover no-repeat;
+      height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+      text-align:center;color:#fff;padding:0 15px;
+    }
+    .hero h1{font-size:2.8rem;margin-bottom:10px;}
+    .hero p{max-width:700px;color:#ddd;}
+
+    /* ===== ARTICLE ===== */
+    .article{padding:60px 10%;max-width:900px;margin:auto;}
+    .article h2{color:#0a3d62;margin-bottom:20px;}
+    .article p{margin-bottom:20px;font-size:1.05rem;color:#333;}
+
+    /* ===== RELATED TRIPS ===== */
+    .related-trips{background:#fff;padding:50px 10%;text-align:center;}
+    .related-trips h2{color:#0a3d62;margin-bottom:30px;}
+    .trips{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;}
+    .trip-card{background:#f9f9f9;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);overflow:hidden;transition:.3s;}
+    .trip-card:hover{transform:translateY(-5px);}
+    .trip-card img{height:180px;object-fit:cover;width:100%;}
+    .trip-card h3{color:#0a3d62;font-size:1.1rem;margin:15px;}
+    .trip-card a{display:inline-block;background:#0a3d62;color:#fff;margin:0 0 15px;padding:8px 15px;border-radius:6px;transition:.3s;}
+    .trip-card a:hover{background:#062f4e;}
+
+    footer{background:#0a3d62;color:#fff;text-align:center;padding:30px 15px;font-size:.9rem;margin-top:50px;}
+    footer p{margin:5px 0;}
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <h1>Echoes of Eternity – Temples of Luxor & Karnak</h1>
+    <p>Step into the world of the pharaohs — where stone speaks, light dances, and history breathes forever.</p>
+  </section>
+
+  <!-- ===== ARTICLE CONTENT ===== -->
+  <section class="article">
+    <h2>Whispers from the Gods</h2>
+    <p>
+      In Luxor, every stone has a story. Once known as Thebes, this sacred city was the beating heart
+      of Ancient Egypt — the place where rulers became gods and gods became part of daily life.
+      The temples of Luxor and Karnak were not just monuments, but living worlds of philosophy,
+      astronomy, and divine connection.
+    </p>
+
+    <p>
+      Walking through the Avenue of Sphinxes, one feels time fold back.
+      The hieroglyphs carved on these walls are not relics; they are messages —
+      whispers from priests, artists, and dreamers who believed eternity was possible.
+    </p>
+
+    <h2>The Light of Karnak</h2>
+    <p>
+      The Great Temple of Karnak stands as one of humanity’s most awe-inspiring achievements.
+      Its columns rise like a forest of stone, and when sunlight filters through,
+      it paints golden patterns that once guided rituals of creation and rebirth.
+    </p>
+
+    <p>
+      For thousands of years, this complex evolved under different pharaohs,
+      each leaving behind a mark of their reign. Yet despite its scale,
+      Karnak tells a deeply human story — of curiosity, devotion, and the search for meaning.
+    </p>
+
+    <h2>Luxor: The City of Living Memory</h2>
+    <p>
+      Today, Luxor continues to breathe with the same majesty.
+      As you sail across the Nile to the Valley of the Kings or watch the temple lights shimmer at night,
+      it becomes clear why Egypt has always been called the cradle of civilization.
+    </p>
+
+    <p>
+      EgTravelMarket invites travelers to experience this wonder not just as tourists, but as seekers —
+      to explore with the eyes of both historian and dreamer.
+    </p>
+  </section>
+
+  <!-- ===== RELATED TRIPS ===== -->
+  <section class="related-trips">
+    <h2>Related Experiences</h2>
+    <div class="trips">
+      <div class="trip-card">
+        <img src="/assets/trips/luxor-flight.jpg" alt="Luxor by Flight">
+        <h3>Luxor by Flight</h3>
+        <a href="/trip-luxor-flight.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/egyptian-museum.jpg" alt="Cairo Museum Tour">
+        <h3>Cairo Museum Tour</h3>
+        <a href="/trip-cairo-museum.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/nile-sunset.jpg" alt="Nile Sunset Cruise">
+        <h3>Nile Sunset Cruise</h3>
+        <a href="/trip-nile-sunset.html">View Trip</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 EgTravelMarket – All Rights Reserved</p>
+    <p>Backed & Managed by GoMundo Travel</p>
+  </footer>
+
+</body>
+</html>
+
+✅ Step 3 — Add Images (Optional)
+
+Upload to your /assets/trips/ folder:
+
+luxor-flight.jpg
+egyptian-museum.jpg
+nile-sunset.jpg
+
+
+(Use Unsplash placeholders for now if you don’t have your own.)
+
+✅ Step 4 — Link from Discover Egypt Page
+
+In your discover-egypt.html, find:
+
+<h3>Ancient Egypt & Archaeology</h3>
+
+
+and wrap it:
+
+<a href="/ancient-egypt.html">
+  <h3>Ancient Egypt & Archaeology</h3>
+</a>

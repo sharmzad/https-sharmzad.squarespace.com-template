@@ -1,0 +1,475 @@
+1) Add this card section to your existing index.html
+
+Paste it inside your homepage where you list product cards (e.g., under “Explore Our Products”):
+
+<!-- === Diving Packages Card (Home) === -->
+<section id="home-diving-card" style="max-width:1200px;margin:40px auto;padding:16px;">
+  <article style="display:grid;grid-template-columns:1.2fr 1fr;gap:16px;align-items:center;background:linear-gradient(135deg,#0a66c2,#0f88e3);border-radius:18px;color:#fff;overflow:hidden;">
+    <div style="padding:20px 24px;">
+      <h2 style="margin:0 0 8px 0;font-size:1.75rem;line-height:1.2;">Red Sea Diving Packages — Eg Travel Market</h2>
+      <p style="margin:0 0 10px 0;opacity:.95;">
+        Explore 2–5 day dive programs across Sharm El-Sheikh’s best sites—Ras Mohammed, Tiran and more. Certified & beginner courses, wrecks like the SS Thistlegorm, plus guided boat days. 
+        Prices from <strong>$150</strong>. Book now and get a <strong>free 20&nbsp;GB SIM card</strong> on arrival. Safe, pro guides, hotel pickup included.
+      </p>
+      <ul style="margin:0 0 14px 18px;">
+        <li>6 curated packages (2–5 days, 2–10 dives)</li>
+        <li>PADI Open Water & Advanced courses</li>
+        <li>Optional 3rd dive + gear rental</li>
+      </ul>
+      <a href="/diving-packages.html" style="display:inline-block;background:#fff;color:#0a66c2;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:600;">View Diving Packages</a>
+    </div>
+    <div style="position:relative;height:100%;">
+      <img src="/images/redsea-hero.jpg" alt="Red Sea diving collage — Eg Travel Market" style="width:100%;height:100%;object-fit:cover;min-height:220px;">
+    </div>
+  </article>
+</section>
+<!-- === /Diving Packages Card (Home) === -->
+
+
+Image tip: place a 1600×900 optimized JPEG at /images/redsea-hero.jpg (≤250KB).
+
+2) Create diving-packages.html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Diving Packages in Sharm El-Sheikh | Eg Travel Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Six Red Sea diving packages in Sharm El-Sheikh — Ras Mohammed, Tiran Island, SS Thistlegorm, PADI Open Water & Advanced. Prices from $150. Free 20 GB SIM with booking.">
+  <link rel="preload" href="/images/redsea-hero.jpg" as="image">
+  <link rel="stylesheet" href="/styles-dive.css">
+</head>
+<body>
+<header class="dv-header">
+  <div class="dv-wrap">
+    <a class="brand" href="/">Eg Travel Market</a>
+    <nav class="dv-nav">
+      <a href="/#tours">Tours</a>
+      <a href="/#packages" class="active">Packages</a>
+      <a href="/#flights">Flights</a>
+      <a href="/#hotels">Hotels</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="dv-hero">
+    <img src="/images/redsea-hero.jpg" alt="Divers over vibrant Red Sea reef in Sharm El-Sheikh">
+    <div class="dv-hero-content">
+      <h1>Dive the Red Sea with Eg Travel Market</h1>
+      <p>Certified guides • PADI training • Ras Mohammed &amp; Tiran • SS Thistlegorm • Hotel pickup • Optional 3rd dive. Prices from <strong>$150</strong>. Book today and get a <strong>free 20&nbsp;GB SIM card</strong> on arrival.</p>
+      <a class="dv-btn" href="/book-diving.html">Book Now</a>
+    </div>
+  </section>
+
+  <!-- Intro (SEO) -->
+  <section class="dv-wrap dv-intro">
+    <h2>Red Sea Diving Packages — Sharm El-Sheikh</h2>
+    <p>
+      Our curated diving programs cover local mooring sites, Ras Mohammed National Park and Tiran Island, with options for beginners and certified divers. 
+      Choose from 2 to 5 separate dive days, add a legendary wreck visit (SS Thistlegorm), or earn your <strong>PADI Open Water</strong> / <strong>PADI Advanced</strong> certification. 
+      All packages include hotel transfers, guided boat days, tanks &amp; weights. Equipment rental and optional 3rd dives are available.
+    </p>
+  </section>
+
+  <!-- Packages Grid -->
+  <section class="dv-wrap dv-grid">
+
+    <!-- Package 1 -->
+    <article class="dv-card" id="pkg1">
+      <img src="/images/dive1.jpg" alt="Two-day certified diver boat trip in Sharm El-Sheikh">
+      <div class="dv-card-body">
+        <h3>Package 1: Two-Day Certified Diver Program</h3>
+        <p><strong>From $150</strong> — 4 dives (2/day). Optional 3rd dive +$35.</p>
+        <ul>
+          <li>Day 1: Local mooring dives (checks &amp; weights)</li>
+          <li>Day 2: Ras Mohammed <em>or</em> Tiran Island (conditions based)</li>
+          <li>Includes transfers, boat days, guide, tanks &amp; weights</li>
+          <li>Certified divers; recent dive within 12 months</li>
+        </ul>
+        <a class="dv-btn-outline" href="/book-diving.html?pkg=Package%201%20—%20Two-Day%20Certified%20Diver%20Program">Book</a>
+      </div>
+    </article>
+
+    <!-- Package 2 -->
+    <article class="dv-card" id="pkg2">
+      <img src="/images/dive2.jpg" alt="Three-day diving plan including Ras Mohammed and Tiran">
+      <div class="dv-card-body">
+        <h3>Package 2: Three Separate Diving Days</h3>
+        <p><strong>From $220</strong> — 6 dives (2/day). Optional 3rd dive +$35.</p>
+        <ul>
+          <li>Day 1: Local site readiness dive</li>
+          <li>Day 2: Ras Mohammed National Park</li>
+          <li>Day 3: Tiran Island</li>
+          <li>Transfers, boat days, guide, tanks &amp; weights</li>
+        </ul>
+        <a class="dv-btn-outline" href="/book-diving.html?pkg=Package%202%20—%20Three%20Separate%20Diving%20Days">Book</a>
+      </div>
+    </article>
+
+    <!-- Package 3 -->
+    <article class="dv-card" id="pkg3">
+      <img src="/images/dive3.jpg" alt="SS Thistlegorm wreck diving experience">
+      <div class="dv-card-body">
+        <h3>Package 3: Local Diving + Thistlegorm Wreck</h3>
+        <p>Local (2 days): <strong>$150</strong> + Thistlegorm: <strong>$110</strong> — <strong>Total from $260</strong>. Optional 3rd dive +$35.</p>
+        <ul>
+          <li>Day 1: Local mooring dives</li>
+          <li>Day 2: Ras Mohammed or Tiran</li>
+          <li>Day 3: SS Thistlegorm wreck (2 wreck dives)</li>
+          <li>Advanced cert required for Thistlegorm</li>
+        </ul>
+        <a class="dv-btn-outline" href="/book-diving.html?pkg=Package%203%20—%20Local%20Diving%20%2B%20Thistlegorm%20Wreck">Book</a>
+      </div>
+    </article>
+
+    <!-- Package 4 -->
+    <article class="dv-card" id="pkg4">
+      <img src="/images/dive4.jpg" alt="PADI Open Water Diver students training in Sharm El-Sheikh">
+      <div class="dv-card-body">
+        <h3>Package 4: PADI Open Water Diver Course</h3>
+        <p><strong>$470</strong> — Complete beginner certification + 2 fun dives.</p>
+        <ul>
+          <li>3–4 days (theory, confined water, 4 open water dives)</li>
+          <li>Course materials &amp; certification included</li>
+          <li>Full equipment + transfers + boat days</li>
+        </ul>
+        <a class="dv-btn-outline" href="/book-diving.html?pkg=Package%204%20—%20PADI%20Open%20Water%20Diver%20Course">Book</a>
+      </div>
+    </article>
+
+    <!-- Package 5 -->
+    <article class="dv-card" id="pkg5">
+      <img src="/images/dive5.jpg" alt="PADI Advanced Open Water course dives">
+      <div class="dv-card-body">
+        <h3>Package 5: PADI Advanced Open Water Course</h3>
+        <p><strong>$400</strong> — 5 specialty dives + 1 fun dive.</p>
+        <ul>
+          <li>Deep, drift, navigation, boat, photo (mix by conditions)</li>
+          <li>2 course dives + fun dive (day 1); 3 specialties (day 2)</li>
+          <li>Equipment, transfers, boat days included</li>
+        </ul>
+        <a class="dv-btn-outline" href="/book-diving.html?pkg=Package%205%20—%20PADI%20Advanced%20Open%20Water%20Course">Book</a>
+      </div>
+    </article>
+
+    <!-- Package 6 -->
+    <article class="dv-card" id="pkg6">
+      <img src="/images/dive6.jpg" alt="Five-day Red Sea dive program around Sharm El-Sheikh">
+      <div class="dv-card-body">
+        <h3>Package 6: Five Separate Diving Days</h3>
+        <p><strong>$350</strong> — 10 dives (2/day). Optional extra dives available.</p>
+        <ul>
+          <li>Day 1: Local checks; Days 2–5: Ras Mohammed, Tiran &amp; top reefs</li>
+          <li>Transfers, boat days, guide, tanks &amp; weights</li>
+          <li>Certified divers; refresher if &gt;12 months inactive</li>
+        </ul>
+        <a class="dv-btn-outline" href="/book-diving.html?pkg=Package%206%20—%20Five%20Separate%20Diving%20Days">Book</a>
+      </div>
+    </article>
+  </section>
+
+  <!-- Contact (same as PDF) -->
+  <section class="dv-contact" id="contact">
+    <div class="dv-wrap">
+      <h2>Contact &amp; Bookings</h2>
+      <p><strong>EG TRAVEL MARKET</strong><br>
+        Website: <a href="https://www.egtravelmarket.com">www.egtravelmarket.com</a><br>
+        Email: <a href="mailto:info@egtravelmarket.com">info@egtravelmarket.com</a><br>
+        Mobile / WhatsApp: <a href="tel:+20012127903329">00201227903329</a><br>
+        Location: Naama Bay, Sharm El-Sheikh, Egypt
+      </p>
+      <p class="note">Book any diving package and receive a <strong>free 20&nbsp;GB SIM card</strong> on arrival.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="dv-footer">
+  <div class="dv-wrap">
+    <p>© <span id="year"></span> Eg Travel Market</p>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
+
+
+Place six optimized images at /images/dive1.jpg … /images/dive6.jpg (reuse the same images from the PDF).
+
+3) Create book-diving.html (booking form like PACK A + Access Code)
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Book Red Sea Diving Package | Eg Travel Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Secure your Red Sea diving package with Eg Travel Market. Access code required. Choose your package, select dates, and submit your booking request.">
+  <link rel="stylesheet" href="/styles-dive.css">
+</head>
+<body>
+<header class="dv-header">
+  <div class="dv-wrap">
+    <a class="brand" href="/">Eg Travel Market</a>
+    <nav class="dv-nav">
+      <a href="/diving-packages.html" class="active">Diving</a>
+      <a href="/#tours">Tours</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="dv-wrap">
+  <section class="dv-form-wrap">
+    <h1>Book Your Diving Package</h1>
+    <p class="hint">For selected promotions, an access code may be required to unlock special rates.</p>
+
+    <form id="bookingForm" class="dv-form" onsubmit="return handleBooking(event)">
+      <label>
+        Select Package
+        <select id="package" required>
+          <option value="">Choose a package</option>
+          <option>Package 1 — Two-Day Certified Diver Program</option>
+          <option>Package 2 — Three Separate Diving Days</option>
+          <option>Package 3 — Local Diving + Thistlegorm Wreck</option>
+          <option>Package 4 — PADI Open Water Diver Course</option>
+          <option>Package 5 — PADI Advanced Open Water Course</option>
+          <option>Package 6 — Five Separate Diving Days</option>
+        </select>
+      </label>
+
+      <div class="dv-grid-2">
+        <label>
+          Preferred Start Date
+          <input type="date" id="startDate" required>
+        </label>
+        <label>
+          Access Code (if required)
+          <input type="text" id="accessCode" placeholder="Enter access code">
+        </label>
+      </div>
+
+      <div class="dv-grid-3">
+        <label>
+          Adults
+          <input type="number" id="adults" min="1" value="1" required>
+        </label>
+        <label>
+          Children
+          <input type="number" id="children" min="0" value="0">
+        </label>
+        <label>
+          Mobile / WhatsApp
+          <input type="tel" id="mobile" value="00201227903329" required>
+        </label>
+      </div>
+
+      <div class="dv-grid-2">
+        <label>
+          Full Name
+          <input type="text" id="fullname" placeholder="Your full name" required>
+        </label>
+        <label>
+          Email
+          <input type="email" id="email" placeholder="you@example.com" required>
+        </label>
+      </div>
+
+      <label>
+        Hotel / Pickup Address (city & hotel name)
+        <input type="text" id="pickup" placeholder="Hotel name, Naama Bay..." required>
+      </label>
+
+      <label>
+        Special Requests / Dive Experience / Certification Level
+        <textarea id="notes" rows="4" placeholder="E.g., Advanced cert, nitrox, gear rental..."></textarea>
+      </label>
+
+      <div class="dv-actions">
+        <button class="dv-btn" type="submit">Request Booking</button>
+        <button class="dv-btn-outline" type="button" onclick="resetBooking()">Reset</button>
+      </div>
+
+      <p id="bookingMessage" class="dv-msg" aria-live="polite"></p>
+    </form>
+
+    <aside class="dv-note">
+      <p><strong>Included:</strong> hotel transfers, guided boat days, tanks &amp; weights.</p>
+      <p><strong>Not included:</strong> equipment rental, marine park fees, meals, optional 3rd dives ($35).</p>
+      <p><strong>Bonus:</strong> Free <strong>20&nbsp;GB SIM card</strong> with every diving booking.</p>
+    </aside>
+  </section>
+</main>
+
+<footer class="dv-footer">
+  <div class="dv-wrap">
+    <p>Need help? <a href="mailto:info@egtravelmarket.com">info@egtravelmarket.com</a> • <a href="tel:+20012127903329">00201227903329</a></p>
+  </div>
+</footer>
+
+<script>
+// Preselect package from URL (?pkg=...)
+(function(){
+  const params = new URLSearchParams(location.search);
+  const fromPage = params.get('pkg');
+  if(fromPage){
+    const select = document.getElementById('package');
+    [...select.options].forEach(opt=>{
+      if(opt.text.trim() === decodeURIComponent(fromPage).trim()){
+        select.value = opt.text; 
+      }
+    });
+  }
+})();
+
+function handleBooking(e){
+  e.preventDefault();
+  const requiredIds = ['package','startDate','adults','fullname','email','mobile','pickup'];
+  for(const id of requiredIds){
+    const el = document.getElementById(id);
+    if(!el.value || (el.type==='number' && +el.value<=0)){
+      document.getElementById('bookingMessage').textContent = 'Please fill all required fields correctly.';
+      el.focus();
+      return false;
+    }
+  }
+  const payload = {
+    package: document.getElementById('package').value,
+    startDate: document.getElementById('startDate').value,
+    accessCode: document.getElementById('accessCode').value,
+    adults: document.getElementById('adults').value,
+    children: document.getElementById('children').value,
+    mobile: document.getElementById('mobile').value,
+    fullname: document.getElementById('fullname').value,
+    email: document.getElementById('email').value,
+    pickup: document.getElementById('pickup').value,
+    notes: document.getElementById('notes').value,
+    source: 'book-diving.html'
+  };
+
+  // Show confirmation now — replace with real backend call later
+  document.getElementById('bookingMessage').innerHTML = 
+    '<strong>Thank you!</strong> Your booking request has been received. We will contact you on WhatsApp or email shortly.';
+
+  // TODO: POST to backend endpoint
+  // fetch('/api/bookings', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) })
+  console.log('Booking payload (send to backend):', payload);
+  return false;
+}
+
+function resetBooking(){
+  document.getElementById('bookingForm').reset();
+  document.getElementById('bookingMessage').textContent = '';
+}
+</script>
+</body>
+</html>
+
+4) Create styles-dive.css
+:root{
+  --brand:#0a66c2;
+  --brand-2:#0f88e3;
+  --ink:#0b1b2b;
+  --muted:#6b7a8b;
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --ring:rgba(10,102,194,.25);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;color:var(--ink);background:var(--bg);}
+
+.dv-wrap{max-width:1200px;margin:0 auto;padding:0 16px}
+.dv-header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #e6ecf3}
+.dv-header .brand{font-weight:800;color:var(--brand);text-decoration:none}
+.dv-nav a{color:#2a3b4d;text-decoration:none;margin-left:14px}
+.dv-nav a.active{color:var(--brand)}
+.dv-header .dv-wrap{display:flex;align-items:center;justify-content:space-between;min-height:60px}
+
+.dv-hero{position:relative;overflow:hidden;height:360px;background:#000}
+.dv-hero img{width:100%;height:100%;object-fit:cover;opacity:.85}
+.dv-hero-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:10px;color:#fff;padding:0 16px}
+.dv-hero h1{margin:0;font-size:2rem;text-shadow:0 2px 6px rgba(0,0,0,.4)}
+.dv-hero p{max-width:760px;font-size:1rem;opacity:.95}
+
+.dv-btn{display:inline-block;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:700;border:0;cursor:pointer}
+.dv-btn-outline{display:inline-block;border:2px solid var(--brand);color:var(--brand);padding:8px 12px;border-radius:10px;text-decoration:none;font-weight:700;background:#fff}
+.dv-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+.dv-intro{padding:24px 0}
+.dv-intro h2{margin:0 0 8px 0}
+
+.dv-grid{display:grid;gap:16px;grid-template-columns:repeat(3,1fr);padding:16px 0}
+.dv-card{background:var(--card);border-radius:16px;overflow:hidden;border:1px solid #e6ecf3;display:flex;flex-direction:column}
+.dv-card img{width:100%;height:200px;object-fit:cover}
+.dv-card-body{padding:14px}
+.dv-card-body h3{margin:0 0 6px 0}
+.dv-card-body p{margin:0 0 8px 0;color:#2a3b4d}
+.dv-card-body ul{margin:0 0 12px 18px;color:#415267}
+
+.dv-contact{background:#0a1726;color:#e9f2ff;padding:32px 0;margin-top:20px}
+.dv-contact a{color:#b8dcff}
+.dv-contact .note{opacity:.9;margin-top:8px}
+
+.dv-footer{background:#fff;border-top:1px solid #e6ecf3;margin-top:24px}
+.dv-footer p{margin:0;padding:12px 0;color:#415267}
+
+.dv-form-wrap{padding:24px 0}
+.dv-form h1{margin:0 0 8px 0}
+.dv-form .hint{color:var(--muted);margin:4px 0 16px 0}
+.dv-form label{display:block;margin:0 0 12px 0}
+.dv-form input,.dv-form select,.dv-form textarea{
+  width:100%;padding:10px 12px;border:1px solid #d7deea;border-radius:10px;background:#fff;
+  outline:none;box-shadow:0 0 0 0 var(--ring);transition:box-shadow .15s,border-color .15s;
+}
+.dv-form input:focus,.dv-form select:focus,.dv-form textarea:focus{
+  border-color:var(--brand);box-shadow:0 0 0 4px var(--ring);
+}
+.dv-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dv-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.dv-msg{margin:10px 0 0 0;color:#065f46;font-weight:600}
+
+@media (max-width: 960px){
+  .dv-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width: 640px){
+  .dv-hero{height:300px}
+  .dv-grid{grid-template-columns:1fr}
+  .dv-grid-2,.dv-grid-3{grid-template-columns:1fr}
+}
+
+Quick install steps (Replit)
+
+Create folders if missing:
+
+/images
+
+
+Upload:
+
+redsea-hero.jpg (home & hero)
+
+dive1.jpg … dive6.jpg (same six images used in the PDF)
+
+Create files:
+
+diving-packages.html (paste the full page)
+
+book-diving.html (paste the form page)
+
+styles-dive.css (paste the stylesheet)
+
+Add the home card snippet into your existing index.html.
+
+Test flow:
+
+Open /diving-packages.html → click any Book button → it opens /book-diving.html with the matching package pre-selected.
+
+Submit the form to see the confirmation message (console shows payload).
+Later, wire the fetch to your backend + send email to info@egtravelmarket.com
+ and WhatsApp 00201227903329 if desired.

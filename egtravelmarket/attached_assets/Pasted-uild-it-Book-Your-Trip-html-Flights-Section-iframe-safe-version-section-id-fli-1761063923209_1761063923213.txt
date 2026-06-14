@@ -1,0 +1,44 @@
+uild it 👇
+
+Book Your Trip
+· html
+<!-- ✈️ Flights Section (iframe-safe version) -->
+<section id="flights" style="max-width:1000px;margin:60px auto;background:#fff;border-radius:20px;padding:40px;box-shadow:0 6px 25px rgba(0,0,0,0.08);">
+  <h2 style="text-align:center;color:#004aad;">✈️ Flights to Sharm El Sheikh</h2>
+  <p style="text-align:center;max-width:800px;margin:auto;color:#333;">Search, compare, and book the best flight deals to Sharm El Sheikh (SSH). Explore multiple options powered by our trusted partners.</p>
+
+
+  <!-- WayAway Flight Search Widget (main) -->
+  <div style="margin-top:40px;text-align:center;">
+    <h3 style="color:#004aad;">🔍 Search Flights via WayAway</h3>
+    <script async src="https://tpscr.com/content?trs=467956&shmarker=679684&locale=en_us&Autocomplete_2=SSH&Autocomplete_3=SSH&Checkbox_9=true&powered_by=true&primary=%2314448Aff&dark=%230C131D&light=%23FFFFFF&secondary=%23F1EDFC&promo_id=7293&campaign_id=200" charset="utf-8"></script>
+  </div>
+
+
+  <!-- Aviasales Price Calendar (iframe sandbox) -->
+  <div style="margin-top:60px;text-align:center;">
+    <h3 style="color:#004aad;">📅 Best Price Calendar via Aviasales</h3>
+    <p style="color:#333;max-width:700px;margin:10px auto;">Discover the cheapest flight dates to Sharm El Sheikh all year round with our Aviasales deals calendar.</p>
+
+
+    <iframe src="aviasales-calendar.html" title="Aviasales Flight Deals Calendar" style="width:100%;height:850px;border:none;border-radius:20px;box-shadow:0 6px 20px rgba(0,0,0,0.1);"></iframe>
+  </div>
+</section>
+
+
+<!-- Separate iframe file (create this as aviasales-calendar.html in Replit) -->
+<!-- Paste only the Aviasales widget code inside that file -->
+<!-- Example: -->
+<!--
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Aviasales Calendar</title>
+</head>
+<body style="margin:0;padding:0;">
+  <script async src="https://tpscr.com/content?currency=usd&trs=467956&shmarker=679684&searchUrl=www.aviasales.com%2Fsearch&locale=en&powered_by=true&destination=SSH&one_way=true&only_direct=true&period=year&range=7%2C14&primary=%23144A93ff&color_background=%23ffffff&dark=%23000000&light=%23FFFFFF&achieve=%2345AD35&promo_id=4041&campaign_id=100" charset="utf-8"></script>
+</body>
+</html>
+-->

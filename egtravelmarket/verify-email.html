@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Verify Email | EG Travel Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    /* Fallback styles if CSS doesn't load */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: #0a1633;
+      color: #e9f1ff;
+      line-height: 1.6;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .header { background: rgba(15, 30, 71, 0.8); padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .nav { display: flex; justify-content: space-between; align-items: center; }
+    .brand { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; text-decoration: none; color: #e9f1ff; }
+    .logo { width: 30px; height: 30px; background: linear-gradient(135deg, #2ea6ff, #6ec1ff); border-radius: 8px; }
+    .menu { display: flex; gap: 30px; }
+    .menu a { text-decoration: none; color: #bcd3ff; transition: color 0.3s; }
+    .menu a:hover { color: #2ea6ff; }
+    .hero { padding: 60px 20px; text-align: center; }
+    .hero h1 { font-size: 32px; margin-bottom: 15px; color: #e9f1ff; }
+    .form { padding: 40px 20px; }
+    #status-container { max-width: 400px; margin: 0 auto; text-align: center; padding: 30px; background: rgba(15, 30, 71, 0.6); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
+    .status { display: none; }
+    .status.active { display: block; animation: fadeIn 0.3s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { width: 50px; height: 50px; border: 4px solid rgba(46, 166, 255, 0.3); border-top: 4px solid #2ea6ff; border-radius: 50%; animation: spin 1s linear infinite; margin: 20px auto; }
+    .emoji { font-size: 60px; margin-bottom: 20px; }
+    .btn { display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, #2ea6ff, #6ec1ff); color: #002349; text-decoration: none; border-radius: 12px; font-weight: 700; margin-top: 20px; border: none; cursor: pointer; font-size: 16px; transition: transform 0.3s; }
+    .btn:hover { transform: translateY(-2px); }
+    h2 { color: #e9f1ff; margin-top: 0; margin-bottom: 15px; }
+    p { color: #bcd3ff; margin: 15px 0; }
+    .success-text { color: #27ae60 !important; }
+    .error-text { color: #ff4d4d !important; }
+    .footer { background: rgba(15, 30, 71, 0.8); padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; color: #99b7ff; font-size: 14px; }
+  </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<header class="header">
+  <div class="container nav">
+    <a href="/index.html" class="brand"><div class="logo"></div><span>EG Travel Market</span></a>
+    <nav class="menu">
+      <a href="/index.html">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/divers.html">Divers</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>Verify Your Email</h1>
+    <p>Activating your account...</p>
+  </div>
+</section>
+
+<section class="form container">
+  <div id="status-container">
+    <!-- Verifying state -->
+    <div id="verifying-state" class="status active">
+      <p style="font-size: 16px;">⏳ Verifying your email...</p>
+      <div class="spinner"></div>
+    </div>
+
+    <!-- Success state -->
+    <div id="success-state" class="status">
+      <div class="emoji">✅</div>
+      <h2 class="success-text">Email Verified Successfully!</h2>
+      <p>Your email has been verified and your account is now active.</p>
+      <p>You can now log in to your account:</p>
+      <button onclick="window.location.href='/guide-login.html'" class="btn">Go to Login</button>
+    </div>
+
+    <!-- Error state -->
+    <div id="error-state" class="status">
+      <div class="emoji">❌</div>
+      <h2 class="error-text">Verification Failed</h2>
+      <p id="error-message">The verification link is invalid or has expired.</p>
+      <p style="margin-top: 30px; font-size: 14px;">
+        <button onclick="window.location.href='/forgot-password.html'" class="btn">Request New Verification</button>
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>© EG Travel Market. All rights reserved.</p>
+  <p>Need help? <a href="/contact.html" style="color: #2ea6ff; text-decoration: none;">Contact us</a></p>
+</footer>
+
+<script>
+// Log for debugging
+console.log('✓ verify-email.html loaded');
+
+// Get token and email from URL
+const params = new URLSearchParams(window.location.search);
+const token = params.get('token');
+const email = params.get('email');
+
+console.log('📧 Params:', { token: token ? token.substring(0, 10) + '...' : 'missing', email: email ? email : 'missing' });
+
+const verifyingState = document.getElementById('verifying-state');
+const successState = document.getElementById('success-state');
+const errorState = document.getElementById('error-state');
+const errorMessageEl = document.getElementById('error-message');
+
+// Function to show a specific state
+function showState(stateName) {
+  verifyingState.classList.remove('active');
+  successState.classList.remove('active');
+  errorState.classList.remove('active');
+  
+  if (stateName === 'verifying') {
+    verifyingState.classList.add('active');
+  } else if (stateName === 'success') {
+    successState.classList.add('active');
+  } else if (stateName === 'error') {
+    errorState.classList.add('active');
+  }
+}
+
+// Validate parameters
+if (!token || !email) {
+  console.error('❌ Missing parameters:', { token: !!token, email: !!email });
+  errorMessageEl.textContent = 'Error: Invalid verification link. Missing token or email.';
+  showState('error');
+} else {
+  // Start verification
+  showState('verifying');
+  
+  console.log('🔄 Calling /api/auth/verify-email...');
+  
+  fetch('/api/auth/verify-email', {
+    method: 'POST',
+    headers: { 
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({ 
+      email: email ? decodeURIComponent(email).toLowerCase() : email,
+      token: token
+    })
+  })
+  .then(res => {
+    console.log('📨 API Response Status:', res.status);
+    return res.json().then(data => ({ status: res.status, data }));
+  })
+  .then(({ status, data }) => {
+    console.log('📨 API Response Data:', data);
+    
+    showState('verifying'); // Keep verifying briefly to show something is happening
+    setTimeout(() => {
+      // Check for success - both status codes and message patterns
+      const isSuccess = (status === 200 || status === 201) || 
+                        (data.message && data.message.toLowerCase().includes('successfully'));
+      
+      if (isSuccess) {
+        console.log('✅ Email verification successful');
+        showState('success');
+      } else {
+        console.error('❌ Verification failed:', data);
+        errorMessageEl.textContent = data.message || data.error || 'Failed to verify email';
+        showState('error');
+      }
+    }, 500);
+  })
+  .catch(err => {
+    console.error('❌ Fetch error:', err);
+    errorMessageEl.textContent = 'Network error: ' + err.message;
+    showState('error');
+  });
+}
+
+// Auto-scroll to content
+setTimeout(() => {
+  document.getElementById('status-container').scrollIntoView({ behavior: 'smooth' });
+}, 100);
+</script>
+
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

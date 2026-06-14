@@ -1,0 +1,26 @@
+api-client.js:296 ✅ API Client initialized
+api-client.js:297 📡 API Base URL: https://eg-travel-market-ahmedhassan301.replit.app
+expert-login.js:90 ✅ Expert login form initialized for: guide
+NDczNTQ1.js?t=473545:1 [tp] entrypoint init
+sentry.avs.io/api/20/envelope/?sentry_version=7&sentry_key=1c30377dafc708e9dfdf6df7e355a97c&sentry_client=sentry.javascript.browser%2F9.44.0:1  Failed to load resource: net::ERR_BLOCKED_BY_CLIENT
+chunk.D7pk0r-x.js:2 The PerformanceObserver does not support buffered flag with the entryTypes argument.
+startObserver @ chunk.D7pk0r-x.js:2
+chunk.DCRPF4lz.js:15 [tp] bb init
+sentry.avs.io/api/20/envelope/?sentry_version=7&sentry_key=1c30377dafc708e9dfdf6df7e355a97c&sentry_client=sentry.javascript.browser%2F9.44.0:1  Failed to load resource: net::ERR_BLOCKED_BY_CLIENT
+sentry.avs.io/api/20/envelope/?sentry_version=7&sentry_key=1c30377dafc708e9dfdf6df7e355a97c&sentry_client=sentry.javascript.browser%2F9.44.0:1  Failed to load resource: net::ERR_BLOCKED_BY_CLIENT
+chunk.DCRPF4lz.js:15 🔐 Attempting login for: testguide@example.com
+chunk.DCRPF4lz.js:15 📡 API Request to: https://eg-travel-market-ahmedhassan301.replit.app/api/auth/login
+api/auth/login:1  Failed to load resource: the server responded with a status of 500 ()
+chunk.DCRPF4lz.js:15 📥 Response status: 500 
+chunk.DCRPF4lz.js:15 ❌ Login failed: Object
+(anonymous) @ chunk.DCRPF4lz.js:15
+chunk.DCRPF4lz.js:15 Login error: Error: fetch failed
+    at Object.login (api-client.js:77:15)
+    at async HTMLFormElement.<anonymous> (expert-login.js:38:22)
+(anonymous) @ chunk.DCRPF4lz.js:15
+chunk.DCRPF4lz.js:15 Login error: Error: fetch failed
+    at Object.login (api-client.js:77:15)
+    at async HTMLFormElement.<anonymous> (expert-login.js:38:22)
+(anonymous) @ chunk.DCRPF4lz.js:15
+sentry.avs.io/api/20/envelope/?sentry_version=7&sentry_key=1c30377dafc708e9dfdf6df7e355a97c&sentry_client=sentry.javascript.browser%2F9.44.0:1  Failed to load resource: net::ERR_BLOCKED_BY_CLIENT
+sentry.avs.io/api/20/envelope/?sentry_version=7&sentry_key=1c30377dafc708e9dfdf6df7e355a97c&sentry_client=sentry.javascript.browser%2F9.44.0:1  Failed to load resource: net::ERR_BLOCKED_BY_CLIENT

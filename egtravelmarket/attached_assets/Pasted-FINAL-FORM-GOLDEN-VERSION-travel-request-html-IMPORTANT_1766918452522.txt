@@ -1,0 +1,220 @@
+FINAL FORM (GOLDEN VERSION) — travel-request.html
+IMPORTANT: Do NOT change any system logic, endpoints, DB logic, submission flow, Code+PIN concept.
+Only UX + copy + (optional) extra fields that are safe.
+
+PAGE:
+https://www.egtravelmarket.com/travel-request.html
+
+====================================================
+A) HERO COPY (REPLACE CURRENT TEXT)
+====================================================
+
+H1:
+Post a Traveller Request
+
+Subheading (1 line):
+Tell us what you need in Egypt — verified experts and the EgTravelMarket team will send tailored offers & bids.
+
+Short paragraph:
+Submit one request and receive personalized quotes for tours, transfers, diving, boats, safaris, and custom packages — matched to your dates and budget.
+
+Soft launch note (clean + trust):
+Soft Launch (Beta): Our network is growing daily. You may receive offers from EgTravelMarket directly and/or trusted licensed partners.
+
+Mini “How it works” (text only):
+How it works: 1) Post your request  2) Experts send offers  3) View & choose using your Request Code + PIN
+
+Security note (keep concept, rewrite):
+After submission, you’ll receive a Request Code + PIN by email (and on-screen). For security, we don’t send clickable login links — always open egtravelmarket.com manually and enter your Code + PIN.
+
+====================================================
+B) FORM STRUCTURE (FINAL ORDER)
+====================================================
+
+SECTION 1 — Your Details
+Helper:
+Your details are used only to deliver your Request Code & PIN and any updates you choose.
+
+Fields (keep existing IDs/names):
+- Full Name *  placeholder: e.g., Ahmed Hassan
+- Email *      placeholder: e.g., name@email.com
+- Phone/WhatsApp (optional) placeholder: e.g., +20 10 0000 0000
+
+SECTION 2 — Request Summary
+Helper:
+Better details = better offers.
+
+1) Request Title * (existing)
+Placeholder:
+e.g., “4 days Cairo + Luxor private tour” or “Sharm diving package for 2”
+
+2) Request Type * (existing select)
+LABEL:
+What type of experience are you looking for? *
+
+Helper:
+Choose the option that best matches your request — you can add details below.
+
+Options: KEEP existing backend values. Only improve display text + ordering.
+Use optgroup for readability (safe).
+(If some values don’t exist, map to closest existing value; DO NOT break old values.)
+
+<option value="">Select request type</option>
+
+<optgroup label="Classic Egypt Experiences">
+<option value="city">🏛️ Classic Sightseeing & Culture — Cairo, Giza, Luxor, Aswan</option>
+<option value="safari">🏜️ Desert, Safari & Adventure — jeep, quad, Bedouin dinner</option>
+</optgroup>
+
+<optgroup label="Red Sea & Marine">
+<option value="diving">🤿 Diving Package — certified or beginner</option>
+<option value="snorkeling">🤿 Snorkeling & Sea Excursions — reefs & islands</option>
+<option value="boat">🚤 Boat / Yacht / Sea Trip — private or shared</option>
+</optgroup>
+
+<optgroup label="Complete & Custom Travel">
+<option value="custom">✨ Custom / Tailor-Made Trip — designed around your needs</option>
+<option value="package">🎒 Full Travel Package — hotel, tours & transport</option>
+</optgroup>
+
+<optgroup label="Services & Special Requests">
+<option value="transfer">🚗 Transfers & Transportation — airport & private drivers</option>
+<option value="guide">👨‍🏫 Private Tour Guide — licensed local guide</option>
+<option value="mentor">🧠 Travel Consultation / Mentor — planning & advice</option>
+<option value="event">🎉 Special Event / Occasion — honeymoon, birthday, group</option>
+<option value="other">❓ Other / Not Sure Yet</option>
+</optgroup>
+
+Add a small helper line under dropdown:
+Not sure? Choose “Custom / Tailor-Made Trip” and explain your idea below.
+
+3) Preferred Language for Communication *  (NEW, very important)
+Label:
+Preferred Language for Communication *
+
+Helper:
+This helps us match you with the right guide, expert, or agency.
+
+Options (visible text):
+🇬🇧 English
+🇫🇷 French
+🇩🇪 German
+🇪🇸 Spanish
+🇮🇹 Italian
+🇷🇺 Russian
+🇵🇱 Polish
+🇸🇦 Arabic
+🇹🇷 Turkish
+🇳🇱 Dutch
+🇸🇪 Swedish
+🇳🇴 Norwegian
+🇩🇰 Danish
+🇨🇿 Czech
+🇷🇴 Romanian
+🇨🇳 Chinese
+🇯🇵 Japanese
+🇰🇷 Korean
+🌐 Any language (English is OK)
+❓ Other (please specify in description)
+
+Trust microcopy under language field:
+Most of our experts speak multiple languages — selecting your preference helps us match you better.
+
+SECTION 3 — Trip Details
+4) Location / Area * (existing)
+Placeholder:
+Anywhere in Egypt (city/area/hotel) — e.g., Cairo, Luxor, Sharm, Hurghada…
+
+5) Preferred Date * (existing)
+Small helper text:
+If flexible, choose an approximate date and mention flexibility below.
+
+6) Number of Travelers * (existing)
+Placeholder:
+e.g., 2
+
+7) Approx. Budget (optional) (existing)
+Placeholder:
+e.g., 300 USD (or 10,000 EGP)
+
+SECTION 4 — Quick Preferences (OPTIONAL but powerful)
+NOTE: These 4 fields improve conversion and offer quality.
+
+Two safe implementation choices:
+
+OPTION 1 (ZERO-RISK, safest):
+Add these fields visually but WITHOUT changing backend payload:
+- Either omit “name” attributes OR keep them but ensure backend ignores extra fields.
+If you want truly zero backend risk, do NOT send these fields; just show them and instruct user in description.
+
+Fields + options:
+A) Travel Style (optional):
+Relaxed & Easy / Balanced / Active & Adventure / Luxury & Comfort / Budget-Friendly
+
+B) Private or Shared? (optional):
+Private / Shared / Open to both
+
+C) Dates Flexibility (optional):
+Fixed / Flexible (+/- few days) / Fully flexible
+
+D) Who is traveling? (optional):
+Solo / Couple / Family with kids / Friends & group / Honeymoon
+
+OPTION 2 (If backend safely ignores extra fields):
+Add names (travel_style, trip_privacy, date_flexibility, traveler_type) as optional.
+No validation required.
+
+SECTION 5 — Description (existing textarea)
+Replace placeholder with this structured template:
+
+Please describe your request clearly:
+• Destinations / cities in Egypt
+• Duration (day trip or multi-day)
+• Must-have activities
+• Hotel category (if needed)
+• Private or shared preference (if any)
+• Language (if “Other”, mention it)
+• Budget range (optional)
+• Any special requests
+
+Better details = better offers.
+
+SECTION 6 — Contact Preference (existing)
+Label:
+How should we contact you? *
+(Keep same options/values)
+
+SECTION 7 — Consent (existing checkbox)
+Replace sentence with:
+I agree that EgTravelMarket may share this request with trusted licensed partners (guides, divers, agencies, and dive centers) so they can send me offers.
+
+SUBMIT BUTTON:
+Keep same action. Suggested label:
+Submit Request & Get Offers
+
+====================================================
+C) READABILITY / UI FIX (IMPORTANT)
+====================================================
+
+Add/confirm CSS (global or page-level):
+
+.form-control, input, select, textarea {
+  font-size: 16px;
+  line-height: 1.35;
+  padding: 12px 12px;
+  color: #111;
+}
+
+select { min-height: 46px; }
+
+select option {
+  color: #111 !important;
+  background: #fff !important;
+}
+
+::placeholder { opacity: 0.85; }
+
+If theme forces light text, ensure:
+select, input, textarea { color: #111 !important; }
+
+END.

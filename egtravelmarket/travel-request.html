@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Post Traveller Request - Submit Travel Needs | EgTravelMarket</title>
+  <meta name="description" content="Post your custom travel request and get personalized offers from verified guides, divers, mentors, agencies, and dive centers across Egypt. Submit what you need and receive tailored travel packages." />
+  <meta name="keywords" content="post travel request, custom travel package, book local guide, private tour, diving trip request, Egypt travel, traveler requests, tour customization" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/header.css" />
+  <style>
+    .page-wrap { max-width: 900px; margin: 2rem auto; padding: 1.5rem; padding-top: 8rem; background: var(--card); border-radius: 1rem; box-shadow: var(--shadow); }
+    .page-wrap h1 { margin-bottom: 0.5rem; color: var(--accent); }
+    .page-wrap p { color: var(--muted); margin-bottom: 1rem; }
+    .soft-launch { background: rgba(250, 173, 20, 0.1); border-left: 4px solid #faad14; padding: 0.75rem 1rem; border-radius: 0.75rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text); }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.25rem; }
+    label { font-weight: 600; font-size: 0.9rem; color: var(--text); }
+    input, select, textarea {
+      font-size: 16px;
+      line-height: 1.35;
+      padding: 12px 12px;
+      color: #0f172a !important;
+      background-color: #ffffff !important;
+      border: 1px solid #cbd5e1;
+      border-radius: 0.6rem;
+    }
+    ::placeholder {
+      color: #64748b !important;
+      opacity: 1;
+    }
+    select {
+      min-height: 46px;
+      appearance: auto;
+      -webkit-appearance: auto;
+      -moz-appearance: auto;
+    }
+    select option {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      padding: 10px;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 2px rgba(56,189,248,0.25);
+    }
+    form * {
+      text-shadow: none !important;
+    }
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+      color: #0f172a !important;
+      caret-color: #0f172a;
+    }
+    label {
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+    h3, h4 {
+      color: #f8fafc;
+    }
+    .form-actions { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .btn-primary { background: var(--brand); color: #fff; border: none; border-radius: 999px; padding: 0.7rem 1.6rem; font-size: 0.95rem; cursor: pointer; align-self: flex-start; transition: background 0.2s; }
+    .btn-primary:hover { background: var(--accent); color: #000; }
+    .small-note { font-size: 0.8rem; color: var(--muted); }
+    .success-box { margin-top: 1rem; padding: 0.9rem 1rem; border-radius: 0.75rem; background: rgba(183, 235, 143, 0.1); border: 1px solid #b7eb8f; font-size: 0.9rem; display: none; color: var(--text); }
+    .error-box { margin-top: 1rem; padding: 0.9rem 1rem; border-radius: 0.75rem; background: rgba(255, 77, 79, 0.1); border: 1px solid #ff4d4f; font-size: 0.9rem; display: none; color: var(--text); }
+    input[type="checkbox"] { width: auto; }
+    .section-helper { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.75rem; font-weight: 400; }
+    .field-helper { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; font-weight: 400; }
+    .how-it-works { background: rgba(46, 166, 255, 0.08); border-left: 4px solid #2ea6ff; padding: 1rem; border-radius: 0.75rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text); }
+    .security-note { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem 1rem; border-radius: 0.75rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--muted); }
+    .quick-prefs-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 1rem; }
+
+    @media (max-width: 768px) {
+      .page-wrap {
+        margin: 1rem auto;
+        padding: 1rem;
+      }
+
+      .page-wrap h1 {
+        font-size: 1.4rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .page-wrap h2 {
+        font-size: 1.1rem;
+      }
+
+      .form-grid, .quick-prefs-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      label {
+        font-size: 0.85rem;
+      }
+
+      input, select, textarea {
+        padding: 0.65rem 0.8rem;
+        font-size: 16px;
+        min-height: 44px;
+      }
+
+      textarea {
+        min-height: 120px;
+      }
+
+      .form-actions {
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        padding: 0.75rem 1.5rem;
+        min-height: 44px;
+        width: 100%;
+        font-size: 1rem;
+      }
+
+      .soft-launch {
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-wrap {
+        margin: 0.5rem auto;
+        padding: 0.75rem;
+        border-radius: 0.75rem;
+      }
+
+      .page-wrap h1 {
+        font-size: 1.2rem;
+      }
+
+      .page-wrap h2 {
+        font-size: 1rem;
+        margin-top: 1rem;
+      }
+
+      label {
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      input, select, textarea {
+        padding: 0.6rem 0.7rem;
+        font-size: 16px;
+        border-radius: 0.5rem;
+      }
+
+      .btn-primary {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9Z2B97VS02"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9Z2B97VS02');
+  </script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="page-wrap">
+    <h1>Post a Traveller Request</h1>
+    <p style="font-size: 1.05rem; margin-bottom: 0.5rem;">Tell us what you need in Egypt — verified experts and the EgTravelMarket team will send tailored offers & bids.</p>
+    <p style="margin-bottom: 1rem;">Submit one request and receive personalized quotes for tours, transfers, diving, boats, safaris, and custom packages — matched to your dates and budget.</p>
+    
+    <div class="soft-launch">
+      <strong>Soft Launch (Beta):</strong> Our network is growing daily. You may receive offers from EgTravelMarket directly and/or trusted licensed partners.
+    </div>
+
+    <div class="how-it-works">
+      <strong style="color: #2ea6ff;">How it works:</strong> 1) Post your request  2) Experts send offers  3) View & choose using your Request Code + PIN
+    </div>
+
+    <div class="security-note">
+      After submission, you'll receive a Request Code + PIN by email (and on-screen). For security, we don't send clickable login links — always open egtravelmarket.com manually and enter your Code + PIN.
+    </div>
+
+    <form id="travelRequestForm">
+      <!-- SECTION 1: Your Details -->
+      <h2 style="color: var(--text); margin-top: 1rem;">Your Details</h2>
+      <p class="section-helper">Your details are used only to deliver your Request Code & PIN and any updates you choose.</p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input id="name" name="name" placeholder="e.g., Ahmed Hassan" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input id="email" name="email" type="email" placeholder="e.g., name@email.com" required />
+        </div>
+        <div class="form-group">
+          <label for="whatsapp">Phone / WhatsApp (optional)</label>
+          <input id="whatsapp" name="whatsapp" placeholder="e.g., +20 10 0000 0000" />
+        </div>
+      </div>
+
+      <!-- SECTION 2: Request Summary -->
+      <h2 style="color: var(--text); margin-top: 1.5rem;">Request Summary</h2>
+      <p class="section-helper">Better details = better offers.</p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="title">Request Title *</label>
+          <input id="title" name="title" placeholder='e.g., "4 days Cairo + Luxor private tour" or "Sharm diving package for 2"' required />
+        </div>
+        <div class="form-group">
+          <label for="category">What type of experience are you looking for? *</label>
+          <select id="category" name="category" required>
+            <option value="">Select request type</option>
+            <optgroup label="Classic Egypt Experiences">
+              <option value="City Tour">🏛️ Classic Sightseeing & Culture — Cairo, Giza, Luxor, Aswan</option>
+              <option value="Safari">🏜️ Desert, Safari & Adventure — jeep, quad, Bedouin dinner</option>
+            </optgroup>
+            <optgroup label="Red Sea & Marine">
+              <option value="Diving">🤿 Diving Package — certified or beginner</option>
+              <option value="Snorkeling">🤿 Snorkeling & Sea Excursions — reefs & islands</option>
+              <option value="Boat Trip">🚤 Boat / Yacht / Sea Trip — private or shared</option>
+            </optgroup>
+            <optgroup label="Complete & Custom Travel">
+              <option value="Custom Package">✨ Custom / Tailor-Made Trip — designed around your needs</option>
+              <option value="Custom Package">🎒 Full Travel Package — hotel, tours & transport</option>
+            </optgroup>
+            <optgroup label="Services & Special Requests">
+              <option value="Transfer">🚗 Transfers & Transportation — airport & private drivers</option>
+              <option value="Other">👨‍🏫 Private Tour Guide — licensed local guide</option>
+              <option value="Other">🧠 Travel Consultation / Mentor — planning & advice</option>
+              <option value="Other">🎉 Special Event / Occasion — honeymoon, birthday, group</option>
+              <option value="Other">❓ Other / Not Sure Yet</option>
+            </optgroup>
+          </select>
+          <p class="field-helper">Choose the option that best matches your request — you can add details below. Not sure? Choose "Custom / Tailor-Made Trip" and explain your idea below.</p>
+        </div>
+        <div class="form-group">
+          <label for="language">Preferred Language for Communication *</label>
+          <select id="language" name="language" required>
+            <option value="">Select language</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="fr">🇫🇷 French</option>
+            <option value="de">🇩🇪 German</option>
+            <option value="es">🇪🇸 Spanish</option>
+            <option value="it">🇮🇹 Italian</option>
+            <option value="ru">🇷🇺 Russian</option>
+            <option value="pl">🇵🇱 Polish</option>
+            <option value="ar">🇸🇦 Arabic</option>
+            <option value="tr">🇹🇷 Turkish</option>
+            <option value="nl">🇳🇱 Dutch</option>
+            <option value="sv">🇸🇪 Swedish</option>
+            <option value="no">🇳🇴 Norwegian</option>
+            <option value="da">🇩🇰 Danish</option>
+            <option value="cs">🇨🇿 Czech</option>
+            <option value="ro">🇷🇴 Romanian</option>
+            <option value="zh">🇨🇳 Chinese</option>
+            <option value="ja">🇯🇵 Japanese</option>
+            <option value="ko">🇰🇷 Korean</option>
+            <option value="any">🌐 Any language (English is OK)</option>
+            <option value="other">❓ Other (please specify in description)</option>
+          </select>
+          <p class="field-helper">This helps us match you with the right guide, expert, or agency. Most of our experts speak multiple languages — selecting your preference helps us match you better.</p>
+        </div>
+      </div>
+
+      <!-- SECTION 3: Trip Details -->
+      <h2 style="color: var(--text); margin-top: 1.5rem;">Trip Details</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="location">Location / Area *</label>
+          <input id="location" name="location" placeholder="Anywhere in Egypt (city/area/hotel) — e.g., Cairo, Luxor, Sharm, Hurghada…" required />
+        </div>
+        <div class="form-group">
+          <label for="date">Preferred Date *</label>
+          <input id="date" name="date" type="date" required />
+          <p class="field-helper">If flexible, choose an approximate date and mention flexibility below.</p>
+        </div>
+        <div class="form-group">
+          <label for="travelers">Number of Travelers *</label>
+          <input id="travelers" name="travelers" type="number" min="1" value="1" placeholder="e.g., 2" required />
+        </div>
+        <div class="form-group">
+          <label for="budget">Approx. Budget (optional)</label>
+          <input id="budget" name="budget" placeholder="e.g., 300 USD (or 10,000 EGP)" />
+        </div>
+      </div>
+
+      <!-- SECTION 4: Quick Preferences (Optional) -->
+      <h2 style="color: var(--text); margin-top: 1.5rem;">Quick Preferences <span style="font-weight: 400; font-size: 0.85rem; color: var(--muted);">(optional but helpful)</span></h2>
+      <div class="quick-prefs-grid">
+        <div class="form-group">
+          <label for="travel_style">Travel Style</label>
+          <select id="travel_style" name="travel_style">
+            <option value="">Select...</option>
+            <option value="relaxed">Relaxed & Easy</option>
+            <option value="balanced">Balanced</option>
+            <option value="active">Active & Adventure</option>
+            <option value="luxury">Luxury & Comfort</option>
+            <option value="budget">Budget-Friendly</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="trip_privacy">Private or Shared?</label>
+          <select id="trip_privacy" name="trip_privacy">
+            <option value="">Select...</option>
+            <option value="private">Private</option>
+            <option value="shared">Shared</option>
+            <option value="both">Open to both</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="date_flexibility">Dates Flexibility</label>
+          <select id="date_flexibility" name="date_flexibility">
+            <option value="">Select...</option>
+            <option value="fixed">Fixed</option>
+            <option value="flexible">Flexible (+/- few days)</option>
+            <option value="fully_flexible">Fully flexible</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="traveler_type">Who is traveling?</label>
+          <select id="traveler_type" name="traveler_type">
+            <option value="">Select...</option>
+            <option value="solo">Solo</option>
+            <option value="couple">Couple</option>
+            <option value="family">Family with kids</option>
+            <option value="friends">Friends & group</option>
+            <option value="honeymoon">Honeymoon</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- SECTION 5: Description -->
+      <div class="form-group" style="margin-top:1.5rem;">
+        <label for="details">Describe your request *</label>
+        <textarea id="details" name="details" required
+          placeholder="Please describe your request clearly:
+• Destinations / cities in Egypt
+• Duration (day trip or multi-day)
+• Must-have activities
+• Hotel category (if needed)
+• Private or shared preference (if any)
+• Language (if 'Other', mention it)
+• Budget range (optional)
+• Any special requests
+
+Better details = better offers."></textarea>
+      </div>
+
+      <!-- SECTION 6: Contact Preference -->
+      <div class="form-group" style="margin-top:0.75rem;">
+        <label for="contactPreference">How should we contact you? *</label>
+        <select id="contactPreference" name="contactPreference" required>
+          <option value="email">By Email Only</option>
+          <option value="whatsapp">WhatsApp (if provided)</option>
+          <option value="both">Email & WhatsApp</option>
+        </select>
+      </div>
+
+      <!-- SECTION 7: Consent -->
+      <div class="form-group" style="margin-top:0.75rem;">
+        <label style="display: flex; align-items: start; gap: 0.5rem;">
+          <input type="checkbox" id="acceptTerms" required />
+          <span>I agree that EgTravelMarket may share this request with trusted licensed partners (guides, divers, agencies, and dive centers) so they can send me offers.</span>
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Submit Request & Get Offers</button>
+        <p class="small-note">
+          After submission, you will receive a <strong>Request Code</strong> and <strong>PIN</strong> by email.
+          For your security, we do <strong>not</strong> include clickable links. Please always open
+          <strong>www.egtravelmarket.com</strong> manually in your browser.
+        </p>
+      </div>
+
+      <div id="successBox" class="success-box"></div>
+      <div id="errorBox" class="error-box"></div>
+    </form>
+  </main>
+
+  <script>
+    fetch('/header.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('header-placeholder').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = '/header.js';
+        document.body.appendChild(script);
+      });
+
+    const form = document.getElementById('travelRequestForm');
+    const successBox = document.getElementById('successBox');
+    const errorBox = document.getElementById('errorBox');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      successBox.style.display = 'none';
+      errorBox.style.display = 'none';
+
+      const payload = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        whatsapp: form.whatsapp.value.trim(),
+        title: form.title.value.trim(),
+        category: form.category.value,
+        location: form.location.value.trim(),
+        travelDate: form.date.value,
+        travelers: parseInt(form.travelers.value, 10) || 1,
+        budget: form.budget.value.trim(),
+        details: form.details.value.trim(),
+        contactPreference: form.contactPreference.value,
+        language: form.language.value
+      };
+
+      try {
+        const res = await fetch('/api/travel-requests', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error('Server error');
+
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message || 'Error');
+
+        if (window.MetaPixelEvents) {
+          window.MetaPixelEvents.trackTravellerRequest();
+        }
+
+        successBox.innerHTML = `
+          <strong>Your request has been submitted successfully.</strong><br>
+          Your Request Code: <strong>${data.code}</strong><br>
+          Your PIN: <strong>${data.pin}</strong><br>
+          We have also sent these details to: <strong>${payload.email}</strong>.<br>
+          Please open <strong>www.egtravelmarket.com</strong> manually and use
+          "Traveller Requests → View My Request" to see offers.
+        `;
+        successBox.style.display = 'block';
+        form.reset();
+      } catch (err) {
+        console.error(err);
+        errorBox.textContent = 'Sorry, something went wrong. Please try again or contact us on info@egtravelmarket.com.';
+        errorBox.style.display = 'block';
+      }
+    });
+  </script>
+
+<!-- SEO FOOTER -->
+<!-- Brand/Logo Section -->
+<div style="background:var(--card);padding:40px 20px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.1);margin-top:80px;">
+  <a href="index.html" style="display:inline-block;text-decoration:none;">
+    <img src="images/etm-logo.png" alt="EgTravelMarket Logo" width="60" height="60" style="margin-bottom:15px;border-radius:12px;">
+    <div style="color:var(--text);font-weight:700;font-size:1.2rem;margin-bottom:8px;">Eg Travel Market</div>
+    <p style="color:var(--muted);margin:0;font-size:0.9rem;">Egypt's All-in-One Travel Marketplace</p>
+  </a>
+</div>
+
+<footer class="seo-footer" style="background:#0a3d62;color:#fff;padding:40px 20px;margin-top:0;border-top:none;"><div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;padding-bottom:20px;"><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Services</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./book-your-trip.html" style="color:#f0f0f0;text-decoration:none;">Book</a></li><li style="margin-bottom:3px;"><a href="./deals.html" style="color:#f0f0f0;text-decoration:none;">Deals</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Experts</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./guides.html" style="color:#f0f0f0;text-decoration:none;">Guides</a></li><li style="margin-bottom:3px;"><a href="./mentor.html" style="color:#f0f0f0;text-decoration:none;">Mentor</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Trips</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./cairo-by-flight.html" style="color:#f0f0f0;text-decoration:none;">Cairo</a></li><li style="margin-bottom:3px;"><a href="./luxor-by-flight.html" style="color:#f0f0f0;text-decoration:none;">Luxor</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Discover</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./discover-egypt.html" style="color:#f0f0f0;text-decoration:none;">Egypt</a></li><li style="margin-bottom:3px;"><a href="./diving-nature.html" style="color:#f0f0f0;text-decoration:none;">Diving</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Company</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./about.html" style="color:#f0f0f0;text-decoration:none;">About</a></li><li style="margin-bottom:3px;"><a href="./contact.html" style="color:#f0f0f0;text-decoration:none;">Contact</a></li></ul></div></div><div style="text-align:center;padding-top:15px;border-top:1px solid rgba(255,255,255,0.1);font-size:0.7rem;color:#aaa;">&copy; 2025 EgTravelMarket. All rights reserved.</div>  <div style="max-width:1000px;margin:0 auto;padding:20px;text-align:center;color:#9aa4c6;font-size:0.75rem;line-height:1.6;border-top:1px solid rgba(255,255,255,0.1);">
+    <p style="margin:0 0 10px 0;"><strong style="color:#ffc107;">Platform Disclaimer</strong></p>
+    <p style="margin:0;">EgTravelMarket is an international technology platform that facilitates connections between travelers and independent service providers. EgTravelMarket does not operate tours, travel services, or diving activities directly. All on-ground travel services in Egypt are executed by independent licensed partners such as GoMundo Travel, while all diving and water activities are provided by independent licensed dive centers such as Megalodon Diving Club. Contracts, service execution, and operational responsibility are solely between travelers and the respective service providers.</p>
+  </div>
+</footer>
+
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

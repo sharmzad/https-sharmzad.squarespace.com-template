@@ -1,0 +1,129 @@
+Subject: UX Improvements Required for Travel Agency Filters (No Backend Changes)
+
+The filters are now technically working, but the user experience is still confusing.
+This task is UX-ONLY.
+⚠️ DO NOT touch backend logic, database, or filter logic.
+
+🔴 CURRENT UX ISSUES
+
+Users do NOT clearly understand that they must click “Filters” to see advanced options.
+
+When clicking Filters, ALL filter sections open at once, which is overwhelming.
+
+There is no visual hierarchy between important filters and advanced filters.
+
+This creates confusion for both travelers (B2C) and agencies (B2B).
+
+✅ REQUIRED UX FIXES (MANDATORY)
+1️⃣ Make the “Filters” button more discoverable
+
+Do ONE of the following (not all):
+
+Change button label to:
+“🔍 Filters”
+OR
+
+Add small helper text under search bar:
+“Use filters to narrow down agencies”
+OR
+
+Add badge text:
+“Filters (Advanced)”
+
+⚠️ Do NOT move the button.
+⚠️ Do NOT change styling theme.
+
+2️⃣ Default collapsed sections (VERY IMPORTANT)
+
+When user clicks Filters:
+
+✅ OPEN by default:
+
+Agency Business Type
+
+Agency Base
+
+❌ COLLAPSED by default:
+
+Egypt Destinations
+
+Products & Services
+
+Experience Level
+
+User should manually expand these if needed.
+
+3️⃣ Reorder filter sections (UX priority order)
+
+Change order to:
+
+Agency Business Type
+
+Agency Base
+
+Egypt Destinations
+
+Products & Services
+
+Experience Level (Advanced)
+
+⚠️ This is display order only — no logic change.
+
+4️⃣ Optional helper text (recommended)
+
+At the top of filters panel, add small text:
+
+“Start with Agency Type or Agency Base to narrow results”
+
+This is text only, no logic.
+
+🚫 WHAT NOT TO CHANGE (CRITICAL)
+
+❌ No backend logic
+
+❌ No database changes
+
+❌ No filter behavior changes
+
+❌ No new filters
+
+❌ No removal of existing filters
+
+❌ No mobile-only solution
+
+❌ No popups or tutorials
+
+✅ ACCEPTANCE CRITERIA
+
+A first-time user should:
+
+Immediately notice the Filters button
+
+Understand they can click it
+
+See only 2 important filters first
+
+Not feel overwhelmed
+
+Easily expand advanced filters if needed
+
+If all sections open at once → UX is NOT acceptable.
+
+🔒 SCOPE CONFIRMATION
+
+This task applies ONLY to:
+/travel-agencies.html
+
+Do NOT apply changes to:
+
+Guides
+
+Divers
+
+Mentors
+
+Dashboard
+
+Admin
+
+END OF TASK

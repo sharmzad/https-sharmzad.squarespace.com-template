@@ -1,0 +1,164 @@
+✅ Structure (same as previous packages):
+
+A package card on the home page (showing summary + pricing + names of trips + saving).
+
+A dedicated package page (with full detailed content + booking form on top + “access code required” note + full content below).
+
+Linked connection: when a user clicks the card on home page → opens the full package page.
+
+🏠 HOME PAGE CARD (summary section)
+<!-- Package K Card -->
+<div class="package-card">
+  <img src="images/package-k.jpg" alt="Package K - The Ultimate Egyptian Immersion">
+  <h3>Package K: The Ultimate Egyptian Immersion</h3>
+  <p>✨ 2 Trips in 1: <strong>Sea Scope Semi-Submarine</strong> + <strong>Cairo by Flight</strong></p>
+  <p><strong>Adult:</strong> $285 (was $350) – Save $65<br>
+     <strong>Child:</strong> $270 (was $340) – Save $70</p>
+  <p class="offer">⭐ SAVE UP TO $70 PER PERSON! ⭐</p>
+  <a href="package-k.html" class="btn">View & Book Now</a>
+</div>
+
+
+👉 Place this inside your main “2 Trips Packages” or “Package Tours” section on the home page.
+👉 The image package-k.jpg can be replaced with your preferred design (I can create one if you want).
+
+📄 PACKAGE-K PAGE (Full page with booking form + full content)
+
+Save as: package-k.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Package K: The Ultimate Egyptian Immersion | EgyTravelMarket</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Include your site header -->
+  <header id="header"></header>
+
+  <main class="package-page">
+    <section class="package-hero">
+      <h1>✈️🌍 Package K: The Ultimate Egyptian Immersion - Save Big!</h1>
+      <p>Experience the best of Egypt's ancient history and dazzling marine life. Book the convenience of two premium trips combined into one incredible package and benefit from an exclusive price reduction!</p>
+    </section>
+
+    <!-- Booking Form -->
+    <section class="booking-form">
+      <h2>Book This Package</h2>
+      <p class="note">🔒 Access Code Required — Please enter your code to unlock booking.</p>
+      <form id="bookingForm">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="access">Access Code</label>
+        <input type="password" id="access" placeholder="Enter access code" required>
+
+        <label for="date">Preferred Date</label>
+        <input type="date" id="date" required>
+
+        <label for="adults">Adults</label>
+        <input type="number" id="adults" min="1" value="1" required>
+
+        <label for="children">Children</label>
+        <input type="number" id="children" min="0" value="0">
+
+        <button type="submit" class="btn">Submit Booking</button>
+      </form>
+    </section>
+
+    <section class="package-content">
+      <h2>Package Price Breakdown & Your Savings</h2>
+      <table class="price-table">
+        <tr>
+          <th>Traveler Type</th>
+          <th>Package Price (You Pay)</th>
+          <th>Individual Price (Was)</th>
+          <th>Your Savings</th>
+        </tr>
+        <tr>
+          <td>Adult</td>
+          <td>$285 USD</td>
+          <td>$350 USD</td>
+          <td>$65 USD</td>
+        </tr>
+        <tr>
+          <td>Child</td>
+          <td>$270 USD</td>
+          <td>$340 USD</td>
+          <td>$70 USD</td>
+        </tr>
+      </table>
+
+      <p class="offer">⭐ SAVE UP TO $70 PER PERSON! Limited Time Offer! ⭐</p>
+
+      <h3>BONUS INCLUSION</h3>
+      <p>Stay connected seamlessly with a <strong>Complimentary Tourist SIM Card</strong> featuring 20 GB of Data Usage! Use maps, share your photos instantly, and call home without any hassle.</p>
+
+      <hr>
+
+      <h2>🌊 Trip 1: Sea Scope Semi-Submarine - A Window to the Red Sea</h2>
+      <p>Discover the magical, colorful world beneath the surface of the Red Sea without getting wet! The Sea Scope is perfect for non-swimmers, families, and anyone who wants a comfortable, up-close view of the coral gardens.</p>
+
+      <ul>
+        <li><strong>Underwater Observation Lounge:</strong> Descend into the air-conditioned, deep-hull viewing gallery, fitted with massive panoramic windows. Sit back in comfort as you glide past breathtaking coral reefs.</li>
+        <li><strong>The World's Best Aquarium (It's Real!):</strong> Marvel at the abundance of exotic, rainbow-colored fish, stunning coral formations, and diverse marine life—all in their natural, pristine habitat.</li>
+        <li><strong>Perfect for All Ages:</strong> Ideal for children and those who prefer not to snorkel or dive.</li>
+        <li><strong>Refuel:</strong> Enjoy soft drinks on board to keep you refreshed.</li>
+      </ul>
+
+      <hr>
+
+      <h2>✈️ Trip 2: Cairo by Flight - Pyramids, Grand Museum & The Nile</h2>
+      <p>Take a swift, comfortable flight to Cairo for a full day of historical exploration led by an expert Egyptologist. Walk in the footsteps of Pharaohs and witness monumental architecture and priceless treasures.</p>
+
+      <ul>
+        <li><strong>The Magnificent Pyramids of Giza:</strong> Visit the last Wonder of the Ancient World — Cheops, Chephren, Mykerinus & the Great Sphinx.</li>
+        <li><strong>The Grand Egyptian Museum (GEM):</strong> Discover the world’s newest and largest archaeological museum during its soft opening phase.</li>
+        <li><strong>Lunch & Local Cuisine:</strong> Enjoy a delicious lunch at a local restaurant.</li>
+        <li><strong>Expert Guiding:</strong> Licensed Egyptologist guide for a fully informative experience.</li>
+        <li><strong>Optional Nile River Cruise:</strong> Pay locally if you wish to add this relaxing boat experience.</li>
+      </ul>
+
+      <h3>Inclusions & Important Information</h3>
+      <table class="info-table">
+        <tr>
+          <th>Included in the Cairo Trip</th>
+          <th>Essential Notes for Travelers</th>
+        </tr>
+        <tr>
+          <td>Round-trip Domestic Flights & All Transfers</td>
+          <td>All necessary airport and hotel transfers are covered.</td>
+        </tr>
+        <tr>
+          <td>Lunch & Guiding</td>
+          <td>Professional Egyptologist Guide & Quality Lunch.</td>
+        </tr>
+        <tr>
+          <td>Soft Drinks</td>
+          <td>Refreshments provided throughout the day.</td>
+        </tr>
+        <tr>
+          <td>Tipping</td>
+          <td>Tipping for your guide and driver is customary and at your discretion.</td>
+        </tr>
+        <tr>
+          <td>Visa Cost (Not Included)</td>
+          <td>Entry Visa $30 USD per person — paid upon arrival at Cairo Airport.</td>
+        </tr>
+      </table>
+
+      <p class="final-call">Secure your spot now and lock in your incredible savings on this once-in-a-lifetime journey!</p>
+    </section>
+  </main>
+
+  <!-- Include your site footer -->
+  <footer id="footer"></footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

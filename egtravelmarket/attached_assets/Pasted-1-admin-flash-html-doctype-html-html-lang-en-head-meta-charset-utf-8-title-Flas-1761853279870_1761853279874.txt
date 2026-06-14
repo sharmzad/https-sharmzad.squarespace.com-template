@@ -1,0 +1,439 @@
+1) admin-flash.html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Flash Offers Admin | EgTravelMarket</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="admin-flash.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>⚡ Flash Offers Admin</h1>
+    <div class="actions">
+      <button id="btn-new" class="btn">+ New Offer</button>
+      <input type="file" id="file-import" accept="application/json" hidden />
+      <button id="btn-import" class="btn btn-ghost">Import JSON</button>
+      <button id="btn-export" class="btn">Download JSON</button>
+      <button id="btn-save" class="btn btn-primary">Save to Browser</button>
+      <button id="btn-publish" class="btn btn-ghost">Copy JSON to Clipboard</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel">
+      <h2>Current Offers</h2>
+      <p class="muted">These are your active/queued flash offers. Edit inline or use the form ➜</p>
+      <div class="table-wrap">
+        <table id="offers-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Badge</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Link</th>
+              <th>Deadline</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="offers-tbody">
+            <!-- rows injected by JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <aside class="form-panel">
+      <h2 id="form-title">Add / Edit Offer</h2>
+      <form id="offer-form">
+        <input type="hidden" name="index" value="-1" />
+
+        <label>Badge
+          <input type="text" name="badge" placeholder="Ends Soon / Trip of the Week / Diving Deal" />
+        </label>
+
+        <label>Title *
+          <input type="text" name="title" placeholder="Cairo by Flight — Round Trip" required />
+        </label>
+
+        <label>Description *
+          <textarea name="desc" rows="4" placeholder="Day tour from Sharm including Museum & Giza Plateau. Save $20 this week." required></textarea>
+        </label>
+
+        <label>Link (URL to your page) *
+          <input type="url" name="link" placeholder="/tours/cairo-by-flight.html" required />
+        </label>
+
+        <label>Deadline (date & time)
+          <input type="datetime-local" name="deadlineLocal" />
+        </label>
+
+        <label>Or paste full ISO deadline (optional)
+          <input type="text" name="deadlineISO" placeholder="2025-11-05T20:00:00+02:00" />
+        </label>
+
+        <div class="hint">
+          Tip: If you use the date/time picker, we’ll convert it to ISO automatically when exporting.
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Save Offer</button>
+          <button type="button" id="btn-cancel" class="btn btn-ghost">Cancel</button>
+          <button type="button" id="btn-delete" class="btn btn-danger">Delete</button>
+        </div>
+      </form>
+
+      <div class="note">
+        <p><strong>How to publish:</strong> Click <em>Download JSON</em> to get <code>flash-offers.json</code>, then replace the file in your project root on Replit.</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="foot">
+    <small>EgTravelMarket — Admin tools (local only). No password for now.</small>
+  </footer>
+
+  <script src="admin-flash.js"></script>
+</body>
+</html>
+
+2) admin-flash.css
+:root{
+  --bg: #0b1220;
+  --bg-soft: #0f1a2e;
+  --card: #121d34;
+  --text: #eaf0ff;
+  --muted: #a9b7d6;
+  --brand1: #2c7df0;
+  --brand2: #00d4ff;
+  --red: #ff5d6c;
+  --ring: rgba(44,125,240,.35);
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:linear-gradient(135deg,var(--bg),#08101c);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+
+.topbar{
+  position:sticky;top:0;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:14px 18px;background:rgba(8,16,28,.7);backdrop-filter: blur(6px);
+  border-bottom:1px solid rgba(255,255,255,.08)
+}
+.topbar h1{margin:0;font-size:18px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+
+.btn{
+  background:linear-gradient(135deg,var(--brand1),var(--brand2));
+  color:#031021;border:0;padding:10px 14px;border-radius:999px;font-weight:600;
+  box-shadow:var(--shadow);cursor:pointer
+}
+.btn:hover{filter:brightness(1.06)}
+.btn-primary{background:linear-gradient(135deg,#3b86f7,#4de1ff)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18)}
+.btn-danger{background:transparent;color:#ffd7db;border:1px solid rgba(255,93,108,.6)}
+
+.wrap{max-width:1200px;margin:22px auto;display:grid;grid-template-columns:1fr 360px;gap:16px;padding:0 16px}
+.panel,.form-panel{
+  background:linear-gradient(180deg,#0c1528,#0a1426);
+  border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px
+}
+h2{margin-top:0}
+
+.table-wrap{overflow:auto;border-radius:10px;border:1px solid rgba(255,255,255,.08)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:top}
+thead th{background:#0b1730;text-align:left;position:sticky;top:0}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+
+.badge{display:inline-block;padding:4px 8px;border-radius:8px;background:rgba(0,212,255,.16);border:1px solid rgba(0,212,255,.35);font-size:12px}
+
+.muted{color:var(--muted);margin-top:-8px;margin-bottom:12px;font-size:13px}
+
+.form-panel label{display:block;margin-bottom:10px;font-size:14px}
+.form-panel input[type="text"],
+.form-panel input[type="url"],
+.form-panel input[type="datetime-local"],
+.form-panel textarea{
+  width:100%;padding:10px;border-radius:10px;background:#0a1529;color:var(--text);
+  border:1px solid rgba(255,255,255,.15)
+}
+.form-panel input:focus, .form-panel textarea:focus{
+  outline:none;box-shadow:0 0 0 3px var(--ring)
+}
+.form-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+
+.hint{color:var(--muted);font-size:12px;margin-top:6px}
+.note{margin-top:16px;color:var(--muted);font-size:13px}
+code{background:#0b1730;padding:2px 6px;border-radius:6px}
+
+.foot{max-width:1200px;margin:20px auto 30px;padding:0 16px;color:var(--muted);font-size:12px}
+
+3) admin-flash.js
+/* Flash Offers Admin — no password, local only
+ * Saves data to localStorage and lets you export a flash-offers.json file.
+ * Optionally tries to load existing flash-offers.json for initial data.
+ */
+
+const LS_KEY = 'ETM_FLASH_OFFERS';
+
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+const tableBody = $('#offers-tbody');
+const form = $('#offer-form');
+const btnNew = $('#btn-new');
+const btnImport = $('#btn-import');
+const fileImport = $('#file-import');
+const btnExport = $('#btn-export');
+const btnSave = $('#btn-save');
+const btnPublish = $('#btn-publish');
+const btnCancel = $('#btn-cancel');
+const btnDelete = $('#btn-delete');
+const formTitle = $('#form-title');
+
+let offers = [];
+
+// ---------- Init ----------
+(async function init(){
+  // 1) Load from localStorage if exists
+  const cached = localStorage.getItem(LS_KEY);
+  if (cached) {
+    try { offers = JSON.parse(cached); }
+    catch { offers = []; }
+  }
+
+  // 2) If empty, try fetching flash-offers.json once
+  if (!offers?.length) {
+    try {
+      const res = await fetch('flash-offers.json', {cache:'no-store'});
+      if (res.ok) {
+        offers = await res.json();
+      }
+    } catch (e) {
+      console.warn('No flash-offers.json found or cannot fetch; starting empty.');
+      offers = [];
+    }
+  }
+
+  renderTable();
+  resetForm();
+})();
+
+// ---------- Render ----------
+function renderTable(){
+  tableBody.innerHTML = '';
+  if (!offers.length) {
+    tableBody.innerHTML = `<tr><td colspan="7" class="muted">No offers yet. Click <strong>+ New Offer</strong> to create one.</td></tr>`;
+    return;
+  }
+  offers.forEach((o, i) => {
+    const tr = document.createElement('tr');
+
+    tr.innerHTML = `
+      <td>${i+1}</td>
+      <td>${o.badge ? `<span class="badge">${escapeHTML(o.badge)}</span>` : ''}</td>
+      <td>${escapeHTML(o.title || '')}</td>
+      <td>${escapeHTML(o.desc || '')}</td>
+      <td><a href="${o.link || '#'}" target="_blank">${escapeHTML(o.link || '')}</a></td>
+      <td>${escapeHTML(o.deadline || '')}</td>
+      <td>
+        <button class="btn btn-ghost" data-edit="${i}">Edit</button>
+      </td>
+    `;
+    tableBody.appendChild(tr);
+  });
+
+  // Bind edit buttons
+  tableBody.querySelectorAll('button[data-edit]').forEach(btn=>{
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.getAttribute('data-edit'), 10);
+      loadIntoForm(idx);
+    });
+  });
+}
+
+function escapeHTML(s){
+  return (s ?? '').toString().replace(/[&<>"']/g, m => (
+    { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]
+  ));
+}
+
+// ---------- Form helpers ----------
+function resetForm(){
+  formTitle.textContent = 'Add / Edit Offer';
+  form.index.value = -1;
+  form.badge.value = '';
+  form.title.value = '';
+  form.desc.value = '';
+  form.link.value = '';
+  form.deadlineLocal.value = '';
+  form.deadlineISO.value = '';
+  btnDelete.style.display = 'none';
+}
+
+function loadIntoForm(index){
+  const o = offers[index];
+  if (!o) return;
+  formTitle.textContent = `Editing #${index+1}`;
+  form.index.value = index;
+  form.badge.value = o.badge || '';
+  form.title.value = o.title || '';
+  form.desc.value = o.desc || '';
+  form.link.value = o.link || '';
+  form.deadlineISO.value = o.deadline || '';
+
+  // Try to parse into datetime-local if possible
+  const dt = toLocalDateTimeInput(o.deadline);
+  form.deadlineLocal.value = dt || '';
+  btnDelete.style.display = 'inline-block';
+}
+
+function toLocalDateTimeInput(iso){
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return '';
+  // Produce 'YYYY-MM-DDTHH:mm'
+  const two = n => n < 10 ? '0'+n : ''+n;
+  const y = d.getFullYear();
+  const m = two(d.getMonth()+1);
+  const day = two(d.getDate());
+  const h = two(d.getHours());
+  const min = two(d.getMinutes());
+  return `${y}-${m}-${day}T${h}:${min}`;
+}
+
+// ---------- Events ----------
+btnNew.addEventListener('click', () => resetForm());
+btnCancel.addEventListener('click', () => resetForm());
+
+btnDelete.addEventListener('click', () => {
+  const idx = parseInt(form.index.value, 10);
+  if (idx >= 0 && idx < offers.length) {
+    if (confirm('Delete this offer?')) {
+      offers.splice(idx, 1);
+      persist();
+      renderTable();
+      resetForm();
+    }
+  }
+});
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const data = getFormData();
+  if (!data.title || !data.desc || !data.link) {
+    alert('Please fill Title, Description and Link.');
+    return;
+  }
+  const idx = parseInt(form.index.value, 10);
+  if (idx >= 0 && idx < offers.length) {
+    offers[idx] = data;
+  } else {
+    offers.push(data);
+  }
+  persist();
+  renderTable();
+  resetForm();
+});
+
+btnSave.addEventListener('click', () => {
+  persist();
+  alert('Saved to browser (localStorage). Remember to Download JSON to publish!');
+});
+
+btnExport.addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(offers, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'flash-offers.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+});
+
+btnPublish.addEventListener('click', async () => {
+  const text = JSON.stringify(offers, null, 2);
+  try {
+    await navigator.clipboard.writeText(text);
+    alert('JSON copied to clipboard. Now replace flash-offers.json in Replit.');
+  } catch {
+    alert('Could not copy automatically. Use Download JSON instead.');
+  }
+});
+
+btnImport.addEventListener('click', () => fileImport.click());
+fileImport.addEventListener('change', async () => {
+  const file = fileImport.files[0];
+  if (!file) return;
+  try {
+    const text = await file.text();
+    const imported = JSON.parse(text);
+    if (!Array.isArray(imported)) throw new Error('Invalid format: expected an array.');
+    offers = imported;
+    persist();
+    renderTable();
+    resetForm();
+    alert('Imported successfully from JSON file.');
+  } catch (e) {
+    alert('Import failed: ' + e.message);
+  } finally {
+    fileImport.value = '';
+  }
+});
+
+// ---------- Utils ----------
+function getFormData(){
+  const badge = form.badge.value.trim();
+  const title = form.title.value.trim();
+  const desc = form.desc.value.trim();
+  const link = form.link.value.trim();
+  let deadline = form.deadlineISO.value.trim();
+
+  // If ISO empty but datetime-local is provided, convert to ISO string with local offset
+  if (!deadline && form.deadlineLocal.value) {
+    const local = new Date(form.deadlineLocal.value);
+    if (!isNaN(local.getTime())) {
+      // Keep as ISO with timezone offset (includes seconds)
+      const iso = toISOWithOffset(local);
+      deadline = iso;
+    }
+  }
+
+  return { badge, title, desc, link, deadline };
+}
+
+function toISOWithOffset(date){
+  const pad = (n)=> (n<10?'0'+n:n);
+  const tzOffsetMin = -date.getTimezoneOffset(); // e.g. +120 for UTC+2
+  const sign = tzOffsetMin >= 0 ? '+' : '-';
+  const hh = pad(Math.floor(Math.abs(tzOffsetMin) / 60));
+  const mm = pad(Math.abs(tzOffsetMin) % 60);
+  const year = date.getFullYear();
+  const month = pad(date.getMonth()+1);
+  const day = pad(date.getDate());
+  const hour = pad(date.getHours());
+  const min = pad(date.getMinutes());
+  const sec = pad(date.getSeconds());
+  return `${year}-${month}-${day}T${hour}:${min}:${sec}${sign}${hh}:${mm}`;
+}
+
+function persist(){
+  localStorage.setItem(LS_KEY, JSON.stringify(offers));
+}
+
+How to use it (quick)
+
+Add these three files to your project root on Replit.
+
+Open admin-flash.html in your browser (Replit webview).
+
+Click + New Offer, fill the form, Save to Browser.
+
+Download JSON → this gives you flash-offers.json.
+
+Replace your project’s flash-offers.json with the new one (drag & drop in Replit).
+
+Refresh your live site → the Deals page + badges update automatically.

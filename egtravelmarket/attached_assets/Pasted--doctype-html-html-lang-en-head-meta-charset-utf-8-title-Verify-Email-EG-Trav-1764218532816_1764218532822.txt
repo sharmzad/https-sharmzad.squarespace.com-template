@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Verify Email | EG Travel Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container nav">
+    <a href="/index.html" class="brand"><div class="logo"></div><span>EG Travel Market</span></a>
+    <nav class="menu">
+      <a href="/index.html">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/divers.html">Divers</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-flex">
+    <div style="flex: 1;">
+      <h1>Verify Your Email</h1>
+      <p>We're verifying your email address to activate your account.</p>
+    </div>
+  </div>
+</section>
+
+<section class="form container">
+  <div style="max-width: 400px; margin: 0 auto; text-align: center;">
+    <div id="verifying" style="display: none;">
+      <p style="font-size: 16px; color: #bcd3ff;">⏳ Verifying your email...</p>
+      <div style="margin-top: 30px;">
+        <div style="width: 50px; height: 50px; border: 4px solid rgba(46, 166, 255, 0.3); border-top: 4px solid #2ea6ff; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+      </div>
+    </div>
+
+    <div id="success" style="display: none;">
+      <div style="font-size: 60px; margin-bottom: 20px;">✅</div>
+      <h2 style="color: #27ae60; margin-top: 0;">Email Verified Successfully!</h2>
+      <p style="color: #bcd3ff;">Your email has been verified and your account is now active.</p>
+      <p style="color: #bcd3ff; margin-top: 30px;">You can now log in to your account:</p>
+      <a href="/guide-login.html" class="btn primary" style="display: inline-block; margin-top: 20px;">Go to Login</a>
+    </div>
+
+    <div id="error" style="display: none;">
+      <div style="font-size: 60px; margin-bottom: 20px;">❌</div>
+      <h2 style="color: #ff4d4d; margin-top: 0;">Verification Failed</h2>
+      <p id="error-message" style="color: #bcd3ff;"></p>
+      <p style="color: #bcd3ff; margin-top: 30px;">The verification link may have expired or is invalid.</p>
+      <a href="/forgot-password.html" class="btn primary" style="display: inline-block; margin-top: 20px;">Request New Verification</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <h5>Support</h5>
+        <div class="list">
+          <a href="/faq.html">Help / FAQ</a>
+          <a href="/contact.html">Contact Us</a>
+          <a href="/privacy.html">Privacy Policy</a>
+        </div>
+      </div>
+      <div>
+        <h5>About</h5>
+        <div class="list">
+          <a href="/about.html">About Us</a>
+          <a href="/partners.html">Partners</a>
+          <a href="/careers.html">Careers</a>
+        </div>
+      </div>
+      <div>
+        <h5>Legal</h5>
+        <div class="list">
+          <a href="/terms.html">Terms & Conditions</a>
+          <a href="/cookies.html">Cookies Policy</a>
+          <a href="/accessibility.html">Accessibility</a>
+        </div>
+      </div>
+      <div>
+        <h5>Connect</h5>
+        <div class="list">
+          <a href="https://facebook.com/egtravelmarket" target="_blank">Facebook</a>
+          <a href="https://instagram.com/egtravelmarket" target="_blank">Instagram</a>
+          <a href="https://twitter.com/egtravelmarket" target="_blank">Twitter</a>
+        </div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:14px">© EG Travel Market. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+</style>
+
+<script>
+// Get token and email from URL
+const params = new URLSearchParams(window.location.search);
+const token = params.get('token');
+const email = params.get('email');
+
+const verifyingEl = document.getElementById('verifying');
+const successEl = document.getElementById('success');
+const errorEl = document.getElementById('error');
+const errorMessageEl = document.getElementById('error-message');
+
+if (!token || !email) {
+  errorMessageEl.textContent = 'Error: Invalid verification link. No token or email provided.';
+  errorEl.style.display = 'block';
+} else {
+  verifyingEl.style.display = 'block';
+
+  fetch('/api/auth/verify-email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 
+      email: decodeURIComponent(email),
+      token 
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    verifyingEl.style.display = 'none';
+    
+    if (data.message && data.message.includes('successfully')) {
+      successEl.style.display = 'block';
+    } else {
+      errorMessageEl.textContent = data.message || 'Failed to verify email';
+      errorEl.style.display = 'block';
+    }
+  })
+  .catch(err => {
+    verifyingEl.style.display = 'none';
+    errorMessageEl.textContent = 'Error: ' + err.message;
+    errorEl.style.display = 'block';
+  });
+}
+</script>
+
+</body>
+</html>

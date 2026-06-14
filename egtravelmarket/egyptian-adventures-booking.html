@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- PRIMARY OG IMAGE -->
+  <meta property="og:title" content="EgTravelMarket – Your Gateway to Explore Egypt" />
+  <meta property="og:description" content="Discover trips, experts, diving, MICE, medical services, and full travel experiences across Egypt." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.egtravelmarket.com/" />
+  <meta property="og:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+
+  <!-- TELL CRAWLERS TO REFRESH OG IMAGE -->
+  <meta property="og:image:secure_url" content="https://www.egtravelmarket.com/static/images/og-image.jpg?v=2" />
+  <title>Book Egyptian Adventures | EgyTravelMarket</title>
+  <meta name="description" content="Book Egyptian Adventures package: Cairo Flight, Ras Mohamed & Quad Safari. Secure your 3-trip Egypt adventure. Easy online booking. From $280 per person.">
+  <meta name="copyright" content="© 2025 EgTravelMarket. All rights reserved.">
+  
+  <!-- Open Graph / Facebook -->
+  <!-- Twitter -->
+  <link rel="canonical" href="https://egytravelmarket.com/egyptian-adventures-booking.html">
+  <link rel="stylesheet" href="styles.min.css?v=20251125-final">
+  <link rel="stylesheet" href="header.css?v=20251125-latest">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <script defer src="app.js"></script>
+  <script src="js/stripe-payment-helper.js?v=3"></script>
+  <script defer src="egyptian-adventures-booking.js?v=4"></script>
+  <style>
+    body{background:#0f1729;color:#1e293b}
+    .hero{position:relative;height:34vh;overflow:hidden}
+    .hero img{width:100%;height:100%;object-fit:cover;filter:brightness(70%)}
+    .hero .t{position:absolute;inset:0;display:grid;place-items:center;color:#fff;text-align:center}
+    .section{max-width:1000px;margin:auto;padding:26px 18px}
+    .panel{background:#fff;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.08);padding:18px;color:#1e293b}
+    .panel h2{color:#0a3d9b;margin-top:0}
+    .panel p{color:#1e293b}
+    .panel b{color:#1e293b}
+    .muted{color:#64748b}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:900px){.row{grid-template-columns:1fr}}
+    .field{display:flex;flex-direction:column;gap:6px}
+    .field input,.field textarea,.field select{padding:10px;border:2px solid #94a3b8;border-radius:8px;background:#fff;font-size:15px;color:#1e293b;width:100%}
+    .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:#0a66c2;box-shadow:0 0 0 3px rgba(10,102,194,0.1)}
+    .field label{font-weight:500;color:#1e293b}
+    .trip{border:1px dashed #cfd8e3;border-radius:10px;padding:12px;margin:10px 0;background:#f8fafc}
+    .trip h4{margin:0 0 6px;color:#0a3d9b}
+    .trip summary{color:#0a66c2;cursor:pointer}
+    .btn{background:#0a66c2;color:#fff;border:none;border-radius:24px;padding:10px 18px;cursor:pointer}
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+    .code-wrap{display:flex;gap:10px}
+    .small{font-size:.9em}
+    .ok{color:#0a8a0a;font-weight:600}
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9Z2B97VS02"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9Z2B97VS02');
+  </script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+  <div id="site-header"></div>
+  <script>
+  fetch("header.html")
+    .then(r=>r.text())
+    .then(h=>{
+      document.getElementById("site-header").innerHTML=h;
+      const s = document.createElement("script");
+      s.src = "header.min.js";
+      s.defer = true;
+      document.head.appendChild(s);
+      
+      (function () {
+        const inSub = location.pathname.includes('/pages/');
+        document.querySelectorAll('a[href^="/"]').forEach(a=>{
+          const raw = a.getAttribute('href');
+          if (raw === '/') { a.setAttribute('href', inSub ? '../index.html' : './'); return; }
+          if (raw.startsWith('/pages/')) { a.setAttribute('href', inSub ? '..'+raw : '.'+raw); return; }
+          a.setAttribute('href', (inSub ? '../' : './') + raw.replace(/^\//, ''));
+        });
+      })();
+    });
+  </script>
+
+  <section class="hero">
+    <img loading="lazy" src="images/packageB.jpg" alt="Egyptian Adventures">
+    <div class="t">
+      <div>
+        <h1>Book: Egyptian Adventures (3 Trips)</h1>
+        <p>Cairo Flight • Ras Mohamed • Quad Safari</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="panel">
+      <div style="background:#fff3cd;border-left:4px solid #ffc107;padding:14px;border-radius:8px;margin-bottom:18px">
+        <p style="margin:0;color:#856404;font-weight:500">
+          ⚠️ Kindly contact us before payment to coordinate availability. Packages with flights have limited seats.
+        </p>
+      </div>
+      
+      <div style="background:#e8f5e9;border:1px solid #66bb6a;border-radius:12px;padding:14px;margin-top:18px;text-align:center">
+        <p style="margin:0 0 10px;color:#2e7d32;font-weight:600;font-size:.95rem">💬 Glad to reply your inquiries before booking</p>
+        <a style="display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:700;transition:background .2s" href="https://wa.me/00201023889959?text=Hi%20EgTravelMarket!%20I%20have%20a%20question%20about%20Egyptian%20Adventures%20Package." target="_blank">
+          <span>📱</span> WhatsApp Us
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="etm-trust-badges">
+    <div class="etm-badge"><i class="fa fa-lock"></i> Secure Checkout</div>
+    <div class="etm-badge"><i class="fa fa-map-marker-alt"></i> Verified Egyptian DMC</div>
+    <div class="etm-badge"><i class="fa fa-globe"></i> Traveler Trusted 2025</div>
+    <div class="etm-badge"><i class="fa fa-headset"></i> 24/7 Customer Support</div>
+    <div class="etm-badge"><i class="fa fa-star"></i> Top Rated Trips</div>
+    <div class="etm-badge"><i class="fa fa-shield-alt"></i> DMCA & GDPR Protected</div>
+  </section>
+
+  <section class="section">
+    <form id="formB" class="panel" onsubmit="return submitB(event)">
+      <h2>Traveler Details</h2>
+      <div class="field">
+        <label>Full Name</label>
+        <input required id="name">
+      </div>
+      <div class="row">
+        <div class="field"><label>WhatsApp Number</label><input required id="phone" placeholder="+20..."></div>
+        <div class="field"><label>Email</label><input type="email" required id="email"><div id="email-message"></div></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Hotel in Sharm</label><input id="hotel"></div>
+        <div class="field"><label>Room Number</label><input id="room"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Adults</label><input type="number" id="adults" min="1" value="1"></div>
+        <div class="field"><label>Children</label><input type="number" id="children" min="0" value="0"></div>
+      </div>
+      <div class="field">
+        <label>Infants <span class="muted small">(FREE from 1 day to 2 years)</span></label>
+        <input type="number" id="infants" min="0" value="0">
+      </div>
+      <div class="field"><label>Special Requests / Remarks <span class="muted small">(Optional)</span></label><textarea id="notes" rows="3" placeholder="Any special requests..."></textarea></div>
+
+      <h2 style="margin-top:14px">Select Your Dates</h2>
+
+      <div class="trip">
+        <h4>✈️ Cairo by Flight</h4>
+        <p class="muted small">Visa: Full Egyptian Entry Visa is required ($30 at Sharm Airport if not already held).</p>
+        <p class="small" style="margin:8px 0;color:#475569;">
+          Choose your preferred departure date using the calendar picker.
+        </p>
+        <div class="row">
+          <div class="field"><label>Choose Date</label><input id="dateCairo" type="date"></div>
+          <div class="field"><label>Passengers for Cairo</label><input type="number" id="paxCairo" min="1" value="1"></div>
+        </div>
+        <details class="small" style="margin-top:6px"><summary>View day program (short)</summary>
+          04:00 pick-up → Fly to Cairo → Giza Pyramids & Sphinx → Lunch → Grand Egyptian Museum → Fly back → Hotel ~20:00.
+        </details>
+      </div>
+
+      <div class="trip">
+        <h4>🌊 Ras Mohamed National Park (Yacht)</h4>
+        <p class="small" style="margin:8px 0;color:#475569;">
+          Choose your preferred yacht trip date using the calendar picker.
+        </p>
+        <div class="row">
+          <div class="field"><label>Choose Date</label><input id="dateRas" type="date"></div>
+          <div class="field"><label>Passengers for Ras Mohamed</label><input type="number" id="paxRas" min="1" value="1"></div>
+        </div>
+        <details class="small" style="margin-top:6px"><summary>View program</summary>
+          Full-day yacht • Multiple snorkeling/diving stops • White Island sandbar • Lunch & soft drinks onboard.
+        </details>
+        <p class="muted small" style="margin-top:6px">National Park Fees is not included. 5 USD Per Person.</p>
+      </div>
+
+      <div class="trip">
+        <h4>🏜️ Sinai Quad Bike Safari</h4>
+        <p class="small" style="margin:8px 0;color:#475569;">
+          Choose your preferred quad safari adventure date using the calendar picker.
+        </p>
+        <div class="row">
+          <div class="field"><label>Choose Date</label><input id="dateQuad" type="date"></div>
+          <div class="field"><label>Riders</label><input type="number" id="paxQuad" min="1" value="1"></div>
+        </div>
+        <details class="small" style="margin-top:6px"><summary>View program</summary>
+          Ride your own ATV across dunes • Echo Mountain • Bedouin tent with tea • ~2 hours round trip.
+        </details>
+      </div>
+
+      <div style="margin-top:20px;text-align:center">
+        <button id="showSummaryBtn" class="btn" type="button" style="margin-bottom:12px">Show Booking Summary</button>
+      </div>
+
+      <div id="summaryArea"></div>
+      <button id="payBtn" class="btn" type="button" style="width:100%;margin-top:12px;display:none;background:#0a66c2">💳 Pay Now with Stripe</button>
+    </form>
+  </section>
+
+  <div id="okPopup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000">
+    <div style="background:#fff;margin:10% auto;max-width:420px;padding:22px;border-radius:12px;text-align:center">
+      <h3>Booking Submitted</h3>
+      <p>Thank you! We'll confirm your Egyptian Adventures package shortly on WhatsApp/email.</p>
+      <button class="btn" onclick="location.href='egyptian-adventures.html'">Back to Package</button>
+    </div>
+  </div>
+
+  <footer class="site-footer" id="contact">
+  <div class="container">
+    <div class="footer-grid">
+
+      <div class="footer-col footer-brand">
+        <a class="brand footer-brand-link" href="index.html">
+          <img class="brand-logo" src="images/etm-logo.png" alt="EgTravelMarket Logo" loading="eager" width="40" height="40">
+          <span class="brand-text">Eg Travel Market</span>
+        </a>
+        <p class="footer-tagline">
+          All your Egypt travel & services in one place.
+        </p>
+
+        <ul class="footer-contact">
+          <li><i class="fa-solid fa-location-dot"></i> Sharm El-Sheikh, Egypt</li>
+          <li><i class="fa-solid fa-envelope"></i> <a href="contact.html">Contact form</a></li>
+        </ul>
+
+        <div class="footer-social">
+          <a aria-label="Facebook" href="https://www.facebook.com/profile.php?id=61583902977314" target="_blank" rel="noopener"><i class="fa-brands fa-facebook"></i></a>
+          <a aria-label="Instagram" href="#" rel="noopener"><i class="fa-brands fa-instagram"></i></a>
+          <a aria-label="LinkedIn" href="https://www.linkedin.com/company/110356108" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i></a>
+          <a aria-label="X" href="#" rel="noopener"><i class="fa-brands fa-x-twitter"></i></a>
+          <a aria-label="YouTube" href="#" rel="noopener"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <nav class="footer-col" aria-label="Explore">
+        <h4 class="footer-title"><i class="fa-solid fa-compass"></i> Explore</h4>
+        <ul class="footer-links">
+          <li><a href="index.html#tours"><i class="fa-solid fa-person-hiking"></i> Tours & Activities</a></li>
+          <li><a href="index.html#popular-tours"><i class="fa-solid fa-star"></i> Popular Tours from Sharm</a></li>
+          <li><a href="book-your-trip.html"><i class="fa-solid fa-plane-departure"></i> Flights & Hotels</a></li>
+          <li><a href="book-diving.html"><i class="fa-solid fa-water"></i> Diving</a></li>
+          <li><a href="guides.html"><i class="fa-solid fa-user-tie"></i> Book a Guide</a></li>
+          <li><a href="divers.html"><i class="fa-solid fa-person-swimming"></i> Book a Diver</a></li>
+          <li><a href="medical.html"><i class="fa-solid fa-briefcase-medical"></i> Medical Services</a></li>
+          <li><a href="mice.html"><i class="fa-solid fa-people-group"></i> MICE & Conferences</a></li>
+          <li><a href="investment.html"><i class="fa-solid fa-chart-line"></i> Investments</a></li>
+          <li><a href="mentor.html"><i class="fa-solid fa-chalkboard-user"></i> Ask a Mentor</a></li>
+          <li><a href="dmc.html"><i class="fa-solid fa-map-location-dot"></i> DMC – Be Your Local Agent</a></li>
+          <li><a href="b2b.html"><i class="fa-solid fa-briefcase"></i> B2B Handling</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Company">
+        <h4 class="footer-title"><i class="fa-solid fa-building"></i> Company</h4>
+        <ul class="footer-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="partners.html">Become a Partner</a></li>
+          <li><a href="affiliate.html">Affiliate Program</a></li>
+          <li><a href="mentor.html">Become a Mentor</a></li>
+          <li><a href="guide-signup.html">Sign Up/In as a Guide</a></li>
+          <li><a href="diver-signup.html">Sign Up/In as a Diver</a></li>
+          <li><a href="dmc.html">Become a Vendor / DMC</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Support & Legal">
+        <h4 class="footer-title"><i class="fa-solid fa-shield-heart"></i> Support & Legal</h4>
+        <ul class="footer-links">
+          <li><a href="faq.html">Help / FAQ</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms & Conditions</a></li>
+          <li><a href="cookies.html">Cookies Policy</a></li>
+        </ul>
+
+        <a href="trip-finder.html" class="btn footer-ai-btn" style="display: inline-block; text-decoration: none;">
+          <i class="fa-solid fa-map-marked-alt"></i> Smart Trip Finder
+        </a>
+      </nav>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright">© 2025 Eg Travel Market — All rights reserved.</p>
+      <p class="footer-legal" style="text-align: center; font-size: 0.75rem; color: var(--muted); margin: 0.8rem 0; line-height: 1.5;">
+        <strong>Registered Office:</strong> 71-75 Shelton Street, Covent Garden, London WC2H 9JQ, United Kingdom<br>
+        Backed & Managed by <strong>GoMundo Travel</strong> — Registered at the Egyptian Tourism Ministry
+      </p>
+      <div class="footer-dmca">
+        <a href="https://www.dmca.com/Protection/Status.aspx?ID=4f3b9d83-a21f-4cdc-983f-097e0f2a7deb" target="_blank" rel="noopener noreferrer">
+          <img loading="lazy" src="https://images.dmca.com/Badges/dmca_protected_11_120.png?ID=4f3b9d83-a21f-4cdc-983f-097e0f2a7deb" 
+               alt="DMCA.com Protection Status" width="100">
+        </a>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1000px;margin:0 auto;padding:20px;text-align:center;color:#9aa4c6;font-size:0.75rem;line-height:1.6;border-top:1px solid rgba(255,255,255,0.1);">
+    <p style="margin:0 0 10px 0;"><strong style="color:#ffc107;">Platform Disclaimer</strong></p>
+    <p style="margin:0;">EgTravelMarket is an international technology platform that facilitates connections between travelers and independent service providers. EgTravelMarket does not operate tours, travel services, or diving activities directly. All on-ground travel services in Egypt are executed by independent licensed partners such as GoMundo Travel, while all diving and water activities are provided by independent licensed dive centers such as Megalodon Diving Club. Contracts, service execution, and operational responsibility are solely between travelers and the respective service providers.</p>
+  </div>
+</footer>
+
+  <script src="js/email-validator.js"></script>
+  <script>
+    function submitB(e){
+      e.preventDefault();
+      document.getElementById('okPopup').style.display='block';
+      return false;
+    }
+  </script>
+
+<!-- SEO FOOTER -->
+<footer class="seo-footer" style="background:#0a3d62;color:#fff;padding:40px 20px;margin-top:80px;border-top:3px solid #ffc107;"><div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;padding-bottom:20px;"><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Packages</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./package-a.html" style="color:#f0f0f0;text-decoration:none;">Package A</a></li><li style="margin-bottom:3px;"><a href="./package-d.html" style="color:#f0f0f0;text-decoration:none;">Package D</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Trips</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./cairo-by-flight.html" style="color:#f0f0f0;text-decoration:none;">Cairo</a></li><li style="margin-bottom:3px;"><a href="./luxor-by-flight.html" style="color:#f0f0f0;text-decoration:none;">Luxor</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Services</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./book-diving.html" style="color:#f0f0f0;text-decoration:none;">Dive</a></li><li style="margin-bottom:3px;"><a href="./deals.html" style="color:#f0f0f0;text-decoration:none;">Deals</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Experts</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./guides.html" style="color:#f0f0f0;text-decoration:none;">Guides</a></li><li style="margin-bottom:3px;"><a href="./mentor.html" style="color:#f0f0f0;text-decoration:none;">Mentor</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Company</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./about.html" style="color:#f0f0f0;text-decoration:none;">About</a></li><li style="margin-bottom:3px;"><a href="./contact.html" style="color:#f0f0f0;text-decoration:none;">Contact</a></li></ul></div></div><div style="border-top:1px solid rgba(255,255,255,0.2);padding-top:10px;text-align:center;color:#bbb;font-size:0.7rem;"><p style="margin:0;">&copy; 2025 EgTravelMarket | <a href="./index.html" style="color:#ffc107;">Home</a> | <a href="./sitemap.xml" style="color:#ffc107;">Sitemap</a></p></div>  <div style="max-width:1000px;margin:0 auto;padding:20px;text-align:center;color:#9aa4c6;font-size:0.75rem;line-height:1.6;border-top:1px solid rgba(255,255,255,0.1);">
+    <p style="margin:0 0 10px 0;"><strong style="color:#ffc107;">Platform Disclaimer</strong></p>
+    <p style="margin:0;">EgTravelMarket is an international technology platform that facilitates connections between travelers and independent service providers. EgTravelMarket does not operate tours, travel services, or diving activities directly. All on-ground travel services in Egypt are executed by independent licensed partners such as GoMundo Travel, while all diving and water activities are provided by independent licensed dive centers such as Megalodon Diving Club. Contracts, service execution, and operational responsibility are solely between travelers and the respective service providers.</p>
+  </div>
+</footer>
+
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+
+Now I need to clearly define CTA destinations to avoid any wrong redirects.
+
+GLOBAL RULE:
+- CTAs must redirect to existing public pages only
+- No placeholders
+- No JS redirects unless already used in production
+- Use normal <a href=""> links
+
+====================================
+HERO SECTION CTAs
+====================================
+
+1) "Post Travel Request"
+→ /travel-request.html
+(For travelers – no signup required)
+
+2) "Explore Trips"
+→ /trips.html
+(Shows fixed trips, packages, trip of the week)
+
+3) "Find Experts"
+→ /guides.html
+(Default experts listing – guides first)
+
+4) "Agencies & Partners"
+→ /travel-agencies.html
+
+====================================
+TRAVELER REQUESTS SECTION
+====================================
+
+5) "Post a Travel Request"
+→ /travel-request.html
+
+6) "Browse Trips Instead"
+→ /trips.html
+
+====================================
+LOCAL EXPERTS MARKETPLACE
+====================================
+
+7) Tour Guides card
+→ /guides.html
+
+8) Divers & Dive Professionals card
+→ /divers.html
+
+9) Travel Mentors card
+→ /mentor.html
+
+10) "Join as Expert"
+→ /be-mentor.html
+
+====================================
+AGENCIES & DIVE CENTERS
+====================================
+
+11) Travel Agencies & DMC card
+→ /travel-agencies.html
+
+12) Dive Centers card
+→ /dive-centers-list.html
+
+13) "Post / Browse Jobs"
+→ /jobs-marketplace.html
+
+14) "Traveler Request (Companies Offer)"
+→ /travel-request.html
+
+====================================
+B2B GROUND HANDLING
+====================================
+
+15) "View Agencies & DMC"
+→ /travel-agencies.html
+
+16) "Send a Request"
+→ /travel-request.html
+
+====================================
+MICE / CORPORATE
+====================================
+
+17) "Request a Corporate Program"
+→ /travel-request.html
+
+18) "Partner With Us"
+→ /travel-agencies.html
+
+====================================
+IMPORTANT NOTES
+====================================
+
+- Do NOT create new pages
+- Do NOT change URLs
+- Do NOT rename routes
+- Do NOT redirect CTAs to login pages
+- Homepage CTAs are PUBLIC by design
+
+Once done, please confirm each CTA route is working correctly.

@@ -1,0 +1,204 @@
+ere’s your full HTML code for Package D – 2 Trips (Pirates & Jeep Safari)
+You can simply paste this under your “Packages” section or save it as package-d.html:
+
+<section id="package-d" class="package-section">
+  <div class="package-container">
+    <h2 class="package-title">Package D – The Ultimate Land & Sea Adventure (2 Trips)</h2>
+    <p class="package-subtitle">🏴‍☠️ Pirates Boat Cruise & 🏜️ Jeep Safari – Double the Fun, Double the Savings!</p>
+
+    <div class="price-table">
+      <h3>Package Price Breakdown & Your Savings</h3>
+      <table>
+        <tr>
+          <th>Trip</th>
+          <th>Adult Price</th>
+          <th>Child Price</th>
+        </tr>
+        <tr>
+          <td>Combined Package (You Pay)</td>
+          <td>$110 USD</td>
+          <td>$75 USD</td>
+        </tr>
+        <tr>
+          <td>Individual Price (Was)</td>
+          <td>$135 USD</td>
+          <td>$100 USD</td>
+        </tr>
+        <tr class="savings-row">
+          <td>Your Total Savings</td>
+          <td>$25 USD</td>
+          <td>$25 USD</td>
+        </tr>
+      </table>
+      <p class="savings-note">💰 That's a total saving of <strong>$50 USD</strong> for a family of two (one adult + one child)!</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Trip 1: Pirates Boat Trip -->
+    <div class="trip-section">
+      <h3>🌊 Trip 1: The Pirates Boat Cruise — Sail, Snorkel & Discover!</h3>
+      <p>Step aboard a magnificent three-masted wooden sailing ship and embark on a full-day adventure that captures the golden age of sailing! This isn’t just a boat ride; it’s a themed escape onto the dazzling Red Sea.</p>
+
+      <ul>
+        <li><strong>A Full-Day Escape (08:00 – 17:00):</strong> Enjoy nearly nine hours on the water, soaking up the sun and Sinai’s spectacular scenery.</li>
+        <li><strong>Three Stops for Discovery:</strong> Drop anchor at vibrant reef locations teeming with marine life.</li>
+        <li><strong>Guided Snorkeling:</strong> Explore coral gardens, colorful fish, and maybe even sea turtles. (Life jackets + snorkel gear usually included.)</li>
+        <li><strong>The Pirate Experience:</strong> Luxurious themed vessel with sun decks and A/C lounges.</li>
+        <li><strong>Fuel Your Adventure:</strong> Delicious on-board lunch included.</li>
+        <li><strong>Convenience Included:</strong> Round-trip hotel ↔ marina transfers.</li>
+      </ul>
+
+      <p class="note">⚠️ Note: National Park Fee $5 per person (not included, payable locally).</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Trip 2: Jeep Safari -->
+    <div class="trip-section">
+      <h3>⛰️ Trip 2: Desert Explorer Jeep Safari — Thrills on Four Wheels!</h3>
+      <p>Get ready for an unforgettable off-road journey through the Sinai Desert! Experience adrenaline-pumping adventure and authentic Bedouin culture all in one amazing day.</p>
+
+      <ul>
+        <li><strong>Off-Road Adventure:</strong> Traverse canyons, mountains, and desert valleys in powerful 4×4 jeeps.</li>
+        <li><strong>Bedouin Camp Visit:</strong> Learn about desert traditions and taste Bedouin tea and bread.</li>
+        <li><strong>Panoramic Views:</strong> Capture breathtaking photos of the golden dunes and rugged Sinai peaks.</li>
+        <li><strong>Sunset Experience:</strong> Watch the desert glow as the sun dips below the horizon — a magical moment!</li>
+        <li><strong>Optional Camel Ride & BBQ Dinner:</strong> Available on some versions of the safari (ask for details when booking).</li>
+        <li><strong>Transfers Included:</strong> Pickup & drop-off from your hotel in Sharm El Sheikh.</li>
+      </ul>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Booking Form -->
+    <div class="booking-form">
+      <h3>📅 Book Your Adventure Now</h3>
+      <form id="packageDForm" onsubmit="event.preventDefault(); alert('Thank you! Your booking has been received. We will contact you shortly.');">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Your Full Name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="example@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="adults">Number of Adults</label>
+          <input type="number" id="adults" name="adults" min="1" value="1" required>
+        </div>
+
+        <div class="form-group">
+          <label for="children">Number of Children</label>
+          <input type="number" id="children" name="children" min="0" value="0">
+        </div>
+
+        <div class="form-group">
+          <label for="date">Preferred Date</label>
+          <input type="date" id="date" name="date" required>
+        </div>
+
+        <button type="submit" class="book-btn">Book Now</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+.package-section {
+  background: #f9fbff;
+  color: #003366;
+  padding: 40px 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  margin: 40px auto;
+  max-width: 950px;
+}
+.package-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #004c99;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.package-subtitle {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+.price-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+.price-table th, .price-table td {
+  border: 1px solid #cfe0ff;
+  padding: 10px;
+  text-align: center;
+}
+.savings-row {
+  background-color: #e6f0ff;
+  font-weight: bold;
+  color: #0066cc;
+}
+.trip-section h3 {
+  color: #004c99;
+  margin-top: 15px;
+}
+.trip-section ul {
+  list-style-type: disc;
+  margin-left: 25px;
+}
+.note {
+  font-style: italic;
+  color: #666;
+}
+.booking-form {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.05);
+}
+.booking-form .form-group {
+  margin-bottom: 15px;
+}
+.booking-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+.booking-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cfe0ff;
+  border-radius: 8px;
+}
+.book-btn {
+  background-color: #004c99;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+.book-btn:hover {
+  background-color: #0066cc;
+}
+.divider {
+  border: none;
+  border-top: 2px solid #e0e8f8;
+  margin: 30px 0;
+}
+</style>
+
+
+✅ How to use:
+
+Same as previous packages — paste this code under your “Packages” section in Replit.
+
+Or save it as package-d.html and link it from your main Packages page.
+
+The form will show a confirmation popup internally (no backend needed yet).

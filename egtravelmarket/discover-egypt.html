@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- PRIMARY OG IMAGE -->
+  <meta property="og:title" content="EgTravelMarket – Your Gateway to Explore Egypt" />
+  <meta property="og:description" content="Discover trips, experts, diving, MICE, medical services, and full travel experiences across Egypt." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.egtravelmarket.com/" />
+  <meta property="og:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+
+  <!-- TELL CRAWLERS TO REFRESH OG IMAGE -->
+  <meta property="og:image:secure_url" content="https://www.egtravelmarket.com/static/images/og-image.jpg?v=2" />
+  <title>Discover Egypt — Culture, Activities & Destinations - EgTravelMarket</title>
+  <meta name="description" content="Learn everything about Egypt's history, nature, beaches, mountains, culture, cuisine, and top attractions. Explore Sharm El Sheikh, Cairo, Red Sea, Pyramids, Luxor, and hidden gems.">
+  <meta name="keywords" content="Egypt destinations, Egypt travel guide, Egyptian culture, Egypt attractions, Red Sea Egypt, Nile River, Egyptian history">
+  <link rel="canonical" href="https://egytravelmarket.com/discover-egypt.html">
+  <link rel="canonical" href="https://egytravelmarket.com/discover-egypt.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{background:#fdfaf6;color:#222;line-height:1.7;overflow-x:hidden;}
+    a{text-decoration:none;color:#0a3d62;}
+    img{max-width:100%;display:block;}
+
+    /* ===== HERO SLIDER ===== */
+    .slider{
+      position:relative;
+      height:80vh;
+      overflow:hidden;
+      width:100%;
+    }
+    .slide{
+      position:absolute;
+      width:100%;height:100%;
+      background-size:cover;
+      background-position:center;
+      opacity:0;
+      transition:opacity 1.5s ease-in-out;
+      top:0;left:0;
+    }
+    .slide.active{opacity:1;}
+    .slide::after{
+      content:"";
+      position:absolute;
+      top:0;left:0;width:100%;height:100%;
+      background:rgba(0,0,0,.55);
+      z-index:1;
+    }
+    .hero-content{
+      position:absolute;
+      top:50%;
+      left:0;
+      right:0;
+      transform:translateY(-50%);
+      text-align:center;
+      color:#fff;
+      z-index:10;
+      max-width:90%;
+      margin:0 auto;
+      padding:20px;
+      animation:fadeIn 1.5s ease forwards;
+    }
+    .hero-content h1{
+      font-size:3rem;
+      margin:0 auto 15px;
+      text-shadow:2px 2px 4px rgba(0,0,0,0.5);
+      max-width:100%;
+      word-wrap:break-word;
+    }
+    .hero-content p{
+      color:#fff;
+      font-size:1.1rem;
+      margin:0 auto 25px;
+      text-shadow:1px 1px 2px rgba(0,0,0,0.5);
+      max-width:100%;
+      word-wrap:break-word;
+    }
+    .hero-content a{
+      display:inline-block;
+      background:#fff;
+      color:#0a3d62;
+      padding:14px 30px;
+      border-radius:6px;
+      font-weight:600;
+      transition:.3s;
+      box-shadow:0 4px 10px rgba(0,0,0,0.3);
+    }
+    .hero-content a:hover{background:#0a3d62;color:#fff;transform:translateY(-2px);box-shadow:0 6px 15px rgba(0,0,0,0.4);}
+
+    /* ===== SECTIONS GRID ===== */
+    .sections{padding:70px 10%;max-width:1200px;margin:auto;}
+    .sections h2{text-align:center;color:#0a3d62;margin-bottom:40px;font-size:2.2rem;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px;}
+    .card{
+      background:#fff;border-radius:12px;overflow:hidden;
+      box-shadow:0 4px 10px rgba(0,0,0,.1);transition:all .6s ease;cursor:pointer;
+      opacity:0;transform:translateY(50px);display:block;
+    }
+    .card.show{opacity:1;transform:translateY(0);}
+    .card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,.15);}
+    .card img{height:180px;object-fit:cover;width:100%;}
+    .card h3{color:#0a3d62;font-size:1.2rem;margin:15px;}
+    .card p{margin:0 15px 20px;color:#555;font-size:.95rem;}
+
+    /* ===== TEAM ===== */
+    .team{background:#f8f8f8;padding:60px 10%;text-align:center;}
+    .team h2{color:#0a3d62;margin-bottom:30px;font-size:2.2rem;}
+    .profiles{display:flex;flex-wrap:wrap;justify-content:center;gap:30px;}
+    .profile{
+      width:250px;background:#fff;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);
+      overflow:hidden;transition:all .6s ease;opacity:0;transform:translateY(40px);cursor:pointer;
+    }
+    .profile.show{opacity:1;transform:translateY(0);}
+    .profile:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,.15);}
+    .profile img{height:260px;width:100%;object-fit:cover;}
+    .profile h3{color:#0a3d62;margin-top:10px;}
+    .profile p{font-size:.9rem;color:#555;padding:0 15px 20px;}
+
+    /* ===== NAVIGATION ===== */
+    .navbar{
+      background:#fff;
+      box-shadow:0 2px 10px rgba(0,0,0,.1);
+      padding:15px 10%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position:sticky;
+      top:0;
+      z-index:1000;
+    }
+    .navbar .logo{
+      font-size:1.5rem;
+      font-weight:700;
+      color:#0a3d62;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .navbar .logo:hover{color:#062f4e;}
+    .home-btn{
+      background:#0a3d62;
+      color:#fff;
+      padding:8px 20px;
+      border-radius:6px;
+      font-weight:600;
+      transition:.3s;
+    }
+    .home-btn:hover{background:#062f4e;transform:translateY(-2px);}
+
+    footer{background:#0a3d62;color:#fff;text-align:center;padding:30px 15px;font-size:.9rem;margin-top:50px;}
+    footer p{margin:5px 0;}
+
+    /* ===== KEYFRAMES ===== */
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .slider{height:70vh;}
+      .hero-content{
+        max-width:95%;
+        padding:15px;
+        left:0;
+        right:0;
+      }
+      .hero-content h1{
+        font-size:1.8rem;
+        margin:0 auto 12px;
+        line-height:1.3;
+      }
+      .hero-content p{
+        font-size:0.95rem;
+        margin:0 auto 20px;
+        line-height:1.5;
+      }
+      .hero-content a{
+        padding:12px 24px;
+        font-size:0.95rem;
+      }
+      .sections h2, .team h2{font-size:1.8rem;}
+      .grid{grid-template-columns:1fr;}
+      .navbar{padding:15px 5%;}
+    }
+    @media (max-width: 480px) {
+      .hero-content{
+        max-width:95%;
+        padding:10px;
+      }
+      .hero-content h1{
+        font-size:1.5rem;
+        margin:0 auto 10px;
+      }
+      .hero-content p{
+        font-size:0.85rem;
+        margin:0 auto 15px;
+      }
+      .hero-content a{padding:10px 20px;font-size:0.9rem;}
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9Z2B97VS02"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9Z2B97VS02');
+  </script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <span>🏛️</span> EgTravelMarket
+    </a>
+    <a href="index.html" class="home-btn">← Home</a>
+  </nav>
+
+  <!-- ===== CINEMATIC HERO SLIDER ===== -->
+  <section class="slider">
+    <div class="slide active" style="background-image:url('assets/hero/pyramids.jpg');"></div>
+    <div class="slide" style="background-image:url('assets/hero/temple.jpg');"></div>
+    <div class="slide" style="background-image:url('assets/hero/nile.jpg');"></div>
+    <div class="slide" style="background-image:url('assets/hero/redsea.jpg');"></div>
+
+    <div class="hero-content">
+      <h1>The Soul of Egypt</h1>
+      <p>Where ancient stories, sacred music, and timeless art live in every journey.</p>
+      <a href="#explore">Explore Now</a>
+    </div>
+  </section>
+
+  <!-- ===== SECTIONS GRID ===== -->
+  <section class="sections" id="explore">
+    <h2>Explore by Theme</h2>
+    <div class="grid">
+
+      <a href="diving-nature.html" class="card">
+        <img loading="lazy" src="assets/discover/nature.jpg" alt="Nature & Diving">
+        <h3>Nature & Diving</h3>
+        <p>Red Sea beauty, coral reefs, and desert wonders — the pulse of Egypt's natural world.</p>
+      </a>
+
+      <a href="culture-art.html" class="card">
+        <img loading="lazy" src="assets/discover/culture.jpg" alt="Culture & Art">
+        <h3>Culture & Art</h3>
+        <p>From ancient crafts to modern galleries — the art that tells Egypt's story.</p>
+      </a>
+
+      <a href="ancient-egypt.html" class="card">
+        <img loading="lazy" src="assets/discover/ancient.jpg" alt="Ancient Egypt">
+        <h3>Ancient Egypt & Archaeology</h3>
+        <p>Temples, tombs, and the eternal mysteries of the pharaohs.</p>
+      </a>
+
+      <a href="religion-spiritual-life.html" class="card">
+        <img loading="lazy" src="assets/discover/religion.jpg" alt="Religion & Spiritual Life">
+        <h3>Religion & Spiritual Life</h3>
+        <p>Where temples, churches, and mosques shape the soul of civilization.</p>
+      </a>
+
+      <a href="cinema-arts.html" class="card">
+        <img loading="lazy" src="assets/discover/cinema.jpg" alt="Cinema & Authors">
+        <h3>Cinema, Authors & Arts</h3>
+        <p>Stories and creativity that built Egypt's golden age of film and literature.</p>
+      </a>
+
+      <a href="music-opera.html" class="card">
+        <img loading="lazy" src="assets/discover/music.jpg" alt="Music & Opera">
+        <h3>Music & Opera</h3>
+        <p>The sound of Egypt — from Umm Kulthum to the modern stage.</p>
+      </a>
+
+      <a href="cities-life.html" class="card">
+        <img loading="lazy" src="assets/discover/cities.jpg" alt="Cities & People">
+        <h3>Cities, People & Life</h3>
+        <p>Daily life in Egypt's cities — Alexandria's sea, Cairo's chaos, Aswan's peace.</p>
+      </a>
+
+      <a href="egyptian-mind.html" class="card">
+        <img loading="lazy" src="assets/discover/mind.jpg" alt="Mind & Mentality">
+        <h3>Egyptian Mind & Mentality</h3>
+        <p>The humor, wisdom, and kindness that define the Egyptian smile.</p>
+      </a>
+
+      <a href="hidden-egypt.html" class="card">
+        <img loading="lazy" src="assets/discover/hidden.jpg" alt="Hidden Egypt">
+        <h3>Hidden Egypt</h3>
+        <p>Villages, oases, and desert tribes — the unseen side of Egyptian life.</p>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ===== TEAM ===== -->
+  <section class="team">
+    <h2>Meet the EgTravelMarket Specialist Team</h2>
+    <div class="profiles">
+      <a href="amr-workspace.html" class="profile">
+        <img loading="lazy" src="assets/team/amr.jpg" alt="Dr. Amr El Hawary">
+        <h3>Dr. Amr El Hawary</h3>
+        <p>Egyptologist, writer, and researcher. Passionate about philosophy, art, and ancient heritage.</p>
+      </a>
+      <a href="heba-workspace.html" class="profile">
+        <img loading="lazy" src="assets/team/heba.jpg" alt="Dr. Heba Ezzat">
+        <h3>Dr. Heba Ezzat</h3>
+        <p>Art critic and cultural thinker. Member of Egypt's Supreme Council of Culture.</p>
+      </a>
+      <a href="akram-workspace.html" class="profile">
+        <img loading="lazy" src="assets/team/akram.jpg" alt="Akram Moustafa">
+        <h3>Akram Moustafa</h3>
+        <p>Writer and actor exploring Egypt's human stories through film and theatre.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== CONTRIBUTOR SECTION ===== -->
+  <section class="sections" style="background:#fff;padding:50px 10%;text-align:center;margin-top:0;">
+    <h2 style="color:#0a3d62;margin-bottom:20px;">Want to Contribute?</h2>
+    <p style="max-width:700px;margin:0 auto 25px;font-size:1.1rem;color:#555;">
+      We welcome travel writers, historians, artists, and Egypt lovers from around the world. 
+      Share your story with us — 
+      <a href="mailto:info@egtravelmarket.com" style="color:#0a3d62;font-weight:600;text-decoration:underline;">info@egtravelmarket.com</a>
+    </p>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 EgTravelMarket – All Rights Reserved</p>
+    <p>Backed & Managed by GoMundo Travel</p>
+    <div style="max-width:1000px;margin:0 auto;padding:20px;text-align:center;color:#9aa4c6;font-size:0.75rem;line-height:1.6;border-top:1px solid rgba(255,255,255,0.1);">
+    <p style="margin:0 0 10px 0;"><strong style="color:#ffc107;">Platform Disclaimer</strong></p>
+    <p style="margin:0;">EgTravelMarket is an international technology platform that facilitates connections between travelers and independent service providers. EgTravelMarket does not operate tours, travel services, or diving activities directly. All on-ground travel services in Egypt are executed by independent licensed partners such as GoMundo Travel, while all diving and water activities are provided by independent licensed dive centers such as Megalodon Diving Club. Contracts, service execution, and operational responsibility are solely between travelers and the respective service providers.</p>
+  </div>
+</footer>
+
+  <!-- ===== SLIDER & SCROLL ANIMATION SCRIPT ===== -->
+  <script>
+    // Hero slider
+    const slides = document.querySelectorAll('.slide');
+    const heroTitle = document.querySelector('.hero-content h1');
+    const heroText = document.querySelector('.hero-content p');
+    const titles = [
+      'The Soul of Egypt',
+      'Where Civilizations Meet',
+      'A Journey Beyond Time',
+      'Discover the Magic of the Nile'
+    ];
+    const texts = [
+      "Where ancient stories, sacred music, and timeless art live in every journey.",
+      "From temples to mosques, from desert to sea — Egypt connects worlds.",
+      "Walk through history and touch eternity across Egypt's living heritage.",
+      "Sail into the sunset and feel the eternal rhythm of the Nile."
+    ];
+    let index = 0;
+    setInterval(() => {
+      slides.forEach(s => s.classList.remove('active'));
+      index = (index + 1) % slides.length;
+      slides[index].classList.add('active');
+      heroTitle.textContent = titles[index];
+      heroText.textContent = texts[index];
+    }, 5000);
+
+    // Scroll animations for cards & team
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.2});
+
+    document.querySelectorAll('.card, .profile').forEach(el => observer.observe(el));
+  </script>
+
+<!-- Brand/Logo Section -->
+<div style="background:#f5f7ff;padding:40px 20px;text-align:center;border-bottom:1px solid rgba(0,0,0,0.1);">
+  <a href="index.html" style="display:inline-block;text-decoration:none;">
+    <img src="images/etm-logo.png" alt="EgTravelMarket Logo" width="60" height="60" style="margin-bottom:15px;border-radius:12px;">
+    <div style="color:#0a3d62;font-weight:700;font-size:1.2rem;margin-bottom:8px;">Eg Travel Market</div>
+    <p style="color:#666;margin:0;font-size:0.9rem;">Egypt's All-in-One Travel Marketplace</p>
+  </a>
+</div>
+
+<!-- SEO FOOTER -->
+<footer class="seo-footer" style="background:#0a3d62;color:#fff;padding:50px 20px;margin-top:0;border-top:none;">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:25px;padding-bottom:30px;">
+    <div><h4 style="margin-bottom:12px;color:#ffc107;">Services</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.9rem;"><li style="margin-bottom:6px;"><a href="./book-trips-by-local-experts.html" style="color:#f0f0f0;text-decoration:none;">Local Experts</a></li><li style="margin-bottom:6px;"><a href="./book-your-trip.html" style="color:#f0f0f0;text-decoration:none;">Book Trip</a></li><li style="margin-bottom:6px;"><a href="./book-diving.html" style="color:#f0f0f0;text-decoration:none;">Diving</a></li></ul></div>
+    <div><h4 style="margin-bottom:12px;color:#ffc107;">Experts</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.9rem;"><li style="margin-bottom:6px;"><a href="./guides.html" style="color:#f0f0f0;text-decoration:none;">Guides</a></li><li style="margin-bottom:6px;"><a href="./divers.html" style="color:#f0f0f0;text-decoration:none;">Divers</a></li><li style="margin-bottom:6px;"><a href="./mentor.html" style="color:#f0f0f0;text-decoration:none;">Mentors</a></li></ul></div>
+    <div><h4 style="margin-bottom:12px;color:#ffc107;">Egypt</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.9rem;"><li style="margin-bottom:6px;"><a href="./ancient-egypt.html" style="color:#f0f0f0;text-decoration:none;">Ancient</a></li><li style="margin-bottom:6px;"><a href="./diving-nature.html" style="color:#f0f0f0;text-decoration:none;">Nature</a></li><li style="margin-bottom:6px;"><a href="./culture-art.html" style="color:#f0f0f0;text-decoration:none;">Culture</a></li></ul></div>
+    <div><h4 style="margin-bottom:12px;color:#ffc107;">Business</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.9rem;"><li style="margin-bottom:6px;"><a href="./mice.html" style="color:#f0f0f0;text-decoration:none;">MICE</a></li><li style="margin-bottom:6px;"><a href="./medical.html" style="color:#f0f0f0;text-decoration:none;">Medical</a></li><li style="margin-bottom:6px;"><a href="./dmc.html" style="color:#f0f0f0;text-decoration:none;">DMC</a></li></ul></div>
+    <div><h4 style="margin-bottom:12px;color:#ffc107;">Company</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.9rem;"><li style="margin-bottom:6px;"><a href="./about.html" style="color:#f0f0f0;text-decoration:none;">About</a></li><li style="margin-bottom:6px;"><a href="./contact.html" style="color:#f0f0f0;text-decoration:none;">Contact</a></li><li style="margin-bottom:6px;"><a href="./faq.html" style="color:#f0f0f0;text-decoration:none;">FAQ</a></li></ul></div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,0.2);padding-top:15px;text-align:center;color:#ccc;font-size:0.8rem;"><p style="margin:0;">&copy; 2025 EgTravelMarket | <a href="./index.html" style="color:#ffc107;">Home</a> | <a href="./sitemap.xml" style="color:#ffc107;">Sitemap</a></p></div>
+  <div style="max-width:1000px;margin:0 auto;padding:20px;text-align:center;color:#9aa4c6;font-size:0.75rem;line-height:1.6;border-top:1px solid rgba(255,255,255,0.1);">
+    <p style="margin:0 0 10px 0;"><strong style="color:#ffc107;">Platform Disclaimer</strong></p>
+    <p style="margin:0;">EgTravelMarket is an international technology platform that facilitates connections between travelers and independent service providers. EgTravelMarket does not operate tours, travel services, or diving activities directly. All on-ground travel services in Egypt are executed by independent licensed partners such as GoMundo Travel, while all diving and water activities are provided by independent licensed dive centers such as Megalodon Diving Club. Contracts, service execution, and operational responsibility are solely between travelers and the respective service providers.</p>
+  </div>
+</footer>
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

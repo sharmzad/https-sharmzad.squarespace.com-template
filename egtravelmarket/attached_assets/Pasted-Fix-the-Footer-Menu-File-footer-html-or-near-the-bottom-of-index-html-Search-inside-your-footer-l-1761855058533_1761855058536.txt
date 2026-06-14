@@ -1,0 +1,118 @@
+Fix the Footer Menu
+
+File: footer.html or near the bottom of index.html
+
+Search inside your footer links for:
+
+<li><a href="/deals.html">⚡ Flash Offer</a></li>
+
+
+➡ Delete that line.
+Keep “Flash Offer” only in your top Discover menu.
+
+🧩 STEP 2 – Fix Jumping Issue (scroll flicker)
+
+File: flash-offer.js
+Find this old line:
+
+cards[index].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+
+
+Replace it with:
+
+// Smooth scroll only inside the flash slider (no page jump)
+track.scrollTo({
+  left: cards[index].offsetLeft,
+  behavior: 'smooth'
+});
+
+🧩 STEP 3 – Responsive Cross-Fade Slider (replaces full slider block)
+
+Still inside flash-offer.js, locate the section
+// ===== Simple Auto Slider ===== (or previous fade version)
+and replace the whole block with this upgraded code:
+
+// ===== Responsive Cross-Fade Auto Slider =====
+(function () {
+  const track = document.querySelector('.flash-track[data-autoplay="true"]');
+  if (!track) return;
+
+  const cards = Array.from(track.children);
+  if (cards.length <= 1) return;
+
+  // Stack cards for fade
+  track.style.position = 'relative';
+  track.style.minHeight = '420px';
+  cards.forEach((card, i) => {
+    card.style.position = 'absolute';
+    card.style.inset = 0;
+    card.style.opacity = i === 0 ? '1' : '0';
+    card.style.transition = 'opacity 1.5s ease';
+    card.style.zIndex = i === 0 ? '2' : '1';
+  });
+
+  let index = 0;
+
+  // Responsive interval: slower on desktop, faster on mobile
+  function getInterval() {
+    return window.innerWidth < 768 ? 8000 : 10000; // 8 s mobile, 10 s desktop
+  }
+  let interval = getInterval();
+
+  function crossFade() {
+    const current = cards[index];
+    const next = cards[(index + 1) % cards.length];
+
+    current.style.zIndex = '2';
+    next.style.zIndex = '3';
+    next.style.opacity = '1';
+
+    setTimeout(() => {
+      current.style.opacity = '0';
+      current.style.zIndex = '1';
+      next.style.zIndex = '2';
+      index = (index + 1) % cards.length;
+    }, 1500); // match transition duration
+  }
+
+  let timer = setInterval(crossFade, interval);
+
+  // Pause on hover
+  track.addEventListener('pointerenter', () => clearInterval(timer));
+  track.addEventListener('pointerleave', () => (timer = setInterval(crossFade, interval)));
+
+  // Re-calculate timing if window resized
+  window.addEventListener('resize', () => {
+    clearInterval(timer);
+    interval = getInterval();
+    timer = setInterval(crossFade, interval);
+  });
+})();
+
+🧩 STEP 4 – Page Stability & Fade Styling
+
+File: deals.css
+Scroll to the bottom and paste this full block:
+
+/* ==== FIX: Smooth page & stable footer ==== */
+html, body {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+body {
+  overscroll-behavior-y: none;
+  background-attachment: fixed;
+}
+
+/* ==== Cross-Fade Slider Styling ==== */
+.flash-track {
+  position: relative;
+  overflow: hidden;
+  min-height: 420px;
+}
+.flash-card {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  transition: opacity 1.5s ease;
+}

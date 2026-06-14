@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="../">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <!-- PRIMARY OG IMAGE -->
+  <meta property="og:title" content="EgTravelMarket – Your Gateway to Explore Egypt" />
+  <meta property="og:description" content="Discover trips, experts, diving, MICE, medical services, and full travel experiences across Egypt." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.egtravelmarket.com/" />
+  <meta property="og:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+
+  <!-- TELL CRAWLERS TO REFRESH OG IMAGE -->
+  <meta property="og:image:secure_url" content="https://www.egtravelmarket.com/static/images/og-image.jpg?v=2" />
+<title>Package Tours | Eg Travel Market — Bundle & Save</title>
+<meta name="description" content="Browse and book travel packages in Egypt. Diving packages, Cairo tours, Nile cruises, and multi-day adventures. Save by bundling activities with Eg Travel Market.">
+<meta name="keywords" content="Egypt package tours, diving packages, Cairo tours, Nile cruise packages, Egypt travel deals">
+
+<!-- Collection Page Schema for Package Tours -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Egypt Package Tours",
+  "description": "Collection of travel packages and tour bundles across Egypt including diving, culture, adventure, and multi-day tours.",
+  "url": "https://www.egtravelmarket.com/pages/package-tours.html",
+  "mainEntity": {
+    "@type": "TravelAgency",
+    "name": "Eg Travel Market",
+    "logo": "https://www.egtravelmarket.com/images/etm-logo.png"
+  }
+}
+</script>
+
+<!-- Open Graph Meta Tags -->
+<!-- Twitter Card -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="../header.css" />
+<style>
+  body {
+    background: linear-gradient(180deg, #0a3d9b 0%, #004aad 100%);
+    min-height: 100vh;
+  }
+
+  .page-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 16px 64px;
+  }
+
+  .breadcrumb {
+    font-size: 0.95rem;
+    margin: 10px 0 16px;
+    color: #e0ebff;
+  }
+  .breadcrumb a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .hero {
+    background: rgba(255,255,255,.16);
+    color: #fff;
+    backdrop-filter: blur(6px);
+    border-radius: 16px;
+    padding: 32px 24px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .hero h1 {
+    margin: 0 0 12px;
+    color: #fff;
+    font-size: 2.5rem;
+  }
+  .hero p {
+    margin: 0;
+    opacity: 0.95;
+    font-size: 1.1rem;
+  }
+
+  .catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 28px;
+    margin: 32px 0;
+  }
+
+  @media (max-width: 640px) {
+    .catalog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .package-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+  }
+  .package-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+  }
+
+  .package-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .package-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .package-header {
+    margin-bottom: 12px;
+  }
+  .package-header h3 {
+    margin: 0 0 6px;
+    color: #004aad;
+    font-size: 1.3rem;
+  }
+  .package-subtitle {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .package-trips {
+    font-size: 0.85rem;
+    color: #475569;
+    margin: 10px 0;
+    line-height: 1.6;
+  }
+
+  .package-price {
+    background: #f1f5f9;
+    border-left: 4px solid #004aad;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 12px 0;
+  }
+  .package-price .price-label {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin: 0 0 4px;
+  }
+  .package-price .price-amount {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #004aad;
+    margin: 0;
+  }
+  .package-price .price-save {
+    font-size: 0.85rem;
+    color: #059669;
+    margin: 4px 0 0;
+  }
+
+  .package-footer {
+    margin-top: auto;
+    padding-top: 16px;
+  }
+
+  .btn {
+    display: block;
+    width: 100%;
+    background: #004aad;
+    color: #fff !important;
+    text-align: center;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: background 0.3s;
+    border: 0;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background: #003d8f;
+  }
+
+  .special-badge {
+    display: inline-block;
+    background: #f59e0b;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .catalog-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .hero h1 {
+      font-size: 2rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-header"></div>
+<script>
+fetch("../header.html")
+  .then(r=>r.text())
+  .then(h=>{
+    document.getElementById("site-header").innerHTML=h;
+    const s = document.createElement("script");
+    s.src = "../header.js";
+    s.defer = true;
+    document.head.appendChild(s);
+    
+    (function () {
+      const inSub = location.pathname.includes('/pages/');
+      document.querySelectorAll('a[href^="/"]').forEach(a=>{
+        const raw = a.getAttribute('href');
+        if (raw === '/') { a.setAttribute('href', inSub ? '../index.html' : './'); return; }
+        if (raw.startsWith('/pages/')) { a.setAttribute('href', inSub ? '..'+raw : '.'+raw); return; }
+        a.setAttribute('href', (inSub ? '../' : './') + raw.replace(/^\//, ''));
+      });
+    })();
+  });
+</script>
+
+<main class="page-wrap">
+  <div class="breadcrumb"><a href="../index.html">Home</a> › Package Tours</div>
+
+  <div class="hero">
+    <h1>🎒 Package Tours</h1>
+    <p>Curated multi-trip experiences with exclusive bundle savings. Book multiple adventures at once and explore Egypt's wonders!</p>
+  </div>
+
+  <div class="catalog-grid">
+
+    <div class="package-card">
+      <img loading="lazy" src="../images/packageA.jpg" alt="Package A - 3 Trips" class="package-img" loading="lazy">
+      <div class="package-content">
+        <div class="package-header">
+          <h3>Package A — 3 Trips</h3>
+          <p class="package-subtitle">The Ultimate Adventure Trio</p>
+        </div>
+        <div class="package-trips">
+          ✓ Jeep Safari & Bedouin Dinner<br>
+          ✓ Sea Scope Semi-Submarine<br>
+          ✓ Cairo by Flight (Pyramids & GEM)
+        </div>
+        <div class="package-price">
+          <p class="price-label">Starting from</p>
+          <p class="price-amount">$375 / Adult</p>
+          <p class="price-save">Save up to $45 per person</p>
+        </div>
+        <div class="package-footer">
+          <a href="../package-a.html" class="btn">View Details & Book</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="package-card">
+      <img loading="lazy" src="../images/packageB.jpg" alt="Package B - Egyptian Adventures" class="package-img" loading="lazy">
+      <div class="package-content">
+        <div class="package-header">
+          <h3>Package B — Egyptian Adventures</h3>
+          <p class="package-subtitle">History, Sea & Sand</p>
+        </div>
+        <div class="package-trips">
+          ✓ Cairo by Flight (Pyramids & GEM)<br>
+          ✓ Ras Mohamed National Park<br>
+          ✓ Quad Bike Safari
+        </div>
+        <div class="package-price">
+          <p class="price-label">Starting from</p>
+          <p class="price-amount">$355 / Adult</p>
+          <p class="price-save">Save up to $30 per person</p>
+        </div>
+        <div class="package-footer">
+          <a href="../egyptian-adventures.html" class="btn">View Details & Book</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="package-card">
+      <img loading="lazy" src="../images/packageC.jpg" alt="Package C - Explorer Triple Pack" class="package-img" loading="lazy">
+      <div class="package-content">
+        <div class="package-header">
+          <h3>Package C — Explorer Triple Pack</h3>
+          <p class="package-subtitle">Egypt's Hidden Gems</p>
+        </div>
+        <div class="package-trips">
+          ✓ Dahab Discovery & Blue Hole<br>
+          ✓ Luxor by Flight (Valley of Kings)<br>
+          ✓ 5-in-1 Desert Rose Safari
+        </div>
+        <div class="package-price">
+          <p class="price-label">Starting from</p>
+          <p class="price-amount">$390 / Adult</p>
+          <p class="price-save">Save up to $35 per person</p>
+        </div>
+        <div class="package-footer">
+          <a href="../package-c.html" class="btn">View Details & Book</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="package-card">
+      <img loading="lazy" src="../images/packageD.jpg" alt="Package D - Land & Sea Adventure" class="package-img" loading="lazy">
+      <div class="package-content">
+        <div class="package-header">
+          <h3>Package D — Land & Sea Adventure</h3>
+          <p class="package-subtitle">Double the Fun</p>
+        </div>
+        <div class="package-trips">
+          ✓ Pirates Boat Cruise<br>
+          ✓ Jeep Safari & Bedouin Experience
+        </div>
+        <div class="package-price">
+          <p class="price-label">Starting from</p>
+          <p class="price-amount">$135 / Adult</p>
+          <p class="price-save">Save up to $35 per person</p>
+        </div>
+        <div class="package-footer">
+          <a href="../package-d.html" class="btn">View Details & Book</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="package-card">
+      <img loading="lazy" src="../images/e-package.webp" alt="Package E - Land & Sea Experience" class="package-img" loading="lazy">
+      <div class="package-content">
+        <div class="package-header">
+          <h3>Package E — Land & Sea Experience</h3>
+          <p class="package-subtitle">Budget-Friendly Duo</p>
+        </div>
+        <div class="package-trips">
+          ✓ Ras Mohamed & White Island<br>
+          ✓ Desert Rose Safari & Stargazing
+        </div>
+        <div class="package-price">
+          <p class="price-label">Starting from</p>
+          <p class="price-amount">$75 / Adult</p>
+          <p class="price-save">Save up to $15 per person</p>
+        </div>
+        <div class="package-footer">
+          <a href="../package-e.html" class="btn">View Details & Book</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="package-card">
+      <img loading="lazy" src="../images/package-k.jpg" alt="Package K - The Ultimate Egyptian Immersion" class="package-img" loading="lazy">
+      <div class="package-content">
+        <div class="package-header">
+          <span class="special-badge">✨ Premium</span>
+          <h3>Package K — Ultimate Immersion</h3>
+          <p class="package-subtitle">Best of Land & Sea</p>
+        </div>
+        <div class="package-trips">
+          ✓ Sea Scope Semi-Submarine<br>
+          ✓ Cairo by Flight (Pyramids & GEM)<br>
+          🎁 <strong>Bonus:</strong> Free SIM Card (20 GB)
+        </div>
+        <div class="package-price">
+          <p class="price-label">Starting from</p>
+          <p class="price-amount">$295 / Adult</p>
+          <p class="price-save">Save up to $70 per person</p>
+        </div>
+        <div class="package-footer">
+          <a href="../package-k.html" class="btn">View Details & Book</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="background:rgba(255,255,255,.12);backdrop-filter:blur(6px);border-radius:16px;padding:28px;margin:40px 0;text-align:center;color:#fff;">
+    <h2 style="margin:0 0 12px;color:#fff;">💬 Have Questions?</h2>
+    <p style="margin:0 0 20px;opacity:.95;">Our team is happy to help you choose the perfect package for your Egypt adventure!</p>
+    <a href="https://wa.me/201023889959?text=Hi!%20I%20have%20questions%20about%20your%20package%20tours." 
+       class="btn" 
+       style="display:inline-block;width:auto;background:#25D366;">
+      <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+    </a>
+  </div>
+
+</main>
+
+<footer id="site-footer"></footer>
+<script>
+fetch("../header.html")
+  .then(r=>r.text())
+  .then(h=>{
+    const footer = h.match(/<footer[\s\S]*<\/footer>/i);
+    if(footer) document.getElementById("site-footer").innerHTML = footer[0];
+  })
+  .catch(err => console.error('Footer load error:', err));
+</script>
+
+</body>
+</html>

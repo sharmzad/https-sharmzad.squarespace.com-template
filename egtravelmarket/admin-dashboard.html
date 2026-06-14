@@ -1,0 +1,1444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Dashboard | Eg Travel Market</title>
+<link rel="stylesheet" href="/assets/styles.css">
+<style>
+  .tabs {
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    margin-bottom: 24px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab {
+    padding: 12px 20px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 15px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .tab:hover {
+    color: var(--text);
+  }
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  @media(max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media(max-width: 560px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .stat-number { font-size: 24px; }
+    .stat-label { font-size: 12px; }
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+  }
+  .stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 8px 0;
+  }
+  .stat-label {
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .table-container {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 500px;
+  }
+  .table thead {
+    background: rgba(255,255,255,.04);
+  }
+  .table th {
+    padding: 14px 16px;
+    text-align: left;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .table tr:last-child td {
+    border-bottom: none;
+  }
+  .table tr:hover {
+    background: rgba(255,255,255,.02);
+  }
+  @media(max-width: 560px) {
+    .table th, .table td {
+      padding: 10px 12px;
+      font-size: 12px;
+    }
+  }
+  .status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .status-pending {
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+  }
+  .status-approved {
+    background: rgba(39, 174, 96, 0.15);
+    color: #27ae60;
+    border: 1px solid rgba(39, 174, 96, 0.3);
+  }
+  .status-rejected {
+    background: rgba(255, 77, 77, 0.15);
+    color: #ff4d4d;
+    border: 1px solid rgba(255, 77, 77, 0.3);
+  }
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .btn-small {
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.06);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-small.approve {
+    background: var(--success);
+    border-color: var(--success);
+    color: white;
+  }
+  .btn-small.reject {
+    background: var(--danger);
+    border-color: var(--danger);
+    color: white;
+  }
+  .btn-small:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 16px;
+  }
+  
+  #trip-modal {
+    display: none !important;
+    z-index: 1 !important;
+  }
+  
+  #trip-details-modal {
+    z-index: 9999 !important;
+  }
+  
+  #trip-details-modal.active {
+    display: flex !important;
+  }
+  .modal.active {
+    display: flex;
+  }
+  
+  #trip-modal.active {
+    display: none !important;
+  }
+  .modal-content {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  @media(max-width: 560px) {
+    .modal-content {
+      max-width: 100%;
+      padding: 16px;
+      border-radius: 12px;
+    }
+    .modal-content h3 {
+      font-size: 16px;
+    }
+  }
+  .modal-content h3 {
+    margin: 0 0 16px;
+    color: var(--text);
+  }
+  .modal-content textarea {
+    width: 100%;
+    min-height: 100px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    color: var(--text);
+    padding: 12px;
+    border-radius: 12px;
+    font-family: inherit;
+    resize: vertical;
+  }
+  .modal-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    justify-content: flex-end;
+  }
+  @media(max-width: 560px) {
+    .modal-buttons {
+      flex-direction: column;
+      gap: 8px;
+    }
+    .modal-buttons button {
+      width: 100%;
+    }
+  }
+  .empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--muted);
+  }
+  .empty-state svg {
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+  @media(max-width: 560px) {
+    h1 {
+      font-size: 24px !important;
+    }
+  }
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<header class="header">
+  <div class="container nav">
+    <a href="/index.html" class="brand"><div class="logo"></div><span>Eg Travel Market</span></a>
+    <nav class="menu">
+      <a href="/admin-dashboard.html" class="active">Dashboard</a>
+      <a href="/admin-trips-management.html">Trips Management</a>
+      <a href="#" id="logout-btn">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<section style="padding: 24px 0;">
+  <div class="container">
+    <h1 style="margin: 0 0 24px; font-size: 32px;">Admin Dashboard</h1>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="analytics">Analytics</button>
+      <button class="tab" data-tab="users">👥 User Management</button>
+      <button class="tab" data-tab="trips">Trips</button>
+      <button class="tab" data-tab="signups">Pending Signups</button>
+      <button class="tab" data-tab="jobs">Pending Job Posts</button>
+      <button class="tab" data-tab="payouts">💰 Expert Payouts</button>
+    </div>
+
+    <div id="analytics-tab" class="tab-content active">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Users</div>
+          <div class="stat-number" id="stat-users">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Pending Signups</div>
+          <div class="stat-number" id="stat-pending-users">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Jobs</div>
+          <div class="stat-number" id="stat-jobs">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Pending Jobs</div>
+          <div class="stat-number" id="stat-pending-jobs">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Active Agencies</div>
+          <div class="stat-number" id="stat-agencies">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Active Experts</div>
+          <div class="stat-number" id="stat-experts">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Applications</div>
+          <div class="stat-number" id="stat-applications">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Approved Jobs</div>
+          <div class="stat-number" id="stat-approved-jobs">-</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="users-tab" class="tab-content">
+      <h2 style="margin-bottom: 20px;">All Users</h2>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Date Joined</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="users-tbody">
+            <tr>
+              <td colspan="6">
+                <div class="empty-state">
+                  <p>Loading users...</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="previous-analytics" class="tab-content" style="display:none;">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Users</div>
+          <div class="stat-number" id="stat-users">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Pending Signups</div>
+          <div class="stat-number" id="stat-pending-users">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Jobs</div>
+          <div class="stat-number" id="stat-jobs">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Pending Jobs</div>
+          <div class="stat-number" id="stat-pending-jobs">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Active Agencies</div>
+          <div class="stat-number" id="stat-agencies">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Active Experts</div>
+          <div class="stat-number" id="stat-experts">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Applications</div>
+          <div class="stat-number" id="stat-applications">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Approved Jobs</div>
+          <div class="stat-number" id="stat-approved-jobs">-</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="trips-tab" class="tab-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="margin: 0;">Trip Management</h2>
+        <button class="btn" onclick="openAddTripModal()" style="background: var(--accent); border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer;">+ Add Trip</button>
+      </div>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Trip Title</th>
+              <th>Adult Price</th>
+              <th>Kids Price</th>
+              <th>Creator (Expert)</th>
+              <th>Location</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="trips-tbody">
+            <tr>
+              <td colspan="7">
+                <div class="empty-state">
+                  <p>Loading expert trips for approval...</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="signups-tab" class="tab-content">
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Type</th>
+              <th>Email Verified</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="signups-tbody">
+            <tr>
+              <td colspan="7">
+                <div class="empty-state">
+                  <p>Loading...</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="payouts-tab" class="tab-content">
+      <div style="margin-bottom: 24px;">
+        <h2 style="margin: 0 0 16px; color: var(--text);">💰 Expert Payout Management</h2>
+        <p style="color: var(--muted); margin: 0;">Approve and process payouts to experts. Experts receive 80% of trip booking revenue.</p>
+      </div>
+      
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Expert Name</th>
+              <th>Email</th>
+              <th>Trip</th>
+              <th>Traveler</th>
+              <th>Amount</th>
+              <th>Bank Account</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="payouts-tbody">
+            <tr>
+              <td colspan="8">
+                <div class="empty-state">
+                  <p>Loading payouts...</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="jobs-tab" class="tab-content">
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Job Title</th>
+              <th>Type</th>
+              <th>Location</th>
+              <th>Salary</th>
+              <th>Posted By</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="jobs-tbody">
+            <tr>
+              <td colspan="8">
+                <div class="empty-state">
+                  <p>Loading...</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trip Approval Modal -->
+<div id="tripApprovalModal" class="modal">
+  <div class="modal-content" style="max-width: 600px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h2 id="approvalModalTitle" style="margin: 0; color: var(--accent);">Trip Details</h2>
+      <button onclick="closeApprovalModal()" style="background: none; border: none; color: var(--muted); font-size: 28px; cursor: pointer; padding: 0;">×</button>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+      <div><span style="color: var(--muted); font-size: 12px;">Expert Name</span><div id="approvalExpertName" style="color: var(--text); font-weight: 600; margin-top: 4px;">-</div></div>
+      <div><span style="color: var(--muted); font-size: 12px;">Trip Type</span><div id="approvalTripType" style="color: var(--text); font-weight: 600; margin-top: 4px;">-</div></div>
+      <div><span style="color: var(--muted); font-size: 12px;">Location</span><div id="approvalLocation" style="color: var(--text); font-weight: 600; margin-top: 4px;">-</div></div>
+      <div><span style="color: var(--muted); font-size: 12px;">Duration</span><div id="approvalDuration" style="color: var(--text); font-weight: 600; margin-top: 4px;">-</div></div>
+      <div><span style="color: var(--muted); font-size: 12px;">Adult Price</span><div id="approvalAdultPrice" style="color: var(--accent); font-weight: 600; margin-top: 4px;">-</div></div>
+      <div><span style="color: var(--muted); font-size: 12px;">Kids Price</span><div id="approvalKidsPrice" style="color: var(--accent); font-weight: 600; margin-top: 4px;">-</div></div>
+      <div><span style="color: var(--muted); font-size: 12px;">Max Group Size</span><div id="approvalMaxGroup" style="color: var(--text); font-weight: 600; margin-top: 4px;">-</div></div>
+    </div>
+    <div style="margin-bottom: 24px;">
+      <span style="color: var(--muted); font-size: 12px;">Description</span>
+      <div id="approvalDescription" style="color: var(--text); margin-top: 8px; line-height: 1.6; font-size: 14px;">-</div>
+    </div>
+    <div style="margin-bottom: 24px;">
+      <span style="color: var(--muted); font-size: 12px;">Cancellation Policy</span>
+      <div id="approvalPolicy" style="color: var(--text); margin-top: 8px; font-size: 14px;">-</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+      <button onclick="approveExpertTripNow()" style="background: rgba(39, 174, 96, 0.2); color: #27ae60; border: 1px solid #27ae60; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600;">✓ Approve</button>
+      <button onclick="rejectTripStart()" style="background: rgba(255, 77, 77, 0.2); color: #ff4d4d; border: 1px solid #ff4d4d; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600;">✗ Reject</button>
+    </div>
+  </div>
+</div>
+
+<!-- Rejection Modal -->
+<div id="rejectReasonModal" class="modal">
+  <div class="modal-content" style="max-width: 400px;">
+    <h3 style="margin-top: 0; color: var(--accent);">Reason for Rejection</h3>
+    <textarea id="rejectReasonText" placeholder="Please provide a reason for rejection..." style="width: 100%; height: 120px; padding: 12px; border: 1px solid rgba(255,255,255,.12); border-radius: 8px; background: rgba(255,255,255,.06); color: var(--text); font-family: inherit; margin-bottom: 16px;"></textarea>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+      <button onclick="closeRejectModal()" style="background: rgba(255,255,255,.08); color: var(--text); border: 1px solid rgba(255,255,255,.12); padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600;">Cancel</button>
+      <button onclick="confirmRejectTrip()" style="background: rgba(255, 77, 77, 0.2); color: #ff4d4d; border: 1px solid #ff4d4d; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600;">Confirm Reject</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_URL = window.location.origin + '/api';
+
+let authToken = localStorage.getItem('authToken');
+let currentRejectTarget = null;
+let currentRejectType = null;
+let currentEditTripId = null;
+
+if (!authToken) {
+  window.location.href = '/admin-login.html';
+}
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+function formatSalary(min, max) {
+  if (!min && !max) return 'Not specified';
+  if (min && max) return `$${min} - $${max}`;
+  if (min) return `From $${min}`;
+  return `Up to $${max}`;
+}
+
+async function loadAnalytics() {
+  try {
+    const response = await fetch(`${API_URL}/admin/analytics`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('Analytics error:', errorData);
+      throw new Error(errorData.message || `Failed to load analytics (${response.status})`);
+    }
+
+    const data = await response.json();
+    document.getElementById('stat-users').textContent = data.totalUsers || 0;
+    document.getElementById('stat-pending-users').textContent = data.pendingUsers || 0;
+    document.getElementById('stat-jobs').textContent = data.totalJobs || 0;
+    document.getElementById('stat-pending-jobs').textContent = data.pendingJobs || 0;
+    document.getElementById('stat-agencies').textContent = data.activeAgencies || 0;
+    document.getElementById('stat-experts').textContent = data.activeExperts || 0;
+    document.getElementById('stat-applications').textContent = data.totalApplications || 0;
+    document.getElementById('stat-approved-jobs').textContent = data.approvedJobs || 0;
+  } catch (error) {
+    console.error('❌ Analytics Loading Error:', error);
+    document.getElementById('stat-users').textContent = '✗';
+    document.getElementById('stat-pending-users').textContent = '✗';
+    document.getElementById('stat-jobs').textContent = '✗';
+    document.getElementById('stat-pending-jobs').textContent = '✗';
+  }
+}
+
+async function loadTrips() {
+  try {
+    const response = await fetch(`${API_URL}/admin/expert-trips/pending-trips`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('Trips error:', errorData);
+      throw new Error(errorData.message || `Failed to load trips (${response.status})`);
+    }
+
+    const data = await response.json();
+    const trips = data.trips || [];
+    const tbody = document.getElementById('trips-tbody');
+
+    if (trips.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7">
+            <div class="empty-state">
+              <p>No pending expert trips for approval</p>
+            </div>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = trips.map(trip => {
+      const adultPrice = trip.price ? parseFloat(trip.price).toFixed(2) : '0.00';
+      const kidsPrice = trip.kids_price !== null && trip.kids_price !== undefined ? parseFloat(trip.kids_price) : 0;
+      return `
+      <tr onclick="viewExpertTripDetails(${trip.id})" style="cursor: pointer;">
+        <td><strong>${trip.title || 'Untitled'}</strong></td>
+        <td><strong>$${adultPrice}</strong></td>
+        <td>${kidsPrice > 0 ? `$${kidsPrice.toFixed(2)}` : 'N/A'}</td>
+        <td><a href="javascript:void(0)" onclick="event.stopPropagation(); goToExpertProfile(${trip.expert_id || 0})" style="color: var(--accent); text-decoration: underline; cursor: pointer;">${trip.expert_name || 'Unknown'}</a></td>
+        <td>${trip.location || '-'}</td>
+        <td><span class="status-badge status-pending">${(trip.status || 'draft').toUpperCase()}</span></td>
+        <td onclick="event.stopPropagation();">
+          <div class="action-buttons" style="gap: 4px;">
+            <button class="btn-small approve" onclick="approveExpertTrip(${trip.id})" style="font-size: 12px; padding: 4px 8px;">Approve</button>
+            <button class="btn-small reject" onclick="openRejectModal(${trip.id}, 'trip')" style="font-size: 12px; padding: 4px 8px;">Reject</button>
+          </div>
+        </td>
+      </tr>
+    `;
+    }).join('');
+    
+    // Store trips data globally for modal display
+    window.allTrips = trips;
+  } catch (error) {
+    console.error('Error loading trips:', error);
+    document.getElementById('trips-tbody').innerHTML = `
+      <tr>
+        <td colspan="7">
+          <div class="empty-state">
+            <p style="color: var(--danger);">Error loading trips. Please try again.</p>
+          </div>
+        </td>
+      </tr>
+    `;
+  }
+}
+
+function goToExpertProfile(expertProfileId) {
+  window.location.href = `/expert-profile.html?id=${expertProfileId}`;
+}
+
+async function approveExpertTrip(tripId) {
+  if (!confirm('Are you sure you want to approve this expert trip?')) return;
+
+  try {
+    const response = await fetch(`${API_URL}/expert-trips/${tripId}/approve`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to approve trip');
+    }
+
+    alert('✅ Expert trip approved successfully!');
+    loadTrips();
+    loadAnalytics();
+  } catch (error) {
+    alert('❌ Error: ' + error.message);
+  }
+}
+
+function viewExpertTripDetails(tripId) {
+  // Find trip by ID from stored trips array
+  const trip = window.allTrips.find(t => t.id === tripId);
+  if (!trip) {
+    alert('Trip not found');
+    return;
+  }
+  
+  // Store trip ID for approve/reject functions
+  window.currentTripId = trip.id;
+  window.currentTrip = trip;
+  
+  // Populate the new approval modal
+  document.getElementById('approvalModalTitle').textContent = trip.title || 'Trip Details';
+  const expertNameEl = document.getElementById('approvalExpertName');
+  expertNameEl.innerHTML = `<a href="javascript:void(0)" onclick="goToExpertProfile(${trip.expert_id})" style="color: var(--accent); text-decoration: underline; cursor: pointer;">${trip.expert_name || 'Unknown'}</a>`;
+  document.getElementById('approvalTripType').textContent = trip.trip_type || 'Custom Trip';
+  document.getElementById('approvalLocation').textContent = trip.location || 'TBD';
+  document.getElementById('approvalDuration').textContent = trip.duration || '-';
+  document.getElementById('approvalAdultPrice').textContent = `$${(parseFloat(trip.price) || 0).toFixed(2)}`;
+  const kidsPrice = trip.kids_price !== null && trip.kids_price !== undefined ? parseFloat(trip.kids_price) : 0;
+  document.getElementById('approvalKidsPrice').textContent = kidsPrice > 0 ? `$${kidsPrice.toFixed(2)}` : 'N/A';
+  document.getElementById('approvalMaxGroup').textContent = trip.max_group_size ? `${trip.max_group_size} people` : 'Unlimited';
+  document.getElementById('approvalDescription').textContent = trip.description || 'No description provided';
+  document.getElementById('approvalPolicy').textContent = trip.cancellation_policy || 'No policy specified';
+  
+  // Open trip approval modal
+  document.getElementById('tripApprovalModal').classList.add('active');
+}
+
+function closeApprovalModal() {
+  document.getElementById('tripApprovalModal').classList.remove('active');
+}
+
+function rejectTripStart() {
+  document.getElementById('rejectReasonText').value = '';
+  document.getElementById('rejectReasonModal').classList.add('active');
+}
+
+function closeRejectModal() {
+  document.getElementById('rejectReasonModal').classList.remove('active');
+}
+
+function approveExpertTripNow() {
+  if (window.currentTripId) {
+    closeApprovalModal();
+    approveExpertTrip(window.currentTripId);
+  }
+}
+
+function confirmRejectTrip() {
+  const reason = document.getElementById('rejectReasonText').value.trim();
+  if (!reason) {
+    alert('Please provide a reason for rejection');
+    return;
+  }
+  
+  if (window.currentTripId) {
+    rejectExpertTrip(window.currentTripId, reason);
+    closeRejectModal();
+    closeApprovalModal();
+  }
+}
+
+async function rejectExpertTrip(tripId, reason) {
+  try {
+    const response = await fetch(`${API_URL}/expert-trips/${tripId}/reject`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ reason })
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to reject trip');
+    }
+
+    alert('✅ Expert trip rejected and expert notified!');
+    loadTrips();
+    loadAnalytics();
+  } catch (error) {
+    alert('❌ Error: ' + error.message);
+  }
+}
+
+function openAddTripModal() {
+  currentEditTripId = null;
+  document.getElementById('trip-modal-title').textContent = 'Add New Trip';
+  document.getElementById('trip-title').value = '';
+  document.getElementById('trip-slug').value = '';
+  document.getElementById('trip-price').value = '';
+  document.getElementById('trip-type').value = 'tour';
+  document.getElementById('trip-location').value = '';
+  document.getElementById('trip-description').value = '';
+  document.getElementById('trip-duration').value = '';
+  document.getElementById('trip-active').checked = true;
+  document.getElementById('trip-popular').checked = true;
+  document.getElementById('trip-modal').classList.add('active');
+}
+
+function closeAddTripModal() {
+  document.getElementById('trip-modal').classList.remove('active');
+}
+
+async function editTrip(tripId) {
+  try {
+    const response = await fetch(`${API_URL}/trips/${tripId}`);
+    if (!response.ok) throw new Error('Failed to load trip');
+    const data = await response.json();
+    const trip = data.trip;
+
+    currentEditTripId = tripId;
+    document.getElementById('trip-modal-title').textContent = 'Edit Trip - ' + trip.title;
+    document.getElementById('trip-title').value = trip.title || '';
+    document.getElementById('trip-slug').value = trip.slug || '';
+    document.getElementById('trip-price').value = trip.price || '';
+    document.getElementById('trip-type').value = trip.trip_type || 'tour';
+    document.getElementById('trip-location').value = trip.location || '';
+    document.getElementById('trip-description').value = trip.description || '';
+    document.getElementById('trip-duration').value = trip.duration_text || '';
+    document.getElementById('trip-active').checked = trip.is_active !== false;
+    document.getElementById('trip-popular').checked = trip.is_popular === true;
+    document.getElementById('trip-modal').classList.add('active');
+  } catch (error) {
+    alert('❌ Error loading trip: ' + error.message);
+  }
+}
+
+async function saveTrip() {
+  const title = document.getElementById('trip-title').value.trim();
+  const slug = document.getElementById('trip-slug').value.trim();
+  const price = document.getElementById('trip-price').value;
+  const description = document.getElementById('trip-description').value.trim();
+
+  if (!title || !slug || !price) {
+    alert('Please fill in all required fields (Title, Slug, Price)');
+    return;
+  }
+
+  try {
+    const tripData = {
+      title,
+      slug,
+      price: parseFloat(price),
+      trip_type: document.getElementById('trip-type').value || 'tour',
+      location: document.getElementById('trip-location').value || null,
+      description: description || null,
+      duration_text: document.getElementById('trip-duration').value || null,
+      is_active: document.getElementById('trip-active').checked,
+      is_popular: document.getElementById('trip-popular').checked,
+      currency: 'USD'
+    };
+
+    let response;
+    if (currentEditTripId) {
+      response = await fetch(`${API_URL}/trips/${currentEditTripId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(tripData)
+      });
+    } else {
+      response = await fetch(`${API_URL}/trips`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(tripData)
+      });
+    }
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to save trip');
+    }
+
+    const result = await response.json();
+    alert(currentEditTripId ? '✅ Trip updated! Changes will reflect on website immediately.' : '✅ Trip created successfully!');
+    closeAddTripModal();
+    loadTrips();
+  } catch (error) {
+    alert('❌ Error: ' + error.message);
+  }
+}
+
+async function deleteTrip(tripId) {
+  if (!confirm('⚠️ Are you sure you want to DELETE this trip? This cannot be undone.')) return;
+
+  try {
+    const response = await fetch(`${API_URL}/trips/${tripId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete trip');
+    }
+
+    alert('✅ Trip deleted successfully! Changes will reflect on website immediately.');
+    loadTrips();
+  } catch (error) {
+    alert('❌ Error: ' + error.message);
+  }
+}
+
+async function loadPendingSignups() {
+  try {
+    const response = await fetch(`${API_URL}/admin/pending-signups?status=pending`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to load pending signups');
+    }
+
+    const data = await response.json();
+    const signups = data.pendingSignups || data || [];
+    const tbody = document.getElementById('signups-tbody');
+
+    if (!Array.isArray(signups) || signups.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7">
+            <div class="empty-state">
+              <p>No pending signups</p>
+            </div>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = signups.map(signup => {
+      const emailVerifiedBadge = signup.email_verified 
+        ? '<span class="status-badge" style="background: rgba(39, 174, 96, 0.15); color: #27ae60; border: 1px solid rgba(39, 174, 96, 0.3);">✅ Verified</span>'
+        : '<span class="status-badge" style="background: rgba(255, 193, 7, 0.15); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.3);">⏳ Pending</span>';
+      
+      return `
+      <tr>
+        <td>${signup.full_name || 'N/A'}</td>
+        <td>${signup.email}</td>
+        <td><span class="status-badge status-pending">${signup.user_type}</span></td>
+        <td>${emailVerifiedBadge}</td>
+        <td>${formatDate(signup.created_at)}</td>
+        <td><span class="status-badge status-${signup.approval_status}">${signup.approval_status}</span></td>
+        <td>
+          <div class="action-buttons">
+            <button class="btn-small approve" onclick="approveSignup(${signup.id})">Approve</button>
+            <button class="btn-small reject" onclick="openRejectModal(${signup.id}, 'signup')">Reject</button>
+          </div>
+        </td>
+      </tr>
+    `;
+    }).join('');
+  } catch (error) {
+    console.error('Error loading signups:', error);
+    document.getElementById('signups-tbody').innerHTML = `
+      <tr>
+        <td colspan="7">
+          <div class="empty-state">
+            <p style="color: var(--danger);">Error loading signups. Please try again.</p>
+          </div>
+        </td>
+      </tr>
+    `;
+  }
+}
+
+async function loadPendingJobs() {
+  try {
+    const response = await fetch(`${API_URL}/admin/pending-jobs`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to load pending jobs');
+    }
+
+    const data = await response.json();
+    const jobs = data.pendingJobs || data || [];
+    const tbody = document.getElementById('jobs-tbody');
+
+    if (!Array.isArray(jobs) || jobs.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8">
+            <div class="empty-state">
+              <p>No pending job posts</p>
+            </div>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = jobs.map(job => `
+      <tr>
+        <td>${job.title}</td>
+        <td><span class="status-badge status-pending">${(job.jobType || job.job_type || 'general').toUpperCase()}</span></td>
+        <td>${job.location || 'N/A'}</td>
+        <td>${formatSalary(job.salaryMin || job.salary_min, job.salaryMax || job.salary_max)}</td>
+        <td>${job.posterName || job.poster_name || 'Unknown'}</td>
+        <td>${formatDate(job.createdAt || job.created_at)}</td>
+        <td><span class="status-badge status-${job.approvalStatus || job.approval_status}">${(job.approvalStatus || job.approval_status || '').toUpperCase()}</span></td>
+        <td>
+          <div class="action-buttons">
+            <button class="btn-small approve" onclick="approveJob(${job.id})">Approve</button>
+            <button class="btn-small reject" onclick="openRejectModal(${job.id}, 'job')">Reject</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  } catch (error) {
+    console.error('Error loading jobs:', error);
+    document.getElementById('jobs-tbody').innerHTML = `
+      <tr>
+        <td colspan="8">
+          <div class="empty-state">
+            <p style="color: var(--danger);">Error loading jobs. Please try again.</p>
+          </div>
+        </td>
+      </tr>
+    `;
+  }
+}
+
+async function approveSignup(userId) {
+  if (!confirm('Are you sure you want to approve this signup?')) return;
+
+  try {
+    const response = await fetch(`${API_URL}/admin/approve-signup/${userId}`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to approve signup');
+    }
+
+    alert('Signup approved successfully!');
+    loadPendingSignups();
+    loadAnalytics();
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
+}
+
+async function approveJob(jobId) {
+  if (!confirm('Are you sure you want to approve this job post?')) return;
+
+  try {
+    const response = await fetch(`${API_URL}/admin/approve-job/${jobId}`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to approve job');
+    }
+
+    alert('Job post approved successfully!');
+    loadPendingJobs();
+    loadAnalytics();
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
+}
+
+function openRejectModal(id, type) {
+  currentRejectTarget = id;
+  currentRejectType = type;
+  document.getElementById('reject-reason').value = '';
+  document.getElementById('reject-modal').classList.add('active');
+}
+
+function closeRejectModal() {
+  currentRejectTarget = null;
+  currentRejectType = null;
+  document.getElementById('reject-modal').classList.remove('active');
+}
+
+async function confirmReject() {
+  const reason = document.getElementById('reject-reason').value.trim();
+  
+  if (!reason) {
+    alert('Please provide a reason for rejection');
+    return;
+  }
+
+  try {
+    let endpoint;
+    if (currentRejectType === 'signup') {
+      endpoint = `${API_URL}/admin/reject-signup/${currentRejectTarget}`;
+    } else {
+      endpoint = `${API_URL}/admin/reject-job/${currentRejectTarget}`;
+    }
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ reason })
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to reject');
+    }
+
+    alert('Rejected successfully!');
+    closeRejectModal();
+    
+    if (currentRejectType === 'signup') {
+      loadPendingSignups();
+    } else {
+      loadPendingJobs();
+    }
+    loadAnalytics();
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
+}
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const tabName = tab.dataset.tab;
+    
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    
+    tab.classList.add('active');
+    document.getElementById(`${tabName}-tab`).classList.add('active');
+    
+    if (tabName === 'signups') {
+      loadPendingSignups();
+    } else if (tabName === 'jobs') {
+      loadPendingJobs();
+    } else if (tabName === 'trips') {
+      loadTrips();
+    } else if (tabName === 'analytics') {
+      loadAnalytics();
+    }
+  });
+});
+
+document.getElementById('logout-btn').addEventListener('click', (e) => {
+  e.preventDefault();
+  if (confirm('Are you sure you want to logout?')) {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    window.location.href = '/index.html';
+  }
+});
+
+async function loadPayouts() {
+  try {
+    const response = await fetch('/api/expert-payouts/admin/pending-payouts', {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to load payouts');
+    }
+
+    const data = await response.json();
+    const payouts = data.payouts || [];
+    const tbody = document.getElementById('payouts-tbody');
+
+    if (payouts.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8">
+            <div class="empty-state">
+              <p>No pending payouts</p>
+            </div>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = payouts.map(p => {
+      const statusBadge = {
+        'pending': '<span class="status-badge status-pending">⏳ Pending</span>',
+        'approved': '<span class="status-badge status-approved">⏳ In Review</span>',
+        'processing': '<span class="status-badge status-pending">⚙️ Processing</span>',
+        'paid': '<span class="status-badge status-approved">✅ Paid</span>',
+        'failed': '<span class="status-badge status-rejected">❌ Failed</span>'
+      }[p.status] || '<span class="status-badge">Unknown</span>';
+
+      const bankInfo = p.bank_iban ? p.bank_iban.slice(-4) : (p.bank_account_number ? '****' + p.bank_account_number.slice(-4) : 'N/A');
+
+      return `
+        <tr>
+          <td>${p.expert_name || 'N/A'}</td>
+          <td>${p.expert_email || 'N/A'}</td>
+          <td>${p.trip_title || 'N/A'}</td>
+          <td>${p.traveler_name || 'N/A'}</td>
+          <td>$${parseFloat(p.amount).toFixed(2)} ${p.currency || 'USD'}</td>
+          <td>${p.bank_name || 'N/A'} - ${bankInfo}</td>
+          <td>${statusBadge}</td>
+          <td>
+            <div class="action-buttons">
+              ${p.status === 'pending' ? `<button class="btn-small approve" onclick="approvePayout(${p.id})">✓ Approve</button>` : ''}
+              ${p.status === 'approved' ? `<button class="btn-small approve" onclick="processPayout(${p.id})">▶ Process</button>` : ''}
+              ${p.status !== 'paid' && p.status !== 'failed' ? `<button class="btn-small reject" onclick="rejectPayout(${p.id})">✕ Reject</button>` : ''}
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  } catch (error) {
+    console.error('Error loading payouts:', error);
+    document.getElementById('payouts-tbody').innerHTML = `
+      <tr>
+        <td colspan="8">
+          <div class="empty-state">
+            <p style="color: var(--danger);">Error loading payouts. Please try again.</p>
+          </div>
+        </td>
+      </tr>
+    `;
+  }
+}
+
+async function approvePayout(payoutId) {
+  if (!confirm('Approve this payout?')) return;
+
+  try {
+    const response = await fetch(`/api/expert-payouts/admin/payouts/${payoutId}/approve`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({})
+    });
+
+    if (!response.ok) throw new Error('Failed to approve payout');
+
+    alert('✅ Payout approved!');
+    loadPayouts();
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
+}
+
+async function processPayout(payoutId) {
+  if (!confirm('Process this payout to expert bank account?')) return;
+
+  try {
+    const response = await fetch(`/api/expert-payouts/admin/payouts/${payoutId}/process`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) throw new Error('Failed to process payout');
+
+    alert('✅ Payout processed! Transfer initiated to expert bank account.');
+    loadPayouts();
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
+}
+
+async function rejectPayout(payoutId) {
+  const reason = prompt('Reason for rejection:');
+  if (!reason) return;
+
+  try {
+    const response = await fetch(`/api/expert-payouts/admin/payouts/${payoutId}/approve`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ status: 'failed', failedReason: reason })
+    });
+
+    if (!response.ok) throw new Error('Failed to reject payout');
+
+    alert('❌ Payout rejected');
+    loadPayouts();
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
+}
+
+async function loadAllUsers() {
+  try {
+    const response = await fetch(`${API_URL}/admin/pending-signups`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to load users');
+    }
+
+    const signups = await response.json();
+    const users = signups.pendingSignups || signups || [];
+    const tbody = document.getElementById('users-tbody');
+
+    if (!Array.isArray(users) || users.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6">
+            <div class="empty-state">
+              <p>No users found</p>
+            </div>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = users.map(user => `
+      <tr>
+        <td>${user.full_name || 'N/A'}</td>
+        <td>${user.email}</td>
+        <td><span class="status-badge status-pending">${user.user_type}</span></td>
+        <td><span class="status-badge status-${user.approval_status}">${user.approval_status}</span></td>
+        <td>${formatDate(user.created_at)}</td>
+        <td>
+          <div class="action-buttons">
+            <button class="btn-small" style="background: rgba(255, 77, 77, 0.15); color: #ff4d4d; border-color: rgba(255, 77, 77, 0.3);" onclick="deleteUser(${user.id})">🗑 Remove</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  } catch (error) {
+    console.error('Error loading users:', error);
+    document.getElementById('users-tbody').innerHTML = `
+      <tr>
+        <td colspan="6">
+          <div class="empty-state">
+            <p style="color: var(--danger);">Error loading users. Please try again.</p>
+          </div>
+        </td>
+      </tr>
+    `;
+  }
+}
+
+async function deleteUser(userId) {
+  if (!confirm('⚠️ Are you sure you want to REMOVE this user permanently? This cannot be undone and will delete all their data.')) return;
+
+  try {
+    const response = await fetch(`${API_URL}/admin/delete-user/${userId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to delete user');
+    }
+
+    alert('✅ User removed successfully!');
+    loadAllUsers();
+    loadAnalytics();
+  } catch (error) {
+    alert('❌ Error: ' + error.message);
+  }
+}
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const tabName = tab.dataset.tab;
+    
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    
+    tab.classList.add('active');
+    document.getElementById(`${tabName}-tab`).classList.add('active');
+    
+    if (tabName === 'users') {
+      loadAllUsers();
+    } else if (tabName === 'signups') {
+      loadPendingSignups();
+    } else if (tabName === 'jobs') {
+      loadPendingJobs();
+    } else if (tabName === 'trips') {
+      loadTrips();
+    } else if (tabName === 'analytics') {
+      loadAnalytics();
+    } else if (tabName === 'payouts') {
+      loadPayouts();
+    }
+  });
+});
+
+document.getElementById('logout-btn').addEventListener('click', (e) => {
+  e.preventDefault();
+  if (confirm('Are you sure you want to logout?')) {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    window.location.href = '/index.html';
+  }
+});
+
+if (authToken) {
+  loadAnalytics();
+  loadTrips();
+}
+</script>
+
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

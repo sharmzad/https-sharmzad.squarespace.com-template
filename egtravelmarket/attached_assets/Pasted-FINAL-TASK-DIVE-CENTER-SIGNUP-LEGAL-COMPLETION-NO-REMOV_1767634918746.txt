@@ -1,0 +1,139 @@
+FINAL TASK – DIVE CENTER SIGNUP LEGAL COMPLETION (NO REMOVALS / NO DUPLICATES)
+
+Please carefully review the existing Dive Center signup form at:
+https://www.egtravelmarket.com/divecenter-signup.html
+
+IMPORTANT RULES:
+- Do NOT remove any existing fields
+- Do NOT rename existing fields
+- Do NOT duplicate existing fields
+- Only ADD missing legal & certification fields
+- Reuse the existing Admin Approval + Certified system already implemented
+
+================================================
+1) BASE FIELD (ALREADY EXISTS – USE IT)
+================================================
+
+The form already contains:
+"Dive Center Base"
+- Egypt-based Dive Center
+- International Dive Center (selling Egypt)
+
+This field MUST be used to conditionally display the new legal fields below.
+
+================================================
+2) ADDITIONS FOR EGYPTIAN DIVE CENTERS ONLY
+(Shown ONLY if Base = Egypt-based Dive Center)
+================================================
+
+A) License Authority (REQUIRED – NEW)
+Dropdown:
+- CDWS
+- Ministry of Tourism
+- CDWS + Ministry of Tourism
+
+B) License Number (REQUIRED – NEW)
+Text field
+
+C) License Issue Date (REQUIRED – NEW)
+Date field
+
+D) License Expiry Date (REQUIRED – NEW)
+Date field
+- Must be a future date
+- Reject signup if expired
+
+E) License Document Uploads (REQUIRED – NEW)
+Exactly TWO uploads (no duplicates):
+- License Document – Front
+- License Document – Back
+(PDF / JPG / PNG)
+
+These documents are for verification only and must NOT be public.
+
+================================================
+3) ADDITIONS FOR INTERNATIONAL DIVE CENTERS ONLY
+(Shown ONLY if Base = International Dive Center)
+================================================
+
+A) Country of Registration (REQUIRED – NEW)
+Text or dropdown
+
+B) Foreign Proof (ONE REQUIRED – NEW)
+- Website URL
+OR
+- Foreign Business Registration ID / Document
+
+C) International Operations Confirmation (REQUIRED – NEW CHECKBOX)
+Text:
+"I confirm that all diving and water activities in Egypt are operated by licensed Egyptian dive centers."
+
+================================================
+4) LEGAL CHECKBOXES – REQUIRED FOR ALL DIVE CENTERS
+(REPLACE the single existing confirmation checkbox)
+================================================
+
+Add THREE required checkboxes before submit:
+
+1) Terms Agreement
+"I agree to the Dive Center Terms, EgTravelMarket Platform Terms, and commission & payment policy."
+
+2) Accuracy Confirmation
+"I confirm that all information and documents provided are accurate and up to date."
+
+3) Verification Consent
+"I consent to EgTravelMarket verifying submitted information and documents if required."
+
+Form submission must be blocked unless ALL are checked.
+
+================================================
+5) BACKEND VALIDATION RULES
+================================================
+
+- Egyptian Dive Center:
+  - All license fields + both license documents are REQUIRED
+  - Reject expired licenses
+
+- International Dive Center:
+  - Country + (Website OR Registration ID) REQUIRED
+  - International confirmation checkbox REQUIRED
+
+- All dive centers:
+  - certification_status must be set to 'pending' on signup
+
+================================================
+6) ADMIN REVIEW & CERTIFICATION (REUSE EXISTING SYSTEM)
+================================================
+
+- Admin must see all newly added fields and documents in the Signup Review modal
+- Approve:
+  - certification_status = 'certified'
+  - Certified badge assigned automatically
+- Reject:
+  - certification_status = 'rejected'
+
+================================================
+7) CERTIFIED BADGES (AUTO – NO MANUAL TOGGLE)
+================================================
+
+- Certified Egyptian Dive Center
+  When:
+  - Base = Egypt
+  - License fields + documents present
+  - Admin approved
+
+- International Dive Center Partner
+  When:
+  - Base = International
+  - International confirmation completed
+  - Admin approved
+
+Badge must be removed automatically if certification is revoked.
+
+================================================
+GOAL
+================================================
+
+This task legally completes the Dive Center signup without changing any existing data,
+keeps the form backward-compatible, and aligns Dive Centers with the same
+certification lifecycle already used for Guides and Travel Agencies.

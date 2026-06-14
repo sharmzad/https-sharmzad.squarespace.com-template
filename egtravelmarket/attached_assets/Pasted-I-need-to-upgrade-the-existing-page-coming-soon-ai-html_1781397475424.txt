@@ -1,0 +1,401 @@
+I need to upgrade the existing page:
+
+`/coming-soon-ai.html`
+
+into a professional EgTravelMarket Smart Trip Finder lead-generation tool.
+
+Important:
+Do NOT redesign the whole website. Keep the same EgTravelMarket design language, colors, fonts, spacing, header/footer style, buttons, and general look of the current page/platform. The new tool should feel native to the current website, not like a separate template.
+
+Main goal:
+Turn the AI Coming Soon page into an interactive “Smart Egypt Trip Finder” that asks visitors a few professional travel questions, generates a personalized Egypt trip result, saves the lead in the platform database, shows it inside the comprehensive admin dashboard, and opens WhatsApp with a ready lead message to EgTravelMarket.
+
+Required user flow:
+
+1. Visitor opens `/coming-soon-ai.html`.
+2. Hero section remains premium and aligned with the current page design.
+3. Replace or enhance the current basic “coming soon / notify me” flow with:
+
+   * “EgTravelMarket Smart Trip Finder”
+   * “Discover your perfect Egypt trip in less than 60 seconds”
+   * Button: “Start My Trip Finder”
+4. Quiz should appear as step-by-step cards, one question per step.
+5. At the end, visitor enters contact details.
+6. System calculates a result/persona.
+7. Show a polished result page with:
+
+   * Trip personality/result name
+   * Suggested route
+   * Best for
+   * Suggested highlights
+   * Recommended duration
+   * Comfort level
+   * CTA button to WhatsApp EgTravelMarket
+8. Save all submitted data to the platform database.
+9. Add a new section/page in the comprehensive admin dashboard to view and manage these leads.
+10. WhatsApp CTA should open a pre-filled WhatsApp message containing the lead details and quiz result.
+
+Quiz questions:
+Use a professional travel-consultant style, not basic boring questions.
+
+Question 1:
+“What kind of Egypt trip are you dreaming of?”
+Options:
+
+* Ancient temples, pyramids & stories
+* Red Sea, sunshine & relaxation
+* Family-friendly activities
+* Adventure, desert & diving
+* Luxury, Nile views & private service
+* Something unique, away from the usual routes
+
+Question 2:
+“Is this your first time in Egypt?”
+Options:
+
+* Yes, first time
+* No, I have visited before
+* I live in Egypt / I know Egypt already
+* I am planning for clients or a group
+
+Question 3:
+“Who are you traveling with?”
+Options:
+
+* Solo
+* Couple
+* Family with children
+* Friends
+* Corporate / incentive group
+* Travel agency / group organizer
+
+Question 4:
+“What pace do you prefer?”
+Options:
+
+* Easy & relaxed
+* Balanced: sightseeing + free time
+* Full program, I want to see everything
+* Premium smooth pace with private arrangements
+
+Question 5:
+“How many days do you have?”
+Options:
+
+* 2–3 days
+* 4–5 days
+* 6–8 days
+* 9–12 days
+* More than 12 days
+* Not sure yet
+
+Question 6:
+“Which experiences attract you most?”
+Multi-select options:
+
+* Pyramids & Grand Egyptian Museum
+* Nile Cruise
+* Abu Simbel
+* Luxor temples & tombs
+* Red Sea snorkeling/diving
+* Desert safari
+* Local food & markets
+* Islamic Cairo & old streets
+* Coptic Cairo
+* Hidden gems like Fayoum, Siwa, and Egypt’s Royal & Presidential Palaces
+* Family fun & easy activities
+* Golf / wellness / premium resorts
+
+Question 7:
+“Preferred comfort level?”
+Options:
+
+* Smart & affordable
+* Comfortable 4-star style
+* Premium 5-star experience
+* Luxury/private/VIP
+* I want options
+
+Question 8:
+“When are you planning to travel?”
+Options:
+
+* This month
+* Next 1–3 months
+* In 3–6 months
+* Later this year
+* Not sure yet
+
+Question 9:
+“Where will you start from?”
+Options:
+
+* Cairo
+* Sharm El Sheikh
+* Hurghada
+* Luxor / Aswan
+* I am flying from abroad
+* Not sure yet
+
+Contact details step:
+Fields:
+
+* Full name — required
+* WhatsApp number — required
+* Email — optional
+* Nationality — optional
+* Adults — required
+* Children ages — optional
+* Notes / special request — optional
+
+Trip results/personas:
+Create logic to assign one of these results:
+
+1. The Classic Egypt Explorer
+   Route: Cairo + Luxor + Aswan + Abu Simbel
+   Best for: first-time visitors, culture lovers, couples, families, small groups
+   Highlights: Pyramids, GEM, Valley of the Kings, Philae Temple, Nile Cruise, Abu Simbel
+
+2. The Red Sea Escape Lover
+   Route: Sharm El Sheikh / Dahab / Ras Mohammed / Hurghada
+   Best for: couples, families, divers, snorkelers, beach lovers
+   Highlights: Red Sea resort, snorkeling/diving, boat trip, desert safari, Bedouin dinner, optional Cairo day trip
+
+3. The Luxury Nile Dreamer
+   Route: Cairo + Luxury Nile Cruise + Abu Simbel
+   Best for: honeymooners, premium travelers, VIP clients, mature travelers
+   Highlights: 5-star hotel, private guide, upgraded cruise cabin, premium transfers, flexible timing
+
+4. The Family Fun Traveler
+   Route: Cairo + Sharm El Sheikh or Hurghada
+   Best for: families with children and school holidays
+   Highlights: Pyramids, GEM, easy sightseeing, Red Sea resort, snorkeling, family safari, private transfers
+
+5. The Adventure Egypt Seeker
+   Route: Sinai + Dahab + Sharm + Desert Safari
+   Best for: young travelers, friends, divers, active couples, repeat visitors
+   Highlights: Dahab, Blue Hole, Ras Mohammed, quad biking, desert dinner, snorkeling, optional St. Catherine
+
+6. The Hidden Gems Collector
+   Route: Cairo + Fayoum + Islamic Cairo + Egypt’s Royal & Presidential Palaces / Siwa optional
+   Best for: repeat travelers, photographers, culture lovers, boutique travel fans
+   Highlights: Fayoum, Tunis Village, Egypt’s Royal & Presidential Palaces, Islamic Cairo, Khan El Khalili, Coptic Cairo, local food experiences
+
+7. The Business / Group Planner
+   Route: Flexible Egypt DMC handling
+   Best for: travel agents, group leaders, companies, schools, incentive organizers
+   Highlights: hotels, transfers, guides, excursions, gala dinner, meeting support, group handling, net rates
+
+Important B2B logic:
+If user selects “Travel agency / group organizer” or “Corporate / incentive group”, prioritize result:
+“The Business / Group Planner”.
+
+Lead temperature logic:
+Add a lead temperature field:
+
+* Hot Lead: travel date is “This month” or “Next 1–3 months” AND WhatsApp number is submitted
+* Warm Lead: travel date is “In 3–6 months”
+* Cold Lead: “Later this year” or “Not sure yet”
+
+Database:
+Create a database table for these leads. Suggested table name:
+
+`trip_finder_leads`
+
+Suggested fields:
+
+* id
+* full_name
+* whatsapp
+* email
+* nationality
+* adults
+* children_ages
+* notes
+* dream_trip
+* first_time_egypt
+* travel_with
+* pace
+* duration
+* selected_experiences
+* comfort_level
+* travel_time
+* start_from
+* result_key
+* result_title
+* suggested_route
+* lead_temperature
+* source_page
+* status
+* admin_notes
+* created_at
+* updated_at
+
+Default source_page:
+`coming-soon-ai`
+
+Default status:
+`New`
+
+Admin dashboard:
+Add a new admin dashboard section called:
+“Trip Finder Leads”
+
+It should show:
+
+* Lead name
+* WhatsApp
+* Nationality
+* Result title
+* Suggested route
+* Travel time
+* Adults
+* Lead temperature
+* Status
+* Created date
+* Action buttons
+
+Admin actions:
+
+* View full lead details
+* Change status:
+
+  * New
+  * Contacted
+  * Quotation Needed
+  * Quotation Sent
+  * Follow Up
+  * Confirmed
+  * Lost
+* Add/edit admin notes
+* Open WhatsApp to contact the lead
+* Export CSV if possible
+
+WhatsApp:
+Use this EgTravelMarket WhatsApp number for the Trip Finder CTA:
+
++201227903329
+
+However, before final deployment, please verify and confirm with me that this is the correct active EgTravelMarket WhatsApp number.
+
+After the result is generated and saved, show a button:
+“Send My Trip Idea on WhatsApp”
+
+The button should open WhatsApp with a pre-filled message to EgTravelMarket.
+
+WhatsApp message template:
+“Hello EgTravelMarket, I completed the Smart Egypt Trip Finder.
+
+Name: [full name]
+WhatsApp: [whatsapp]
+Nationality: [nationality]
+Travelers: [adults] adults, children ages: [children_ages]
+Travel time: [travel_time]
+Trip result: [result_title]
+Suggested route: [suggested_route]
+Comfort level: [comfort_level]
+Interested in: [selected_experiences]
+Starting from: [start_from]
+
+Please send me a custom Egypt travel plan.”
+
+Important:
+The lead must be saved in the database first, then the WhatsApp button/message can open.
+
+Design and content:
+Keep the existing page look and platform branding. Make the quiz cards elegant, mobile-first, fast-loading, and premium. Use the existing color palette and buttons. Add polished microcopy suitable for future ads.
+
+Suggested marketing copy:
+Headline:
+“Your Smart Egypt Trip Finder”
+
+Subheadline:
+“Answer a few quick questions and discover the Egypt route that fits your travel style — from pyramids and Nile cruises to Red Sea escapes and hidden gems.”
+
+CTA:
+“Start My Trip Finder”
+
+Trust line:
+“Powered by EgTravelMarket — Egypt travel experts, local guides and curated experiences.”
+
+Result loading text:
+
+* “Analyzing your travel style…”
+* “Matching your perfect Egypt route…”
+* “Preparing your trip idea…”
+
+Validation:
+
+* Full name required
+* WhatsApp required
+* Adults required
+* Selected experience should allow multi-select
+* Prevent duplicate accidental submissions if the user double-clicks submit
+* Show clear friendly error messages if anything is missing
+* Make sure the form works properly on mobile
+
+Technical requirements:
+
+* Do not break any existing page, route, login, admin dashboard, trips, requests, bookings, Stripe, or existing database tables.
+* Backup or preserve the current file before editing.
+* Use the existing project backend/database style.
+* If the project uses Express routes, create proper API endpoints for creating and listing Trip Finder leads.
+* If there is existing admin authentication, protect the admin leads section using the same admin auth.
+* Make sure it works in production, not only preview.
+* Test on mobile and desktop.
+* Make sure the lead is saved before opening WhatsApp.
+* If database migration is needed, create it cleanly and document it.
+* Do not create a separate design system or new unrelated styling.
+* Do not change the existing brand identity.
+* Do not remove the current page content unless it is being replaced properly with the new Trip Finder section.
+
+Full end-to-end testing:
+After finishing the implementation, please run a complete test from A to Z, including:
+
+* Open `/coming-soon-ai.html` on desktop and mobile
+* Start the Smart Trip Finder
+* Complete all quiz steps
+* Test single-select and multi-select answers
+* Submit contact details
+* Confirm validation works for required fields
+* Confirm duplicate submissions are prevented
+* Confirm the result/persona is generated correctly
+* Confirm the lead is saved in the database
+* Confirm the lead appears in the comprehensive admin dashboard
+* Confirm admin can view full lead details
+* Confirm admin can update lead status
+* Confirm admin can add/edit notes
+* Confirm admin can open WhatsApp to contact the lead
+* Confirm WhatsApp opens with the correct pre-filled message
+* Confirm the WhatsApp number is correct: +201227903329
+* Confirm the design matches the existing EgTravelMarket page/platform
+* Confirm no existing pages, admin sections, trips, bookings, requests, login, Stripe, or database tables are broken
+* Confirm it works after deployment/production, not only in preview
+
+Acceptance criteria:
+
+1. `/coming-soon-ai.html` displays the Smart Trip Finder inside the existing page design.
+2. Visitor can complete the quiz and contact form.
+3. A personalized result appears.
+4. Lead is saved in database.
+5. Lead appears in admin dashboard under “Trip Finder Leads”.
+6. Admin can update status and notes.
+7. WhatsApp button opens with pre-filled lead details.
+8. WhatsApp number uses +201227903329, after confirmation.
+9. No existing platform functionality is broken.
+10. Design remains consistent with EgTravelMarket.
+11. Page is ready to be used later for paid ads.
+
+After implementation, please provide a short technical summary explaining:
+
+1. Which files you changed.
+2. Which database table/migration you added.
+3. Which API endpoints you created.
+4. Where I can find Trip Finder Leads in the admin dashboard.
+5. How to change the EgTravelMarket WhatsApp number if needed.
+6. Any environment variables or deployment steps required.
+7. Confirmation that the feature was tested on mobile and desktop.
+8. Final testing report from A to Z.
+
+Budget control:
+Please implement this carefully, but do not exceed 25 USD in Replit Agent usage before asking me for approval. If more budget is needed, stop and provide a progress report showing what has been completed, what remains, and why more usage is required.

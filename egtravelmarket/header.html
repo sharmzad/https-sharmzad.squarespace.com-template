@@ -1,0 +1,149 @@
+<header class="site-header" role="banner">
+  <div class="flash-sale" aria-label="Flash sale offers">
+    <span>🔥 Deals</span>
+    <div class="flash-sale__track" aria-hidden="true">
+      <div class="flash-sale__inner">
+        <span>Loading deals...</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="platform-disclaimer" style="background:linear-gradient(90deg, #0a2540 0%, #0d3a5c 50%, #0a2540 100%);padding:8px 20px;text-align:center;font-size:0.72rem;color:#9fb5d1;border-bottom:1px solid rgba(255,255,255,0.08);letter-spacing:0.3px;">
+    <span style="color:#ffc107;">&#9670;</span> EgTravelMarket is a global travel marketplace — All travel and diving activities are provided by independent licensed partners <span style="color:#ffc107;">&#9670;</span>
+  </div>
+
+  <nav class="nav" role="navigation" aria-label="Primary">
+    <a class="brand" href="index.html" data-root="/">
+      <img class="brand__logo" src="images/etm-logo.png" alt="EgTravelMarket Logo" loading="eager" width="40" height="40">
+      <span class="brand__name">Eg Travel Market</span>
+    </a>
+
+    <ul class="nav__list" id="primary-nav">
+      <li><a class="nav__link" href="index.html">🏠 Home</a></li>
+      <li class="has-sub">
+        <a class="nav__link" href="#discover">🌍 Discover</a>
+        <div class="mega" role="group" aria-label="Discover">
+          <a href="discover-egypt.html"><strong>🌟 Discover Egypt</strong><span>Culture, history & hidden gems</span></a>
+          <a href="deals.html"><strong>⚡ Flash Offers</strong><span>Limited-time deals & promotions</span></a>
+          <a href="index.html#tours"><strong>🎫 Tours & Activities</strong><span>Sharm, Cairo, Luxor, Sinai</span></a>
+          <a href="book-your-trip.html#hotels"><strong>✈️ Flights & Hotels</strong><span>Search & compare deals</span></a>
+          <a href="index.html#diving"><strong>🤿 Diving</strong><span>PADI & adaptive diving</span></a>
+          <a href="guides.html"><strong>👨‍🏫 Meet Our Guides</strong><span>Expert local guides</span></a>
+          <a href="divers.html"><strong>🏊 Meet Our Divers</strong><span>Certified dive instructors</span></a>
+          <a href="mentor.html"><strong>🎓 Mentor</strong><span>Be a mentor / find one</span></a>
+          <a href="mice.html"><strong>🎪 MICE & Conferences</strong><span>Request a proposal</span></a>
+          <a href="medical.html"><strong>🏥 Medical Services</strong><span>Talk to a doctor • Rx delivery</span></a>
+          <a href="investment.html"><strong>💼 Investments</strong><span>Real estate & business</span></a>
+          <a href="dmc.html"><strong>🏢 DMC • Be Your Local Agent</strong><span>Local handling in Sharm</span></a>
+          <a href="b2b.html"><strong>🤝 B2B Handling</strong><span>For tour operators & airlines</span></a>
+          <a href="trip-finder.html"><strong>🗺️ Trip Finder</strong><span>Find your perfect Egypt trip</span></a>
+        </div>
+      </li>
+      <li><a class="nav__link" href="guides.html">👨‍🏫 Ask a Guide</a></li>
+      <li><a class="nav__link" href="divers.html">🏊 Ask a Diver</a></li>
+      <li><a class="nav__link" href="travel-agencies.html">🧳 Travel Agencies</a></li>
+      <li><a class="nav__link" href="dive-centers-list.html">🤿 Dive Centers</a></li>
+      <li><a class="nav__link" href="jobs-marketplace.html">💼 Browse Jobs</a></li>
+      <li class="has-sub">
+        <a class="nav__link" href="travel-request-view.html">🗺️ Traveller Requests <span style="background:#ff4d4f;color:#fff;font-size:0.65rem;padding:0.05rem 0.3rem;border-radius:999px;margin-left:0.25rem;">NEW</span></a>
+        <div class="mega" role="group" aria-label="Traveller Requests">
+          <a href="travel-request.html"><strong>📝 Post Request</strong><span>Get custom offers from experts</span></a>
+          <a href="travel-request-view.html"><strong>👀 View My Request</strong><span>Check offers with your code</span></a>
+          <a href="travel-requests-browse.html"><strong>🔍 Browse Requests</strong><span>For experts: find travelers</span></a>
+        </div>
+      </li>
+      <li><a class="nav__link" href="expert-trips-marketplace.html">📍 Book Trips from Local Experts <span style="background:#ff4d4f;color:#fff;font-size:0.65rem;padding:0.05rem 0.3rem;border-radius:999px;margin-left:0.25rem;">NEW</span></a></li>
+    </ul>
+
+    <div class="nav__cta">
+      <a class="btn" href="deals.html">Deals</a>
+      <a class="btn btn--primary" href="trip-finder.html">Trip Finder</a>
+    </div>
+
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobile-drawer" aria-label="Open menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </nav>
+</header>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<aside class="drawer" id="mobile-drawer" aria-hidden="true" aria-label="Mobile menu">
+  <div class="drawer__head">
+    <div class="brand">
+      <img class="brand__logo" src="images/etm-logo.png" alt="EgTravelMarket Logo" loading="eager" width="40" height="40">
+      <span class="brand__name">Eg Travel Market</span>
+    </div>
+    <button class="menu-toggle" id="menuClose" aria-label="Close menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="drawer__body">
+    <ul class="drawer__list">
+      <li><a class="drawer__link" href="index.html">🏠 Home</a></li>
+      <li>
+        <details class="submenu">
+          <summary>🌍 Discover <small>Products</small></summary>
+          <ul>
+            <li><a href="discover-egypt.html">🌟 Discover Egypt</a></li>
+            <li><a href="deals.html">⚡ Flash Offers</a></li>
+            <li><a href="index.html#tours">Tours & Activities</a></li>
+            <li><a href="book-your-trip.html#hotels">Flights & Hotels</a></li>
+            <li><a href="index.html#diving">Diving</a></li>
+            <li><a href="guides.html">Meet Our Guides</a></li>
+            <li><a href="divers.html">Meet Our Divers</a></li>
+            <li><a href="dive-centers-list.html">🤿 Dive Centers</a></li>
+            <li><a href="travel-agencies.html">🧳 Travel Agencies</a></li>
+            <li><a href="mice.html">MICE & Conferences</a></li>
+            <li><a href="medical.html">Medical Services</a></li>
+            <li><a href="investment.html">Investments</a></li>
+            <li><a href="dmc.html">DMC • Local Agent</a></li>
+            <li><a href="b2b.html">B2B Handling</a></li>
+            <li><a href="trip-finder.html">Trip Finder</a></li>
+          </ul>
+        </details>
+      </li>
+      <li><a class="drawer__link" href="guides.html">👨‍🏫 Ask a Guide</a></li>
+      <li><a class="drawer__link" href="divers.html">🏊 Ask a Diver</a></li>
+      <li><a class="drawer__link" href="travel-agencies.html">🧳 Travel Agencies</a></li>
+      <li><a class="drawer__link" href="dive-centers-list.html">🤿 Dive Centers</a></li>
+      <li><a class="drawer__link" href="jobs-marketplace.html">💼 Browse Jobs</a></li>
+      <li>
+        <details class="submenu">
+          <summary>🗺️ Traveller Requests <span style="background:#ff4d4f;color:#fff;font-size:0.6rem;padding:0.05rem 0.3rem;border-radius:999px;margin-left:0.25rem;">NEW</span></summary>
+          <ul>
+            <li><a href="travel-request.html">📝 Post Request</a></li>
+            <li><a href="travel-request-view.html">👀 View My Request</a></li>
+            <li><a href="travel-requests-browse.html">🔍 Browse Requests</a></li>
+          </ul>
+        </details>
+      </li>
+      <li><a class="drawer__link" href="expert-trips-marketplace.html">📍 Book Trips from Local Experts <span style="background:#ff4d4f;color:#fff;font-size:0.6rem;padding:0.05rem 0.3rem;border-radius:999px;margin-left:0.25rem;">NEW</span></a></li>
+      <li>
+        <details class="submenu">
+          <summary>Support & Legal</summary>
+          <ul>
+            <li><a href="contact.html">📞 Contact Us</a></li>
+            <li><a href="legal-faq.html">📚 Legal FAQ</a></li>
+            <li><a href="terms.html">📜 Terms & Conditions</a></li>
+            <li><a href="privacy.html">🔒 Privacy Policy</a></li>
+            <li><a href="cancellation-policy.html">↩️ Cancellation Policy</a></li>
+            <li><a href="cookies.html">🍪 Cookies Policy</a></li>
+            <li><a href="code-of-conduct.html">👥 Code of Conduct</a></li>
+          </ul>
+        </details>
+      </li>
+      <li style="margin-top:.5rem;display:flex;gap:.5rem">
+        <a class="btn" style="flex:1;text-align:center" href="deals.html">Deals</a>
+        <a class="btn btn--primary" style="flex:1;text-align:center" href="trip-finder.html">Trip Finder</a>
+      </li>
+    </ul>
+  </div>
+</aside>
+
+<script defer src="ticker-loader.js"></script>

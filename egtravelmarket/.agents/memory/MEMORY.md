@@ -1,0 +1,3 @@
+- [ZeptoMail credit exhaustion](zeptomail-credits.md) — when ALL transactional emails fail with 503, check ZeptoMail billing first before debugging code
+- [Rate limiter behind Cloudflare](cloudflare-ratelimit.md) — must use CF-Connecting-IP + ipKeyGenerator helper; trust proxy 1 alone causes shared-IP false 429s
+- [Admin signup query performance](admin-signup-perf.md) — three heavy endpoints all needed WHERE filters + LIMIT; DB indexes on approval_status/email_verified fixed slowness

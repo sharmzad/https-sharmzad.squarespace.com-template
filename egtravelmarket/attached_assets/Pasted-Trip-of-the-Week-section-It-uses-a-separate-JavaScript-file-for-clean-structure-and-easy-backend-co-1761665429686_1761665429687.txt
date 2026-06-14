@@ -1,0 +1,283 @@
+Trip of the Week section.
+It uses a separate JavaScript file for clean structure and easy backend connection later.
+
+🟦 1️⃣ Final — trip-of-the-week.html
+
+Replace everything inside your current file with the code below ⬇️
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trip of the Week | EgTravelMarket</title>
+<meta name="description" content="Cairo by Flight — Trip of the Week with free SIM and Turkish Bath bonus.">
+<link rel="icon" href="/favicon.ico" />
+
+<!-- Travelpayouts affiliate script -->
+<script data-noptimize="1" data-cfasync="false" data-wpfc-render="false">
+  (function () {
+      var script = document.createElement("script");
+      script.async = 1;
+      script.src = 'https://tp-em.com/NDY3OTU2.js?t=467956';
+      document.head.appendChild(script);
+  })();
+</script>
+
+<link rel="stylesheet" href="styles.css">
+<style>
+:root{
+  --blue-1:#0ea5e9; --blue-2:#2563eb; --ink:#0b1220; --card:#ffffff; --muted:#6b7280; --ring: rgba(37,99,235,.25);
+}
+*{box-sizing:border-box} body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; color:var(--ink); background:#f6f8fb}
+.header{position:sticky; top:0; z-index:30; background:#fff; border-bottom:1px solid #eef2f7; padding:10px 16px; display:flex; align-items:center; justify-content:space-between}
+.header .brand{display:flex; align-items:center; gap:10px; font-weight:800}
+.header .brand .dot{width:10px; height:10px; border-radius:50%; background:linear-gradient(135deg,var(--blue-1),var(--blue-2))}
+.header a{color:#1e3a8a; text-decoration:none; font-weight:700}
+.hero{background:linear-gradient(135deg,var(--blue-1),var(--blue-2)); color:#fff; padding: clamp(28px, 4vw, 56px) 16px}
+.hero-inner{max-width:1100px; margin:0 auto; display:grid; grid-template-columns: 1.2fr .8fr; gap:24px; align-items:center}
+@media (max-width:900px){.hero-inner{grid-template-columns:1fr}}
+.badge{display:inline-block; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.35); color:#fff; padding:6px 12px; border-radius:999px; font-size:.92rem}
+.hero h1{margin:10px 0 8px; font-size: clamp(1.8rem, 4vw, 2.6rem)}
+.hero p{margin:0 0 12px; opacity:.97}
+.hero-img{width:100%; aspect-ratio:16/10; border-radius:16px; object-fit:cover; box-shadow:0 12px 30px rgba(0,0,0,.22)}
+.hero-meta{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+.chip{background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.35); padding:6px 10px; border-radius:10px; font-weight:700}
+.container{max-width:1100px; margin: clamp(18px,3vw,34px) auto; padding:0 16px; display:grid; grid-template-columns: 1.2fr .8fr; gap:24px}
+@media (max-width:980px){.container{grid-template-columns:1fr}}
+.card{background:var(--card); border:1px solid #e9eef5; border-radius:16px; padding:18px; box-shadow:0 10px 22px rgba(0,0,0,.06)}
+.card h2{margin:0 0 10px; font-size:1.25rem}
+.table{width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:12px; border:1px solid #e5ecf7}
+.table thead th{background:#f1f5ff; color:#1e3a8a; text-align:left; padding:10px; border-bottom:1px solid #e5ecf7}
+.table tbody td{padding:10px; border-bottom:1px solid #eef3fb; vertical-align:top}
+.incl{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+.incl .pill{background:#eef6ff; border:1px solid #d9e7ff; color:#1e3a8a; padding:6px 10px; border-radius:999px; font-size:.9rem}
+.summary-card{background:#f0f9ff; border:1px solid #bae6fd; border-radius:12px; padding:16px; margin-top:16px; display:none}
+.summary-card.show{display:block}
+.footer{padding:30px 16px; color:#475569; text-align:center}
+.footer a{color:#1e3a8a; font-weight:700; text-decoration:none}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a href="/" class="brand"><span class="dot"></span> EgTravelMarket</a>
+  <nav><a href="/">Home</a></nav>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <span class="badge">⭐ Trip of the Week</span>
+      <h1 id="tripTitle"></h1>
+      <p id="tripSummary"></p>
+      <div class="hero-meta">
+        <span class="chip" id="chipDay"></span>
+        <span class="chip" id="chipSeats"></span>
+        <span class="chip" id="chipType"></span>
+      </div>
+    </div>
+    <div>
+      <img id="heroImg" class="hero-img" src="" alt="">
+    </div>
+  </div>
+</section>
+
+<main class="container">
+  <article class="card">
+    <h2>About & Itinerary</h2>
+    <p id="tripDescription"></p>
+    <table class="table"><thead><tr><th>Day</th><th>Activity</th><th>Notes</th></tr></thead><tbody id="itineraryBody"></tbody></table>
+    <div class="incl" id="includes"></div>
+    <div class="summary-card" id="bookingSummary"><h3>📋 Your Booking Summary</h3><div id="summaryContent"></div></div>
+    <p class="small" style="margin-top:14px;">
+      Need help? WhatsApp us:
+      <a href="https://wa.me/00201227903329" target="_blank" style="color:#25D366;font-weight:600;">+20 122 790 3329</a>
+    </p>
+  </article>
+
+  <aside class="card">
+    <h3>Book the Trip of the Week</h3>
+    <p id="seatInfo" class="small"></p>
+    <div class="field">
+      <label for="accessCode">Access Code</label>
+      <a href="https://wa.me/00201227903329?text=Hello,%20I%20need%20an%20access%20code%20for%20the%20Trip%20of%20the%20Week"
+         target="_blank" class="btn" style="display:inline-block;background:#25D366;color:white;padding:10px 16px;border-radius:8px;text-decoration:none;margin-bottom:10px;">
+         WhatsApp for Access Code</a>
+      <div class="inline" style="display:flex;gap:8px;">
+        <input id="accessCode" placeholder="Enter your code" style="flex:1;padding:8px;border:1px solid #ccc;border-radius:6px;">
+        <button id="checkCode" class="btn" style="background:#2563eb;color:white;border:none;padding:8px 16px;border-radius:6px;">Verify</button>
+      </div>
+      <div id="codeFeedback" class="small" style="margin-top:6px;"></div>
+    </div>
+    <form id="towForm" novalidate></form>
+  </aside>
+</main>
+
+<footer class="footer">© <span id="year"></span> EgTravelMarket — <a href="/">Home</a></footer>
+
+<!-- Load weekly config + logic -->
+<script src="trip-of-week-script.js"></script>
+</body>
+</html>
+
+🟨 2️⃣ New File — trip-of-week-script.js
+
+Create a new file in the same folder (next to your HTML) and paste this code ⬇️
+
+// --- WEEKLY CONFIGURATION ---
+const WEEKLY = {
+  tripName: "Cairo by Flight",
+  mainDay: "Tuesday",
+  isAirTrip: true,
+  seats: 20,
+  accessCodes: ["ETM2025", "VIP001", "TRIPWEEK"],
+  paymentUrl: "https://yourpaymentgateway.com/pay-trip-week",
+  priceAdult: 180,
+  priceChild: 160,
+  summary: "This week only: Free SIM (20GB) + Turkish Bath 15 min.",
+  heroImg: "images/cairo-by-flight-trip.webp",
+  description:
+    "Fly from Sharm El-Sheikh to Cairo for a full-day guided tour including the Great Pyramids, the Sphinx, and the Grand Egyptian Museum area. Buffet lunch by the Nile included. Return flight in the evening.",
+  itinerary: [
+    { day:"Tuesday", title:"Transfer from Hotel to Sharm Airport", notes:"Pick-up 04:00–05:00 AM.", type:"main"},
+    { day:"Tuesday", title:"Flight to Cairo", notes:"1-hour flight. Meet guide on arrival.", type:"main"},
+    { day:"Tuesday", title:"Pyramids & Sphinx Tour", notes:"Guided visit with photo stops.", type:"main"},
+    { day:"Tuesday", title:"Lunch by the Nile", notes:"Buffet meal with river view.", type:"main"},
+    { day:"Tuesday", title:"Egyptian Museum / Grand Museum", notes:"Explore ancient treasures.", type:"main"},
+    { day:"Tuesday", title:"Return Flight to Sharm", notes:"Evening flight + hotel transfer.", type:"main"},
+    { day:"Tuesday", title:"SIM Card 20GB (Free Bonus)", notes:"Delivered Day 1.", type:"bonus"},
+    { day:"Thursday", title:"Turkish Bath 15 min (Free Bonus)", notes:"Relaxation session.", type:"bonus"}
+  ],
+  includes: [
+    "Round-trip Flights (Sharm ↔ Cairo)",
+    "Air-conditioned Transfers",
+    "Lunch by the Nile",
+    "Entrance Fees",
+    "Professional Guide",
+    "SIM Card 20 GB (Bonus)",
+    "15-min Turkish Bath (Bonus)"
+  ]
+};
+
+// --- PAGE LOGIC ---
+const $ = s => document.querySelector(s);
+const storeKey = "tow_seats_left";
+let codeOK = false;
+
+document.addEventListener("DOMContentLoaded", () => {
+  initTrip();
+  $("#checkCode").addEventListener("click", verifyCode);
+});
+
+function initTrip() {
+  $("#tripTitle").textContent = WEEKLY.tripName;
+  $("#tripSummary").textContent = WEEKLY.summary;
+  $("#heroImg").src = WEEKLY.heroImg;
+  $("#chipDay").textContent = `Main Day: ${WEEKLY.mainDay}`;
+  $("#chipType").textContent = WEEKLY.isAirTrip ? "Air Trip" : "Land/Sea";
+  $("#year").textContent = new Date().getFullYear();
+
+  // Seats
+  let seats = Number(localStorage.getItem(storeKey));
+  if (!seats || seats <= 0 || seats > WEEKLY.seats) {
+    seats = WEEKLY.seats;
+    localStorage.setItem(storeKey, seats);
+  }
+  updateSeatsUI(seats);
+
+  $("#tripDescription").textContent = WEEKLY.description;
+
+  // itinerary table
+  const tb = $("#itineraryBody");
+  tb.innerHTML = "";
+  WEEKLY.itinerary.forEach(i => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${i.day}</td><td>${i.title}</td><td>${i.notes}</td>`;
+    tb.appendChild(tr);
+  });
+
+  // includes
+  const inc = $("#includes");
+  inc.innerHTML = "";
+  WEEKLY.includes.forEach(t => {
+    const s = document.createElement("span");
+    s.className = "pill";
+    s.textContent = t;
+    inc.appendChild(s);
+  });
+
+  // form base
+  $("#towForm").innerHTML = `
+    <h3>This Week’s Prices</h3>
+    <div class="row"><div class="field"><label>Adult</label><div class="price-display">$${WEEKLY.priceAdult}</div></div>
+    <div class="field"><label>Child</label><div class="price-display">$${WEEKLY.priceChild}</div></div></div>
+    <h3>Passengers</h3>
+    <div class="field"><label>Adults</label><input id="adults" type="number" min="0" max="10" value="1" disabled></div>
+    <div class="field"><label>Children</label><input id="children" type="number" min="0" max="10" value="0" disabled></div>
+    <div class="field"><label>Infants (FREE)</label><input id="infants" type="number" min="0" max="4" value="0" disabled></div>
+    <h3>Hotel & Contact</h3>
+    <div class="field"><label>Hotel Name</label><input id="hotelName" disabled></div>
+    <div class="field"><label>Room Number</label><input id="roomNumber" disabled></div>
+    <div class="field"><label>Name</label><input id="name" disabled></div>
+    <div class="field"><label>Phone (WhatsApp)</label><input id="phone" disabled></div>
+    <div class="field"><label>Email</label><input id="email" type="email" disabled></div>
+    <button id="payBtn" class="btn" disabled>Proceed to Payment</button>
+    <div id="summaryArea" style="margin-top:10px;"></div>
+  `;
+  $("#payBtn").addEventListener("click", proceedToPayment);
+}
+
+function updateSeatsUI(n) {
+  $("#chipSeats").textContent = `Seats Left: ${n}`;
+  $("#seatInfo").textContent = n > 0
+    ? `Only ${n} seats left this week. Enter access code to book.`
+    : "Sold out this week.";
+}
+
+function verifyCode() {
+  const code = ($("#accessCode").value || "").trim();
+  let seats = Number(localStorage.getItem(storeKey)) || WEEKLY.seats;
+  if (seats <= 0) { $("#codeFeedback").textContent = "Sold out."; return; }
+  if (!code) { $("#codeFeedback").textContent = "Enter your code."; return; }
+
+  if (WEEKLY.accessCodes.includes(code)) {
+    codeOK = true;
+    $("#codeFeedback").textContent = "✓ Code accepted! Fill your details.";
+    ["adults","children","infants","hotelName","roomNumber","name","phone","email"].forEach(id => $("#"+id).disabled=false);
+    $("#payBtn").disabled=false;
+  } else {
+    codeOK = false;
+    $("#codeFeedback").textContent = "Invalid code.";
+  }
+}
+
+function proceedToPayment() {
+  if (!codeOK) return alert("Enter a valid access code first.");
+  let seats = Number(localStorage.getItem(storeKey));
+  const A = +$("#adults").value, C = +$("#children").value;
+  const pax = A + C;
+  if (pax <= 0) return alert("Select at least one passenger.");
+  if (pax > seats) return alert(`Only ${seats} seat(s) left.`);
+
+  seats -= pax; localStorage.setItem(storeKey, seats); updateSeatsUI(seats);
+
+  const params = new URLSearchParams({
+    trip: WEEKLY.tripName, adults:A, children:C,
+    priceAdult:WEEKLY.priceAdult, priceChild:WEEKLY.priceChild,
+    total:(A*WEEKLY.priceAdult)+(C*WEEKLY.priceChild),
+    hotelName:$("#hotelName").value, roomNumber:$("#roomNumber").value,
+    phone:$("#phone").value, email:$("#email").value, name:$("#name").value
+  });
+  window.open(`${WEEKLY.paymentUrl}?${params.toString()}`, "_blank");
+}
+
+🧭 How to use
+
+Replace your old trip-of-the-week.html with the new one above.
+
+Create a new file → trip-of-week-script.js → paste the JS code.
+
+Run your Replit project — everything will look and behave exactly as before ✅
+
+The code is now clean, modular, and ready to connect to backend APIs later.

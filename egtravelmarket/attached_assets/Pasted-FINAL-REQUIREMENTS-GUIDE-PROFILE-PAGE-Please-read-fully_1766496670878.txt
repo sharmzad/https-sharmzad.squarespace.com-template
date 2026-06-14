@@ -1,0 +1,136 @@
+FINAL REQUIREMENTS – GUIDE PROFILE PAGE
+(Please read fully before implementing)
+
+IMPORTANT RULES (NON-NEGOTIABLE):
+1) Do NOT change CSS, colors, fonts, or layout theme.
+2) Do NOT change URLs or routing.
+3) Do NOT delete any existing database fields.
+4) We already have ~55 existing guides – NONE must disappear or look empty.
+5) Use fallback logic everywhere (structured fields first, old text as backup).
+
+================================================
+SECTION 1 – TOP HEADER (KEEP AS IS, WITH LOGIC)
+================================================
+
+At the top of the guide profile page, KEEP the current structure:
+
+- Cover image
+- Profile image
+- Guide full name
+- Verified / Licensed badge (if applicable)
+
+DIRECTLY UNDER THE NAME, KEEP the STATS ROW:
+
+- Years Experience
+- Total Bookings
+- Average Rating
+- Profile Views
+
+Rules for stats:
+- Do NOT hide zero values
+- If Total Bookings = 0 or Rating = 0.0, style softly (grey or “New guide” tooltip)
+- Do NOT fake values
+
+================================================
+SECTION 2 – PRIMARY CTA (MANDATORY)
+================================================
+
+Add a CLEAR PRIMARY CTA BUTTON near the top (after stats row):
+
+Button text:
+- “Request Custom Itinerary” (preferred)
+OR
+- “Contact Guide”
+
+CTA BEHAVIOR (VERY IMPORTANT):
+- Do NOT redirect to another page
+- On click → OPEN A MODAL POPUP on the SAME PAGE
+
+MODAL CONTENT:
+- Guide name + small profile photo
+- Short text: “Tell us what you’re looking for and this guide will contact you”
+- Form fields:
+  - Traveler name
+  - Traveler email
+  - Traveler WhatsApp
+  - Message (required)
+- Hidden fields:
+  - guide_id
+  - guide_name
+- Submit button: “Send Request”
+
+ON SUBMIT:
+- Save request in database
+- Send email notification to:
+  - Guide
+  - Admin
+
+Reason:
+- Lead generation (no instant booking yet)
+- Higher conversion
+- Keep user on profile page
+
+================================================
+SECTION 3 – QUICK INFO (VERY IMPORTANT)
+================================================
+
+Show a clean “At a glance” section with:
+
+- Primary Location (ONE city – home base)
+- Languages Spoken
+- Specialist / Tour Style
+- Ministry of Tourism License (badge + number if exists)
+
+BACKWARD COMPATIBILITY LOGIC (MANDATORY):
+
+For EACH field (Languages, Specialties, Locations):
+
+IF new structured field exists and is not empty:
+    display structured values
+ELSE:
+    display old free-text values (what guides wrote before)
+
+This ensures:
+- Old 55 guides show their data
+- New guides show clean dropdown data
+- No empty sections
+
+================================================
+SECTION 4 – ABOUT THE GUIDE (BIO)
+================================================
+
+- KEEP the bio
+- Limit visible text to 4–5 lines
+- Add “Read more” toggle if text is longer
+
+Do NOT remove the bio – it is important for trust in Egypt market.
+
+================================================
+SECTION 5 – CONTACT & SOCIAL (KEEP)
+================================================
+
+Show contact options clearly:
+- WhatsApp (primary)
+- Email (secondary)
+- Social icons (optional, small)
+
+Do NOT replace CTA with WhatsApp only.
+CTA modal remains the primary action.
+
+================================================
+SECTION 6 – TRIPS CREATED BY THIS GUIDE (YES)
+================================================
+
+Show “Trips created by this guide” section:
+KEEP this section exactly as it is
+   - Keep it at the bottom of the profile
+   - Do NOT move, redesign, or change it
+   - If there are no trips, leave section as-is (CTA already covers requests)
+
+No changes needed here, this is intentional.
+- If guide has NO trips:
+  Show message:
+  “This guide can create a custom itinerary for you”
+  + show CTA button again
+
+================================================

@@ -1,0 +1,796 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trips Management | Admin | Eg Travel Market</title>
+<link rel="stylesheet" href="/assets/styles.css">
+<style>
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  @media(max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media(max-width: 560px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .stat-card:hover, .stat-card.active {
+    border-color: var(--accent);
+    background: rgba(14, 165, 233, 0.05);
+  }
+  .stat-number {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 8px 0;
+  }
+  .stat-label {
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+  .table-container {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+  }
+  .table thead {
+    background: rgba(255,255,255,.04);
+  }
+  .table th {
+    padding: 14px 16px;
+    text-align: left;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    font-size: 14px;
+  }
+  .table tr:last-child td {
+    border-bottom: none;
+  }
+  .table tr:hover {
+    background: rgba(255,255,255,.02);
+  }
+  .status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .status-draft { background: rgba(100, 116, 139, 0.2); color: #94a3b8; }
+  .status-pending_approval { background: rgba(255, 193, 7, 0.15); color: #ffc107; }
+  .status-approved { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+  .status-suspended { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+  .status-deleted { background: rgba(100, 116, 139, 0.15); color: #64748b; text-decoration: line-through; }
+  .action-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    transition: all 0.2s;
+  }
+  .action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .btn-suspend { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+  .btn-suspend:hover:not(:disabled) { background: rgba(239, 68, 68, 0.3); }
+  .btn-unsuspend { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+  .btn-unsuspend:hover:not(:disabled) { background: rgba(34, 197, 94, 0.3); }
+  .btn-revoke { background: rgba(255, 193, 7, 0.15); color: #ffc107; }
+  .btn-revoke:hover:not(:disabled) { background: rgba(255, 193, 7, 0.3); }
+  .btn-delete { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+  .btn-delete:hover:not(:disabled) { background: rgba(239, 68, 68, 0.2); }
+  .btn-view { background: rgba(14, 165, 233, 0.15); color: #0ea5e9; }
+  .btn-view:hover:not(:disabled) { background: rgba(14, 165, 233, 0.3); }
+  .btn-approve { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+  .btn-approve:hover:not(:disabled) { background: rgba(34, 197, 94, 0.3); }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent);
+    text-decoration: none;
+    margin-bottom: 24px;
+  }
+  .back-link:hover { text-decoration: underline; }
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .filter-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,.1);
+    background: transparent;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal.show { display: flex; }
+  .modal-content {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .modal-title { font-size: 18px; font-weight: 600; }
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .form-group {
+    margin-bottom: 16px;
+  }
+  .form-label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .form-input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.1);
+    background: rgba(0,0,0,.2);
+    color: var(--text);
+    font-size: 14px;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .btn-secondary {
+    background: rgba(255,255,255,.1);
+    color: var(--text);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--muted);
+  }
+  .expert-link {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .expert-link:hover { text-decoration: underline; }
+  .trip-title {
+    font-weight: 500;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .bookings-list {
+    margin-top: 16px;
+  }
+  .booking-item {
+    background: rgba(0,0,0,.2);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+  .empty-state {
+    text-align: center;
+    padding: 40px;
+    color: var(--muted);
+  }
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+<div style="max-width: 1400px; margin: 0 auto; padding: 32px 20px;">
+  <a href="/admin-comprehensive.html" class="back-link">← Back to Dashboard</a>
+  
+  <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+    <h1 style="margin: 0;">Trips Management</h1>
+    <button id="fix-status-btn" onclick="fixPublishedStatus()" style="background: rgba(255, 193, 7, 0.15); color: #ffc107; border: none; padding: 10px 16px; border-radius: 8px; font-weight: 600; cursor: pointer;">Fix 'Published' Status</button>
+  </div>
+
+  <div class="stats-grid" id="stats-grid">
+    <div class="stat-card" data-filter="all">
+      <div class="stat-label">Total Trips</div>
+      <div class="stat-number" id="stat-total">-</div>
+    </div>
+    <div class="stat-card" data-filter="approved">
+      <div class="stat-label">Approved</div>
+      <div class="stat-number" id="stat-approved">-</div>
+    </div>
+    <div class="stat-card" data-filter="pending_approval">
+      <div class="stat-label">Pending</div>
+      <div class="stat-number" id="stat-pending">-</div>
+    </div>
+    <div class="stat-card" data-filter="suspended">
+      <div class="stat-label">Suspended</div>
+      <div class="stat-number" id="stat-suspended">-</div>
+    </div>
+    <div class="stat-card" data-filter="draft">
+      <div class="stat-label">Draft</div>
+      <div class="stat-number" id="stat-draft">-</div>
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <button class="filter-btn active" data-filter="all">All Trips</button>
+    <button class="filter-btn" data-filter="approved">Approved</button>
+    <button class="filter-btn" data-filter="pending_approval">Pending Approval</button>
+    <button class="filter-btn" data-filter="suspended">Suspended</button>
+    <button class="filter-btn" data-filter="draft">Draft</button>
+    <button class="filter-btn" data-filter="deleted">Deleted</button>
+  </div>
+
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Trip Title</th>
+          <th>Creator</th>
+          <th>Creator Type</th>
+          <th>Expert Type</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="trips-table">
+        <tr><td colspan="8" class="loading">Loading trips...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal" id="action-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modal-title">Action</h3>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const API_BASE = '';
+
+let allTrips = [];
+let currentFilter = 'all';
+
+async function getToken() {
+  return localStorage.getItem('authToken') || localStorage.getItem('token');
+}
+
+async function fetchWithAuth(url, options = {}) {
+  const token = await getToken();
+  if (!token) {
+    window.location.href = '/admin-login.html';
+    return;
+  }
+  return fetch(url, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+      ...options.headers
+    }
+  });
+}
+
+async function loadStats() {
+  try {
+    const res = await fetchWithAuth(`${API_BASE}/api/admin/expert-trips/stats/overview`);
+    const data = await res.json();
+    document.getElementById('stat-total').textContent = data.total_trips || 0;
+    document.getElementById('stat-approved').textContent = data.approved_count || 0;
+    document.getElementById('stat-pending').textContent = data.pending_count || 0;
+    document.getElementById('stat-suspended').textContent = data.suspended_count || 0;
+    document.getElementById('stat-draft').textContent = data.draft_count || 0;
+  } catch (err) {
+    console.error('Failed to load stats:', err);
+  }
+}
+
+async function loadTrips(status = '') {
+  try {
+    const url = status && status !== 'all' 
+      ? `${API_BASE}/api/admin/expert-trips/all-trips?status=${status}&limit=100`
+      : `${API_BASE}/api/admin/expert-trips/all-trips?limit=100`;
+    
+    const res = await fetchWithAuth(url);
+    const data = await res.json();
+    allTrips = data.trips || [];
+    renderTrips();
+  } catch (err) {
+    console.error('Failed to load trips:', err);
+    document.getElementById('trips-table').innerHTML = 
+      '<tr><td colspan="8" class="empty-state">Failed to load trips</td></tr>';
+  }
+}
+
+function renderTrips() {
+  const tbody = document.getElementById('trips-table');
+  
+  if (allTrips.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No trips found</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = allTrips.map(trip => {
+    const isAgency = trip.createdByType === 'agency';
+    const isDiveCenter = trip.createdByType === 'dive_center';
+    let profileUrl, creatorBadge;
+    
+    if (isDiveCenter) {
+      profileUrl = `/divecenter-profile.html?id=${trip.diveCenterId}`;
+      creatorBadge = '<span style="background: #0077be; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">DIVE CENTER</span>';
+    } else if (isAgency) {
+      profileUrl = `/agency-profile.html?id=${trip.agencyId}`;
+      creatorBadge = '<span style="background: #8b5cf6; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">AGENCY</span>';
+    } else {
+      profileUrl = `/expert-profile.html?id=${trip.expertId}`;
+      creatorBadge = '<span style="background: #3b82f6; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">EXPERT</span>';
+    }
+    
+    return `
+    <tr>
+      <td class="trip-title" title="${trip.title}">${trip.title}</td>
+      <td>
+        <a href="${profileUrl}" class="expert-link" target="_blank">
+          ${trip.expertName || '-'}
+        </a>
+      </td>
+      <td>${creatorBadge}</td>
+      <td>${trip.expertType || '-'}</td>
+      <td>${trip.currency || 'USD'} ${trip.price}</td>
+      <td><span class="status-badge status-${trip.status}">${formatStatus(trip.status)}</span></td>
+      <td>${formatDate(trip.createdAt)}</td>
+      <td>${getActionButtons(trip)}</td>
+    </tr>
+  `;
+  }).join('');
+}
+
+function formatStatus(status) {
+  const map = {
+    'draft': 'Draft',
+    'pending_approval': 'Pending',
+    'approved': 'Approved',
+    'suspended': 'Suspended',
+    'deleted': 'Deleted'
+  };
+  return map[status] || status;
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '-';
+  return new Date(dateStr).toLocaleDateString('en-US', { 
+    month: 'short', day: 'numeric', year: 'numeric' 
+  });
+}
+
+function getActionButtons(trip) {
+  let buttons = '';
+  
+  buttons += `<button class="action-btn btn-view" onclick="viewBookings(${trip.id}, '${trip.title}')">Bookings</button>`;
+  
+  if (trip.status === 'approved') {
+    buttons += `<button class="action-btn btn-suspend" onclick="showSuspendModal(${trip.id}, '${trip.title}')">Suspend</button>`;
+    buttons += `<button class="action-btn btn-revoke" onclick="showRevokeModal(${trip.id}, '${trip.title}')">Revoke</button>`;
+  }
+  
+  if (trip.status === 'suspended') {
+    buttons += `<button class="action-btn btn-unsuspend" onclick="unsuspendTrip(${trip.id})">Reactivate</button>`;
+    buttons += `<button class="action-btn btn-revoke" onclick="showRevokeModal(${trip.id}, '${trip.title}')">Revoke</button>`;
+  }
+  
+  if (trip.status === 'pending_approval') {
+    buttons += `<button class="action-btn btn-approve" onclick="approveTrip(${trip.id})">Approve</button>`;
+    buttons += `<button class="action-btn btn-revoke" onclick="showRejectModal(${trip.id}, '${trip.title}')">Reject</button>`;
+  }
+  
+  if (trip.status !== 'deleted') {
+    buttons += `<button class="action-btn btn-delete" onclick="showDeleteModal(${trip.id}, '${trip.title}')">Remove</button>`;
+  }
+  
+  return buttons;
+}
+
+function showModal(title, content) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = content;
+  document.getElementById('action-modal').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('action-modal').classList.remove('show');
+}
+
+function showSuspendModal(tripId, title) {
+  showModal('Suspend Trip', `
+    <p>Suspend "<strong>${title}</strong>"?</p>
+    <p style="color: var(--muted); font-size: 13px;">This will hide the trip from public and disable bookings.</p>
+    <div class="form-group">
+      <label class="form-label">Reason (optional)</label>
+      <textarea id="suspend-reason" class="form-input" rows="3" placeholder="Enter reason..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="suspendTrip(${tripId})">Suspend Trip</button>
+    </div>
+  `);
+}
+
+function showRevokeModal(tripId, title) {
+  showModal('Revoke Approval', `
+    <p>Revoke approval for "<strong>${title}</strong>"?</p>
+    <p style="color: var(--muted); font-size: 13px;">This will move the trip back to pending for re-review.</p>
+    <div class="form-group">
+      <label class="form-label">Reason (optional)</label>
+      <textarea id="revoke-reason" class="form-input" rows="3" placeholder="Enter reason..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="revokeTrip(${tripId})">Revoke Approval</button>
+    </div>
+  `);
+}
+
+function showRejectModal(tripId, title) {
+  showModal('Reject Trip', `
+    <p>Reject "<strong>${title}</strong>"?</p>
+    <p style="color: var(--muted); font-size: 13px;">This will move the trip back to draft status.</p>
+    <div class="form-group">
+      <label class="form-label">Rejection Reason (required)</label>
+      <textarea id="reject-reason" class="form-input" rows="3" placeholder="Enter reason..." required></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="rejectTrip(${tripId})">Reject Trip</button>
+    </div>
+  `);
+}
+
+function showDeleteModal(tripId, title) {
+  showModal('Remove Trip', `
+    <p>Remove "<strong>${title}</strong>"?</p>
+    <p style="color: var(--muted); font-size: 13px;">This will soft-delete the trip. It can be recovered if needed.</p>
+    <div class="form-group">
+      <label class="form-label">Reason (optional)</label>
+      <textarea id="delete-reason" class="form-input" rows="3" placeholder="Enter reason..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" style="background: #ef4444;" onclick="deleteTrip(${tripId})">Remove Trip</button>
+    </div>
+  `);
+}
+
+async function suspendTrip(tripId) {
+  const reason = document.getElementById('suspend-reason')?.value;
+  try {
+    const res = await fetchWithAuth(`${API_BASE}/api/admin/expert-trips/${tripId}/suspend`, {
+      method: 'POST',
+      body: JSON.stringify({ reason })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert(data.message);
+      closeModal();
+      loadTrips(currentFilter);
+      loadStats();
+    } else {
+      alert(data.message || 'Failed to suspend trip');
+    }
+  } catch (err) {
+    alert('Error: ' + err.message);
+  }
+}
+
+async function unsuspendTrip(tripId) {
+  if (!confirm('Reactivate this trip?')) return;
+  try {
+    const res = await fetchWithAuth(`${API_BASE}/api/admin/expert-trips/${tripId}/unsuspend`, {
+      method: 'POST'
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert(data.message);
+      loadTrips(currentFilter);
+      loadStats();
+    } else {
+      alert(data.message || 'Failed to unsuspend trip');
+    }
+  } catch (err) {
+    alert('Error: ' + err.message);
+  }
+}
+
+async function revokeTrip(tripId) {
+  const reason = document.getElementById('revoke-reason')?.value;
+  try {
+    const res = await fetchWithAuth(`${API_BASE}/api/admin/expert-trips/${tripId}/revoke`, {
+      method: 'POST',
+      body: JSON.stringify({ reason })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert(data.message);
+      closeModal();
+      loadTrips(currentFilter);
+      loadStats();
+    } else {
+      alert(data.message || 'Failed to revoke approval');
+    }
+  } catch (err) {
+    alert('Error: ' + err.message);
+  }
+}
+
+async function approveTrip(tripId) {
+  if (!confirm('Approve this trip?')) return;
+  try {
+    const res = await fetchWithAuth(`${API_BASE}/api/admin/expert-trips/${tripId}/approve`, {
+      method: 'POST',
+      body: JSON.stringify({})
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert(data.message);
+      loadTrips(currentFilter);
+      loadStats();
+    } else {
+      alert(data.message || 'Failed to approve trip');
+    }
+  } catch (err) {
+    alert('Error: ' + err.message);
+  }
+}
+
+async function rejectTrip(tripId) {
+  const reason = document.getElementById('reject-reason')?.value;
+  if (!reason) {
+    alert('Rejection reason is required');
+    return;
+  }
+  try {
+    const res = await fetchWithAuth(`${API_BASE}/api/admin/expert-trips/${tripId}/reject`, {
+      method: 'POST',
+      body: JSON.stringify({ reason })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert(data.message);
+      closeModal();
+      loadTrips(currentFilter);
+      loadStats();
+    } else {
+      alert(data.message || 'Failed to reject trip');
+    }
+  } catch (err) {
+    alert('Error: ' + err.message);
+  }
+}
+
+async function deleteTrip(tripId) {
+  const reason = document.getElementById('delete-reason')?.value;
+  try {
+    const res = await fetchWithAuth(`${API_BASE}/api/admin/expert-trips/${tripId}`, {
+      method: 'DELETE',
+      body: JSON.stringify({ reason })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert(data.message);
+      closeModal();
+      loadTrips(currentFilter);
+      loadStats();
+    } else {
+      alert(data.message || 'Failed to remove trip');
+    }
+  } catch (err) {
+    alert('Error: ' + err.message);
+  }
+}
+
+async function viewBookings(tripId, title) {
+  showModal(`Bookings: ${title}`, '<div class="loading">Loading bookings...</div>');
+  try {
+    const res = await fetchWithAuth(`${API_BASE}/api/admin/expert-trips/${tripId}/bookings`);
+    const data = await res.json();
+    
+    if (data.bookings && data.bookings.length > 0) {
+      const bookingsHtml = data.bookings.map(b => `
+        <div class="booking-item">
+          <div><strong>${b.travelerName}</strong> - ${b.travelerEmail}</div>
+          <div style="color: var(--muted); font-size: 12px; margin-top: 4px;">
+            ${b.travelers} traveler(s) | ${b.currency} ${b.totalAmount} | ${b.paymentStatus}
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('modal-body').innerHTML = `
+        <p style="color: var(--muted); margin-bottom: 16px;">${data.total} booking(s) found</p>
+        <div class="bookings-list">${bookingsHtml}</div>
+        <div class="modal-actions">
+          <button class="btn-secondary" onclick="closeModal()">Close</button>
+        </div>
+      `;
+    } else {
+      document.getElementById('modal-body').innerHTML = `
+        <p class="empty-state">No bookings yet</p>
+        <div class="modal-actions">
+          <button class="btn-secondary" onclick="closeModal()">Close</button>
+        </div>
+      `;
+    }
+  } catch (err) {
+    document.getElementById('modal-body').innerHTML = `
+      <p style="color: #ef4444;">Failed to load bookings: ${err.message}</p>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="closeModal()">Close</button>
+      </div>
+    `;
+  }
+}
+
+async function fixPublishedStatus() {
+  if (!confirm('This will convert all trips with "published" status to "approved" status. Continue?')) {
+    return;
+  }
+  const btn = document.getElementById('fix-status-btn');
+  btn.disabled = true;
+  btn.textContent = 'Fixing...';
+  try {
+    const res = await fetchWithAuth(`${API_BASE}/api/admin/expert-trips/fix-published-status`, {
+      method: 'POST'
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert(`Success! Fixed ${data.count} trips.`);
+      loadTrips(currentFilter);
+      loadStats();
+    } else {
+      alert(data.message || 'Failed to fix status');
+    }
+  } catch (err) {
+    alert('Error: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Fix 'Published' Status";
+  }
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    loadTrips(currentFilter);
+  });
+});
+
+document.querySelectorAll('.stat-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const filter = card.dataset.filter;
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.filter === filter);
+    });
+    currentFilter = filter;
+    loadTrips(filter);
+  });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadStats();
+  loadTrips();
+});
+</script>
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

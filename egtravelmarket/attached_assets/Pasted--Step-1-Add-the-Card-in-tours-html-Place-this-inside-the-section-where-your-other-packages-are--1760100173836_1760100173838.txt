@@ -1,0 +1,84 @@
+🟦 Step 1 — Add the Card in tours.html
+
+Place this inside the section where your other packages are (same grid or row).
+
+<!-- Private Transfer + Complimentary SIM Card Card -->
+<div class="tour-card">
+  <img src="unnamed.jpg" alt="Private Transfer Sharm El Sheikh" class="tour-image">
+  <div class="tour-content">
+    <h3>Private Transfer + Complimentary SIM Card</h3>
+    <p>Arrive stress-free! Enjoy a private, direct airport transfer to your hotel in Sharm — plus a free 20GB data SIM on arrival.</p>
+    <a href="private-transfer.html" class="btn">View Itinerary</a>
+  </div>
+</div>
+
+
+(Make sure the image unnamed.jpg is inside your project’s images/ folder or main folder — then update the path if needed, e.g. images/unnamed.jpg)
+
+🟦 Step 2 — Create a New File: private-transfer.html
+
+This file will open when users click “View Itinerary.”
+It follows the same layout and itinerary style as your 3 Trips Package pages:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Private Transfer + Free SIM | EgyTravelMarket</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Include your site header -->
+  <header>
+    <!-- Use your existing header include or navigation -->
+  </header>
+
+  <section class="package-hero">
+    <img src="unnamed.jpg" alt="Sharm El Sheikh Private Transfer" class="hero-image">
+    <div class="hero-overlay">
+      <h1>Private Transfer + Complimentary SIM Card</h1>
+      <p>Direct Airport Transfer – Free 20GB Data SIM Included</p>
+    </div>
+  </section>
+
+  <section class="package-details">
+    <h2>About This Service</h2>
+    <p>
+      Simplify your Sharm El Sheikh arrival and departure with our exclusive private transfer service!
+      Upon your arrival at Sharm Airport, forget the hassle of waiting and embark on a seamless journey directly to your hotel in Naema Bay, Hadaba, or Nabq.
+      Our private transfer ensures you reach your destination swiftly and comfortably.
+    </p>
+
+    <h3>What You Get</h3>
+    <ul>
+      <li><strong>Private, direct transfer:</strong> No stops, no delays – just you and your party heading straight to your hotel.</li>
+      <li><strong>Complimentary 20 GB SIM card:</strong> Stay connected from the moment you land! This free SIM card with generous data is exclusively for arrival transfers.</li>
+      <li><strong>Fixed Low Price:</strong> Whether you're traveling solo, as a couple, or with a group of up to 8 people, the cost is a flat <strong>$40 USD</strong> per private vehicle, or <strong>$5 USD per person</strong> for a group of eight.</li>
+    </ul>
+
+    <h3>Itinerary</h3>
+    <ol>
+      <li><strong>Arrival:</strong> Your driver meets you at the airport arrival hall holding a "Sharm Transfers" sign.</li>
+      <li><strong>SIM Card Delivery:</strong> Receive your complimentary 20 GB data SIM at pickup.</li>
+      <li><strong>Direct Transfer:</strong> Enjoy a smooth private ride to your hotel in Naema Bay, Hadaba, or Nabq.</li>
+      <li><strong>Drop-off:</strong> Assistance with luggage upon arrival at your hotel.</li>
+      <li><strong>Return Option (optional):</strong> Book your return transfer to the airport at the same low rate.</li>
+    </ol>
+
+    <h3>Price</h3>
+    <p class="price"><strong>$40 USD per vehicle (up to 8 people)</strong> – or just <strong>$5 USD per person</strong> for groups.</p>
+
+    <a href="https://wa.me/00201023889959" class="btn book-now">Book via WhatsApp</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <!-- Your existing footer -->
+  </footer>
+</body>
+</html>
+
+🟦 Step 3 — Ensure Styling Matches
+
+If your style.css already styles .tour-card, .btn, .package-details, etc., you’re done ✅

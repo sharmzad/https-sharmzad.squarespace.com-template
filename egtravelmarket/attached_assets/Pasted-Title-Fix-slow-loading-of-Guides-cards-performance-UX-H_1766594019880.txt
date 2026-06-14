@@ -1,0 +1,80 @@
+Title: Fix slow loading of Guides cards (performance + UX)
+Hi,
+Please apply the following improvements to the Guides listing page (and later reuse same logic for Divers, Mentors, Agencies , Dive Center ):
+________________________________________
+1️⃣ Add Skeleton Loader (Critical – UX)
+Before API data loads, show skeleton cards instead of a blank page.
+Requirements:
+•	Show 8–12 placeholder guide cards immediately on page load
+•	Skeleton structure:
+o	Circular avatar
+o	Name bar
+o	Rating bar
+o	Location bar
+•	Remove skeleton once real data arrives
+This is required even if backend is still loading.
+________________________________________
+2️⃣ Lazy Load Images
+All guide card images must use lazy loading:
+<img loading="lazy" />
+This applies to:
+•	Profile photo
+•	Cover photo (if used)
+________________________________________
+3️⃣ Optimize API Response (Very Important)
+The guides list API must return ONLY fields used in cards.
+✅ Include:
+•	id
+•	name
+•	profile_photo
+•	city / country
+•	languages
+•	rating (if exists)
+❌ Exclude:
+•	full bio
+•	certificates
+•	social links
+•	long descriptions
+Also apply:
+LIMIT 12 or 20
+________________________________________
+4️⃣ Add Pagination / Load More
+Do NOT load all guides at once.
+•	Initial load: 12 or 20 guides
+•	Add “Load More” button or infinite scroll
+•	Fetch next page only when requested
+________________________________________
+5️⃣ Cache Guides API
+Cache the guides list response for 5–10 minutes.
+Reason:
+•	Guides data does not change frequently
+•	Reduces database + cold start delay
+•	Improves speed for most visitors
+________________________________________
+6️⃣ Image Optimization
+Ensure:
+•	Profile images served as WebP
+•	Max width: 400px
+•	File size ideally < 100KB
+If available, enable Cloudflare image optimization.
+________________________________________
+7️⃣ Prevent Layout Shift (CLS)
+Card height must be fixed before data loads to avoid jumping content.
+Skeleton and real cards must share same dimensions.
+________________________________________
+8️⃣ Reusable Component
+Implement this as a reusable solution so it can be applied later to:
+•	Divers
+•	Mentors
+•	Agencies
+•	Dive Centers
+________________________________________
+Expected Result
+•	Page shows skeleton instantly
+•	Text loads first
+•	Images load smoothly
+•	No white screen
+•	Faster perceived load (mobile + desktop)
+Please confirm once implemented.
+Thank you.
+

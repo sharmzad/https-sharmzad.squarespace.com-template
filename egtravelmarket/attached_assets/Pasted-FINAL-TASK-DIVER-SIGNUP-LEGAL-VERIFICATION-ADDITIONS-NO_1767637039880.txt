@@ -1,0 +1,129 @@
+FINAL TASK – DIVER SIGNUP LEGAL & VERIFICATION ADDITIONS
+(NO REMOVALS / NO RENAMING / NO DUPLICATES)
+
+Please review the existing Diver signup form at:
+https://www.egtravelmarket.com/diver-signup.html
+
+IMPORTANT RULES:
+- Do NOT remove any existing fields
+- Do NOT rename any existing fields
+- Do NOT duplicate existing fields
+- Only ADD the missing verification & legal fields below
+- Reuse the existing Admin Approval + Certified system already implemented for other user types
+
+================================================
+1) EXISTING FIELDS (KEEP AS-IS)
+================================================
+
+All current Diver fields must remain unchanged, including:
+- Diver role/type
+- Certifications list (PADI / SSI / CMAS, etc.)
+- Years of experience
+- Locations
+- Languages
+- Licensed / Insured (Yes / No)
+- Profile photo
+- Bio
+- Contact info
+- Password fields
+
+================================================
+2) NEW ADDITIONS – DIVER VERIFICATION
+================================================
+
+A) Professional Certification Proof (NEW – REQUIRED)
+Add a required upload field:
+- "Diving Certification Document"
+(PDF / JPG / PNG)
+
+This is to verify certifications already selected in the existing form
+(e.g., PADI, SSI, CMAS). The document is for admin verification only
+and must NOT be public.
+
+------------------------------------------------
+B) Insurance Details (CONDITIONAL – NEW)
+------------------------------------------------
+
+Use the existing field:
+"Licensed / Insured Diver" (Yes / No)
+
+IF user selects "Yes", then require:
+
+1) Insurance Proof Upload (REQUIRED – conditional)
+   - PDF / JPG / PNG
+
+2) Insurance Expiry Date (REQUIRED – conditional)
+   - Must be a future date
+   - Reject signup if expired
+
+If "No" is selected:
+- Do NOT require insurance fields
+
+================================================
+3) LEGAL CHECKBOXES – REQUIRED FOR ALL DIVERS
+================================================
+
+Add THREE required checkboxes before form submission:
+
+1) Terms Agreement
+"I agree to the Diver Terms, EgTravelMarket Platform Terms, and the commission & payment policy."
+
+2) Accuracy Confirmation
+"I confirm that all information and documents provided are accurate and up to date."
+
+3) Verification Consent
+"I consent to EgTravelMarket verifying submitted information and documents if required."
+
+Form submission must be blocked unless ALL three checkboxes are checked.
+
+================================================
+4) BACKEND VALIDATION RULES
+================================================
+
+- Reject signup if certification document is missing
+- If Licensed / Insured = Yes:
+  - Require insurance document
+  - Require expiry date in the future
+- Enforce all legal checkboxes
+
+On successful signup:
+- Set certification_status = 'pending'
+
+================================================
+5) ADMIN REVIEW & CERTIFICATION (REUSE EXISTING SYSTEM)
+================================================
+
+- Admin must see:
+  - All existing diver profile data
+  - Certification document
+  - Insurance document + expiry date (if provided)
+  - Legal confirmation checkboxes
+
+- Admin actions:
+  - Approve → certification_status = 'certified'
+  - Reject → certification_status = 'rejected'
+
+================================================
+6) PUBLIC VISIBILITY RULES
+================================================
+
+- Only divers with certification_status = 'certified' appear publicly
+- Pending or rejected diver profiles must be hidden
+- Direct access to uncertified profiles should return 404
+
+================================================
+7) CERTIFIED BADGE (AUTO)
+================================================
+
+- Show "Certified Diver" badge when:
+  - certification_status = 'certified'
+- Badge must be removed automatically if approval is revoked
+- No manual badge toggles
+
+================================================
+GOAL
+================================================
+
+This task completes Diver verification without changing any existing
+Diver signup fields, aligns Divers with the platform-wide certification
+workflow, and improves trust and safety without over-regulating individuals.

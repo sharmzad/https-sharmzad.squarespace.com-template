@@ -1,0 +1,201 @@
+Copy-Paste to your index.html (just before the footer)
+<!-- ====== BOARD OF ADVISORS SECTION ====== -->
+<section class="advisory-section" id="board-advisory">
+  <h2 class="section-title">Board of Advisors</h2>
+  <p class="section-subtitle">A network of experts guiding every step — from diving to desert adventures.</p>
+
+  <div class="advisory-container">
+    <!-- Advisor 1 -->
+    <div class="advisor-card">
+      <img src="images/hatem-soliman.jpg" alt="Hatem Soliman">
+      <h3>Hatem Soliman</h3>
+      <p class="role">Chairman, Dive Center Owners</p>
+      <p class="bio">Expert in diving operations and safety, advising on all diving trips and underwater experiences.</p>
+    </div>
+
+    <!-- Advisor 2 -->
+    <div class="advisor-card">
+      <img src="images/osama-ramadan.jpg" alt="Osama Ramadan">
+      <h3>Osama Ramadan</h3>
+      <p class="role">Chairman, Sea Trips Company</p>
+      <p class="bio">One of Egypt’s most renowned specialists in boat and sea excursions, overseeing quality and safety of all maritime tours.</p>
+    </div>
+
+    <!-- Advisor 3 -->
+    <div class="advisor-card">
+      <img src="images/sheikh-ahmed-soraya.jpg" alt="Sheikh Ahmed Abou Soraya">
+      <h3>Sheikh Ahmed Abou Soraya</h3>
+      <p class="role">Sinai Bedouin Advisor</p>
+      <p class="bio">One of Sinai’s most respected Bedouin figures, guiding the authenticity of our desert safari experiences.</p>
+    </div>
+
+    <!-- Advisor 4 -->
+    <div class="advisor-card">
+      <img src="images/mohamed-salah.jpg" alt="Mohamed Salah">
+      <h3>Mohamed Salah</h3>
+      <p class="role">Medical Insurance Consultant</p>
+      <p class="bio">Specialist in tourism medical insurance and support for travelers in Sharm El-Sheikh.</p>
+    </div>
+
+    <!-- Advisor 5 -->
+    <div class="advisor-card">
+      <img src="images/hesham-mohy.jpg" alt="Hesham Mohy">
+      <h3>Hesham Mohy</h3>
+      <p class="role">Chief Guide of South Sinai</p>
+      <p class="bio">Creator of unique itineraries and experiences across Sinai’s most inspiring landscapes.</p>
+    </div>
+
+    <!-- Advisor 6 -->
+    <div class="advisor-card">
+      <img src="images/yasser-moawad.jpg" alt="Yasser Moawad">
+      <h3>Yasser Moawad</h3>
+      <p class="role">Tourism Management Advisor</p>
+      <p class="bio">Specialist in Spanish-speaking markets and high-end group management.</p>
+    </div>
+
+    <!-- Advisor 7 -->
+    <div class="advisor-card">
+      <img src="images/gamal-mohamed.jpg" alt="Gamal Mohamed">
+      <h3>Gamal Mohamed</h3>
+      <p class="role">Tourism Management Advisor</p>
+      <p class="bio">Expert in Italian-speaking groups and cultural tourism programs.</p>
+    </div>
+
+    <!-- Advisor 8 -->
+    <div class="advisor-card">
+      <img src="images/ahmed-abd.jpg" alt="Ahmed Abd El-Hamied">
+      <h3>Ahmed Abd El-Hamied</h3>
+      <p class="role">Tourism Advisor</p>
+      <p class="bio">Experienced with English-speaking groups, ensuring smooth operations for all clients.</p>
+    </div>
+
+    <!-- Advisor 9 -->
+    <div class="advisor-card">
+      <img src="images/waleed-ali.jpg" alt="Waleed Ali">
+      <h3>Waleed Ali</h3>
+      <p class="role">Transportation Specialist</p>
+      <p class="bio">Expert in limousine and car rental services ensuring safe and stylish journeys.</p>
+    </div>
+
+    <!-- Advisor 10 -->
+    <div class="advisor-card">
+      <img src="images/mohamed-abbas.jpg" alt="Mohamed Abbas">
+      <h3>Mohamed Abbas</h3>
+      <p class="role">Investment Advisor</p>
+      <p class="bio">Dutch citizen with deep expertise in tourism investment and development opportunities.</p>
+    </div>
+
+    <!-- Advisor 11 -->
+    <div class="advisor-card">
+      <img src="images/sameh-elmasry.jpg" alt="Sameh El Masry">
+      <h3>Sameh El-Masry</h3>
+      <p class="role">Real Estate Advisor</p>
+      <p class="bio">Italian citizen with strong experience in real estate and property development.</p>
+    </div>
+
+    <!-- Advisor 12 -->
+    <div class="advisor-card">
+      <img src="images/ali-mohamed.jpg" alt="Ali Mohamed">
+      <h3>Ali Mohamed</h3>
+      <p class="role">Legal Consultant</p>
+      <p class="bio">Renowned lawyer in Sharm, offering free consultation and legal support for our clients.</p>
+    </div>
+  </div>
+</section>
+
+
+
+Add this CSS to your styles.css
+/* ===== TEAM & ADVISORY SECTIONS ===== */
+.team-section, .advisory-section {
+  text-align: center;
+  padding: 70px 20px;
+  background: #f9fafb;
+}
+.team-section {
+  background: linear-gradient(180deg, #e6f0ff 0%, #f9fafb 100%);
+}
+.section-title {
+  font-size: 2rem;
+  color: #0056b3;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+.section-subtitle {
+  color: #555;
+  margin-bottom: 40px;
+}
+
+.team-container, .advisory-container {
+  display: grid;
+  gap: 30px;
+  justify-content: center;
+}
+.team-container {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.advisory-container {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.team-card, .advisor-card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 20px;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.team-card:hover, .advisor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+.team-card img, .advisor-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+.advisor-card img {
+  border-radius: 12px;
+}
+.team-card h3, .advisor-card h3 {
+  font-size: 1.2rem;
+  color: #003366;
+  margin-bottom: 5px;
+}
+.title, .role {
+  font-weight: 600;
+  color: #0066cc;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+.bio {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+.whatsapp {
+  color: #25D366;
+  font-size: 1.3rem;
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+}
+.whatsapp:hover {
+  color: #1ebe5d;
+}
+@media (max-width: 768px) {
+  .team-container, .advisory-container {
+    grid-template-columns: 1fr;
+  }
+}
+________________________________________
+⚙️ To activate WhatsApp icons
+Add this to your <head> if not already:
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+
+Paste HTML right before your <footer> section in Replit.

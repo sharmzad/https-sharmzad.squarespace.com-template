@@ -1,0 +1,318 @@
+b2b-handling.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B2B Handling | EgyTravelMarket</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(180deg, #0b3d91, #1e90ff);
+      color: #222;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    header {
+      text-align: center;
+      color: white;
+      padding: 80px 20px 40px;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .section {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .section h2 {
+      color: #0b3d91;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section ul {
+      list-style-type: disc;
+      padding-left: 25px;
+      line-height: 1.7;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .stat-box {
+      background: #0b3d91;
+      color: white;
+      padding: 25px 35px;
+      border-radius: 16px;
+      text-align: center;
+      flex: 1 1 200px;
+    }
+
+    .stat-box h3 {
+      font-size: 1.8rem;
+      margin: 0;
+    }
+
+    .why {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .why-box {
+      background: #f3f8ff;
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 5px solid #0b3d91;
+    }
+
+    .why-box h4 {
+      margin-bottom: 8px;
+      color: #0b3d91;
+    }
+
+    .contact-section {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .contact-left {
+      flex: 1 1 300px;
+    }
+
+    .contact-left h2 {
+      color: #0b3d91;
+      margin-bottom: 10px;
+    }
+
+    .whatsapp {
+      display: inline-flex;
+      align-items: center;
+      background: #25D366;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      gap: 10px;
+      transition: 0.3s;
+    }
+
+    .whatsapp:hover {
+      background: #1da851;
+    }
+
+    .contact-form {
+      flex: 1 1 350px;
+    }
+
+    .contact-form form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .contact-form input, .contact-form textarea {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .contact-form button {
+      background: #0b3d91;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .contact-form button:hover {
+      background: #1e90ff;
+    }
+
+    footer {
+      text-align: center;
+      color: white;
+      padding: 30px 10px;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2rem; }
+      .section { padding: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Professional B2B Handling & DMC Services in Egypt</h1>
+    <p>Your trusted local partner for ground operations and travel management.</p>
+  </header>
+
+  <div class="container">
+    <div class="section">
+      <p><strong>EgyTravelMarket</strong> provides comprehensive B2B travel solutions including hotel contracting, charter operations, transfers, professional guides, and complete group management services. Based in Sharm El Sheikh with nationwide coverage.</p>
+    </div>
+
+    <div class="section">
+      <h2>🏨 Hotel Contracting & Allocation</h2>
+      <ul>
+        <li>Pre-negotiated competitive rates with 500+ hotels</li>
+        <li>Guaranteed room allocations year-round</li>
+        <li>Flexible payment terms and credit facilities</li>
+        <li>Real-time availability and instant confirmations</li>
+        <li>Special contracts for series and seasonal programs</li>
+        <li>Exclusive access to closed allocations</li>
+        <li>Direct contracts with hotel chains</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>✈️ Charter & Flight Operations Support</h2>
+      <ul>
+        <li>Airport meet & greet services</li>
+        <li>VIP lounge access and fast-track immigration</li>
+        <li>Ground handling coordination</li>
+        <li>Crew accommodation and transfers</li>
+        <li>Flight manifest management and fuel coordination</li>
+        <li>24/7 emergency support</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🚐 Professional Guides & Transfers</h2>
+      <ul>
+        <li>Licensed Egyptologist tour guides</li>
+        <li>Multilingual guides (15+ languages)</li>
+        <li>Modern air-conditioned vehicle fleet</li>
+        <li>Airport/hotel transfers nationwide</li>
+        <li>Private luxury vehicles and coaches</li>
+        <li>Professional drivers with tourism licenses</li>
+        <li>GPS tracking and real-time coordination</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>👥 Groups & Series Management</h2>
+      <ul>
+        <li>Dedicated group coordinators</li>
+        <li>Customized itinerary planning</li>
+        <li>Group check-in/out services</li>
+        <li>Special meal arrangements</li>
+        <li>Emergency medical support</li>
+        <li>Post-tour reporting and feedback</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🎫 Ticketing & Reservations</h2>
+      <ul>
+        <li>Pre-booked entrance tickets to all monuments</li>
+        <li>Skip-the-line priority access</li>
+        <li>Sound & light show reservations</li>
+        <li>Special event tickets and cruise bookings</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>⚙️ Operations & Logistics Support</h2>
+      <ul>
+        <li>24/7 operations control center</li>
+        <li>Emergency response team</li>
+        <li>Quality control and supplier management</li>
+        <li>Detailed financial reporting</li>
+        <li>Comprehensive insurance coverage</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>📊 Our Track Record</h2>
+      <div class="stats">
+        <div class="stat-box"><h3>50+</h3><p>Hotel Partners</p></div>
+        <div class="stat-box"><h3>15+</h3><p>Languages</p></div>
+        <div class="stat-box"><h3>24/7</h3><p>Support</p></div>
+        <div class="stat-box"><h3>100%</h3><p>Licensed</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>🤝 Why Partner With Us?</h2>
+      <div class="why">
+        <div class="why-box"><h4>Local Expertise</h4><p>Based in Sharm El Sheikh with deep knowledge of all destinations.</p></div>
+        <div class="why-box"><h4>Competitive Rates</h4><p>Best net rates through direct contracts and bulk purchasing.</p></div>
+        <div class="why-box"><h4>Fast Response</h4><p>Instant confirmations and same-day solutions.</p></div>
+        <div class="why-box"><h4>Reliability</h4><p>Fully licensed with comprehensive insurance coverage.</p></div>
+        <div class="why-box"><h4>Technology-Driven</h4><p>Modern booking systems and real-time tracking.</p></div>
+        <div class="why-box"><h4>Partnership Approach</h4><p>Your extension on the ground, not just a supplier.</p></div>
+      </div>
+    </div>
+
+    <div class="contact-section">
+      <div class="contact-left">
+        <h2>Ready to Start Working Together?</h2>
+        <p>Contact the Executive Manager directly for partnership inquiries or to request rate sheets.</p>
+        <a href="https://wa.me/201227903329" target="_blank" class="whatsapp">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="24"> +20 122 790 3329
+        </a>
+      </div>
+
+      <div class="contact-form">
+        <form id="b2bForm" onsubmit="event.preventDefault(); alert('Thank you! Our executive manager will contact you shortly.'); this.reset();">
+          <input type="text" placeholder="Your Name" required>
+          <input type="text" placeholder="Company Name" required>
+          <input type="email" placeholder="Email Address" required>
+          <input type="text" placeholder="Country" required>
+          <textarea rows="4" placeholder="Your Message"></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 EgyTravelMarket | Your Professional DMC in Egypt</p>
+  </footer>
+</body>
+</html>

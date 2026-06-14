@@ -1,0 +1,127 @@
+FINAL UPDATE – Diver Cards & Diver Public Profile
+Please read carefully. No redesign, no color/layout changes, no DB deletion.
+
+========================
+1) DIVER CARDS (LIST PAGE)
+========================
+
+KEEP existing structure:
+- Profile photo
+- Name
+- Role (e.g. Diving Instructor)
+- Primary location ONLY
+- Rating & years experience
+- Verified badge
+- View Profile CTA
+
+ADD (NEW – IMPORTANT):
+➤ Short Bio on Diver Card
+
+Bio rules:
+- Show ONLY 1 line
+- Max 120 characters
+- Truncate with "…" if longer
+- Same styling as Guide cards
+- No expand on click
+- Desktop & mobile identical behavior
+
+Bio source logic (MANDATORY fallback):
+IF diver.bio exists → use it
+ELSE IF diver.about exists → use it
+ELSE → show nothing
+
+Card content order (LOCK THIS):
+Name
+Role
+Location
+Rating / Years
+SHORT BIO (1 line)
+Specialties (max 2)
++X more (if applicable)
+View Profile CTA
+
+Specialties rules:
+- Show max 2 specialties only
+- If more exist → show "+X more"
+- Do NOT show all specialties on card
+
+=============================
+2) DIVER PUBLIC PROFILE PAGE
+=============================
+
+KEEP top summary section EXACTLY as is:
+- Years Experience
+- Total Bookings
+- Average Rating
+- Profile Views
+- Verified badge
+
+CTA BUTTON (TEXT CHANGE ONLY):
+Current logic is correct, only change label to ONE of:
+- "Request a Diving Experience"
+OR
+- "Request a Custom Dive Plan"
+
+DO NOT change routing or backend logic.
+
+CTA behavior:
+- Opens traveler request
+- Pre-fills diver ID & expert type
+- Same behavior as Guides
+
+========================
+3) PROFILE CONTENT SECTIONS
+========================
+
+About section:
+- Show full bio/about text
+- Use structured bio if exists
+- Else fallback to old text bio
+
+Certifications:
+- Show structured dropdown data
+- Else fallback to old text
+- Never show empty section
+
+Languages:
+- Show structured dropdown data
+- Else fallback to old text
+- Never show empty section
+
+Specialties:
+- Show ALL specialties on profile page
+- Order: common → advanced
+
+========================
+4) CONTACT & SOCIAL (KEEP)
+========================
+
+KEEP exactly as implemented:
+- WhatsApp button
+- Email
+- Phone
+- Social links (Instagram, Facebook, Website)
+
+Do NOT remove or hide.
+Do NOT convert to dropdowns.
+
+========================
+5) TRIPS BY THIS EXPERT
+========================
+
+KEEP section exactly as is.
+- Do NOT move it
+- Do NOT hide it
+- Do NOT change CTA or text
+
+========================
+6) IMPORTANT RULES
+========================
+
+- Do NOT show prices publicly (hourly/daily)
+- Do NOT add booking calendar
+- Do NOT remove old DB fields
+- Use fallback logic everywhere
+- No layout or color changes
+
+This must remain consistent with Guides behavior.

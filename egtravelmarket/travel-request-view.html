@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>View My Travel Request & Expert Offers | EgTravelMarket</title>
+  <meta name="description" content="View your travel request, track incoming offers from verified experts (guides, divers, mentors, agencies), and accept or reject bids. Access your request history and manage all details securely.">
+  <meta name="keywords" content="view travel request, travel offers, expert bids, accept offer, reject offer, track booking, request status, Egypt travel marketplace, custom trip quotes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/header.css" />
+  <style>
+    .page-wrap { max-width: 900px; margin: 2rem auto; padding: 1.5rem; padding-top: 8rem; background: var(--card); border-radius: 1rem; box-shadow: var(--shadow); }
+    .page-wrap h1 { margin-bottom: 0.5rem; color: var(--accent); }
+    .page-wrap h2 { color: var(--text); margin-top: 1.5rem; }
+    .page-wrap p { color: var(--muted); margin-bottom: 1rem; }
+    .lookup-form { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 1rem; margin-top: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.25rem; }
+    label { font-weight: 600; font-size: 0.9rem; color: var(--text); }
+    input { padding: 0.55rem 0.7rem; border-radius: 0.6rem; border: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; background: var(--bg-soft); color: var(--text); }
+    input:focus { outline: none; border-color: var(--brand); background: var(--bg); }
+    .btn-primary { background: var(--brand); color: #fff; border: none; border-radius: 999px; padding: 0.6rem 1.4rem; font-size: 0.9rem; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s; }
+    .btn-primary:hover { background: var(--accent); color: #000; }
+    .small-note { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
+    .error-box { margin-top: 1rem; padding: 0.9rem 1rem; border-radius: 0.75rem; background: rgba(255, 77, 79, 0.1); border: 1px solid #ff4d4f; font-size: 0.9rem; display: none; color: var(--text); }
+
+    .confidence-header { 
+      background: linear-gradient(135deg, rgba(82,196,26,0.15) 0%, rgba(46,166,255,0.15) 100%);
+      border: 1px solid rgba(82,196,26,0.3);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .confidence-header h2 { 
+      margin: 0 0 0.5rem 0;
+      color: #52c41a;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .confidence-header p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+
+    .request-summary-card {
+      background: var(--bg-soft);
+      border-radius: 1rem;
+      padding: 1.25rem;
+      margin-top: 1rem;
+      border-left: 4px solid var(--brand);
+    }
+    .summary-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .summary-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .summary-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .summary-value {
+      font-size: 0.95rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .summary-details {
+      background: rgba(255,255,255,0.03);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-top: 1rem;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .summary-details-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--brand);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .summary-details-text {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .status-badge { display: inline-block; padding: 0.3rem 0.75rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; }
+    .status-open { background: rgba(82,196,26,0.2); color: #52c41a; }
+    .status-closed { background: rgba(140,140,140,0.2); color: #8c8c8c; }
+    .status-cancelled { background: rgba(255,77,79,0.2); color: #ff4d4f; }
+    
+    .status-controls { margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .btn-secondary { background: var(--bg-soft); color: var(--text); border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; padding: 0.5rem 1.2rem; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
+    .btn-secondary:hover { background: var(--bg); }
+    .btn-danger { background: rgba(255,77,79,0.2); color: #ff4d4f; border: 1px solid #ff4d4f; }
+    .btn-danger:hover { background: rgba(255,77,79,0.3); }
+
+    .offers-section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .offers-section-header h2 {
+      margin: 0;
+      color: var(--text);
+    }
+    .offers-count-badge {
+      background: var(--brand);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+    }
+    .traveler-guidance {
+      background: rgba(46, 166, 255, 0.08);
+      border-left: 3px solid #2ea6ff;
+      padding: 0.85rem 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .traveler-guidance strong { color: #2ea6ff; }
+
+    .offer-card {
+      background: var(--bg-soft);
+      border-radius: 1rem;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      border: 2px solid rgba(255,255,255,0.08);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .offer-card:hover {
+      border-color: rgba(46,166,255,0.3);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .offer-card.accepted {
+      border: 2px solid #52c41a;
+      background: rgba(82,196,26,0.08);
+    }
+    .offer-card.rejected {
+      opacity: 0.5;
+      border-color: rgba(255,77,79,0.3);
+      pointer-events: none;
+    }
+    .offer-card.not-selected {
+      opacity: 0.55;
+      border-color: rgba(140,140,140,0.3);
+      pointer-events: none;
+    }
+
+    .offer-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .provider-info {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      flex: 1;
+    }
+    .provider-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--accent) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: #fff;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .provider-details {
+      flex: 1;
+    }
+    .provider-details h4 {
+      margin: 0 0 0.4rem 0;
+      font-size: 1.1rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .provider-badges {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+    .provider-type-badge {
+      display: inline-block;
+      background: rgba(46,166,255,0.15);
+      color: #2ea6ff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      background: rgba(82,196,26,0.15);
+      color: #52c41a;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+    }
+    .btn-view-profile {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(46,166,255,0.1);
+      color: var(--brand);
+      border: 1px solid var(--brand);
+      border-radius: 6px;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-view-profile:hover {
+      background: var(--brand);
+      color: #fff;
+    }
+    .provider-name-link {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .provider-name-link:hover {
+      color: var(--brand);
+      text-decoration: underline;
+    }
+    .provider-avatar-link {
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .provider-avatar-link:hover .provider-avatar {
+      border-color: var(--brand);
+      transform: scale(1.05);
+    }
+    .offer-price-box {
+      text-align: right;
+      background: rgba(255,193,7,0.08);
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      min-width: 120px;
+    }
+    .offer-price-amount {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.2;
+    }
+    .offer-price-currency {
+      font-size: 1rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .offer-price-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 0.2rem;
+    }
+
+    .offer-message {
+      background: rgba(255,255,255,0.03);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-left: 3px solid var(--brand);
+    }
+    .offer-message-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--brand);
+      margin-bottom: 0.5rem;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .offer-message-text {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .offer-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .offer-status {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .offer-status-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .offer-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-accept {
+      background: #52c41a;
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 0.65rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-accept:hover {
+      background: #73d13d;
+      transform: translateY(-1px);
+    }
+    .btn-reject {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px;
+      padding: 0.65rem 1.5rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-reject:hover {
+      background: rgba(255,77,79,0.1);
+      color: #ff4d4f;
+      border-color: #ff4d4f;
+    }
+
+    .accepted-next-steps {
+      background: rgba(82,196,26,0.1);
+      border: 1px solid rgba(82,196,26,0.3);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .accepted-next-steps p {
+      margin: 0 0 0.75rem 0;
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+    .btn-payment {
+      background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      opacity: 0.6;
+    }
+    .btn-payment:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(82,196,26,0.3);
+    }
+    .btn-payment.disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .no-offers-card {
+      background: var(--bg-soft);
+      border-radius: 1rem;
+      padding: 2rem;
+      text-align: center;
+      border: 2px dashed rgba(255,255,255,0.1);
+    }
+    .no-offers-card h3 {
+      margin: 0 0 0.5rem 0;
+      color: var(--text);
+    }
+    .no-offers-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .acceptance-confirmed {
+      background: linear-gradient(135deg, rgba(82,196,26,0.12) 0%, rgba(46,166,255,0.08) 100%);
+      border: 1px solid rgba(82,196,26,0.3);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .acceptance-confirmed h3 {
+      margin: 0 0 0.75rem 0;
+      color: #52c41a;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .acceptance-confirmed p {
+      margin: 0 0 1rem 0;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+    .acceptance-confirmed .next-step-note {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+    .acceptance-confirmed .payment-info {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin: 0.5rem 0;
+      background: rgba(255,255,255,0.05);
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      display: inline-block;
+    }
+    .acceptance-steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin: 1rem 0;
+      padding: 0.75rem;
+      background: rgba(255,255,255,0.03);
+      border-radius: 0.75rem;
+    }
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+    .step-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #52c41a;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .more-offers-notice {
+      background: rgba(255,193,7,0.08);
+      border: 1px solid rgba(255,193,7,0.3);
+      border-radius: 0.75rem;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+    .offer-card.official-offer {
+      border: 2px solid var(--brand);
+      background: linear-gradient(135deg, rgba(46,166,255,0.08) 0%, rgba(82,196,26,0.05) 100%);
+    }
+    .official-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: linear-gradient(135deg, var(--brand) 0%, #52c41a 100%);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .official-subtitle {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+    .profile-reassurance {
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: rgba(46,166,255,0.08);
+      padding: 0.4rem 0.6rem;
+      border-radius: 0.5rem;
+      display: inline-block;
+      margin-top: 0.25rem;
+    }
+
+    .safety-footer {
+      margin-top: 2rem;
+      padding: 1.25rem;
+      background: rgba(46, 166, 255, 0.05);
+      border-radius: 1rem;
+      border: 1px solid rgba(46,166,255,0.15);
+      text-align: center;
+    }
+    .safety-footer-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .safety-footer h4 {
+      margin: 0 0 0.5rem 0;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+    .safety-footer p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    .safety-footer a {
+      color: var(--brand);
+      text-decoration: none;
+    }
+    .safety-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .history-section { margin-top: 2rem; }
+    .request-card { background: var(--bg-soft); padding: 1rem; border-radius: 0.75rem; margin-bottom: 1rem; border-left: 4px solid var(--brand); }
+
+    @media (max-width: 768px) {
+      .page-wrap { margin: 1rem auto; padding: 1rem; }
+      .page-wrap h1 { font-size: 1.4rem; }
+      .page-wrap h2 { font-size: 1.1rem; }
+      .lookup-form { grid-template-columns: 1fr; gap: 0.75rem; }
+      label { font-size: 0.85rem; }
+      input { padding: 0.65rem 0.8rem; font-size: 16px; min-height: 44px; }
+      .btn-primary { padding: 0.75rem 1.5rem; min-height: 44px; font-size: 1rem; width: 100%; margin-top: 0.5rem; }
+      .confidence-header { padding: 1rem; }
+      .confidence-header h2 { font-size: 1.2rem; }
+      .summary-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+      .offer-card-header { flex-direction: column; gap: 0.75rem; }
+      .offer-price-box { text-align: left; width: 100%; }
+      .offer-card-footer { flex-direction: column; align-items: stretch; }
+      .offer-actions { justify-content: stretch; }
+      .btn-accept, .btn-reject { flex: 1; text-align: center; min-height: 44px; }
+      .status-controls { gap: 0.5rem; }
+      .btn-secondary, .btn-danger { padding: 0.65rem 1rem; font-size: 0.85rem; min-height: 44px; flex: 1; }
+    }
+
+    @media (max-width: 480px) {
+      .page-wrap { margin: 0.5rem auto; padding: 0.75rem; }
+      .page-wrap h1 { font-size: 1.2rem; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .provider-info { flex-direction: column; align-items: flex-start; }
+      .status-controls { flex-direction: column; gap: 0.5rem; }
+      .btn-secondary, .btn-danger { width: 100%; padding: 0.65rem 1rem; font-size: 0.85rem; }
+    }
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9Z2B97VS02"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9Z2B97VS02');
+  </script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="page-wrap">
+    <h1>View My Travel Request & Expert Offers</h1>
+    <p>Enter the <strong>Request Code</strong> and <strong>PIN</strong> that we sent to your email <strong>from info@egtravelmarket.com</strong>.</p>
+    
+    <div style="background: rgba(46, 166, 255, 0.08); border-left: 4px solid #2ea6ff; padding: 1rem; border-radius: 0.75rem; margin-bottom: 1.5rem; font-size: 0.95rem; color: var(--text);">
+      <strong style="color: #2ea6ff;">📋 Track Your Travel Offers</strong><br>
+      View all travel offers received for your request. Compare offers from verified local providers, review their profiles, and select the best option for your trip.
+    </div>
+
+    <form id="lookupForm" class="lookup-form">
+      <div class="form-group">
+        <label for="code">Request Code</label>
+        <input id="code" name="code" required />
+      </div>
+      <div class="form-group">
+        <label for="pin">PIN</label>
+        <input id="pin" name="pin" required />
+      </div>
+      <div class="form-group" style="align-self:end;">
+        <button type="submit" class="btn-primary">Show My Request</button>
+        <p class="small-note">For your protection, we never include clickable links in our emails. Always type www.egtravelmarket.com manually in your browser.</p>
+      </div>
+    </form>
+
+    <div id="errorBox" class="error-box"></div>
+
+    <div id="confidenceHeader" class="confidence-header" style="display:none;">
+      <h2>🎉 Your Travel Request Is Live</h2>
+      <p>Local providers are reviewing your request and preparing personalized offers for you.</p>
+    </div>
+
+    <div id="requestSummary" class="request-summary-card" style="display:none;"></div>
+
+    <div id="statusControls" class="status-controls" style="display:none;">
+      <button id="btnCloseRequest" class="btn-secondary">✓ Close Request (Got what I needed)</button>
+      <button id="btnCancelRequest" class="btn-secondary btn-danger">✗ Cancel Request</button>
+    </div>
+
+    <div id="acceptanceConfirmed" class="acceptance-confirmed" style="display:none;">
+      <h3 id="acceptanceTitle">✅ Offer Accepted Successfully!</h3>
+      <p id="acceptanceMessage">You have accepted an offer. Proceed to payment to confirm your booking.</p>
+      
+      <div id="acceptanceSteps" class="acceptance-steps">
+        <div class="step-item"><span class="step-icon">1</span> <span class="step-text">Offer locked - no changes can be made</span></div>
+        <div class="step-item"><span class="step-icon">2</span> <span class="step-text">Provider notified of your acceptance</span></div>
+        <div class="step-item"><span class="step-icon">3</span> <span class="step-text">Complete payment to confirm booking</span></div>
+        <div class="step-item"><span class="step-icon">4</span> <span class="step-text">EgTravelMarket manages the entire transaction</span></div>
+      </div>
+      
+      <div id="paymentSection">
+        <button id="paymentBtn" class="btn-payment" style="display:none;" onclick="initiatePayment()">💳 Proceed to Payment</button>
+        <div id="paymentPaidBadge" style="display:none; background: rgba(82,196,26,0.15); border: 2px solid #52c41a; color: #52c41a; padding: 1rem 2rem; border-radius: 12px; font-size: 1.1rem; font-weight: 600; text-align: center; margin: 1rem 0;">
+          ✓ Payment Complete - Your booking is confirmed!
+        </div>
+        <p id="paymentNote" class="payment-info" style="display:none;">Payment is processed securely by EgTravelMarket. The provider is paid after confirmation. You are fully protected.</p>
+      </div>
+      <p id="expertNote" class="next-step-note" style="display:none;">The provider has been notified and will contact you shortly through EgTravelMarket.</p>
+    </div>
+
+    <div id="offersSection" style="display:none;">
+      <div class="offers-section-header">
+        <h2>Offers from Local Providers</h2>
+        <span id="offersCountBadge" class="offers-count-badge">0</span>
+      </div>
+      <div class="traveler-guidance">
+        <strong>💡 How to choose the best offer:</strong><br>
+        Compare offers from verified local providers. Click <strong>"View Profile"</strong> to learn about each provider's experience and reviews. Read their messages carefully, check pricing, then click <strong>"Accept Offer"</strong> on the best option for your trip.
+      </div>
+      <div id="moreOffersNotice" class="more-offers-notice" style="display:none;">
+        📩 Other providers may continue sending offers until the request closes. You will be notified by email.
+      </div>
+      <div id="offersContainer"></div>
+    </div>
+
+    <div id="historySection" class="history-section" style="display:none;">
+      <h2>Your Request History</h2>
+      <p class="small-note">All requests associated with this Code & PIN</p>
+      <div id="historyContainer"></div>
+    </div>
+
+    <div id="safetyFooter" class="safety-footer" style="display:none;">
+      <div class="safety-footer-icon">🔒</div>
+      <h4>Protected by EgTravelMarket</h4>
+      <p>All payments and communications are secured by EgTravelMarket.<br>
+      Never share personal contact details or pay outside the platform.<br><br>
+      Need help? Contact us at <a href="mailto:info@egtravelmarket.com">info@egtravelmarket.com</a></p>
+    </div>
+  </main>
+
+  <script>
+    fetch('/header.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('header-placeholder').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = '/header.js';
+        document.body.appendChild(script);
+      });
+
+    const lookupForm = document.getElementById('lookupForm');
+    const errorBox = document.getElementById('errorBox');
+    const confidenceHeader = document.getElementById('confidenceHeader');
+    const requestSummary = document.getElementById('requestSummary');
+    const statusControls = document.getElementById('statusControls');
+    const acceptanceConfirmed = document.getElementById('acceptanceConfirmed');
+    const offersSection = document.getElementById('offersSection');
+    const offersContainer = document.getElementById('offersContainer');
+    const offersCountBadge = document.getElementById('offersCountBadge');
+    const historySection = document.getElementById('historySection');
+    const historyContainer = document.getElementById('historyContainer');
+    const safetyFooter = document.getElementById('safetyFooter');
+
+    let currentCode, currentPin, currentRequestId;
+    let acceptedOffer = null;
+
+    // Check URL for payment status
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get('payment');
+    const codeFromUrl = urlParams.get('code');
+    let paymentAlertShown = false;
+    
+    // Auto-fill code from URL if present
+    if (codeFromUrl) {
+      document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('code').value = codeFromUrl;
+      });
+    }
+    
+    function showPaymentAlert() {
+      if (paymentAlertShown) return;
+      paymentAlertShown = true;
+      
+      if (paymentStatus === 'success') {
+        setTimeout(() => {
+          alert('🎉 Payment successful! Your booking is now confirmed. You will receive a confirmation email shortly.');
+          // Clean URL
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }, 500);
+      } else if (paymentStatus === 'cancelled') {
+        setTimeout(() => {
+          alert('Payment was cancelled. You can try again when ready.');
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }, 500);
+      }
+    }
+
+    async function initiatePayment() {
+      if (!acceptedOffer || !currentCode || !currentPin) {
+        alert('Error: No accepted offer found. Please refresh the page.');
+        return;
+      }
+
+      const paymentBtn = document.getElementById('paymentBtn');
+      const originalText = paymentBtn.textContent;
+      paymentBtn.textContent = '⏳ Creating payment session...';
+      paymentBtn.disabled = true;
+
+      try {
+        const res = await fetch(`/api/agency-traveler-request/${acceptedOffer.id}/pay`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            code: currentCode,
+            pin: currentPin,
+            successUrl: window.location.origin + `/travel-request-view.html?payment=success&code=${currentCode}`,
+            cancelUrl: window.location.origin + `/travel-request-view.html?payment=cancelled&code=${currentCode}`
+          })
+        });
+
+        const data = await res.json();
+        
+        if (!data.success) {
+          throw new Error(data.message || 'Failed to create payment session');
+        }
+
+        // Payment is being processed
+        if (data.processing) {
+          alert('Your payment is being processed. Please refresh the page in a few seconds to see the updated status.');
+          paymentBtn.textContent = originalText;
+          paymentBtn.disabled = false;
+          return;
+        }
+
+        // Redirect to Stripe checkout
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error('No payment URL received');
+        }
+
+      } catch (err) {
+        console.error('Payment error:', err);
+        alert('Error: ' + (err.message || 'Failed to start payment. Please try again.'));
+        paymentBtn.textContent = originalText;
+        paymentBtn.disabled = false;
+      }
+    }
+
+    async function checkPaymentStatus(offerId) {
+      try {
+        const res = await fetch(`/api/agency-traveler-request/offer/${offerId}/payment-status?code=${encodeURIComponent(currentCode)}&pin=${encodeURIComponent(currentPin)}`);
+        const data = await res.json();
+        
+        if (data.success && data.hasOrder && data.paymentStatus === 'paid') {
+          return { isPaid: true, paidAt: data.paidAt };
+        }
+        return { isPaid: false };
+      } catch (err) {
+        console.error('Error checking payment status:', err);
+        return { isPaid: false };
+      }
+    }
+
+    function updatePaymentUI(offer, paymentInfo) {
+      const acceptanceTitle = document.getElementById('acceptanceTitle');
+      const acceptanceMessage = document.getElementById('acceptanceMessage');
+      const paymentBtn = document.getElementById('paymentBtn');
+      const paymentPaidBadge = document.getElementById('paymentPaidBadge');
+      const paymentNote = document.getElementById('paymentNote');
+      const expertNote = document.getElementById('expertNote');
+      const acceptanceSteps = document.getElementById('acceptanceSteps');
+      
+      // Payment button visibility: show for ALL provider types when NOT paid
+      // Supported: agency, dive_center, guide, diver, mentor, admin
+      const payableProviderTypes = ['agency', 'dive_center', 'divecenter', 'guide', 'diver', 'mentor', 'admin'];
+      const isPayableProvider = payableProviderTypes.includes(offer.provider_type);
+      
+      if (paymentInfo.isPaid) {
+        // Payment completed
+        acceptanceTitle.textContent = '🎉 Booking Confirmed!';
+        acceptanceMessage.textContent = 'Your payment has been processed and your booking is confirmed.';
+        acceptanceSteps.style.display = 'none';
+        paymentBtn.style.display = 'none';
+        paymentPaidBadge.style.display = 'block';
+        paymentNote.style.display = 'none';
+        expertNote.textContent = 'The provider has been notified and will contact you with trip details.';
+        expertNote.style.display = 'block';
+      } else if (isPayableProvider) {
+        // All provider types - show payment button
+        acceptanceSteps.style.display = 'flex';
+        paymentBtn.style.display = 'block';
+        paymentPaidBadge.style.display = 'none';
+        paymentNote.style.display = 'block';
+        expertNote.style.display = 'none';
+      } else {
+        // Unknown provider type - hide payment, show contact info
+        acceptanceSteps.style.display = 'flex';
+        paymentBtn.style.display = 'none';
+        paymentPaidBadge.style.display = 'none';
+        paymentNote.style.display = 'none';
+        expertNote.style.display = 'block';
+      }
+    }
+
+    function escapeHtml(unsafe) {
+      if (!unsafe) return '';
+      const div = document.createElement('div');
+      div.textContent = unsafe;
+      return div.innerHTML;
+    }
+
+    function getStatusBadge(status) {
+      const statusClass = status === 'open' ? 'status-open' : status === 'closed' ? 'status-closed' : 'status-cancelled';
+      const statusLabel = status.charAt(0).toUpperCase() + status.slice(1);
+      return `<span class="status-badge ${statusClass}">${escapeHtml(statusLabel)}</span>`;
+    }
+
+    function getProviderTypeLabel(type) {
+      const labels = {
+        'guide': 'Tour Guide',
+        'diver': 'Diving Instructor',
+        'mentor': 'Travel Mentor',
+        'agency': 'Travel Agency',
+        'divecenter': 'Dive Center',
+        'dive_center': 'Dive Center',
+        'local_agency': 'Travel Agency',
+        'expert': 'Local Expert',
+        'admin': 'EgTravelMarket Team'
+      };
+      return labels[type] || 'Local Provider';
+    }
+
+    function getProviderInitial(name) {
+      if (!name) return '?';
+      return name.charAt(0).toUpperCase();
+    }
+
+    window.updateBidStatus = async function(bidId, newStatus) {
+      let confirmMessage;
+      if (newStatus === 'accepted') {
+        confirmMessage = '✅ ACCEPT THIS OFFER?\n\nBy accepting, you agree to proceed with this provider.\n\n• They will be notified immediately\n• You will proceed to payment\n• Other offers will be marked as "Not Selected"\n\nDo you want to accept this offer?';
+      } else {
+        confirmMessage = '❌ REJECT THIS OFFER?\n\nThis offer will be marked as rejected and the provider will be notified.\n\nThis action cannot be undone.\n\nDo you want to reject this offer?';
+      }
+      
+      if (!confirm(confirmMessage)) return;
+
+      try {
+        const res = await fetch(`/api/travel-requests/bids/${bidId}/status`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code: currentCode, pin: currentPin, status: newStatus })
+        });
+
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message || 'Error');
+
+        if (newStatus === 'accepted') {
+          alert('🎉 Offer accepted successfully!\n\nYou can now proceed to payment. The provider has been notified.');
+        } else {
+          alert('Offer rejected. The provider has been notified.');
+        }
+        lookupForm.dispatchEvent(new Event('submit'));
+      } catch (err) {
+        console.error(err);
+        alert('Error updating offer status. Please try again.');
+      }
+    };
+
+    async function updateStatus(newStatus) {
+      const actionWord = newStatus === 'closed' ? 'close' : 'cancel';
+      if (!confirm(`Are you sure you want to ${actionWord} this request? This action cannot be undone.`)) return;
+
+      try {
+        const res = await fetch(`/api/travel-requests/${currentRequestId}/status`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code: currentCode, pin: currentPin, status: newStatus })
+        });
+
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message || 'Error');
+
+        alert('Request status updated successfully!');
+        lookupForm.dispatchEvent(new Event('submit'));
+      } catch (err) {
+        console.error(err);
+        alert('Error updating status. Please try again.');
+      }
+    }
+
+    document.getElementById('btnCloseRequest').addEventListener('click', () => updateStatus('closed'));
+    document.getElementById('btnCancelRequest').addEventListener('click', () => updateStatus('cancelled'));
+
+    async function loadHistory() {
+      try {
+        const res = await fetch('/api/travel-requests/history', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code: currentCode, pin: currentPin })
+        });
+
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!data.success || !data.requests || data.requests.length < 1) return;
+
+        const allRequests = data.requests;
+        
+        if (allRequests.length > 1) {
+          historyContainer.innerHTML = '<p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem;">You have ' + allRequests.length + ' total requests with this Code & PIN:</p>';
+          allRequests.forEach((r, index) => {
+            const card = document.createElement('div');
+            card.className = 'request-card';
+            const isCurrent = r.id === currentRequestId;
+            card.innerHTML = `
+              ${isCurrent ? '<strong style="color: var(--brand);">[Current Request]</strong><br>' : ''}
+              <strong>${escapeHtml(r.title)}</strong> ${getStatusBadge(r.status)}<br>
+              <small>Date: ${escapeHtml(r.travel_date || '-')} | Location: ${escapeHtml(r.location || '-')} | ${r.bids ? r.bids.length : 0} offers received</small>
+            `;
+            historyContainer.appendChild(card);
+          });
+          historySection.style.display = 'block';
+        }
+      } catch (err) {
+        console.error('Error loading history:', err);
+      }
+    }
+
+    lookupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.style.display = 'none';
+      confidenceHeader.style.display = 'none';
+      requestSummary.style.display = 'none';
+      statusControls.style.display = 'none';
+      acceptanceConfirmed.style.display = 'none';
+      offersSection.style.display = 'none';
+      historySection.style.display = 'none';
+      safetyFooter.style.display = 'none';
+      document.getElementById('moreOffersNotice').style.display = 'none';
+      offersContainer.innerHTML = '';
+
+      currentCode = lookupForm.code.value.trim();
+      currentPin = lookupForm.pin.value.trim();
+
+      const payload = {
+        code: currentCode,
+        pin: currentPin
+      };
+
+      try {
+        const res = await fetch('/api/travel-requests/view', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({}));
+          throw new Error(errorData.message || 'Server error');
+        }
+
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message || 'Not found');
+
+        const r = data.request;
+        currentRequestId = r.id;
+
+        confidenceHeader.style.display = 'block';
+        
+        const detailsEscaped = escapeHtml(r.details || '').replace(/\n/g,'<br>');
+        requestSummary.innerHTML = `
+          <div class="summary-title">
+            ${escapeHtml(r.title)}
+            ${getStatusBadge(r.status)}
+          </div>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <span class="summary-label">Destination</span>
+              <span class="summary-value">${escapeHtml(r.location) || 'Not specified'}</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Travel Date</span>
+              <span class="summary-value">${escapeHtml(r.travel_date) || 'Flexible'}</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Travelers</span>
+              <span class="summary-value">${escapeHtml(r.travelers) || 'Not specified'}</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Request Type</span>
+              <span class="summary-value">${escapeHtml(r.category) || 'General'}</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Budget</span>
+              <span class="summary-value">${escapeHtml(r.budget) || 'Not specified'}</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Language</span>
+              <span class="summary-value">${escapeHtml(r.language) || 'English'}</span>
+            </div>
+          </div>
+          ${r.details ? `
+          <div class="summary-details">
+            <span class="summary-details-label">Your Request Details</span>
+            <div class="summary-details-text">${detailsEscaped}</div>
+          </div>
+          ` : ''}
+        `;
+        requestSummary.style.display = 'block';
+
+        if (r.status === 'open') {
+          statusControls.style.display = 'flex';
+        }
+
+        const acceptedBid = data.bids && data.bids.find(b => b.status === 'accepted');
+        const hasAcceptedOffer = !!acceptedBid;
+        
+        if (hasAcceptedOffer) {
+          acceptedOffer = acceptedBid;
+          acceptanceConfirmed.style.display = 'block';
+          
+          // Check payment status and update UI
+          const paymentInfo = await checkPaymentStatus(acceptedBid.id);
+          updatePaymentUI(acceptedBid, paymentInfo);
+          
+          // Show payment alert if returning from Stripe
+          if (paymentStatus && paymentInfo.isPaid) {
+            showPaymentAlert();
+          }
+        } else {
+          acceptedOffer = null;
+        }
+        
+        if (r.status === 'open' && !hasAcceptedOffer) {
+          document.getElementById('moreOffersNotice').style.display = 'block';
+        }
+
+        const totalOffers = data.bids ? data.bids.length : 0;
+        offersCountBadge.textContent = totalOffers;
+
+        if (!data.bids || data.bids.length === 0) {
+          offersContainer.innerHTML = `
+            <div class="no-offers-card">
+              <h3>⏳ No Offers Yet</h3>
+              <p>Our team and local providers are still reviewing your request and preparing personalized offers. Please check back later!</p>
+            </div>
+          `;
+        } else {
+          data.bids.forEach(b => {
+            const card = document.createElement('div');
+            const cardClasses = ['offer-card'];
+            
+            // Determine if this is an admin/EgTravelMarket offer
+            // Only provider_type === 'admin' means EgTravelMarket (NOT based on provider_id being null)
+            const isAdmin = b.provider_type === 'admin';
+            
+            if (isAdmin) {
+              cardClasses.push('official-offer');
+            }
+            
+            if (b.status === 'accepted') {
+              cardClasses.push('accepted');
+            } else if (b.status === 'rejected') {
+              cardClasses.push('rejected');
+            } else if (hasAcceptedOffer && b.status === 'pending') {
+              cardClasses.push('not-selected');
+            }
+            card.className = cardClasses.join(' ');
+
+            const messageEscaped = escapeHtml(b.message || '').replace(/\n/g,'<br>');
+            
+            function getProfilePath(providerType) {
+              const pathMap = {
+                'guide': 'guide',
+                'diver': 'diver',
+                'mentor': 'mentor',
+                'agency': 'agency',
+                'divecenter': 'dive-center',
+                'dive_center': 'dive-center'
+              };
+              return pathMap[providerType] || providerType;
+            }
+            
+            const profileUrl = !isAdmin && b.provider_slug ? `/${getProfilePath(b.provider_type)}/${escapeHtml(b.provider_slug)}` : null;
+            
+            // Determine if profile should be visible/active based on offer status
+            const isRejectedOrNotSelected = b.status === 'rejected' || (hasAcceptedOffer && b.status === 'pending');
+            
+            let viewProfileBtn;
+            if (profileUrl) {
+              if (isRejectedOrNotSelected) {
+                // Grey out profile button for rejected/not-selected offers
+                viewProfileBtn = `<span class="btn-view-profile disabled" style="opacity: 0.5; cursor: not-allowed; pointer-events: none;">👤 View Profile</span>`;
+              } else {
+                // Active profile button for pending (before acceptance) and accepted offers
+                viewProfileBtn = `<a href="${profileUrl}" target="_blank" rel="noopener" class="btn-view-profile">👤 View Profile</a>`;
+              }
+            } else if (isAdmin) {
+              viewProfileBtn = '<span class="official-subtitle">Managed directly by EgTravelMarket Team</span>';
+            } else {
+              viewProfileBtn = '<div class="profile-reassurance">This offer is managed through EgTravelMarket. All payments and communication are fully protected.</div>';
+            }
+
+            let bidStatusBadge;
+            let statusNote = '';
+            let actionButtons = '';
+            
+            if (b.status === 'accepted') {
+              bidStatusBadge = '<span class="status-badge" style="background: rgba(82,196,26,0.2); color: #52c41a; font-size: 0.85rem;">✅ Accepted</span>';
+              statusNote = 'You accepted this offer';
+            } else if (b.status === 'rejected') {
+              bidStatusBadge = '<span class="status-badge" style="background: rgba(255,77,79,0.2); color: #ff4d4f;">❌ Rejected</span>';
+              statusNote = 'You rejected this offer';
+            } else if (hasAcceptedOffer) {
+              bidStatusBadge = '<span class="status-badge" style="background: rgba(140,140,140,0.2); color: #8c8c8c;">Not Selected</span>';
+              statusNote = 'Another offer was accepted';
+            } else {
+              bidStatusBadge = '<span class="status-badge" style="background: rgba(255,193,7,0.2); color: #ffc107;">⏳ Awaiting Your Decision</span>';
+              statusNote = 'Review this offer and decide';
+              actionButtons = `
+                <button class="btn-accept" onclick="updateBidStatus(${b.id}, 'accepted')">✓ Accept Offer</button>
+                <button class="btn-reject" onclick="updateBidStatus(${b.id}, 'rejected')">✗ Reject</button>
+              `;
+            }
+
+            const providerBadge = isAdmin 
+              ? '<span class="official-badge">⭐ Official EgTravelMarket Offer</span>'
+              : `<span class="provider-type-badge">${getProviderTypeLabel(b.provider_type)}</span>${b.is_verified ? '<span class="verified-badge">✓ Verified</span>' : ''}`;
+
+            // Provider name and avatar links - disable for rejected/not-selected offers
+            let providerNameHtml;
+            let providerAvatarHtml;
+            
+            if (profileUrl && !isRejectedOrNotSelected) {
+              // Active links for pending (before acceptance) and accepted offers
+              providerNameHtml = `<a href="${profileUrl}" target="_blank" rel="noopener" class="provider-name-link">${escapeHtml(b.provider_name)}</a>`;
+              providerAvatarHtml = `<a href="${profileUrl}" target="_blank" rel="noopener" class="provider-avatar-link"><div class="provider-avatar">${getProviderInitial(b.provider_name)}</div></a>`;
+            } else {
+              // Non-clickable for admin, rejected, or not-selected offers
+              providerNameHtml = `<span>${escapeHtml(b.provider_name)}</span>`;
+              providerAvatarHtml = `<div class="provider-avatar">${getProviderInitial(b.provider_name)}</div>`;
+            }
+
+            card.innerHTML = `
+              <div class="offer-card-header">
+                <div class="provider-info">
+                  ${providerAvatarHtml}
+                  <div class="provider-details">
+                    <h4>${providerNameHtml}</h4>
+                    <div class="provider-badges">
+                      ${providerBadge}
+                    </div>
+                    ${viewProfileBtn}
+                  </div>
+                </div>
+                <div class="offer-price-box">
+                  ${b.price ? `
+                    <div class="offer-price-amount">${escapeHtml(String(b.price))} <span class="offer-price-currency">${escapeHtml(b.currency || 'USD')}</span></div>
+                    <div class="offer-price-label">Total Price</div>
+                  ` : '<div class="offer-price-label">Price on request</div>'}
+                </div>
+              </div>
+              <div class="offer-message">
+                <span class="offer-message-label">Provider's Message</span>
+                <div class="offer-message-text">${messageEscaped || 'No additional details provided.'}</div>
+              </div>
+              <div class="offer-card-footer">
+                <div class="offer-status">
+                  ${bidStatusBadge}
+                  <span class="offer-status-note">${statusNote}</span>
+                </div>
+                <div class="offer-actions">${actionButtons}</div>
+              </div>
+            `;
+            offersContainer.appendChild(card);
+          });
+        }
+        offersSection.style.display = 'block';
+        safetyFooter.style.display = 'block';
+
+        loadHistory();
+
+      } catch (err) {
+        console.error(err);
+        errorBox.textContent = err.message || 'Sorry, we could not find this request. Please check your Code & PIN or contact info@egtravelmarket.com.';
+        errorBox.style.display = 'block';
+      }
+    });
+  </script>
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

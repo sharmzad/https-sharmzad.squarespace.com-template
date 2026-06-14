@@ -1,0 +1,86 @@
+Please review Dive Center signup and align it fully with Agency signup logic.
+This is important to attract INTERNATIONAL dive centers exactly like international travel agencies.
+
+---
+
+1) Dive Center Business Type (CRITICAL FIX)
+
+Current issue:
+- Dropdown options are not readable (text visibility problem)
+- Users cannot clearly see or understand business role
+- Missing international-facing role
+
+REQUIRED ACTIONS:
+
+A) Fix UI / UX
+- Dropdown background must match site dark theme
+- Text color must be white
+- Selected value must be clearly visible inside the field
+- Same readability level as Agency signup business type
+
+B) Update / confirm business type options:
+
+Dive Center Business Type options must include:
+- Local Dive Center
+- Liveaboard Operator
+- Training Center
+- Technical Diving Center
+- Freediving Center
+- International Diving Travel Provider (selling Egypt)
+
+This option is mandatory to attract dive centers from abroad.
+
+---
+
+2) Clarify B2B Capability (TEXT ONLY – NO LOGIC CHANGE)
+
+Add helper text under Business Type or Description:
+“You can work with travelers, travel agencies, and other dive centers.”
+
+This aligns dive centers with agency B2B positioning.
+
+---
+
+3) Confirm Parity With Agency Signup
+
+Ensure the following are treated exactly like Agency signup:
+- Egypt-based OR International selection
+- Years of experience
+- Destinations operated in
+- Products & services
+- Profile reflects all signup fields
+- Edit profile is pre-filled with same data
+
+No licenses, no tax, no bank info required at signup.
+
+---
+
+This change is UX + clarity focused.
+No backend logic change required.
+
+Please add a mandatory confirmation checkbox to the Dive Center signup form,
+identical to the one used in Agency signup.
+
+---
+
+CONFIRMATION CHECKBOX (REQUIRED)
+
+Label text (exact wording):
+
+"I confirm that all listed products and services are related to Egypt tourism and I agree to the platform terms."
+
+---
+
+REQUIREMENTS:
+- Checkbox must be required before submission
+- Same styling and validation behavior as Agency signup
+- Error message if unchecked: "You must confirm this before submitting"
+
+---
+
+PURPOSE:
+- Ensure all dive centers (local & international) are offering Egypt-related services only
+- Legal & scope alignment with EgTravelMarket
+- Consistency with Agency onboarding
+
+No backend logic change needed beyond storing the confirmation flag (boolean).

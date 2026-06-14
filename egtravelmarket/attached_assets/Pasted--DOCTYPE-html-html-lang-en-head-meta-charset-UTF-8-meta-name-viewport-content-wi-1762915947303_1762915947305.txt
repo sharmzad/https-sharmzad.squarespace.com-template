@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EgTravelMarket | Egypt on Screen – Cinema, Authors & Arts</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{background:#fdfaf6;color:#222;line-height:1.7;}
+    a{text-decoration:none;color:#0a3d62;}
+    img{max-width:100%;display:block;}
+
+    /* ===== HERO ===== */
+    .hero{
+      background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+                 url('https://images.unsplash.com/photo-1545239351-1141bd82e8a6') center/cover no-repeat;
+      height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+      text-align:center;color:#fff;padding:0 15px;
+    }
+    .hero h1{font-size:2.8rem;margin-bottom:10px;}
+    .hero p{max-width:700px;color:#ddd;}
+
+    /* ===== ARTICLE ===== */
+    .article{padding:60px 10%;max-width:900px;margin:auto;}
+    .article h2{color:#0a3d62;margin-bottom:20px;}
+    .article p{margin-bottom:20px;font-size:1.05rem;color:#333;}
+
+    /* ===== RELATED TRIPS ===== */
+    .related-trips{background:#fff;padding:50px 10%;text-align:center;}
+    .related-trips h2{color:#0a3d62;margin-bottom:30px;}
+    .trips{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;}
+    .trip-card{background:#f9f9f9;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);overflow:hidden;transition:.3s;}
+    .trip-card:hover{transform:translateY(-5px);}
+    .trip-card img{height:180px;object-fit:cover;width:100%;}
+    .trip-card h3{color:#0a3d62;font-size:1.1rem;margin:15px;}
+    .trip-card a{display:inline-block;background:#0a3d62;color:#fff;margin:0 0 15px;padding:8px 15px;border-radius:6px;transition:.3s;}
+    .trip-card a:hover{background:#062f4e;}
+
+    footer{background:#0a3d62;color:#fff;text-align:center;padding:30px 15px;font-size:.9rem;margin-top:50px;}
+    footer p{margin:5px 0;}
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <h1>Egypt on Screen – Cinema, Authors & Arts</h1>
+    <p>Explore how Egypt’s cinema, literature, and art continue to shape imagination and identity across generations.</p>
+  </section>
+
+  <!-- ===== ARTICLE CONTENT ===== -->
+  <section class="article">
+    <h2>The Soul of Egyptian Storytelling</h2>
+    <p>
+      Egypt’s art has always been more than expression — it’s memory.  
+      From hieroglyphic walls to film reels, Egyptians have told stories that carry both wisdom and emotion.
+      Cairo once earned the title “Hollywood of the East,” and its films still echo with laughter, drama,
+      and dreams that touch millions.
+    </p>
+
+    <p>
+      Icons like Omar Sharif, Faten Hamama, and Youssef Chahine gave Egypt its cinematic golden age,
+      while writers such as Naguib Mahfouz turned Cairo’s streets into pages of philosophy and humanity.
+      Their works remind the world that art here is both local and universal.
+    </p>
+
+    <h2>Art Beyond the Screen</h2>
+    <p>
+      Today’s generation continues the legacy — painters, actors, musicians, and filmmakers exploring
+      new forms while honoring the classics.  
+      One of them is <strong>Akram Moustafa</strong>, whose writing and acting celebrate Egypt’s humor,
+      contradictions, and compassion.  
+      Through stories of ordinary people, he reveals the extraordinary soul of Egyptian life.
+    </p>
+
+    <p>
+      In galleries, cafés, and film festivals, Egypt’s creative pulse never stops.
+      Art here is not reserved for museums — it lives in the rhythm of Cairo’s traffic, in songs from radios,
+      and in every spontaneous smile between strangers.
+    </p>
+
+    <h2>Experience Egyptian Culture with EgTravelMarket</h2>
+    <p>
+      EgTravelMarket invites you to see Egypt not only through ancient monuments but through its living arts.
+      Walk through Zamalek’s galleries, attend an evening at the Cairo Opera House,
+      or explore the history of Egyptian cinema guided by local artists.
+      Every scene, every melody, every painting adds another color to your journey.
+    </p>
+  </section>
+
+  <!-- ===== RELATED TRIPS ===== -->
+  <section class="related-trips">
+    <h2>Related Experiences</h2>
+    <div class="trips">
+      <div class="trip-card">
+        <img src="/assets/trips/opera-house.jpg" alt="Cairo Opera House">
+        <h3>Cairo Opera House Visit</h3>
+        <a href="/trip-opera-house.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/film-tour.jpg" alt="Film & Culture Tour">
+        <h3>Film & Culture Tour – Cairo</h3>
+        <a href="/trip-film-tour.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/art-gallery.jpg" alt="Art Gallery Walk">
+        <h3>Modern Art Gallery Walk</h3>
+        <a href="/trip-art-gallery.html">View Trip</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 EgTravelMarket – All Rights Reserved</p>
+    <p>Backed & Managed by GoMundo Travel</p>
+  </footer>
+
+</body>
+</html>
+
+✅ Step 3 — Upload Images (Optional)
+
+Add to /assets/trips/
+
+opera-house.jpg
+film-tour.jpg
+art-gallery.jpg
+
+✅ Step 4 — Link from Discover Egypt Page
+
+In discover-egypt.html, find
+
+<h3>Cinema, Authors & Arts</h3>
+
+
+and wrap it:
+
+<a href="/cinema-arts.html">
+  <h3>Cinema, Authors & Arts</h3>
+</a>
+
+✅ Step 5 — Run & Preview
+
+Click Run → open /cinema-arts.html
+You’ll see a cinematic article blending history, Akram’s creativity, and travel inspiration.

@@ -1,0 +1,165 @@
+Subject: Homepage – add marketplace explanation sections before Trip of the Week
+
+Message:
+
+Hello,
+Please update the homepage by adding the following HTML sections BEFORE the existing “Trip of the Week” section.
+
+⚠️ Important rules:
+
+Do NOT remove or modify any existing trip/package sections
+
+Do NOT change backend logic
+
+Do NOT change SEO yet
+
+Use existing CSS / Bootstrap styles
+
+Just insert the sections below in order
+
+🔹 SECTION 1 – What is EgTravelMarket?
+<section class="home-section">
+  <div class="container">
+    <h2 class="section-title text-center">What is EgTravelMarket?</h2>
+    <p class="text-center">
+      EgTravelMarket is an Egypt-focused travel marketplace connecting travelers with verified local experts,
+      tour guides, dive professionals, travel agencies, and corporate travel partners.
+      The platform combines official trips, custom travel requests, expert services, tourism jobs,
+      B2B ground handling, and MICE under one trusted system.
+    </p>
+  </div>
+</section>
+
+🔹 SECTION 2 – Traveler Requests
+<section class="home-section bg-light">
+  <div class="container">
+    <h2 class="section-title text-center">Traveler Requests — Let Experts Compete for You</h2>
+    <p class="text-center">
+      Post your travel request without signup and receive tailored offers from verified experts,
+      agencies, and dive centers. Compare proposals and choose the best option —
+      EgTravelMarket secures the entire process.
+    </p>
+
+    <div class="text-center mt-3">
+      <a href="/travel-request.html" class="btn btn-success me-2">
+        Post a Travel Request
+      </a>
+      <a href="/trips.html" class="btn btn-outline-primary">
+        Browse Trips Instead
+      </a>
+    </div>
+  </div>
+</section>
+
+🔹 SECTION 3 – Local Experts Marketplace
+<section class="home-section">
+  <div class="container">
+    <h2 class="section-title text-center">Local Experts Marketplace</h2>
+    <p class="text-center">
+      Connect with professional tour guides, divers, and travel mentors.
+      Travelers get real expertise — experts can create profiles, publish services,
+      bid on requests, apply for jobs, and grow their business.
+    </p>
+
+    <div class="text-center mt-3">
+      <a href="/guides.html" class="btn btn-primary me-2">
+        Browse All Experts
+      </a>
+      <a href="/travel-request.html" class="btn btn-success">
+        Post a Request (Experts Bid)
+      </a>
+    </div>
+  </div>
+</section>
+
+🔹 SECTION 4 – Travel Agencies & Dive Centers
+<section class="home-section bg-light">
+  <div class="container">
+    <h2 class="section-title text-center">Travel Agencies & Dive Centers</h2>
+    <p class="text-center">
+      Discover trusted companies or join as a corporate partner.
+      Agencies and dive centers can receive traveler requests,
+      post jobs, and select the most suitable experts for their operations.
+    </p>
+
+    <div class="text-center mt-3">
+      <a href="/jobs-marketplace.html" class="btn btn-outline-dark me-2">
+        Post / Browse Jobs
+      </a>
+      <a href="/travel-request.html" class="btn btn-success">
+        Traveler Request (Companies Offer)
+      </a>
+    </div>
+  </div>
+</section>
+
+🔹 SECTION 5 – B2B Ground Handling
+<section class="home-section">
+  <div class="container">
+    <h2 class="section-title text-center">B2B Ground Handling & Local Representation in Egypt</h2>
+    <p class="text-center">
+      International tour operators can assign EgTravelMarket as their local partner in Egypt,
+      or use the platform to identify the best agencies, guides, and dive centers —
+      before or during contract agreements.
+    </p>
+
+    <div class="text-center mt-3">
+      <a href="/travel-agencies.html" class="btn btn-primary me-2">
+        View Agencies & DMC
+      </a>
+      <a href="/travel-request.html" class="btn btn-outline-primary">
+        Request Local Handling
+      </a>
+    </div>
+  </div>
+</section>
+
+🔹 SECTION 6 – MICE & Corporate Travel
+<section class="home-section bg-dark text-light">
+  <div class="container">
+    <h2 class="section-title text-center text-light">
+      MICE, Corporate Travel & Team Building
+    </h2>
+    <p class="text-center">
+      EgTravelMarket organizes corporate events, conferences,
+      incentive travel, and team-building programs across Egypt
+      for companies and international partners.
+    </p>
+
+    <div class="text-center mt-3">
+      <a href="/travel-request.html" class="btn btn-success me-2">
+        Request a Corporate Program
+      </a>
+      <a href="/travel-agencies.html" class="btn btn-outline-light">
+        Partner With Us
+      </a>
+    </div>
+  </div>
+</section>
+
+🔹 SECTION 7 – START OF TRIPS (IMPORTANT)
+
+Immediately before the existing “Trip of the Week” section, add:
+
+<section class="home-section">
+  <div class="container">
+    <h2 class="section-title text-center">
+      Official EgTravelMarket Trips & Packages
+    </h2>
+    <p class="text-center">
+      Curated and managed directly by the EgTravelMarket team.
+    </p>
+  </div>
+</section>
+
+✅ END OF UPDATE
+
+After this heading, keep:
+
+Trip of the Week
+
+Packages
+
+Popular tours
+
+All existing trip logic unchanged

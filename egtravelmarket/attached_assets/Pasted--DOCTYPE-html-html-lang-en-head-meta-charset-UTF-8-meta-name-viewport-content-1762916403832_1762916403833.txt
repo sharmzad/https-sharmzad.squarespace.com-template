@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EgTravelMarket | Alexandria: Between the Sea and the Page</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{background:#fdfaf6;color:#222;line-height:1.7;}
+    a{text-decoration:none;color:#0a3d62;}
+    img{max-width:100%;display:block;}
+
+    /* ===== HERO ===== */
+    .hero{
+      background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+                 url('https://images.unsplash.com/photo-1552604660-1a3c79b8d3d5') center/cover no-repeat;
+      height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+      text-align:center;color:#fff;padding:0 15px;
+    }
+    .hero h1{font-size:2.8rem;margin-bottom:10px;}
+    .hero p{max-width:700px;color:#ddd;}
+
+    /* ===== ARTICLE ===== */
+    .article{padding:60px 10%;max-width:900px;margin:auto;}
+    .article h2{color:#0a3d62;margin-bottom:20px;}
+    .article p{margin-bottom:20px;font-size:1.05rem;color:#333;}
+
+    /* ===== RELATED TRIPS ===== */
+    .related-trips{background:#fff;padding:50px 10%;text-align:center;}
+    .related-trips h2{color:#0a3d62;margin-bottom:30px;}
+    .trips{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;}
+    .trip-card{background:#f9f9f9;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);overflow:hidden;transition:.3s;}
+    .trip-card:hover{transform:translateY(-5px);}
+    .trip-card img{height:180px;object-fit:cover;width:100%;}
+    .trip-card h3{color:#0a3d62;font-size:1.1rem;margin:15px;}
+    .trip-card a{display:inline-block;background:#0a3d62;color:#fff;margin:0 0 15px;padding:8px 15px;border-radius:6px;transition:.3s;}
+    .trip-card a:hover{background:#062f4e;}
+
+    footer{background:#0a3d62;color:#fff;text-align:center;padding:30px 15px;font-size:.9rem;margin-top:50px;}
+    footer p{margin:5px 0;}
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <h1>Alexandria: Between the Sea and the Page</h1>
+    <p>Discover Egypt’s cities — where history, sea, and daily life blend into one timeless rhythm.</p>
+  </section>
+
+  <!-- ===== ARTICLE CONTENT ===== -->
+  <section class="article">
+    <h2>The City of Stories</h2>
+    <p>
+      Alexandria, the city of poets and dreamers, has always lived between two worlds — 
+      where the Mediterranean meets the desert, and where the past still whispers through every corner.
+      Founded by Alexander the Great, it became a beacon of knowledge, art, and light for centuries.
+    </p>
+
+    <h2>Where History Meets Coffee</h2>
+    <p>
+      Today, Alexandria’s charm lies not only in its grand library or Greco-Roman ruins,
+      but in its cafés, where old men debate politics and young artists read poetry to the sound of waves.
+      The scent of sea salt mixes with cardamom, and the call to prayer blends with seagulls’ cries.
+    </p>
+
+    <p>
+      Each Egyptian city has its own rhythm: Cairo’s energy, Luxor’s majesty, Aswan’s calm.
+      Yet Alexandria feels like a pause — a place to breathe, to read, and to remember.
+    </p>
+
+    <h2>Living Egypt, Not Just Visiting</h2>
+    <p>
+      EgTravelMarket invites travelers to experience Egypt’s urban soul.
+      Walk through downtown Cairo’s colonial boulevards, ride a felucca through Aswan at sunset,
+      or watch fishermen mend their nets on Alexandria’s Corniche.
+      Each encounter reveals another face of Egyptian life — humble, proud, and endlessly welcoming.
+    </p>
+  </section>
+
+  <!-- ===== RELATED TRIPS ===== -->
+  <section class="related-trips">
+    <h2>Related Experiences</h2>
+    <div class="trips">
+      <div class="trip-card">
+        <img src="/assets/trips/alexandria-day.jpg" alt="Alexandria Day Trip">
+        <h3>Alexandria Day Trip</h3>
+        <a href="/trip-alexandria.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/cairo-life.jpg" alt="Cairo City Life Tour">
+        <h3>Cairo City Life Tour</h3>
+        <a href="/trip-cairo-life.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/aswan-walk.jpg" alt="Aswan Cultural Walk">
+        <h3>Aswan Cultural Walk</h3>
+        <a href="/trip-aswan-walk.html">View Trip</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 EgTravelMarket – All Rights Reserved</p>
+    <p>Backed & Managed by GoMundo Travel</p>
+  </footer>
+
+</body>
+</html>
+✅ Step 3 — Add Optional Images
+Upload to /assets/trips/ folder:
+
+Copy code
+alexandria-day.jpg  
+cairo-life.jpg  
+aswan-walk.jpg  
+✅ Step 4 — Connect from Discover Egypt Page
+In your discover-egypt.html, find:
+
+html
+Copy code
+<h3>Cities, People & Life</h3>
+and wrap it with:
+
+html
+Copy code
+<a href="/cities-life.html">
+  <h3>Cities, People & Life</h3>
+</a>
+✅ Step 5 — Preview
+Click Run, open /cities-life.html,
+and you’ll see Alexandria brought to life — poetic, cultural, cinematic —
+with real trip links to your Egypt city tours 🌍

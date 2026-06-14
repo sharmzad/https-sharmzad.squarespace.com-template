@@ -1,0 +1,19 @@
+api-client.js:296 ✅ API Client initialized
+api-client.js:297 📡 API Base URL: https://ad07b034-5104-4742-ab1b-5fd6a4c4c387-00-3jcgxvcz1yndv.kirk.replit.dev
+NDczNTQ1.js?t=473545:1 [tp] entrypoint init
+chunk.DCRPF4lz.js:15 ✅ Found signup form: unnamed
+chunk.DCRPF4lz.js:15 ✅ Expert signup form initialized for: guide
+guide-signup.html:1 [DOM] Found 2 elements with non-unique id #confirmPassword: (More info: https://goo.gl/9p2vKq) <input type=​"password" class=​"input" id=​"confirmPassword" placeholder=​"Re-enter password" required data-gtm-form-interact-field-id=​"5">​ <input type=​"password" class=​"input" id=​"confirmPassword" placeholder=​"Re-enter password" required data-gtm-form-interact-field-id=​"7">​
+guide-signup.html:1 [DOM] Found 2 elements with non-unique id #password: (More info: https://goo.gl/9p2vKq) <input type=​"password" class=​"input" id=​"password" placeholder=​"Minimum 8 characters" required minlength=​"8" data-gtm-form-interact-field-id=​"4">​ <input type=​"password" class=​"input" id=​"password" placeholder=​"Minimum 8 characters" required minlength=​"8" data-gtm-form-interact-field-id=​"6">​
+chunk.D7pk0r-x.js:2 The PerformanceObserver does not support buffered flag with the entryTypes argument.
+startObserver @ chunk.D7pk0r-x.js:2
+chunk.DCRPF4lz.js:15 [tp] bb init
+upload-photo:1  Failed to load resource: the server responded with a status of 404 (Not Found)
+chunk.DCRPF4lz.js:15 ❌ Signup error: Error: API Client not loaded. Please refresh the page.
+    at HTMLFormElement.<anonymous> (expert-signup.js:187:15)
+(anonymous) @ chunk.DCRPF4lz.js:15
+chunk.DCRPF4lz.js:15 Error stack: Error: API Client not loaded. Please refresh the page.
+    at HTMLFormElement.<anonymous> (https://ad07b034-5104-4742-ab1b-5fd6a4c4c387-00-3jcgxvcz1yndv.kirk.replit.dev/js/expert-signup.js:187:15)
+(anonymous) @ chunk.DCRPF4lz.js:15
+chunk.DCRPF4lz.js:15 Showing error: Failed to create account. System error - please refresh the page and try again.
+(anonymous) @ chunk.DCRPF4lz.js:15

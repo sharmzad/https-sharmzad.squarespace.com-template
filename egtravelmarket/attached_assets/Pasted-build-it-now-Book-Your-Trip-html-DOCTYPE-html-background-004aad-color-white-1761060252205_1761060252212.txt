@@ -1,0 +1,83 @@
+build it now 👇
+
+Book Your Trip
+· html
+<!DOCTYPE html>
+      background: #004aad;
+      color: white;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      margin-top: 80px;
+    }
+    .cta {
+      background: white;
+      color: #004aad;
+      padding: 15px 25px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 15px;
+      box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+    }
+    @media (max-width: 768px) {
+      header h1 { font-size: 2rem; }
+      section { margin: 30px 15px; padding: 30px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Book Your Trip to Sharm El Sheikh</h1>
+    <p>Find flights, hotels, tours, and travel insurance — all in one place.</p>
+  </header>
+
+
+  <section id="flights">
+    <h2>✈️ Flights to Sharm El Sheikh</h2>
+    <p style="text-align:center;max-width:800px;margin:auto;color:#333;">Search and compare flights from your city to Sharm El Sheikh (SSH) with real-time prices and deals.</p>
+    <div class="widget-container">
+      <!-- Paste your Travelpayouts Flight Search Widget code here -->
+    </div>
+    <br>
+    <h3 style="text-align:center;margin-top:40px;color:#004aad;">Best Flight Deals Calendar</h3>
+    <div class="widget-container">
+      <!-- Paste your Travelpayouts Pricing Calendar Widget code here -->
+    </div>
+  </section>
+
+
+  <section id="hotels">
+    <h2>🏨 Hotels in Sharm El Sheikh</h2>
+    <p style="text-align:center;max-width:800px;margin:auto;color:#333;">Book hotels, resorts, and apartments across Sharm El Sheikh. Choose from beachfront stays and luxury resorts at the best prices.</p>
+    <div class="widget-container">
+      <!-- Paste your Travelpayouts Hotel Booking Widget code here -->
+    </div>
+  </section>
+
+
+  <section id="packages">
+    <h2>🧭 Packages & Tours in Sharm El Sheikh</h2>
+    <p style="text-align:center;max-width:800px;margin:auto;color:#333;">Discover day trips, diving adventures, and desert safaris curated by EgTravelMarket and our local partners.</p>
+    <div class="widget-container">
+      <!-- Paste your Travelpayouts Packages / Tours Widget code here -->
+    </div>
+  </section>
+
+
+  <section id="insurance">
+    <h2>💳 Travel Insurance for Your Trip</h2>
+    <p style="text-align:center;max-width:800px;margin:auto;color:#333;">Stay protected during your vacation. Compare and choose travel insurance plans suitable for your Egypt journey.</p>
+    <div class="widget-container">
+      <!-- Paste your Travelpayouts Insurance Widget code here -->
+    </div>
+  </section>
+
+
+  <footer>
+    <h2>Plan Your Trip with EgTravelMarket</h2>
+    <p>Our travel experts are ready to assist you. Contact us anytime for personalized offers.</p>
+    <a href="https://wa.me/201227903329" class="cta">💬 Chat on WhatsApp</a>
+  </footer>
+</body>
+</html>

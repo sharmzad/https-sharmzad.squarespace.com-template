@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EgTravelMarket – Medical Support & MISR Hospital Partnership</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0077ff;
+      --primary-dark: #0057c4;
+      --accent: #00c6b8;
+      --bg: #050b16;
+      --card-bg: #0b1220;
+      --text: #f5f7ff;
+      --muted: #9aa4c6;
+      --border: #1b2340;
+      --danger: #ff4d4f;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at top, #091936 0, #02040a 55%, #000 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* =========== LAYOUT =========== */
+
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to right, rgba(2, 6, 23, 0.92), rgba(15, 23, 42, 0.8));
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .nav {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.9rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #3bf, #0077ff 45%, #001133 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #e5f2ff;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-text span:first-child {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+
+    .brand-text span:last-child {
+      font-size: 0.73rem;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      padding-bottom: 0.15rem;
+      border-bottom: 1px solid transparent;
+    }
+
+    .nav-links a:hover {
+      color: #e5e7ff;
+      border-color: rgba(129, 140, 248, 0.7);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.75rem;
+    }
+
+    .nav-tag {
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(96, 165, 250, 0.5);
+      color: #bfdbfe;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), transparent);
+    }
+
+    .btn-nav-wa {
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.75rem;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      box-shadow: 0 0 18px rgba(34, 197, 94, 0.45);
+    }
+
+    .btn-nav-wa span {
+      font-size: 1rem;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    /* =========== HERO =========== */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr);
+      align-items: center;
+      gap: 2.3rem;
+      padding: 2.4rem 1.5rem 1.8rem;
+    }
+
+    .hero-left h1 {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-left h1 span {
+      color: var(--accent);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(23, 37, 84, 0.9);
+      border: 1px solid rgba(96, 165, 250, 0.5);
+      font-size: 0.72rem;
+      color: #bfdbfe;
+      margin-bottom: 0.65rem;
+    }
+
+    .hero-badge span {
+      font-size: 0.9rem;
+    }
+
+    .hero-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 32rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-sub strong {
+      color: #e5e7ff;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.6rem 1rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      box-shadow: 0 0 22px rgba(59, 130, 246, 0.6);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 26px rgba(59, 130, 246, 0.9);
+    }
+
+    .btn-outline {
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+    }
+
+    .btn-outline:hover {
+      background: rgba(30, 64, 175, 0.8);
+      border-color: rgba(129, 140, 248, 0.9);
+    }
+
+    .btn-ghost {
+      border: 1px solid transparent;
+      background: transparent;
+      color: #9ca3af;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(55, 65, 81, 0.9);
+      color: #e5e7eb;
+    }
+
+    .hero-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .hero-right {
+      border-radius: 1.4rem;
+      background: radial-gradient(circle at top, rgba(59, 130, 246, 0.2), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      padding: 1.2rem 1.4rem;
+      box-shadow: 0 0 40px rgba(15, 23, 42, 0.9);
+    }
+
+    .hero-kpi-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.7rem;
+      font-size: 0.78rem;
+    }
+
+    .partner-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(96, 165, 250, 0.6);
+      color: #bfdbfe;
+    }
+
+    .partner-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.6rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .stat-card {
+      border-radius: 0.9rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      padding: 0.6rem;
+      text-align: left;
+    }
+
+    .stat-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+
+    .mini-banner {
+      margin-top: 0.5rem;
+      padding: 0.55rem 0.7rem;
+      border-radius: 0.9rem;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.35), rgba(56, 189, 248, 0.1));
+      font-size: 0.72rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .mini-banner strong {
+      color: #e5f2ff;
+    }
+
+    /* =========== SECTIONS =========== */
+
+    section {
+      padding: 1.8rem 1.5rem 1.5rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.3rem;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .section-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+      max-width: 30rem;
+    }
+
+    /* Cards grid */
+
+    .grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      padding: 0.9rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .card p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .chip {
+      font-size: 0.65rem;
+      padding: 0.16rem 0.45rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: #e5e7eb;
+    }
+
+    .card-footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .tag-pill {
+      padding: 0.18rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      font-size: 0.62rem;
+    }
+
+    .btn-small {
+      padding: 0.45rem 0.8rem;
+      font-size: 0.75rem;
+    }
+
+    .btn-wa {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      box-shadow: 0 0 18px rgba(34, 197, 94, 0.55);
+    }
+
+    .btn-wa:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 24px rgba(34, 197, 94, 0.9);
+    }
+
+    /* MISR Features */
+
+    .partner-strip {
+      margin-bottom: 0.8rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .partner-strip strong {
+      color: #e5f2ff;
+    }
+
+    .badge-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.68rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(96, 165, 250, 0.5);
+      background: rgba(15, 23, 42, 0.9);
+      color: #bfdbfe;
+      margin-left: 0.35rem;
+    }
+
+    /* Steps */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .step-card {
+      background: var(--card-bg);
+      border-radius: 0.9rem;
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      padding: 0.7rem;
+      font-size: 0.78rem;
+    }
+
+    .step-number {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(37, 99, 235, 0.3);
+      border: 1px solid rgba(129, 140, 248, 0.8);
+      font-size: 0.7rem;
+      margin-bottom: 0.3rem;
+    }
+
+    /* FAQ */
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+
+    .faq-item {
+      background: var(--card-bg);
+      border-radius: 0.9rem;
+      border: 1px solid var(--border);
+      padding: 0.8rem;
+    }
+
+    .faq-item h3 {
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .faq-item p {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* Footer */
+
+    footer {
+      border-top: 1px solid rgba(30, 64, 175, 0.6);
+      padding: 1rem 1.5rem 1.3rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: rgba(2, 6, 23, 0.96);
+      margin-top: 1rem;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+    }
+
+    .footer-links a:hover {
+      color: #e5e7ff;
+    }
+
+    /* =========== MODAL / POPUP =========== */
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 1rem;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      max-width: 480px;
+      width: 100%;
+      border-radius: 1.2rem;
+      background: radial-gradient(circle at top, rgba(59, 130, 246, 0.3), rgba(15, 23, 42, 0.97));
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.9);
+      padding: 1.1rem 1.2rem 1rem;
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .modal-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .modal-body {
+      margin-top: 0.6rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .modal-body p + p {
+      margin-top: 0.35rem;
+    }
+
+    .modal-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.55rem;
+    }
+
+    .modal-footer {
+      margin-top: 0.9rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+
+    .btn-secondary {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      color: #e5e7eb;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(30, 64, 175, 0.85);
+    }
+
+    .btn-danger {
+      background: rgba(220, 38, 38, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.7);
+      color: #fecaca;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.45rem;
+      border-radius: 999px;
+    }
+
+    .modal-close {
+      border: none;
+      background: transparent;
+      color: #9ca3af;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .modal-close:hover {
+      color: #e5e7eb;
+    }
+
+    /* =========== RESPONSIVE =========== */
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding-top: 1.8rem;
+      }
+
+      .hero-right {
+        order: -1;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .grid-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .faq-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .grid-4,
+      .grid-3,
+      .steps {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero {
+        padding-inline: 1.1rem;
+      }
+
+      .container,
+      section,
+      footer {
+        padding-inline: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- ================= HEADER ================= -->
+  <header>
+    <div class="nav">
+      <div class="nav-left">
+        <div class="logo-circle">ET</div>
+        <div class="brand-text">
+          <span>EgTravelMarket</span>
+          <span>Medical Support • Egypt</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="/index.html">Home</a>
+        <a href="/tours.html">Tours</a>
+        <a href="/dmc.html">DMC</a>
+        <a href="/b2b.html">B2B</a>
+        <a href="/mice.html">MICE</a>
+        <a href="/investment.html">Investment</a>
+        <a href="/mentor.html">Mentor</a>
+      </nav>
+
+      <div class="nav-right">
+        <span class="nav-tag">24/7 Medical Support</span>
+        <a href="https://wa.me/201094776665" target="_blank" rel="noopener" class="btn-nav-wa">
+          <span>🟢</span> WhatsApp
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= HERO ================= -->
+    <section class="hero container">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span>🏥</span>
+          In partnership with <strong>MISR Hospital – Sharm El Sheikh</strong>
+        </div>
+
+        <h1>
+          Medical Support in Egypt<br>
+          <span>Powered by EgTravelMarket & MISR Hospital</span>
+        </h1>
+
+        <p class="hero-sub">
+          Whether you’re a traveler or resident, we connect you to
+          <strong>AI medical consultation, hospital visits, insurance assistance</strong> and more –
+          with 24/7 coordination in Sharm El Sheikh and across Egypt.
+        </p>
+
+        <div class="hero-cta-row">
+          <a href="https://wa.me/201062222113?text=Hello%20I%20need%20Doctor%20Chat%20support%20from%20EgTravelMarket"
+             target="_blank" rel="noopener"
+             class="btn btn-primary">
+            💬 WhatsApp – Doctor Chat
+          </a>
+
+          <a href="https://wa.me/201094776665?text=Hello%20I%20need%20Hospital%20/%20Insurance%20support%20from%20EgTravelMarket"
+             target="_blank" rel="noopener"
+             class="btn btn-outline">
+            🏥 WhatsApp – Hospital & Insurance
+          </a>
+
+          <a href="https://misrhospital.com/" target="_blank" rel="noopener" class="btn btn-ghost">
+            🌐 Visit MISR Hospital Website
+          </a>
+        </div>
+
+        <p class="hero-note">
+          We coordinate between you and MISR Hospital. All medical decisions & records remain under the hospital team.
+        </p>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-kpi-header">
+          <div class="partner-pill">
+            <span class="partner-badge-dot"></span>
+            MISR Hospital – Advanced Medical Care
+          </div>
+          <span style="font-size:0.7rem;color:var(--muted);">
+            Emergency: +20 69 366 6766
+          </span>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-value">AI Cath Lab</div>
+            <div class="stat-label">First in Middle East & Africa</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">0</div>
+            <div class="stat-label">Hospital-Acquired Infections Record</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">24/7</div>
+            <div class="stat-label">Emergency Services</div>
+          </div>
+        </div>
+
+        <div class="mini-banner">
+          <span>🤖</span>
+          <div>
+            <strong>AI Medical Consultation</strong><br>
+            Instant preliminary assessment of your symptoms – then follow-up with real doctors at MISR Hospital.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CORE MEDICAL SERVICES ================= -->
+    <section>
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">EgTravelMarket Medical Services</h2>
+          <p class="section-sub">
+            Your single point of contact for doctor chat, clinic & hospital visits, pharmacy delivery,
+            insurance assistance and optical services in Sharm El Sheikh and beyond.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-4">
+        <!-- Doctor Chat -->
+        <article class="card">
+          <h3>Doctor Chat (Online)</h3>
+          <p>
+            Text-based and voice notes via WhatsApp with our medical partners for non-emergency questions and guidance.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Pre-trip questions</span>
+            <span class="chip">Non-emergency</span>
+            <span class="chip">English / Arabic</span>
+          </div>
+          <div class="card-footer-row">
+            <span class="tag-pill">WhatsApp only</span>
+            <a href="https://wa.me/201062222113?text=Hello%20I%20need%20Doctor%20Chat%20support%20from%20EgTravelMarket"
+               target="_blank" rel="noopener"
+               class="btn btn-small btn-wa">
+              💬 Chat Doctor
+            </a>
+          </div>
+        </article>
+
+        <!-- Clinic & Hospital Visits -->
+        <article class="card">
+          <h3>Clinic & Hospital Visits</h3>
+          <p>
+            We arrange appointments and in-hospital visits at MISR Hospital or partner clinics with full logistics support.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Outpatient visits</span>
+            <span class="chip">Inpatient stay</span>
+            <span class="chip">Escort & translation</span>
+          </div>
+          <div class="card-footer-row">
+            <span class="tag-pill">Sharm El Sheikh</span>
+            <a href="https://wa.me/201094776665?text=Hello%20I%20need%20Clinic%20/%20Hospital%20Visit%20support%20from%20EgTravelMarket"
+               target="_blank" rel="noopener"
+               class="btn btn-small btn-wa">
+              🏥 Request Visit
+            </a>
+          </div>
+        </article>
+
+        <!-- Insurance Assistance -->
+        <article class="card">
+          <h3>Insurance Assistance</h3>
+          <p>
+            Support with insurance verification, documentation and coordination with MISR Hospital for covered services.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Policy check</span>
+            <span class="chip">Direct billing (if available)</span>
+            <span class="chip">Claims support</span>
+          </div>
+          <div class="card-footer-row">
+            <span class="tag-pill">Travel & medical insurance</span>
+            <a href="https://wa.me/201094776665?text=Hello%20I%20need%20Insurance%20Assistance%20from%20EgTravelMarket"
+               target="_blank" rel="noopener"
+               class="btn btn-small btn-wa">
+              📄 Check Coverage
+            </a>
+          </div>
+        </article>
+
+        <!-- Pharmacy & Optical -->
+        <article class="card">
+          <h3>Pharmacy & Optical Support</h3>
+          <p>
+            Help with prescribed medication, pharmacy guidance and basic optical needs via our local partners.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Prescription help</span>
+            <span class="chip">Pharmacy guidance</span>
+            <span class="chip">Optical referrals</span>
+          </div>
+          <div class="card-footer-row">
+            <span class="tag-pill">Local support</span>
+            <a href="https://wa.me/201094776665?text=Hello%20I%20need%20Pharmacy%20/%20Optical%20support%20from%20EgTravelMarket"
+               target="_blank" rel="noopener"
+               class="btn btn-small btn-wa">
+              💊 Contact Support
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= MISR HOSPITAL FEATURES (HYBRID) ================= -->
+    <section>
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Powered by MISR Hospital – Sharm El Sheikh</h2>
+          <p class="section-sub">
+            Through our partnership with MISR Hospital, you can access AI medical consultation, advanced cardiology,
+            emergency care and more – while EgTravelMarket remains your single coordination point.
+          </p>
+        </div>
+      </div>
+
+      <p class="partner-strip">
+        MISR Hospital offers advanced services such as an
+        <strong>AI-powered cath lab</strong>, zero hospital-acquired infections record and
+        24/7 emergency care in Sharm El Sheikh. :contentReference[oaicite:1]{index=1}
+        <span class="badge-inline">
+          Partner Facility · 31 Salam Road, Sharm El Sheikh
+        </span>
+      </p>
+
+      <div class="grid grid-3">
+        <!-- AI Consultation (opens modal) -->
+        <article class="card">
+          <h3>AI Medical Consultation</h3>
+          <p>
+            Start a quick AI-powered preliminary assessment of your symptoms, then follow up with a real doctor.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Preliminary assessment</span>
+            <span class="chip">Available 24/7</span>
+            <span class="chip">Provided by MISR Hospital</span>
+          </div>
+          <div class="card-footer-row">
+            <span class="tag-pill">Hybrid · AI + Doctor</span>
+            <button type="button"
+                    class="btn btn-small btn-primary"
+                    data-open-modal="aiModal">
+              🤖 Start AI Consultation
+            </button>
+          </div>
+        </article>
+
+        <!-- Book Appointment (opens modal) -->
+        <article class="card">
+          <h3>Book an Appointment</h3>
+          <p>
+            Request an appointment with MISR Hospital specialists. We help you prepare and coordinate the visit.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Cardiology & Cath Lab</span>
+            <span class="chip">Endoscopy & surgery</span>
+            <span class="chip">Emergency & follow-up</span>
+          </div>
+          <div class="card-footer-row">
+            <span class="tag-pill">Hospital Visit</span>
+            <button type="button"
+                    class="btn btn-small btn-primary"
+                    data-open-modal="bookModal">
+              📅 Book Appointment
+            </button>
+          </div>
+        </article>
+
+        <!-- Emergency + Direct MISR link -->
+        <article class="card">
+          <h3>Emergency & Direct Hospital Contact</h3>
+          <p>
+            For life-threatening situations, always contact emergency services or MISR Hospital directly,
+            then inform EgTravelMarket for follow-up & coordination.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Emergency: +20 69 366 6766</span>
+            <span class="chip">WhatsApp: +20 150 000 3155</span>
+            <span class="chip">24/7 trauma care</span>
+          </div>
+          <div class="card-footer-row">
+            <span class="tag-pill">Emergency only</span>
+            <a href="https://misrhospital.com/" target="_blank" rel="noopener"
+               class="btn btn-small btn-outline">
+              🚑 Open MISR Hospital
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= HOW IT WORKS ================= -->
+    <section>
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">How the Medical Partnership Works</h2>
+          <p class="section-sub">
+            Simple, clear steps so you always know who you contact and what happens next.
+          </p>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <p><strong>Contact EgTravelMarket</strong> via WhatsApp for doctor chat, hospital visit or insurance questions.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <p>We check your case & documents, then coordinate with <strong>MISR Hospital</strong> on availability & options.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <p>You may use <strong>AI Medical Consultation</strong> and/or book an appointment with the hospital specialists.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <p>Visit MISR Hospital, receive treatment, and we support you with follow-up, logistics & insurance matters.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section>
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Medical FAQ</h2>
+          <p class="section-sub">
+            Important information about the AI tool, our role and how MISR Hospital handles your medical care.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h3>Is the AI medical consultation replacing a real doctor?</h3>
+          <p>
+            No. The AI tool is a <strong>preliminary assessment</strong> provided by MISR Hospital. It helps you organise your
+            symptoms before seeing a doctor. Final diagnosis and treatment are always made by human doctors. :contentReference[oaicite:2]{index=2}
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Who is responsible for medical decisions?</h3>
+          <p>
+            <strong>MISR Hospital and its medical team</strong> are fully responsible for all medical decisions, diagnoses and
+            treatments. EgTravelMarket only coordinates logistics, communication and support around your visit.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What number should I use for quick questions?</h3>
+          <p>
+            For non-emergency questions and doctor chat, use WhatsApp:
+            <br>Doctor Chat: <strong>+20 106 222 2113</strong>
+            <br>Hospital & Insurance: <strong>+20 109 477 6665</strong>
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What happens if I have an emergency?</h3>
+          <p>
+            In an emergency, always call local emergency services or MISR Hospital directly (+20 69 366 6766) first.
+            After that, inform EgTravelMarket so we can support with coordination and follow-up.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="footer-inner">
+      <p>
+        © 2025 EgTravelMarket – Medical Services & Health Support.
+        Backed & managed by GoMundo Travel.
+      </p>
+      <div class="footer-links">
+        <span>In partnership with MISR Hospital – Sharm El Sheikh</span>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ================= MODALS (OPTION C HYBRID) ================= -->
+
+<!-- AI Consultation Modal -->
+<div class="modal-backdrop" id="aiModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">AI Medical Consultation</div>
+        <div class="modal-sub">
+          Powered by MISR Hospital · coordinated by EgTravelMarket
+        </div>
+      </div>
+      <button class="modal-close" data-close-modal="aiModal">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <p>
+        Use MISR Hospital’s <strong>AI assistant</strong> to get a fast, preliminary assessment of your symptoms.
+        The AI will ask a few questions, then you can continue with a real doctor at the hospital.
+      </p>
+      <p>
+        Before you proceed, you can also chat with EgTravelMarket if you want help in English or Arabic,
+        or if you need us to follow your case.
+      </p>
+
+      <div class="modal-badges">
+        <span class="btn-danger">Important: AI is not a substitute for professional medical advice.</span>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <a href="https://wa.me/201062222113?text=Hello%20I%20want%20to%20use%20AI%20Medical%20Consultation%20via%20EgTravelMarket"
+         target="_blank" rel="noopener"
+         class="btn btn-small btn-wa">
+        💬 WhatsApp – Doctor Chat
+      </a>
+      <a href="https://misrhospital.com/"
+         target="_blank" rel="noopener"
+         class="btn btn-small btn-secondary">
+        🤖 Continue to MISR Hospital AI
+      </a>
+      <button class="btn btn-small btn-ghost" data-close-modal="aiModal">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Book Appointment Modal -->
+<div class="modal-backdrop" id="bookModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Book an Appointment</div>
+        <div class="modal-sub">
+          MISR Hospital specialists · arranged through EgTravelMarket
+        </div>
+      </div>
+      <button class="modal-close" data-close-modal="bookModal">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <p>
+        EgTravelMarket can help you prepare your appointment request, coordinate dates and support you
+        with insurance or travel arrangements.
+      </p>
+      <p>
+        You can either contact us on WhatsApp, or go directly to MISR Hospital’s appointment form.
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <a href="https://wa.me/201094776665?text=Hello%20I%20want%20to%20book%20an%20appointment%20with%20MISR%20Hospital%20via%20EgTravelMarket"
+         target="_blank" rel="noopener"
+         class="btn btn-small btn-wa">
+        🏥 WhatsApp – Hospital & Insurance
+      </a>
+      <a href="https://misrhospital.com/"
+         target="_blank" rel="noopener"
+         class="btn btn-small btn-secondary">
+        📅 Continue to MISR Hospital Booking
+      </a>
+      <button class="btn btn-small btn-ghost" data-close-modal="bookModal">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Simple modal handling
+  document.addEventListener("click", function (e) {
+    const openTarget = e.target.closest("[data-open-modal]");
+    if (openTarget) {
+      const id = openTarget.getAttribute("data-open-modal");
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add("open");
+    }
+
+    const closeTarget = e.target.closest("[data-close-modal]");
+    if (closeTarget) {
+      const id = closeTarget.getAttribute("data-close-modal");
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.remove("open");
+    }
+
+    // Click outside modal closes it
+    if (e.target.classList.contains("modal-backdrop")) {
+      e.target.classList.remove("open");
+    }
+  });
+</script>
+
+</body>
+</html>

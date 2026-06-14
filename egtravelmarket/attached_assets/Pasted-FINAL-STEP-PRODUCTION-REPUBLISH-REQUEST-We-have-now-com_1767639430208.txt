@@ -1,0 +1,100 @@
+FINAL STEP – PRODUCTION REPUBLISH REQUEST
+
+We have now completed verification, legal validation, and admin approval workflows
+for ALL user types across the platform.
+
+Please proceed with a FULL production republish and ensure all recent changes
+are applied to the LIVE environment (production database + frontend + backend).
+
+================================================
+SCOPE OF COMPLETED FEATURES (MUST BE INCLUDED IN PRODUCTION)
+================================================
+
+1) UNIFIED ADMIN SIGN-UP APPROVAL (GLOBAL)
+- Admin can view FULL signup data for ALL user types (read-only):
+  Guides, Divers, Mentors, Travel Agencies, Dive Centers
+- Admin can Approve / Reject signups
+- signup_approved / certification_status logic enforced
+- Only approved users appear publicly
+- Direct access to unapproved profiles returns 404
+
+------------------------------------------------
+2) TOUR GUIDES – LEGAL VERIFICATION (LIVE)
+------------------------------------------------
+- Mandatory license number, issue date, expiry date
+- Ministry + Syndicate license uploads (front & back)
+- Legal confirmation checkboxes
+- Dual-layer verification (license + admin)
+- Certified & Licensed badge shown publicly after approval
+
+------------------------------------------------
+3) TRAVEL AGENCIES – CERTIFICATION BADGES (LIVE)
+------------------------------------------------
+- Egyptian Licensed Travel Agency (green badge)
+- International Partner Agency (blue badge + disclaimer)
+- Badge logic computed automatically
+- Admin approval required
+- Public visibility filtered by certification_status
+
+------------------------------------------------
+4) DIVE CENTERS – LEGAL CERTIFICATION (LIVE)
+------------------------------------------------
+- Egyptian vs International dive center logic
+- Egyptian: CDWS / Ministry license + documents
+- International: country + website/registration + operations confirmation
+- Business activity (Diving / Water Sports)
+- Automatic certified badge assignment
+- Admin preview of legal fields and badge eligibility
+
+------------------------------------------------
+5) DIVERS – PROFESSIONAL VERIFICATION (LIVE)
+------------------------------------------------
+- Certification document required for all divers
+- Conditional insurance upload + expiry date validation
+- 3 legal confirmation checkboxes
+- Admin review of documents
+- No badge (admin approval = quality gate only)
+
+------------------------------------------------
+6) MENTORS – ROLE CLARITY & ADMIN APPROVAL (LIVE)
+------------------------------------------------
+- Role clarification checkbox (planning & consultation only)
+- 3 legal confirmation checkboxes
+- Admin approval required
+- NO certification badge for mentors
+
+------------------------------------------------
+7) LEGAL CHECKBOX STANDARDIZATION
+------------------------------------------------
+Across all applicable signups:
+- Terms agreement
+- Accuracy confirmation
+- Verification consent
+(All enforced frontend + backend)
+
+------------------------------------------------
+8) DATABASE & MIGRATIONS
+------------------------------------------------
+- All new columns added and aligned in:
+  - schema.ts (Drizzle)
+  - schema.sql
+- Production database must include ALL recent schema updates
+
+------------------------------------------------
+9) PRODUCTION CHECKS REQUIRED
+------------------------------------------------
+Please confirm after republish:
+- Production DB is migrated correctly
+- No regression on existing users
+- Admin approval panel works on production
+- Public listings correctly filter by approval/certification
+- Certified badges display correctly where applicable
+
+================================================
+GOAL
+================================================
+
+This republish should fully activate the unified verification and approval system
+for all user types in production, with no feature gaps between dev and live.
+
+Please confirm once production republish is complete.

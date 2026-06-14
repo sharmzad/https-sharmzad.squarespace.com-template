@@ -1,0 +1,209 @@
+Mentor Signup, Search Filters & Login Clarification
+
+Important: Do NOT change colors, layout, fonts, or page structure.
+Only update fields, labels, filters, and helper text.
+
+1️⃣ be-mentor.html – Mentor SIGN-UP FORM (VERY IMPORTANT)
+✅ REQUIRED FIELDS (ADD / ENSURE)
+
+Please ensure the mentor signup form includes these fields:
+
+Basic Info
+
+Full Name
+
+Email
+
+Password
+
+Country of Residence (dropdown)
+
+Currently Based In:
+
+Egypt
+
+Outside Egypt
+
+Professional Info
+
+Languages (multi-select)
+
+Years of Experience with Egypt:
+
+0–1
+
+2–5
+
+6–10
+
+10+
+
+Mentor Specialties (multi-select):
+
+First-time Egypt travel
+
+Luxury travel
+
+Budget travel
+
+Family trips
+
+Honeymoon
+
+Solo travelers
+
+Solo female travelers
+
+Digital nomads
+
+Adventure & culture
+
+Nile Cruise planning
+
+Red Sea planning
+
+Destinations Covered (multi-select)
+
+Cairo & Giza
+
+Luxor & Aswan
+
+Nile Cruise
+
+Sharm El Sheikh
+
+Hurghada / El Gouna
+
+Dahab
+
+Alexandria
+
+Siwa
+
+Profile Content
+
+Short Bio (max 500 characters)
+
+Profile Photo (required)
+
+Cover Photo (optional)
+
+✅ TRUST & LEGAL CONFIRMATION (REQUIRED)
+
+Add this mandatory checkbox at the end of the form:
+
+☐ I confirm that I provide planning and consultation services only, and that EgTravelMarket handles all bookings, payments, and on-ground execution.
+
+Form must not submit unless checked.
+
+2️⃣ mentor.html – PUBLIC SEARCH & FILTER (Travelers)
+✅ FILTERS TO ADD / ENSURE
+
+On mentor listing page, filters should include:
+
+Language
+
+Based In:
+
+Egypt
+
+Abroad
+
+Mentor Specialties
+
+Destinations Covered
+
+Price Range:
+
+Planning / Consultation price
+
+Experience Level
+
+Optional (later):
+
+Rating
+
+Availability
+
+✅ MENTOR CARD – WHAT IS SHOWN PUBLICLY
+
+Each mentor card must show ONLY:
+
+Profile photo
+
+Name
+
+Languages (max 3 shown)
+
+“Based in: Egypt / Abroad”
+
+Specialties (tags)
+
+Destinations (tags)
+
+Starting price label:
+“Planning from $XX” or “Consultation from $XX”
+
+CTA button:
+View Mentor
+
+❌ Do NOT show phone, WhatsApp, email, or external links.
+
+✅ SEARCH LOGIC (IMPORTANT)
+
+Search should match:
+
+Mentor name
+
+Bio text
+
+Specialties
+
+Destinations
+
+Languages
+
+3️⃣ Mentor Offers Logic (IMPORTANT CLARIFICATION)
+
+Mentors can create TWO TYPES of offers using the SAME “Create Offer” page.
+
+🟦 Offer Type A: Itinerary / Planning
+
+Example titles:
+
+“7-Day Egypt Cultural Itinerary”
+
+“Luxury Egypt Trip Plan”
+
+Price label:
+Planning Fee
+
+Shown publicly as:
+Planning Service
+
+🟦 Offer Type B: Online Consultation
+
+Example titles:
+
+“60-Minute Egypt Trip Consultation”
+
+Duration:
+
+30 / 60 / 90 minutes
+
+Description:
+
+Zoom / Google Meet / platform call
+
+Shown publicly as:
+Online Consultation
+
+⚠️ No execution wording allowed in either.
+
+4️⃣ mentor-login.html – LOGIN PAGE (TEXT + IMAGE LOGIC)
+✅ LOGIN TEXT (KEEP SIMPLE)
+
+Ensure login page text says:
+
+Login to your Travel Mentor account
+Plan trips. Advise travelers. Earn online.

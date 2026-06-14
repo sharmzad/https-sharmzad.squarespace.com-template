@@ -1,0 +1,110 @@
+Hello,
+
+Please help update and optimize the SEO content for the following signup pages on EgTravelMarket.
+The goal is to improve search visibility and conversion for professional experts (tour guides & divers).
+
+1) Guide Signup Page
+
+URL: /guide-signup.html
+
+Meta Title:
+Tour Guide Signup in Egypt | Create Your Profile on EgTravelMarket
+
+Meta Description:
+Join EgTravelMarket as a licensed tour guide in Egypt. Create your professional profile, design your own itineraries, and connect directly with travelers worldwide.
+
+H1:
+Join as a Professional Tour Guide in Egypt
+
+Page Content (Main Body):
+EgTravelMarket is a travel marketplace designed to empower licensed tour guides in Egypt. Create your professional profile, publish your own tour programs, and connect directly with travelers looking for authentic local experiences — without intermediaries.
+
+Section – Why Join EgTravelMarket as a Tour Guide?
+
+Create a verified professional profile
+
+Design and publish your own itineraries
+
+Reach international travelers worldwide
+
+Receive direct inquiries and bookings
+
+Full control over your prices and programs
+
+No middlemen or agency dependency
+
+Section – Who Can Join?
+This platform is designed for licensed tour guides in Egypt, Egyptologists, and professional local experts with guiding experience.
+
+Section – How It Works:
+
+Create your tour guide profile
+
+Add your bio and experience
+
+Publish your tour programs
+
+Connect directly with travelers
+
+Closing Section:
+Join EgTravelMarket and become part of a growing network of local experts shaping the future of travel in Egypt.
+
+2) Diver Signup Page
+
+URL: /diver-signup.html
+
+Meta Title:
+Diver & Divemaster Signup | Create Your Profile on EgTravelMarket
+
+Meta Description:
+Join EgTravelMarket as a professional diver or divemaster in Egypt. Create your profile, list your diving trips, and connect directly with clients worldwide.
+
+H1:
+Join as a Professional Diver or Divemaster
+
+Page Content (Main Body):
+EgTravelMarket connects certified divers and diving professionals with travelers seeking authentic underwater experiences in Egypt. Create your diver profile, showcase your skills, and offer your own diving trips with full independence.
+
+Section – Why Join EgTravelMarket as a Diver?
+
+Create a professional diver profile
+
+Showcase certifications and experience
+
+Publish your own diving trips
+
+Reach international diving travelers
+
+No intermediaries or agencies
+
+Direct communication with clients
+
+Section – Who Is This For?
+Certified divers, divemasters, freelance diving professionals, and independent dive instructors.
+
+Section – How It Works:
+
+Register as a diver
+
+Complete your professional profile
+
+Add diving trips and experiences
+
+Connect directly with clients
+
+Closing Section:
+Join EgTravelMarket and take your diving career to the next level.
+
+Optional (If Possible)
+
+Please ensure:
+
+Proper H1 / H2 structure
+
+Fast page load on mobile
+
+Clean semantic HTML
+
+SEO-friendly formatting
+
+Thank you.

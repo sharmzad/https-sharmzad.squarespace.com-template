@@ -1,0 +1,181 @@
+Extend Traveler Request Payment Flow to All Provider Types
+
+The agency traveler-request payment flow is now the reference implementation.
+Please replicate the SAME logic for all other provider types with NO new logic paths.
+
+✅ Provider Types to Support
+
+Apply the exact same acceptance + payment + escrow logic for:
+
+agency
+
+dive_center
+
+guide
+
+diver
+
+mentor
+
+admin (EgTravelMarket managed offers)
+
+1️⃣ Single Source of Truth (Do NOT change)
+
+For ALL provider types, the following rules apply:
+
+On Offer Acceptance
+guest_requests.accepted_offer_id = offer.id
+guest_requests.final_price = offer.price
+guest_requests.status = 'accepted'
+
+
+final_price MUST always come from the accepted offer
+
+Traveler budget is informational only
+
+2️⃣ Offer Ownership (MANDATORY)
+
+Each offer MUST return explicitly:
+
+provider_type
+provider_id
+provider_name
+
+
+Rules:
+
+Never infer ownership from expert_id
+
+Never treat NULL expert_id as admin
+
+Ownership is decided ONLY by provider_type
+
+Examples:
+
+Guide → provider_type = 'guide'
+
+Dive Center → provider_type = 'dive_center'
+
+Mentor → provider_type = 'mentor'
+
+EgTravelMarket → provider_type = 'admin'
+
+3️⃣ traveler_request_orders (Shared for ALL providers)
+
+Reuse the same table for all provider types:
+
+Required fields:
+
+request_id
+offer_id
+provider_type
+provider_id
+amount_total
+platform_fee (20%)
+provider_amount (80%)
+status (pending | paid | released)
+stripe_session_id
+release_date
+
+
+No separate tables per provider.
+
+4️⃣ Payment Button Visibility (Unified Logic)
+
+For ALL provider types except admin (optional):
+
+Show Proceed to Payment button ONLY when:
+
+offer.id === guest_requests.accepted_offer_id
+AND offer.provider_type IN ('agency','dive_center','guide','diver','mentor')
+AND traveler_request_orders.status !== 'paid'
+
+
+Button must NEVER appear on non-accepted offers
+
+Button must disappear after payment
+
+5️⃣ Stripe Checkout (Same Flow)
+
+Stripe checkout creation must:
+
+Use guest_requests.final_price
+
+Calculate:
+
+20% platform commission
+
+80% provider payout
+
+Store stripe_session_id
+
+Prevent double payments (reuse session)
+
+6️⃣ Webhook Handling (Shared)
+
+Stripe webhook must:
+
+Mark order as paid
+
+Keep funds in EgTravelMarket escrow
+
+Set release_date = trip_date + 7 days
+
+Send emails to:
+
+Traveler (confirmation)
+
+Provider (payment received – pending release)
+
+Admin (full breakdown)
+
+7️⃣ UI Display Rules (Important)
+
+After acceptance:
+
+Show provider name + provider type
+
+Never label non-admin offers as “EgTravelMarket Offer”
+
+Hide all other offers
+
+Show locked status:
+
+“Offer accepted”
+
+“Payment required” or “Payment completed”
+
+8️⃣ Admin (EgTravelMarket) Offers
+
+For provider_type = 'admin':
+
+Acceptance still locks the offer
+
+Payment button behavior:
+
+Either enabled (if admin-managed paid service)
+
+Or hidden (if free/manual handling)
+
+👉 Keep logic configurable but do not break the shared flow
+
+9️⃣ Critical Rule (DO NOT BREAK)
+
+❌ No duplicated logic
+❌ No provider-specific payment tables
+❌ No frontend price overrides
+❌ No expert_id-based ownership
+
+✅ One acceptance flow
+✅ One payment flow
+✅ One escrow model
+
+🎯 Goal
+
+Once implemented:
+
+Traveler request payments behave identically to expert trips
+
+Provider type is interchangeable
+
+Adding new provider types requires zero new logic

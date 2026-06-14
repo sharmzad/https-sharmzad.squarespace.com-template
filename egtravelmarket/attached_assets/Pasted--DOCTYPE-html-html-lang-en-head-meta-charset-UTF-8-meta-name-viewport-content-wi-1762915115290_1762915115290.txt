@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EgTravelMarket | The Spirit of Egyptian Hospitality</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{background:#fdfaf6;color:#222;line-height:1.7;}
+    a{text-decoration:none;color:#0a3d62;}
+    img{max-width:100%;display:block;}
+
+    /* ===== HERO ===== */
+    .hero{
+      background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+                 url('https://images.unsplash.com/photo-1591608516485-17c7c3f6e46b') center/cover no-repeat;
+      height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+      text-align:center;color:#fff;padding:0 15px;
+    }
+    .hero h1{font-size:2.8rem;margin-bottom:10px;}
+    .hero p{max-width:700px;color:#ddd;}
+
+    /* ===== ARTICLE ===== */
+    .article{padding:60px 10%;max-width:900px;margin:auto;}
+    .article h2{color:#0a3d62;margin-bottom:20px;}
+    .article p{margin-bottom:20px;font-size:1.05rem;color:#333;}
+
+    /* ===== RELATED TRIPS ===== */
+    .related-trips{background:#fff;padding:50px 10%;text-align:center;}
+    .related-trips h2{color:#0a3d62;margin-bottom:30px;}
+    .trips{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;}
+    .trip-card{background:#f9f9f9;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);overflow:hidden;transition:.3s;}
+    .trip-card:hover{transform:translateY(-5px);}
+    .trip-card img{height:180px;object-fit:cover;width:100%;}
+    .trip-card h3{color:#0a3d62;font-size:1.1rem;margin:15px;}
+    .trip-card a{display:inline-block;background:#0a3d62;color:#fff;margin:0 0 15px;padding:8px 15px;border-radius:6px;transition:.3s;}
+    .trip-card a:hover{background:#062f4e;}
+
+    footer{background:#0a3d62;color:#fff;text-align:center;padding:30px 15px;font-size:.9rem;margin-top:50px;}
+    footer p{margin:5px 0;}
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <h1>The Spirit of Egyptian Hospitality</h1>
+    <p>Discover the warmth, generosity, and traditions that make Egypt’s culture unforgettable.</p>
+  </section>
+
+  <!-- ===== ARTICLE CONTENT ===== -->
+  <section class="article">
+    <h2>Where Every Guest Becomes Family</h2>
+    <p>
+      In Egypt, hospitality isn’t a service — it’s a way of life. Whether you’re sipping tea in a Cairo alleyway or
+      sharing bread with Bedouins in Sinai, you’ll quickly learn that “welcome” here means much more than words.
+      Egyptians take pride in making every guest feel like family, a tradition rooted in thousands of years of
+      desert culture and faith.
+    </p>
+
+    <h2>Festivals, Food & Daily Warmth</h2>
+    <p>
+      From the bright lanterns of Ramadan to the spring celebrations of Sham El-Nessim, Egypt’s calendar is
+      filled with moments of joy and togetherness. Weddings pulse with music and laughter, streets fill with
+      aromas of grilled kebab and sweet konafa, and strangers exchange smiles like old friends.
+    </p>
+
+    <p>
+      These traditions don’t belong only to the past — they’re alive in every market, every café, and every home.
+      Visitors often describe feeling an instant connection, as if Egypt itself opens its arms to greet them.
+    </p>
+
+    <h2>Experience It with EgTravelMarket</h2>
+    <p>
+      Through EgTravelMarket, you can go beyond sightseeing and truly live Egypt’s culture.
+      Join a local family dinner in Cairo, sail the Nile at sunset with live oriental music,
+      or visit artisans in Old Cairo preserving crafts that date back centuries.
+    </p>
+
+    <p>
+      Each experience is designed not just to show you Egypt, but to make you a part of it —
+      to feel the laughter, the rhythm, and the shared humanity that binds everyone here.
+    </p>
+  </section>
+
+  <!-- ===== RELATED TRIPS ===== -->
+  <section class="related-trips">
+    <h2>Related Experiences</h2>
+    <div class="trips">
+      <div class="trip-card">
+        <img src="/assets/trips/cairo-walking.jpg" alt="Cairo Walking Tour">
+        <h3>Cairo Walking Tour</h3>
+        <a href="/trip-cairo-walking.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/nile-dinner.jpg" alt="Nile Dinner Cruise">
+        <h3>Nile Dinner Cruise</h3>
+        <a href="/trip-nile-dinner.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/old-cairo.jpg" alt="Old Cairo Experience">
+        <h3>Old Cairo & Local Crafts Tour</h3>
+        <a href="/trip-old-cairo.html">View Trip</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 EgTravelMarket – All Rights Reserved</p>
+    <p>Backed & Managed by GoMundo Travel</p>
+  </footer>
+
+</body>
+</html>
+
+✅ Step 3 — Upload Optional Trip Images
+
+Inside /assets/trips/, upload:
+
+cairo-walking.jpg
+nile-dinner.jpg
+old-cairo.jpg
+
+
+(Use placeholders from Unsplash if you don’t have them yet.)
+
+✅ Step 4 — Connect from Discover Egypt Page
+
+In your discover-egypt.html, find:
+
+<h3>Culture & Traditions</h3>
+
+
+and wrap it like this:
+
+<a href="/culture-traditions.html">
+  <h3>Culture & Traditions</h3>
+</a>

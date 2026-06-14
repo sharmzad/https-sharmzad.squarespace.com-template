@@ -1,0 +1,229 @@
+HTML (index.html)
+
+Replace your old “Trip of the Week” section with this:
+
+<section class="trip-of-the-week">
+  <div class="trip-container">
+    <!-- Text Content -->
+    <div class="trip-text fade-left">
+      <span class="trip-tag">⭐ Trip of the Week</span>
+      <h2>Cairo by Flight</h2>
+      <p>This week only: Free Turkish Bath + Local SIM Card</p>
+      <div class="trip-buttons">
+        <button class="trip-btn">Tuesday Departure</button>
+        <button class="trip-btn">Save More This Week</button>
+        <button class="trip-btn">Limited Spots</button>
+      </div>
+      <a href="#" class="book-btn">Book Now</a>
+    </div>
+
+    <!-- Image Content -->
+    <div class="trip-image fade-right">
+      <img src="WhatsApp Image 2025-11-06 at 03.32.12.jpeg" alt="Cairo by Flight">
+    </div>
+  </div>
+</section>
+
+
+👉 Replace the filename inside <img src="..."> if it’s different.
+
+🎨 CSS (styles.css)
+
+Paste this at the bottom of your CSS file:
+
+/* === Trip of the Week Section === */
+.trip-of-the-week {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #007bff 0%, #00b4ff 100%);
+  padding: 60px 40px;
+  overflow: hidden;
+}
+
+/* Layout Container */
+.trip-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
+  gap: 50px;
+}
+
+/* Text Block */
+.trip-text {
+  flex: 1;
+  color: #fff;
+  line-height: 1.5;
+}
+
+.trip-tag {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.trip-text h2 {
+  font-size: 2.8rem;
+  margin-bottom: 15px;
+}
+
+.trip-text p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.trip-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.trip-btn {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: default;
+}
+
+.book-btn {
+  display: inline-block;
+  background: #fff;
+  color: #007bff;
+  padding: 12px 28px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.book-btn:hover {
+  background: #007bff;
+  color: #fff;
+}
+
+/* Image Block */
+.trip-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.trip-image img {
+  width: 420px;
+  max-width: 100%;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease, opacity 0.6s ease;
+}
+
+.trip-image img:hover {
+  transform: scale(1.04);
+}
+
+/* === Cinematic Fade Animations === */
+.fade-left, .fade-right {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInCinematic 1.2s forwards;
+}
+
+.fade-left {
+  animation-delay: 0.2s;
+  transform: translateX(-40px);
+}
+
+.fade-right {
+  animation-delay: 0.5s;
+  transform: translateX(40px);
+}
+
+@keyframes fadeInCinematic {
+  to {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+/* === Responsive Design === */
+@media (max-width: 1024px) {
+  .trip-text h2 {
+    font-size: 2.4rem;
+  }
+
+  .trip-container {
+    gap: 30px;
+  }
+
+  .trip-image img {
+    width: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .trip-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .trip-text h2 {
+    font-size: 2.2rem;
+  }
+
+  .trip-text p {
+    font-size: 1.05rem;
+  }
+
+  .trip-image img {
+    width: 80%;
+    margin-top: 25px;
+  }
+
+  .trip-of-the-week {
+    padding: 50px 20px;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .trip-image img {
+    width: 90%;
+  }
+
+  .trip-text h2 {
+    font-size: 1.9rem;
+  }
+}
+
+⚙️ How to Apply on Replit
+
+Open your project on Replit.
+
+Go to index.html, find the old Trip of the Week section, replace it with the HTML above.
+
+Go to styles.css, scroll to the bottom, and paste all CSS above.
+
+Upload the promo image file to Replit’s sidebar.
+
+Copy its exact name (e.g. cairobyflight.jpeg) and replace it in the <img src="...">.
+
+Click Run, refresh preview, and test it on desktop + mobile view.
+
+✅ Result:
+
+Everything fits one screen (no extra scroll).
+
+Text fades in from left, image from right.
+
+Image resizes automatically for tablet & mobile.
+
+Perfect modern alignment for the EgTravelMarket homepage.

@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Cairo by Flight — Round Trip",
+    "desc": "Day tour from Sharm El-Sheikh including Museum & Giza Plateau. Save $20 this week.",
+    "link": "cairo-by-flight.html",
+    "badge": "Ends Soon",
+    "deadline": "2025-11-05T20:00:00+02:00"
+  },
+  {
+    "title": "Luxor by Flight — Special",
+    "desc": "Karnak, Valley of the Kings & Hatshepsut. Save $25 on select dates.",
+    "link": "luxor-by-flight.html",
+    "badge": "Trip of the Week",
+    "deadline": "2025-11-08T23:59:00+02:00"
+  },
+  {
+    "title": "Red Sea Diving — 3+1 Free",
+    "desc": "Book 3 dive days, get the 4th free at Nabq & Ras Mohammed.",
+    "link": "book-diving.html",
+    "badge": "Diving Deal",
+    "deadline": "2025-11-12T18:00:00+02:00"
+  }
+]

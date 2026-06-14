@@ -1,0 +1,92 @@
+NDY3OTU2.js?t=467956:1 [tp] entrypoint init
+sentry.avs.io/api/20/envelope/?sentry_version=7&sentry_key=1c30377dafc708e9dfdf6df7e355a97c&sentry_client=sentry.javascript.browser%2F9.44.0:1  Failed to load resource: net::ERR_BLOCKED_BY_CLIENT
+chunk.r5DzKXMb.js:2 The PerformanceObserver does not support buffered flag with the entryTypes argument.
+startObserver @ chunk.r5DzKXMb.js:2
+chunk.Dqr8DSBp.js:15  POST https://sentry.avs.io/api/20/envelope/?sentry_version=7&sentry_key=1c30377dafc708e9dfdf6df7e355a97c&sentry_client=sentry.javascript.browser%2F9.44.0 net::ERR_BLOCKED_BY_CLIENT
+s @ chunk.Dqr8DSBp.js:15
+f @ chunk.Dqr8DSBp.js:8
+s @ chunk.Dqr8DSBp.js:8
+o @ chunk.Dqr8DSBp.js:8
+sendEnvelope @ chunk.Dqr8DSBp.js:7
+_flushOutcomes @ chunk.Dqr8DSBp.js:8
+(anonymous) @ chunk.Dqr8DSBp.js:15
+chunk.Dqr8DSBp.js:15  POST https://sentry.avs.io/api/20/envelope/?sentry_version=7&sentry_key=1c30377dafc708e9dfdf6df7e355a97c&sentry_client=sentry.javascript.browser%2F9.44.0 net::ERR_BLOCKED_BY_CLIENT
+s @ chunk.Dqr8DSBp.js:15
+f @ chunk.Dqr8DSBp.js:8
+s @ chunk.Dqr8DSBp.js:8
+o @ chunk.Dqr8DSBp.js:8
+sendEnvelope @ chunk.Dqr8DSBp.js:7
+_flushOutcomes @ chunk.Dqr8DSBp.js:8
+(anonymous) @ chunk.Dqr8DSBp.js:15
+chunk.Dqr8DSBp.js:15  POST https://sentry.avs.io/api/20/envelope/?sentry_version=7&sentry_key=1c30377dafc708e9dfdf6df7e355a97c&sentry_client=sentry.javascript.browser%2F9.44.0 net::ERR_BLOCKED_BY_CLIENT
+s @ chunk.Dqr8DSBp.js:15
+f @ chunk.Dqr8DSBp.js:8
+s @ chunk.Dqr8DSBp.js:8
+o @ chunk.Dqr8DSBp.js:8
+sendEnvelope @ chunk.Dqr8DSBp.js:7
+_flushOutcomes @ chunk.Dqr8DSBp.js:8
+(anonymous) @ chunk.Dqr8DSBp.js:15
+chunk.Dqr8DSBp.js:15 💳 Stripe payment button clicked!
+package-a-script.js?v=9:226 Uncaught (in promise) TypeError: Cannot read properties of null (reading 'value')
+    at processPackageAPayment (package-a-script.js?v=9:226:33)
+    at HTMLButtonElement.<anonymous> (package-a-script.js?v=9:210:11)
+    at HTMLButtonElement.r (chunk.Dqr8DSBp.js:15:7651)
+processPackageAPayment @ package-a-script.js?v=9:226
+(anonymous) @ package-a-script.js?v=9:210
+r @ chunk.Dqr8DSBp.js:15
+chunk.Dqr8DSBp.js:15 💳 Stripe payment button clicked!
+package-a-script.js?v=9:226 Uncaught (in promise) TypeError: Cannot read properties of null (reading 'value')
+    at processPackageAPayment (package-a-script.js?v=9:226:33)
+    at HTMLButtonElement.<anonymous> (package-a-script.js?v=9:210:11)
+    at HTMLButtonElement.r (chunk.Dqr8DSBp.js:15:7651)
+processPackageAPayment @ package-a-script.js?v=9:226
+(anonymous) @ package-a-script.js?v=9:210
+r @ chunk.Dqr8DSBp.js:15
+chunk.Dqr8DSBp.js:15 💳 Stripe payment button clicked!
+package-a-script.js?v=9:226 Uncaught (in promise) TypeError: Cannot read properties of null (reading 'value')
+    at processPackageAPayment (package-a-script.js?v=9:226:33)
+    at HTMLButtonElement.<anonymous> (package-a-script.js?v=9:210:11)
+    at HTMLButtonElement.r (chunk.Dqr8DSBp.js:15:7651)
+processPackageAPayment @ package-a-script.js?v=9:226
+(anonymous) @ package-a-script.js?v=9:210
+r @ chunk.Dqr8DSBp.js:15
+chunk.Dqr8DSBp.js:15 💳 Stripe payment button clicked!
+package-a-script.js?v=9:226 Uncaught (in promise) TypeError: Cannot read properties of null (reading 'value')
+    at processPackageAPayment (package-a-script.js?v=9:226:33)
+    at HTMLButtonElement.<anonymous> (package-a-script.js?v=9:210:11)
+    at HTMLButtonElement.r (chunk.Dqr8DSBp.js:15:7651)
+processPackageAPayment @ package-a-script.js?v=9:226
+(anonymous) @ package-a-script.js?v=9:210
+r @ chunk.Dqr8DSBp.js:15
+chunk.Dqr8DSBp.js:15 💳 Stripe payment button clicked!
+package-a-script.js?v=9:226 Uncaught (in promise) TypeError: Cannot read properties of null (reading 'value')
+    at processPackageAPayment (package-a-script.js?v=9:226:33)
+    at HTMLButtonElement.<anonymous> (package-a-script.js?v=9:210:11)
+    at HTMLButtonElement.r (chunk.Dqr8DSBp.js:15:7651)
+processPackageAPayment @ package-a-script.js?v=9:226
+(anonymous) @ package-a-script.js?v=9:210
+r @ chunk.Dqr8DSBp.js:15
+chunk.Dqr8DSBp.js:15 💳 Stripe payment button clicked!
+package-a-script.js?v=9:226 Uncaught (in promise) TypeError: Cannot read properties of null (reading 'value')
+    at processPackageAPayment (package-a-script.js?v=9:226:33)
+    at HTMLButtonElement.<anonymous> (package-a-script.js?v=9:210:11)
+    at HTMLButtonElement.r (chunk.Dqr8DSBp.js:15:7651)
+processPackageAPayment @ package-a-script.js?v=9:226
+(anonymous) @ package-a-script.js?v=9:210
+r @ chunk.Dqr8DSBp.js:15
+chunk.Dqr8DSBp.js:15 💳 Stripe payment button clicked!
+package-a-script.js?v=9:226 Uncaught (in promise) TypeError: Cannot read properties of null (reading 'value')
+    at processPackageAPayment (package-a-script.js?v=9:226:33)
+    at HTMLButtonElement.<anonymous> (package-a-script.js?v=9:210:11)
+    at HTMLButtonElement.r (chunk.Dqr8DSBp.js:15:7651)
+processPackageAPayment @ package-a-script.js?v=9:226
+(anonymous) @ package-a-script.js?v=9:210
+r @ chunk.Dqr8DSBp.js:15
+chunk.Dqr8DSBp.js:15  POST https://sentry.avs.io/api/20/envelope/?sentry_version=7&sentry_key=1c30377dafc708e9dfdf6df7e355a97c&sentry_client=sentry.javascript.browser%2F9.44.0 net::ERR_BLOCKED_BY_CLIENT
+s @ chunk.Dqr8DSBp.js:15
+f @ chunk.Dqr8DSBp.js:8
+s @ chunk.Dqr8DSBp.js:8
+o @ chunk.Dqr8DSBp.js:8
+sendEnvelope @ chunk.Dqr8DSBp.js:7
+_flushOutcomes @ chunk.Dqr8DSBp.js:8
+(anonymous) @ chunk.Dqr8DSBp.js:15

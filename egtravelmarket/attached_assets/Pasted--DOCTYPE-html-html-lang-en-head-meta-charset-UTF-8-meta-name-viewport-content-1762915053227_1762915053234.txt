@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EgTravelMarket | Sharm: Where Desert Meets Sea</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{background:#fdfaf6;color:#222;line-height:1.7;}
+    a{text-decoration:none;color:#0a3d62;}
+    img{max-width:100%;display:block;}
+
+    /* ===== HERO ===== */
+    .hero{
+      background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+                 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
+      height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+      text-align:center;color:#fff;padding:0 15px;
+    }
+    .hero h1{font-size:2.8rem;margin-bottom:10px;}
+    .hero p{max-width:700px;color:#ddd;}
+
+    /* ===== ARTICLE ===== */
+    .article{padding:60px 10%;max-width:900px;margin:auto;}
+    .article h2{color:#0a3d62;margin-bottom:20px;}
+    .article p{margin-bottom:20px;font-size:1.05rem;color:#333;}
+
+    /* ===== RELATED TRIPS ===== */
+    .related-trips{background:#fff;padding:50px 10%;text-align:center;}
+    .related-trips h2{color:#0a3d62;margin-bottom:30px;}
+    .trips{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;}
+    .trip-card{background:#f9f9f9;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);overflow:hidden;transition:.3s;}
+    .trip-card:hover{transform:translateY(-5px);}
+    .trip-card img{height:180px;object-fit:cover;width:100%;}
+    .trip-card h3{color:#0a3d62;font-size:1.1rem;margin:15px;}
+    .trip-card a{display:inline-block;background:#0a3d62;color:#fff;margin:0 0 15px;padding:8px 15px;border-radius:6px;transition:.3s;}
+    .trip-card a:hover{background:#062f4e;}
+
+    /* ===== FOOTER ===== */
+    footer{background:#0a3d62;color:#fff;text-align:center;padding:30px 15px;font-size:.9rem;margin-top:50px;}
+    footer p{margin:5px 0;}
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <h1>Sharm: Where Desert Meets Sea</h1>
+    <p>Discover the soul of Egypt’s Red Sea capital — a world where coral reefs, desert winds, and warm smiles meet.</p>
+  </section>
+
+  <!-- ===== ARTICLE CONTENT ===== -->
+  <section class="article">
+    <h2>The Gateway Between Worlds</h2>
+    <p>
+      Sharm El-Sheikh isn’t just a destination — it’s an experience that merges two of nature’s
+      greatest contrasts: the endless desert and the living sea. From the rolling dunes of Sinai to the deep blue
+      coral gardens of Ras Mohamed, this region captures the spirit of balance that defines Egypt itself.
+    </p>
+
+    <p>
+      Once a quiet fishing village, Sharm has become a global meeting point for travelers, divers,
+      and dreamers. Yet despite its modern resorts and international events, it has kept its soul.
+      Walk through the local markets, talk to a Bedouin elder over tea, or watch the sunset from Naama Bay,
+      and you’ll feel the pulse of real Egypt beneath the surface.
+    </p>
+
+    <h2>Life Beneath the Waves</h2>
+    <p>
+      Beneath the clear turquoise surface lies a kingdom of color.  
+      The reefs of Sharm and Tiran are among the most vibrant on earth —
+      home to sea turtles, rays, and corals that glow like gemstones.  
+      Diving here isn’t just sport; it’s meditation. Many visitors say their first dive changed
+      how they see the planet itself.
+    </p>
+
+    <p>
+      EgTravelMarket partners with trusted diving centers that focus on safety and environmental care.
+      When you dive through our packages, you support the preservation of these fragile ecosystems.
+    </p>
+
+    <h2>Desert Silence & Bedouin Spirit</h2>
+    <p>
+      As night falls, the desert comes alive with stars.  
+      The Bedouin camps outside Sharm welcome travelers with open arms —
+      offering traditional food, music, and storytelling around the fire.
+      It’s in these quiet moments, away from noise and Wi-Fi, that many guests say they truly
+      “met” Egypt.
+    </p>
+
+    <p>
+      Whether you seek adventure or reflection, Sharm gives both.  
+      The city’s peace conferences and coral reefs tell one story: Egypt is a land where worlds connect.
+    </p>
+  </section>
+
+  <!-- ===== RELATED TRIPS ===== -->
+  <section class="related-trips">
+    <h2>Related Experiences</h2>
+    <div class="trips">
+      <div class="trip-card">
+        <img src="/assets/trips/sharm-diving.jpg" alt="Diving Experience">
+        <h3>Sharm Diving & Coral Safari</h3>
+        <a href="/trip-diving-sharm.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/bedouin-night.jpg" alt="Bedouin Night">
+        <h3>Bedouin Night & Desert Safari</h3>
+        <a href="/trip-bedouin-safari.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/ras-mohamed.jpg" alt="Ras Mohamed National Park">
+        <h3>Ras Mohamed National Park Excursion</h3>
+        <a href="/trip-ras-mohamed.html">View Trip</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 EgTravelMarket – All Rights Reserved</p>
+    <p>Backed & Managed by GoMundo Travel</p>
+  </footer>
+
+</body>
+</html>
+🧭 Step 2 — Upload Trip Images (optional)
+If you already have images for your trips, create this folder in Replit:
+/assets/trips/
+
+Upload:
+
+Copy code
+sharm-diving.jpg
+bedouin-night.jpg
+ras-mohamed.jpg
+(You can use placeholder Unsplash images for now if you don’t have them yet.)
+
+🧩 Step 3 — Connect From “Discover Egypt” Page
+In your main discover-egypt.html, find this section:
+
+html
+Copy code
+<h3>Red Sea & Sharm El-Sheikh</h3>
+and wrap it with a link:
+
+html
+Copy code
+<a href="/red-sea-sharm.html">
+  <h3>Red Sea & Sharm El-Sheikh</h3>
+</a>

@@ -1,0 +1,270 @@
+Create a complete Technical Handover Document for this web platform for a new developer who will take over development and maintenance.
+
+Important instructions:
+
+* Do NOT modify any files.
+* Do NOT refactor anything.
+* Do NOT delete anything.
+* Do NOT create new code.
+* Only inspect the codebase and produce a clear technical report.
+* The goal is to help a new developer understand the whole platform architecture and know where to work safely.
+
+Please produce a structured technical report with the following sections:
+
+1. Executive Technical Summary
+   Explain in simple technical terms:
+
+* What this platform does
+* What technologies are used
+* How the frontend, backend, database, payments, emails, and admin system are connected
+* Whether the project is monolithic or separated into frontend/backend
+
+2. Project Structure Map
+   List the main folders and files.
+   For each important folder/file, explain:
+
+* What it does
+* Whether it belongs to frontend, backend, database, admin, authentication, payments, emails, uploads, or configuration
+* Whether it is critical, optional, old/unused, or risky to change
+
+3. Frontend Map
+   Identify all main frontend pages.
+   For each page, explain:
+
+* File name/path
+* Purpose of the page
+* What data it displays
+* Which API endpoints it calls
+* Which buttons/forms/actions exist on the page
+* Where the page sends data
+* Any JavaScript file linked to it
+* Any problems, duplicated logic, or hardcoded data
+
+4. Backend/API Map
+   List all API routes/endpoints in the backend.
+   For each endpoint, provide:
+
+* HTTP method
+* URL path
+* File/function where it is defined
+* What it does
+* Which frontend page uses it
+* Input parameters/body
+* Output/response shape
+* Which database tables it reads/writes
+* Whether authentication is required
+* Whether admin access is required
+* Possible failure points
+
+5. Database Map
+   Identify the database type and connection file.
+   Then list all database tables.
+   For each table, explain:
+
+* Table name
+* Purpose
+* Main columns
+* Primary key
+* Relationships with other tables
+* Which API endpoints use it
+* Which frontend/admin pages depend on it
+* Whether it looks active, duplicated, old, or unused
+* Any naming inconsistencies or schema problems
+
+6. Authentication and Login Flow
+   Explain the complete login system:
+
+* Where login form/page is located
+* Which API endpoint handles login
+* How users/admins are verified
+* How passwords are checked/stored
+* How sessions, cookies, JWT, or tokens are handled
+* Where admin permissions are checked
+* What happens after successful login
+* What happens after failed login
+* Weak points or security concerns
+
+7. Admin Dashboard Map
+   Explain the admin dashboard in detail:
+
+* Admin entry page/file
+* All admin sections/pages
+* Which APIs each admin section calls
+* What data each section loads
+* How approve/reject/edit/delete actions work
+* Which database tables are affected
+* Why the dashboard may be slow
+* Any repeated API calls or inefficient queries
+* Any risky admin actions
+
+8. Experts System Flow
+   Explain the full experts flow:
+
+* Expert signup page
+* Expert form fields
+* API endpoint receiving expert signup
+* Database tables used
+* Approval process
+* How expert profiles become public
+* How expert listing pages load data
+* Search/filter logic
+* Any possible bugs or weak points
+
+9. Agencies / DMC / Dive Centers Flow
+   Explain the full agency/provider flow:
+
+* Signup page
+* API endpoint
+* Database tables
+* Approval process
+* Public profile loading
+* Admin management
+* Any duplicated logic with experts
+* Any weak points
+
+10. Traveler Request / Offers / Booking Flow
+    Explain the full flow step by step:
+
+* Traveler submits request
+* Request stored in database
+* Providers/agencies see or receive request
+* Providers send offers
+* Traveler accepts/rejects offer
+* Payment process starts
+* Booking confirmation
+* Emails sent
+* Admin visibility
+  For each step, mention:
+* Frontend page/file
+* API endpoint
+* Database table
+* Related status fields
+* Possible failure points
+
+11. Stripe Payment Flow
+    Explain:
+
+* Where payment is created
+* Which files handle Stripe
+* Which API endpoints are involved
+* What happens before payment
+* What happens after successful payment
+* Webhook handling
+* Which database records are updated
+* Any risks such as duplicate payment, missing webhook validation, or unconfirmed booking
+
+12. Email Flow
+    Explain:
+
+* Which email provider is used
+* Where email credentials are configured
+* Which files send emails
+* Which events trigger emails
+* Email templates or hardcoded email content
+* Error handling for failed emails
+* Missing email notifications
+
+13. File Uploads / Images
+    Explain:
+
+* How images/files are uploaded
+* Where they are stored
+* Which pages use uploaded files
+* Which database fields store file paths
+* Whether storage is safe for production
+* Risks if Replit restarts, redeploys, or file paths change
+
+14. Environment Variables and Secrets
+    List all environment variables used in the project.
+    For each one, explain:
+
+* Name
+* Purpose
+* Which file uses it
+* Whether it is required for local development
+* Whether it is required for production
+  Do not expose actual secret values.
+
+15. Current Runtime / Deployment Setup
+    Explain:
+
+* How the app runs on Replit
+* Start command
+* Build command if any
+* Port used
+* Static file serving
+* Backend server entry point
+* Database connection at runtime
+* Any Replit-specific configuration
+
+16. Known Technical Risks
+    Identify the main risks in the current codebase, including:
+
+* Pages not loading until republish
+* Login instability
+* Admin dashboard slow loading
+* Database connection problems
+* Missing error handling
+* Long-running queries
+* Duplicated code
+* Hardcoded values
+* Security issues
+* Files or tables that look unused or confusing
+
+17. Recommended Developer Action Plan
+    Create a prioritized plan for the new developer:
+
+Critical fixes first:
+
+* What must be fixed immediately
+
+Important improvements:
+
+* What should be improved after stability
+
+Refactoring plan:
+
+* What should be cleaned gradually
+
+Do not change yet:
+
+* What should not be touched before full testing
+
+18. Safe Development Rules
+    Write clear rules for the developer:
+
+* Which files are dangerous to edit
+* Which flows must be tested after any change
+* Which database tables must be backed up before changes
+* Which features must not be rewritten suddenly
+* How to work using branches and commits
+
+19. Testing Checklist
+    Create a manual testing checklist for the platform:
+
+* Homepage
+* Expert listing
+* Expert profile
+* Agency listing
+* Agency profile
+* Login
+* Admin login
+* Admin dashboard
+* Expert approval
+* Agency approval
+* Traveler request
+* Provider offer
+* Payment
+* Email notifications
+* Mobile responsiveness
+
+20. New Developer Quick Start
+    Explain:
+
+* How a new developer should read the project
+* First 10 files to inspect
+* How to run locally if possible
+* What information they need from the owner
+* What they should fix first
+
+Output the report in a clean format with headings, bullet points, file paths, route names, table names, and clear explanations.

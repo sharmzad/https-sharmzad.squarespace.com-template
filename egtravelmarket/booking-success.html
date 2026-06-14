@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- PRIMARY OG IMAGE -->
+  <meta property="og:title" content="EgTravelMarket – Your Gateway to Explore Egypt" />
+  <meta property="og:description" content="Discover trips, experts, diving, MICE, medical services, and full travel experiences across Egypt." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.egtravelmarket.com/" />
+  <meta property="og:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+
+  <!-- TELL CRAWLERS TO REFRESH OG IMAGE -->
+  <meta property="og:image:secure_url" content="https://www.egtravelmarket.com/static/images/og-image.jpg?v=2" />
+    <title>Booking Confirmed - EG Travel Market</title>
+    <meta name="description" content="Your booking is confirmed! Thank you for choosing EgTravelMarket. View your booking details, download confirmations, and prepare for your Egypt adventure.">
+    <meta name="keywords" content="booking confirmation, Egypt trip confirmed, travel booking">
+    <link rel="canonical" href="https://egytravelmarket.com/booking-success.html">
+    
+    <!-- Open Graph Meta Tags -->
+    <!-- Twitter Card -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            animation: scaleIn 0.6s ease-out;
+        }
+
+        .success-icon svg {
+            width: 48px;
+            height: 48px;
+            stroke: white;
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            animation: slideIn 0.6s ease-out 0.2s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                stroke-dasharray: 60;
+                stroke-dashoffset: 60;
+            }
+            to {
+                stroke-dasharray: 60;
+                stroke-dashoffset: 0;
+            }
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .booking-details {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            text-align: left;
+            border-left: 4px solid #28a745;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .detail-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #666;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .email-notice {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+            color: #1565c0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .email-icon {
+            font-size: 20px;
+            margin-right: 8px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            background: #e8e8e8;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #fee;
+            border: 1px solid #fcc;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+            color: #c33;
+            font-size: 14px;
+            display: none;
+        }
+
+        .footer-text {
+            color: #999;
+            font-size: 12px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 24px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+    <div class="container">
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Processing your booking...</p>
+        </div>
+
+        <div id="success" style="display: none;">
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+
+            <h1>✅ Booking Confirmed!</h1>
+            <p class="subtitle">Your expert trip booking is complete. You're all set to embark on an amazing adventure!</p>
+
+            <div class="email-notice">
+                <span class="email-icon">📧</span>
+                A confirmation email has been sent to <strong id="emailDisplay"></strong>. Please check your inbox for trip details and next steps.
+            </div>
+
+            <div class="booking-details">
+                <div class="detail-row">
+                    <span class="detail-label">Booking ID:</span>
+                    <span class="detail-value">#<span id="bookingId">-</span></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Trip:</span>
+                    <span class="detail-value" id="tripTitle">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Total Amount:</span>
+                    <span class="detail-value">$<span id="totalAmount">0.00</span></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Status:</span>
+                    <span class="detail-value" style="color: #28a745; font-weight: 700;">✓ Confirmed</span>
+                </div>
+            </div>
+
+            <div id="expertContact" style="background: #e3f2fd; border: 1px solid #90caf9; border-radius: 8px; padding: 16px; margin-bottom: 24px; display: none;">
+                <h3 style="color: #1565c0; margin-top: 0; margin-bottom: 12px;">📞 Contact Your Expert Guide</h3>
+                <p style="color: #1565c0; margin: 8px 0; font-size: 14px;">Your expert guide is <strong id="expertName"></strong>. Get in touch to coordinate your trip!</p>
+                <div id="contactButtons" style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px;"></div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="window.location.href = '/';">
+                    🏠 Home
+                </button>
+            </div>
+
+            <p class="footer-text">
+                Thank you for booking with EG Travel Market! Your payment is secure and held in escrow until the trip is confirmed.
+            </p>
+        </div>
+
+        <div id="error" class="error">
+            <strong>❌ Error:</strong> <span id="errorMessage"></span>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookingId = urlParams.get('bookingId');
+        const sessionId = urlParams.get('sessionId');
+
+        async function confirmBooking() {
+            const loadingEl = document.getElementById('loading');
+            const successEl = document.getElementById('success');
+            const errorEl = document.getElementById('error');
+            const errorMsg = document.getElementById('errorMessage');
+
+            try {
+                if (!bookingId || !sessionId) {
+                    throw new Error('Invalid booking parameters');
+                }
+
+                loadingEl.style.display = 'block';
+
+                // Call backend to confirm payment and send emails
+                const response = await fetch('/api/expert-trips-payments/confirm-payment-success', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        bookingId: parseInt(bookingId),
+                        sessionId
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || 'Failed to confirm booking');
+                }
+
+                loadingEl.style.display = 'none';
+                successEl.style.display = 'block';
+
+                // Fire Meta Pixel Purchase event for expert trip booking
+                if (window.MetaPixelEvents) {
+                  window.MetaPixelEvents.trackPurchase(
+                    parseFloat(result.totalAmount || 0),
+                    'USD',
+                    'expert',
+                    result.expertType || 'guide'
+                  );
+                }
+
+                // Display booking details
+                document.getElementById('bookingId').textContent = bookingId;
+                document.getElementById('tripTitle').textContent = result.tripTitle || 'Expert Trip';
+                document.getElementById('totalAmount').textContent = parseFloat(result.totalAmount || 0).toFixed(2);
+                document.getElementById('emailDisplay').textContent = result.travelerEmail || 'your email';
+
+                // Display expert contact info
+                if (result.expertName) {
+                    document.getElementById('expertName').textContent = result.expertName;
+                    document.getElementById('expertContact').style.display = 'block';
+                    
+                    let contactHTML = '';
+                    if (result.expertEmail) {
+                        contactHTML += `<a href="mailto:${result.expertEmail}" style="padding: 10px 16px; background: #1565c0; color: white; border-radius: 6px; text-decoration: none; font-size: 14px; display: inline-block;">📧 Email</a>`;
+                    }
+                    if (result.expertWhatsapp) {
+                        const whatsappUrl = `https://wa.me/${result.expertWhatsapp.replace(/\D/g, '')}?text=Hi,%20I%20just%20booked%20your%20trip!%20Booking%20ID:%20%23${bookingId}`;
+                        contactHTML += `<a href="${whatsappUrl}" target="_blank" style="padding: 10px 16px; background: #25D366; color: white; border-radius: 6px; text-decoration: none; font-size: 14px; display: inline-block;">💬 WhatsApp</a>`;
+                    }
+                    document.getElementById('contactButtons').innerHTML = contactHTML;
+                }
+
+                // Log success
+                console.log('✅ Booking confirmed:', result);
+            } catch (error) {
+                console.error('❌ Booking confirmation error:', error);
+                loadingEl.style.display = 'none';
+                errorEl.style.display = 'block';
+                errorMsg.textContent = error.message || 'Something went wrong. Please contact support.';
+            }
+        }
+
+        // Confirm booking on page load
+        document.addEventListener('DOMContentLoaded', confirmBooking);
+    </script>
+
+<!-- SEO FOOTER -->
+<footer class="seo-footer" style="background:#0a3d62;color:#fff;padding:40px 20px;margin-top:80px;border-top:3px solid #ffc107;"><div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;padding-bottom:20px;"><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Services</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./book-diving.html" style="color:#f0f0f0;text-decoration:none;">Dive</a></li><li style="margin-bottom:3px;"><a href="./deals.html" style="color:#f0f0f0;text-decoration:none;">Deals</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Trips</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./cairo-by-flight.html" style="color:#f0f0f0;text-decoration:none;">Cairo</a></li><li style="margin-bottom:3px;"><a href="./luxor-by-flight.html" style="color:#f0f0f0;text-decoration:none;">Luxor</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Experts</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./guides.html" style="color:#f0f0f0;text-decoration:none;">Guides</a></li><li style="margin-bottom:3px;"><a href="./mentor.html" style="color:#f0f0f0;text-decoration:none;">Mentor</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Business</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./mice.html" style="color:#f0f0f0;text-decoration:none;">MICE</a></li><li style="margin-bottom:3px;"><a href="./investment.html" style="color:#f0f0f0;text-decoration:none;">Invest</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Company</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./about.html" style="color:#f0f0f0;text-decoration:none;">About</a></li><li style="margin-bottom:3px;"><a href="./contact.html" style="color:#f0f0f0;text-decoration:none;">Contact</a></li></ul></div></div><div style="border-top:1px solid rgba(255,255,255,0.2);padding-top:10px;text-align:center;color:#bbb;font-size:0.7rem;"><p style="margin:0;">&copy; 2025 EgTravelMarket | <a href="./index.html" style="color:#ffc107;">Home</a> | <a href="./sitemap.xml" style="color:#ffc107;">Sitemap</a></p></div>  <div style="max-width:1000px;margin:0 auto;padding:20px;text-align:center;color:#9aa4c6;font-size:0.75rem;line-height:1.6;border-top:1px solid rgba(255,255,255,0.1);">
+    <p style="margin:0 0 10px 0;"><strong style="color:#ffc107;">Platform Disclaimer</strong></p>
+    <p style="margin:0;">EgTravelMarket is an international technology platform that facilitates connections between travelers and independent service providers. EgTravelMarket does not operate tours, travel services, or diving activities directly. All on-ground travel services in Egypt are executed by independent licensed partners such as GoMundo Travel, while all diving and water activities are provided by independent licensed dive centers such as Megalodon Diving Club. Contracts, service execution, and operational responsibility are solely between travelers and the respective service providers.</p>
+  </div>
+</footer>
+
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

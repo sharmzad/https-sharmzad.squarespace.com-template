@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Goodbye Sharm Trip - City Tour & Sunset Views | EgyTravelMarket</title>
+  <meta name="description" content="Discover Sharm's heart! Visit the bazaar, mosque, church, and Hadaba Plateau for sunset views. Only $15 per adult, FREE for children under 14.">
+  <meta name="copyright" content="© 2025 EgTravelMarket. All rights reserved.">
+  
+  <link rel="canonical" href="https://egytravelmarket.com/goodbye-sharm-trip.html">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="header.css?v=20251125-latest">
+  <style>
+    :root{
+      --brand-start:#0a66c2; --brand-end:#19a1f7; --bg:#0b1220; --text:#e9f2ff;
+      --muted:#9fb5d1; --card:#121a2b; --border:rgba(255,255,255,.12);
+      --accent:#ffb02e; --success:#22c55e; --danger:#ef4444; --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:18px; --radius-sm:12px; --max:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+
+    .container{max-width:var(--max);margin:auto;padding:1rem}
+    .email-fab{position:fixed;right:18px;bottom:18px;z-index:900;display:grid;place-items:center;width:54px;height:54px;border-radius:999px;background:linear-gradient(135deg,var(--brand-start),var(--brand-end));box-shadow:var(--shadow)}
+    .email-fab svg{color:#fff}
+
+    .hero{position:relative;min-height:56vh;display:grid;align-items:end}
+    .hero__bg{position:absolute;inset:0;background:url('images/goodbye-sharm.jpg') center/cover no-repeat}
+    .hero__overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,22,40,.35),rgba(10,22,40,.75) 40%,rgba(10,22,40,.95))}
+    .hero__content{position:relative;z-index:1;padding:2rem 1rem}
+    .hero__title{font-size:clamp(1.6rem,3vw,2.6rem);font-weight:900;margin:0 0 .5rem}
+    .hero__sub{color:var(--muted);margin:.25rem 0 1rem}
+    .badges{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .7rem;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,.06);color:var(--text)}
+    .cta{display:flex;gap:.6rem;margin-top:1rem}
+    .btn{padding:.7rem 1rem;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.08);color:var(--text);font-weight:700;cursor:pointer}
+    .btn--primary{background:linear-gradient(135deg,var(--brand-start),var(--brand-end));border-color:transparent}
+
+    .layout{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1rem}
+    @media(min-width:1024px){.layout{grid-template-columns:minmax(0,1fr) 360px;align-items:start}}
+
+    .strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem;margin:1rem 0}
+    .pill{display:flex;align-items:center;gap:.6rem;padding:.7rem .8rem;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:var(--radius-sm)}
+    @media(min-width:700px){.strip{grid-template-columns:repeat(5,1fr)}}
+
+    .tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
+    .tab{padding:.6rem .9rem;border-radius:999px;border:2px solid var(--border);background:rgba(255,255,255,.08);cursor:pointer;transition:all .3s ease;font-weight:600}
+    .tab:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2)}
+    .tab[aria-selected="true"]{background:linear-gradient(135deg,rgba(10,102,194,.5),rgba(25,161,247,.4));border-color:var(--brand-start);font-weight:700;box-shadow:0 0 0 3px rgba(10,102,194,.15)}
+    .panel{margin-top:1rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem}
+
+    .feature-list{list-style:none;padding:0;margin:.5rem 0}
+    .feature-list li{padding:.4rem 0;display:flex;align-items:start;gap:.5rem}
+    .feature-list li:before{content:'✓';color:var(--success);font-weight:700}
+
+    .booking{position:sticky;top:14px;background:rgba(12,18,32,.9);backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;box-shadow:var(--shadow)}
+    .booking h3{margin:.2rem 0 1rem}
+    .booking__toggle{display:none}
+    .field{display:grid;gap:.35rem;margin:.6rem 0}
+    .field label{color:var(--muted);font-size:.95rem}
+    .field input, .field select{padding:.65rem .7rem;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--text)}
+    .field select, .field select option{background:#fff;color:#0b1220}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+    .price{display:flex;align-items:center;justify-content:space-between;margin-top:.8rem;padding:.7rem .8rem;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--border)}
+    .notice{font-size:.9rem;color:var(--muted);margin-top:.6rem}
+    .help{display:flex;align-items:center;gap:.5rem;margin-top:.6rem}
+
+    .callout{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);padding:.9rem;border-radius:12px}
+    .callout--warn{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.35)}
+    .callout--info{background:rgba(59,130,246,.08);border-color:rgba(59,130,246,.35)}
+
+    @media(max-width:1023px){
+      .booking{position:fixed;bottom:0;left:0;right:0;border-radius:var(--radius) var(--radius) 0 0;z-index:999;max-height:85vh;overflow-y:auto}
+      .booking.collapsed .booking__content{display:none}
+      .booking__toggle{display:flex;align-items:center;justify-content:space-between;padding:.7rem;background:linear-gradient(135deg,var(--brand-start),var(--brand-end));border-radius:var(--radius-sm);cursor:pointer;margin-bottom:.5rem}
+      .booking:not(.collapsed) .booking__toggle-icon{transform:rotate(180deg)}
+    }
+
+    .etm-trust-badges{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0;padding:12px;background:rgba(255,255,255,.03);border-radius:12px}
+    .etm-badge{display:flex;align-items:center;gap:6px;padding:8px 10px;background:linear-gradient(90deg,#005b96,#007acc);border-radius:8px;font-size:.8rem;color:#fff;transition:transform .2s ease,box-shadow .2s ease}
+    .etm-badge i{color:#ffd700;font-size:1rem}
+    .etm-badge:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,91,150,.3)}
+    @media(max-width:768px){
+      .etm-trust-badges{grid-template-columns:repeat(2,1fr);gap:6px;padding:10px}
+      .etm-badge{font-size:.75rem;padding:6px 8px}
+      .etm-badge i{font-size:.9rem}
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9Z2B97VS02"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9Z2B97VS02');
+  </script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+  <div id="site-header"></div>
+  <script>
+    fetch("header.html").then(r=>r.text()).then(h=>{document.getElementById("site-header").innerHTML=h;const s=document.createElement("script");s.src="header.min.js";document.body.appendChild(s);});
+  </script>
+
+  <a class="email-fab" href="mailto:support@egtravelmarket.com" title="Email Support" aria-label="Email support">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg"><path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="white" stroke-width="1.7"/><path d="M22 8l-8.6 5.4a2 2 0 0 1-2.2 0L2 8" stroke="white" stroke-width="1.7"/></svg>
+  </a>
+
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__overlay"></div>
+    <div class="container hero__content">
+      <h1 class="hero__title">Goodbye Sharm Trip: Discover the Soul of the City Before You Go</h1>
+      <p class="hero__sub">⭐⭐⭐⭐⭐ · Duration: 14:00-20:00 · Adults $15 | Children under 14 FREE</p>
+      <div class="badges">
+        <span class="badge">🕌 Mosque & Church Visit</span>
+        <span class="badge">🛍️ Fixed-Price Bazaar</span>
+        <span class="badge">🌅 Hadaba Sunset View</span>
+        <span class="badge">🚐 Hotel Transfers</span>
+        <span class="badge">👨‍👩‍👧 Family Friendly</span>
+      </div>
+      <div class="cta">
+        <a class="btn btn--primary" href="#booking">Book Now</a>
+        <a class="btn" href="https://wa.me/201023889959?text=Hi%2C%20I%20have%20a%20question%20about%20Goodbye%20Sharm%20Trip" target="_blank">Ask a Question</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="strip" aria-label="Tour highlights">
+      <div class="pill">🕌 Al Mustafa Mosque</div>
+      <div class="pill">⛪ Coptic Church</div>
+      <div class="pill">🛍️ Bazaar Shopping</div>
+      <div class="pill">🌅 Panoramic Views</div>
+      <div class="pill">🚐 Convenient Pickup</div>
+    </div>
+
+    <div class="layout">
+      <main>
+        <div class="tabs" role="tablist" aria-label="Tour information tabs">
+          <button class="tab" role="tab" aria-selected="true" data-tab="overview">Overview</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="itinerary">Itinerary</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="pricing">Pricing</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="info">Important Information</button>
+        </div>
+
+        <section id="panel-overview" class="panel" role="tabpanel">
+          <h3 style="margin-top:0">Experience Authentic Egypt Before You Leave</h3>
+          <p>
+            End your holiday with a touch of culture and beauty! The <strong>Goodbye Sharm Trip</strong> offers an authentic city experience that connects you with Sharm El Sheikh's true essence—colorful bazaars, sacred landmarks, and a sunset view that will stay in your heart forever.
+          </p>
+
+          <h4>🌅 What Makes This Experience Special?</h4>
+          <p>
+            This afternoon tour is perfect for your last day in Sharm. Visit the majestic <strong>Al Mustafa Mosque</strong> with its oriental atmosphere, the beautiful <strong>Coptic Church</strong> in the Egyptian quarter, and shop at the <strong>Famous Fixed-Price Bazaar</strong>—the only market in Sharm offering real Egyptian products at fair prices.
+          </p>
+
+          <h4>✨ Why Choose This Trip?</h4>
+          <ul class="feature-list">
+            <li>Experience authentic Egyptian life beyond the resorts</li>
+            <li>Perfect for families and last-day travelers</li>
+            <li>Enjoy a beautiful sunset viewpoint at Hadaba Plateau</li>
+            <li>Unbeatable value - only $15 per adult, FREE for kids under 14</li>
+            <li>Back in time for dinner at your hotel</li>
+            <li>Small groups for a personalized experience</li>
+          </ul>
+
+          <div class="callout" style="margin-top:.8rem">
+            <strong>🎯 Perfect For:</strong> Families with children, culture enthusiasts, photographers, shoppers looking for authentic souvenirs, and anyone wanting to see the real Sharm before heading home!
+          </div>
+        </section>
+
+        <section id="panel-itinerary" class="panel" role="tabpanel" hidden>
+          <h3 style="margin-top:0">📅 Tour Itinerary</h3>
+          
+          <div class="callout callout--info" style="margin-bottom:1rem">
+            <strong>⏰ Tour Schedule:</strong> Every Tuesday & Wednesday, 14:00 - 20:00 (back in time for dinner)
+          </div>
+
+          <div style="display:grid;gap:.8rem">
+            <div style="padding:.8rem;border-left:3px solid var(--brand-start);background:rgba(255,255,255,.03);border-radius:8px">
+              <strong>14:00 - Hotel Pickup</strong><br>
+              Convenient pickup from your hotel anywhere in Sharm El Sheikh
+            </div>
+            <div style="padding:.8rem;border-left:3px solid var(--brand-start);background:rgba(255,255,255,.03);border-radius:8px">
+              <strong>14:30 - Fixed-Price Bazaar</strong><br>
+              The only market in Sharm offering real Egyptian products at fair prices. Shop for authentic souvenirs, spices, textiles, and local crafts.
+            </div>
+            <div style="padding:.8rem;border-left:3px solid var(--brand-start);background:rgba(255,255,255,.03);border-radius:8px">
+              <strong>16:00 - Coptic Church Visit</strong><br>
+              See the beautiful Coptic Church in the Egyptian quarter of Sharm
+            </div>
+            <div style="padding:.8rem;border-left:3px solid var(--brand-start);background:rgba(255,255,255,.03);border-radius:8px">
+              <strong>17:00 - Al Mustafa Mosque</strong><br>
+              Explore the majestic Al Mustafa Mosque with its stunning oriental atmosphere in Old Sharm
+            </div>
+            <div style="padding:.8rem;border-left:3px solid var(--brand-start);background:rgba(255,255,255,.03);border-radius:8px">
+              <strong>18:30 - Hadaba Plateau</strong><br>
+              Head to the Hadaba Plateau for a breathtaking panoramic view of the city and sunset
+            </div>
+            <div style="padding:.8rem;border-left:3px solid var(--brand-start);background:rgba(255,255,255,.03);border-radius:8px">
+              <strong>20:00 - Hotel Drop-off</strong><br>
+              Return to your hotel before dinner time
+            </div>
+          </div>
+        </section>
+
+        <section id="panel-pricing" class="panel" role="tabpanel" hidden>
+          <h3 style="margin-top:0">💰 Pricing</h3>
+          
+          <div style="background:rgba(255,255,255,.03);border-radius:12px;padding:1.5rem;margin:1rem 0">
+            <div style="display:grid;gap:1rem">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:.8rem;background:rgba(10,102,194,.1);border-radius:8px">
+                <span><strong>Adults</strong></span>
+                <span style="font-size:1.3rem;font-weight:700;color:var(--accent)">$15 USD</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:.8rem;background:rgba(34,197,94,.1);border-radius:8px">
+                <span><strong>Children (under 14 years)</strong></span>
+                <span style="font-size:1.3rem;font-weight:700;color:var(--success)">FREE</span>
+              </div>
+            </div>
+          </div>
+
+          <h4 style="margin-top:1.5rem">What's Included in Your Price</h4>
+          <ul class="feature-list">
+            <li>Round-trip air-conditioned transport from your hotel</li>
+            <li>Professional English-speaking guide</li>
+            <li>All visits as per itinerary</li>
+            <li>Free time for shopping at the bazaar</li>
+            <li>Panoramic photo opportunity at Hadaba Plateau</li>
+          </ul>
+
+          <h4 style="margin-top:1.5rem">What's NOT Included</h4>
+          <ul style="padding-left:1.5rem">
+            <li>Personal shopping expenses</li>
+            <li>Entrance fees to mosques/churches (usually free)</li>
+            <li>Meals or beverages</li>
+            <li>Gratuities (optional)</li>
+          </ul>
+
+          <div class="callout" style="margin-top:1rem">
+            <strong>🎯 Exceptional Value:</strong> At only $15 per adult with children FREE, this is the most affordable way to experience authentic Sharm culture and create lasting memories before you leave!
+          </div>
+        </section>
+
+        <section id="panel-info" class="panel" role="tabpanel" hidden>
+          <h3 style="margin-top:0">📝 Important Information</h3>
+          
+          <div class="callout callout--info" style="margin-bottom:.8rem">
+            <strong>📋 Tour Details:</strong>
+            <ul style="margin:.5rem 0;padding-left:1.5rem">
+              <li><strong>Days:</strong> Every Tuesday & Wednesday</li>
+              <li><strong>Time:</strong> 14:00 - 20:00 (6 hours)</li>
+              <li><strong>Departure Point:</strong> Your hotel in Sharm El Sheikh</li>
+              <li><strong>Activity Level:</strong> Easy (minimal walking, suitable for all ages)</li>
+              <li><strong>Languages:</strong> English, Arabic</li>
+              <li><strong>Group Size:</strong> Small groups for personalized experience</li>
+            </ul>
+          </div>
+
+          <div class="callout" style="margin-bottom:.8rem">
+            <strong>👕 What to Wear & Bring:</strong>
+            <ul style="margin:.5rem 0;padding-left:1.5rem">
+              <li>Comfortable walking shoes</li>
+              <li>Modest clothing (shoulders and knees covered for mosque visit)</li>
+              <li>Camera for photos</li>
+              <li>Cash for shopping</li>
+              <li>Light jacket (evenings can be cool)</li>
+            </ul>
+          </div>
+
+          <div class="callout callout--warn" style="margin-bottom:.8rem">
+            <strong>⚠️ Please Note:</strong>
+            <ul style="margin:.5rem 0;padding-left:1.5rem">
+              <li>This tour runs on Tuesdays and Wednesdays only</li>
+              <li>Modest dress is required for religious site visits</li>
+              <li>You'll be back before dinner time (20:00)</li>
+              <li>Shopping at the bazaar is optional</li>
+            </ul>
+          </div>
+        </section>
+      </main>
+
+      <aside class="booking collapsed" id="booking" aria-label="Booking widget">
+        <div class="booking__toggle" id="bookingToggle">
+          <div>
+            <strong style="font-size:1.05rem">$15/adult · Kids FREE</strong>
+            <div style="font-size:.85rem;color:var(--muted)">Tap to reserve your spot</div>
+          </div>
+          <div class="booking__toggle-icon" style="font-size:1.5rem">▲</div>
+        </div>
+        <div class="booking__content">
+        <h3>Reserve Your Spot</h3>
+        
+        <section class="etm-trust-badges">
+          <div class="etm-badge"><i class="fa fa-lock"></i> Secure Checkout</div>
+          <div class="etm-badge"><i class="fa fa-map-marker-alt"></i> Verified Egyptian DMC</div>
+          <div class="etm-badge"><i class="fa fa-globe"></i> Traveler Trusted 2025</div>
+          <div class="etm-badge"><i class="fa fa-headset"></i> 24/7 Customer Support</div>
+          <div class="etm-badge"><i class="fa fa-star"></i> Top Rated Trips</div>
+          <div class="etm-badge"><i class="fa fa-shield-alt"></i> DMCA & GDPR Protected</div>
+        </section>
+        
+        <div class="field">
+          <label for="date">Trip Date (Tue/Wed) *</label>
+          <input id="date" type="date" required>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="adults">Adults</label>
+            <input id="adults" type="number" min="1" max="20" value="1">
+          </div>
+          <div class="field">
+            <label for="children">Children (under 14 - FREE)</label>
+            <input id="children" type="number" min="0" max="20" value="0">
+          </div>
+        </div>
+        <div class="field">
+          <label for="name">Full Name *</label>
+          <input id="name" type="text" placeholder="Your full name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email Address *</label>
+          <input id="email" type="email" placeholder="name@example.com" required>
+          <div id="email-message"></div>
+        </div>
+        <div class="field">
+          <label for="hotel">Hotel Name (optional)</label>
+          <input id="hotel" type="text" placeholder="Your hotel in Sharm">
+        </div>
+        <div class="field">
+          <label for="room">Room Number (optional)</label>
+          <input id="room" type="text" placeholder="Room number">
+        </div>
+        <div class="field">
+          <label for="notes">Special Requests</label>
+          <input id="notes" type="text" placeholder="Any special requests?">
+        </div>
+        <div class="price">
+          <span>Subtotal</span>
+          <strong id="subtotal">$15</strong>
+        </div>
+        <div class="notice">Children under 14 years are completely FREE! Only adults are charged.</div>
+        <div class="help"><a href="mailto:support@egtravelmarket.com">✉️ Email Support</a></div>
+        <div id="summaryArea"></div>
+        <button id="bookBtn" class="btn btn--primary" style="width:100%;margin-top:.9rem;display:none">💳 Pay Now with Stripe</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script src="js/email-validator.js"></script>
+  <script src="js/stripe-payment-helper.js?v=3"></script>
+  <script src="goodbye-sharm-script.js?v=2"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const emailInput = document.getElementById('email');
+      const emailMessage = document.getElementById('email-message');
+      if (emailInput && emailMessage) {
+        setupEmailValidation(emailInput, emailMessage);
+      }
+    });
+
+    const bookingToggle = document.getElementById('bookingToggle');
+    const bookingWidget = document.getElementById('booking');
+    if(bookingToggle){
+      bookingToggle.addEventListener('click', ()=>{
+        bookingWidget.classList.toggle('collapsed');
+      });
+    }
+
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.getAttribute('data-tab');
+        tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+        tab.setAttribute('aria-selected', 'true');
+        panels.forEach(p => p.hidden = p.id !== `panel-${target}`);
+      });
+    });
+  </script>
+
+<!-- SEO FOOTER -->
+<footer class="seo-footer" style="background:#0a3d62;color:#fff;padding:40px 20px;margin-top:80px;border-top:3px solid #ffc107;"><div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;padding-bottom:20px;"><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Trips</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./cairo-by-flight.html" style="color:#f0f0f0;text-decoration:none;">Cairo</a></li><li style="margin-bottom:3px;"><a href="./luxor-by-flight.html" style="color:#f0f0f0;text-decoration:none;">Luxor</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Services</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./book-diving.html" style="color:#f0f0f0;text-decoration:none;">Dive</a></li><li style="margin-bottom:3px;"><a href="./customize-your-trip.html" style="color:#f0f0f0;text-decoration:none;">Custom</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Experts</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./guides.html" style="color:#f0f0f0;text-decoration:none;">Guides</a></li><li style="margin-bottom:3px;"><a href="./divers.html" style="color:#f0f0f0;text-decoration:none;">Divers</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Discover</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./diving-nature.html" style="color:#f0f0f0;text-decoration:none;">Diving</a></li><li style="margin-bottom:3px;"><a href="./deals.html" style="color:#f0f0f0;text-decoration:none;">Deals</a></li></ul></div><div><h4 style="margin-bottom:8px;color:#ffc107;font-size:0.85rem;">Company</h4><ul style="list-style:none;padding:0;margin:0;font-size:0.75rem;"><li style="margin-bottom:3px;"><a href="./about.html" style="color:#f0f0f0;text-decoration:none;">About</a></li><li style="margin-bottom:3px;"><a href="./faq.html" style="color:#f0f0f0;text-decoration:none;">FAQ</a></li></ul></div></div><div style="border-top:1px solid rgba(255,255,255,0.2);padding-top:10px;text-align:center;color:#bbb;font-size:0.7rem;"><p style="margin:0;">&copy; 2025 EgTravelMarket | <a href="./index.html" style="color:#ffc107;">Home</a> | <a href="./sitemap.xml" style="color:#ffc107;">Sitemap</a></p></div>  <div style="max-width:1000px;margin:0 auto;padding:20px;text-align:center;color:#9aa4c6;font-size:0.75rem;line-height:1.6;border-top:1px solid rgba(255,255,255,0.1);">
+    <p style="margin:0 0 10px 0;"><strong style="color:#ffc107;">Platform Disclaimer</strong></p>
+    <p style="margin:0;">EgTravelMarket is an international technology platform that facilitates connections between travelers and independent service providers. EgTravelMarket does not operate tours, travel services, or diving activities directly. All on-ground travel services in Egypt are executed by independent licensed partners such as GoMundo Travel, while all diving and water activities are provided by independent licensed dive centers such as Megalodon Diving Club. Contracts, service execution, and operational responsibility are solely between travelers and the respective service providers.</p>
+  </div>
+</footer>
+
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

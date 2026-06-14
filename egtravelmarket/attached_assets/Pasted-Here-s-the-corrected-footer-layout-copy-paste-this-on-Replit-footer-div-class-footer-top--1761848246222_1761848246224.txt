@@ -1,0 +1,68 @@
+Here’s the corrected footer layout (copy–paste this on Replit)
+<footer>
+  <div class="footer-top">
+    <div class="footer-content">
+      <!-- Your main footer sections (Explore / Company / Support etc.) -->
+      <div class="footer-sections">
+        <div class="footer-column">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="#">Tours & Activities</a></li>
+            <li><a href="#">Flights & Hotels</a></li>
+            <li><a href="#">Diving</a></li>
+            <li><a href="#">Medical Services</a></li>
+            <li><a href="#">MICE & Conferences</a></li>
+            <li><a href="#">Investments</a></li>
+            <li><a href="#">Ask a Mentor</a></li>
+            <li><a href="#">DMC – Be Your Local Agent</a></li>
+            <li><a href="#">B2B Handling</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Become a Partner</a></li>
+            <li><a href="#">Affiliate Program</a></li>
+            <li><a href="#">Become a Mentor</a></li>
+            <li><a href="#">Become a Vendor / DMC</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Support & Legal</h4>
+          <ul>
+            <li><a href="#">Help / FAQ</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Cookies Policy</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Single, unified bottom line -->
+  <div class="footer-bottom">
+    <p>© 2025 EgTravelMarket — All rights reserved.</p>
+    <p>
+      <a href="#">Privacy</a> • 
+      <a href="#">Terms</a> • 
+      <a href="#">Cookies</a>
+    </p>
+    <div class="dmca">
+      <img src="https://www.dmca.com/img/dmca_protected_sml_120n.png" alt="DMCA.com Protection" />
+    </div>
+  </div>
+</footer>
+
+💡 Notes:
+
+You’ll now have one clean copyright section with everything unified.
+
+Delete any extra <footer> tags below this in your HTML file.
+
+Keep this at the bottom of your index.html only once.
+
+The DMCA logo will remain but properly aligned with the rest.

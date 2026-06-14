@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- PRIMARY OG IMAGE -->
+  <meta property="og:title" content="EgTravelMarket – Your Gateway to Explore Egypt" />
+  <meta property="og:description" content="Discover trips, experts, diving, MICE, medical services, and full travel experiences across Egypt." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.egtravelmarket.com/" />
+  <meta property="og:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+
+  <!-- TELL CRAWLERS TO REFRESH OG IMAGE -->
+  <meta property="og:image:secure_url" content="https://www.egtravelmarket.com/static/images/og-image.jpg?v=2" />
+<title>Register Your Travel Agency | Eg Travel Market</title>
+<meta name="description" content="Register your travel agency on EgyTravelMarket. Post job openings for guides, divers, and mentors. Find qualified travel experts for your business.">
+<meta name="copyright" content="© 2025 Eg Travel Market. All rights reserved.">
+
+<link rel="canonical" href="https://egytravelmarket.com/agency-signup.html">
+<link rel="stylesheet" href="/assets/styles.css">
+<style>
+  .checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+  .checkbox-item label {
+    margin: 0;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  select,
+  select option {
+    background-color: #0f1f2f;
+    color: #ffffff;
+  }
+  select:focus {
+    outline: none;
+    border-color: #00c2ff;
+  }
+</style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9Z2B97VS02"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9Z2B97VS02');
+  </script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<header class="header">
+  <div class="container nav">
+    <a href="/index.html" class="brand"><div class="logo"></div><span>Eg Travel Market</span></a>
+    <nav class="menu">
+      <a href="/index.html">Home</a><a href="/guides.html">Guides</a><a href="/divers.html">Divers</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-flex">
+    <div style="flex: 1;">
+      <h1>Register Your Travel Agency</h1>
+      <p style="font-size: 18px; line-height: 1.6; margin-bottom: 20px;">Join EgyTravelMarket and connect with Egypt's best tourism professionals. Post job opportunities, find qualified guides, diving instructors, and travel mentors to grow your business.</p>
+      
+      <div style="background: rgba(61, 169, 252, 0.1); border-left: 4px solid #3da9fc; padding: 16px; border-radius: 8px; margin-top: 20px;">
+        <h3 style="margin: 0 0 12px 0; color: #3da9fc; font-size: 16px;">Why Register Your Agency?</h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+          <li><strong>Find Qualified Talent:</strong> Access pre-screened tourism experts</li>
+          <li><strong>Post Job Openings:</strong> Reach professionals actively seeking positions</li>
+          <li><strong>Verified Platform:</strong> All signups reviewed by our admin team</li>
+          <li><strong>Free Registration:</strong> No upfront costs to join</li>
+        </ul>
+      </div>
+    </div>
+    <div style="flex: 0 0 auto; max-width: 450px;">
+      <img loading="lazy" src="/attached_assets/stock_images/professional_travel__74bfcc72.jpg" alt="Travel Agency Office" style="width: 100%; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.35);">
+    </div>
+  </div>
+</section>
+
+<section class="form container">
+  <form id="agency-signup-form">
+    <h3 style="margin-bottom: 20px; color: #ffffff; background: #3da9fc; padding: 12px 16px; border-radius: 8px; font-size: 16px;">Company Information</h3>
+    <div class="form-grid">
+      <div style="grid-column:1/-1">
+        <label>Company Name *</label>
+        <input class="input" id="companyName" required placeholder="e.g., Nile Adventures Tours">
+      </div>
+      <div>
+        <label>Contact Person Name *</label>
+        <input class="input" id="fullName" required placeholder="e.g., Ahmed Hassan">
+      </div>
+      <div>
+        <label>Email *</label>
+        <input class="input" type="email" id="email" required placeholder="info@company.com">
+        <div id="email-message" style="display:none;"></div>
+      </div>
+      <div>
+        <label>Phone / WhatsApp</label>
+        <input class="input" id="phone" placeholder="+20 1XX XXX XXXX">
+      </div>
+      <div>
+        <label>Location</label>
+        <input class="input" id="location" placeholder="Cairo, Egypt">
+      </div>
+      <div id="licenseNumberSection">
+        <label id="licenseNumberLabel">License Number</label>
+        <input class="input" id="licenseNumber" placeholder="ETAA-XXXXXXXXX">
+        <small id="licenseNumberHelper" style="color: #666; margin-top: 4px; display: none;">Tourism License Number is required for Egyptian travel agencies.</small>
+      </div>
+      <div>
+        <label>Years in Business</label>
+        <input class="input" type="number" id="yearsInBusiness" min="0" placeholder="10">
+      </div>
+      <div style="grid-column:1/-1">
+        <label>Company Website</label>
+        <input class="input" type="text" id="websiteUrl" placeholder="www.example.com or example.com">
+        <small style="color: #666; margin-top: 4px; display: block;">Don't need to type http:// - just enter the domain</small>
+      </div>
+      <div style="grid-column:1/-1">
+        <label>Company Description</label>
+        <textarea id="companyDescription" rows="4" placeholder="Tell us about your company, services, and what makes you unique..."></textarea>
+      </div>
+    </div>
+
+    <h3 style="margin: 30px 0 10px; color: #ffffff; background: #3da9fc; padding: 12px 16px; border-radius: 8px; font-size: 16px;">Business Location</h3>
+    <div class="form-grid">
+      <div>
+        <label>Country of Registration *</label>
+        <select class="input" id="countryOfRegistration" required>
+          <option value="">Select Country</option>
+        </select>
+      </div>
+      <div>
+        <label>City of Registration *</label>
+        <input class="input" id="cityOfRegistration" required placeholder="e.g., Cairo">
+      </div>
+    </div>
+
+    <h3 style="margin: 30px 0 10px; color: #ffffff; background: #3da9fc; padding: 12px 16px; border-radius: 8px; font-size: 16px;">Business Classification</h3>
+    <div class="form-grid">
+      <div>
+        <label>Business Type *</label>
+        <select class="input" id="businessType" required>
+          <option value="">Select Business Type</option>
+          <option value="Travel Agency">Travel Agency</option>
+          <option value="Tour Operator">Tour Operator</option>
+          <option value="DMC (Local Handling Agent)">DMC (Local Handling Agent)</option>
+        </select>
+      </div>
+      <div>
+        <label>Tax / VAT Number</label>
+        <input class="input" id="taxVatNumber" placeholder="Optional">
+      </div>
+      <div style="grid-column:1/-1">
+        <label>Upload Business License (PDF/JPG/PNG)</label>
+        <input type="file" id="businessLicenseFile" class="input" accept=".pdf,.jpg,.jpeg,.png">
+        <input type="hidden" id="businessLicenseUrl">
+        <small style="color: #666; margin-top: 4px; display: block;">Optional - You can upload your business license document</small>
+      </div>
+      <div style="grid-column:1/-1; display: none;" id="tourismLicenseSection">
+        <label style="color: #e74c3c;">Upload Tourism Ministry / ETAA License (Required) *</label>
+        <input type="file" id="tourismLicenseFile" class="input" accept=".pdf,.jpg,.jpeg,.png">
+        <input type="hidden" id="tourismLicenseUrl">
+        <small style="color: #e74c3c; margin-top: 4px; display: block;">This must be the official tourism license issued by the Egyptian Ministry of Tourism / ETAA.</small>
+      </div>
+    </div>
+
+    <h3 style="margin: 30px 0 10px; color: #ffffff; background: #e74c3c; padding: 12px 16px; border-radius: 8px; font-size: 16px;">Egypt Destination Focus (Required)</h3>
+    <div style="background: rgba(231, 76, 60, 0.1); border: 2px solid #e74c3c; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+      <div style="margin-bottom: 20px;">
+        <label style="font-weight: bold; display: block; margin-bottom: 10px;">Do you sell Egypt-based travel products? *</label>
+        <div style="display: flex; gap: 20px;">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="radio" name="sellsEgyptProducts" value="Yes" id="sellsEgyptYes" required>
+            <span>Yes</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="radio" name="sellsEgyptProducts" value="No" id="sellsEgyptNo">
+            <span>No</span>
+          </label>
+        </div>
+        <p id="egyptProductsWarning" style="color: #e74c3c; font-weight: bold; margin-top: 10px; display: none;">This platform is exclusively for agencies that sell Egypt-based travel products.</p>
+      </div>
+      <div>
+        <label style="font-weight: bold; display: block; margin-bottom: 10px;">Egypt Destinations You Operate In *</label>
+        <div class="checkbox-group" id="egyptDestinationsGroup">
+          <div class="checkbox-item"><input type="checkbox" id="egypt-dest-cairo" value="Cairo"><label for="egypt-dest-cairo">Cairo</label></div>
+          <div class="checkbox-item"><input type="checkbox" id="egypt-dest-giza" value="Giza"><label for="egypt-dest-giza">Giza</label></div>
+          <div class="checkbox-item"><input type="checkbox" id="egypt-dest-alex" value="Alexandria"><label for="egypt-dest-alex">Alexandria</label></div>
+          <div class="checkbox-item"><input type="checkbox" id="egypt-dest-sharm" value="Sharm El Sheikh"><label for="egypt-dest-sharm">Sharm El Sheikh</label></div>
+          <div class="checkbox-item"><input type="checkbox" id="egypt-dest-hurghada" value="Hurghada"><label for="egypt-dest-hurghada">Hurghada</label></div>
+          <div class="checkbox-item"><input type="checkbox" id="egypt-dest-dahab" value="Dahab"><label for="egypt-dest-dahab">Dahab</label></div>
+          <div class="checkbox-item"><input type="checkbox" id="egypt-dest-marsa" value="Marsa Alam"><label for="egypt-dest-marsa">Marsa Alam</label></div>
+          <div class="checkbox-item"><input type="checkbox" id="egypt-dest-luxor" value="Luxor"><label for="egypt-dest-luxor">Luxor</label></div>
+          <div class="checkbox-item"><input type="checkbox" id="egypt-dest-aswan" value="Aswan"><label for="egypt-dest-aswan">Aswan</label></div>
+          <div class="checkbox-item"><input type="checkbox" id="egypt-dest-abusimbel" value="Abu Simbel"><label for="egypt-dest-abusimbel">Abu Simbel</label></div>
+          <div class="checkbox-item"><input type="checkbox" id="egypt-dest-siwa" value="Siwa Oasis"><label for="egypt-dest-siwa">Siwa Oasis</label></div>
+          <div class="checkbox-item"><input type="checkbox" id="egypt-dest-nile" value="Nile Cruises"><label for="egypt-dest-nile">Nile Cruises</label></div>
+          <div class="checkbox-item"><input type="checkbox" id="egypt-dest-redsea" value="Red Sea (General)"><label for="egypt-dest-redsea">Red Sea (General)</label></div>
+          <div class="checkbox-item"><input type="checkbox" id="egypt-dest-other" value="Other"><label for="egypt-dest-other">Other</label></div>
+        </div>
+        <div id="egyptDestOtherInput" style="display: none; margin-top: 10px;">
+          <input class="input" id="egyptDestOtherText" placeholder="Please specify other destinations">
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin: 30px 0 10px; color: #ffffff; background: #3da9fc; padding: 12px 16px; border-radius: 8px; font-size: 16px;">Products & Services Offered</h3>
+    <div class="checkbox-group" id="productsOfferedGroup">
+      <div class="checkbox-item"><input type="checkbox" id="product-classic" value="Classic sightseeing tours"><label for="product-classic">Classic sightseeing tours</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-private" value="Private / tailor-made tours"><label for="product-private">Private / tailor-made tours</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-group" value="Group packages"><label for="product-group">Group packages</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-luxury" value="Luxury travel"><label for="product-luxury">Luxury travel</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-budget" value="Budget travel"><label for="product-budget">Budget travel</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-daytours" value="Day tours & excursions"><label for="product-daytours">Day tours & excursions</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-nile" value="Nile cruises"><label for="product-nile">Nile cruises</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-diving" value="Diving packages (as reseller)"><label for="product-diving">Diving packages (as reseller)</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-safari" value="Safari & adventure trips"><label for="product-safari">Safari & adventure trips</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-transport" value="Transportation services"><label for="product-transport">Transportation services</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-airport" value="Airport transfers"><label for="product-airport">Airport transfers</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-mice" value="MICE / Groups / Incentives"><label for="product-mice">MICE / Groups / Incentives</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-religious" value="Religious tourism"><label for="product-religious">Religious tourism</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-medical" value="Medical tourism"><label for="product-medical">Medical tourism</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-edu" value="Educational / cultural trips"><label for="product-edu">Educational / cultural trips</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-cruise" value="Cruise shore excursions"><label for="product-cruise">Cruise shore excursions</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="product-other" value="Other"><label for="product-other">Other</label></div>
+    </div>
+    <div id="productOtherInput" style="display: none; margin-top: 10px;">
+      <input class="input" id="productOtherText" placeholder="Please specify other products/services">
+    </div>
+
+    <h3 style="margin: 30px 0 10px; color: #ffffff; background: #3da9fc; padding: 12px 16px; border-radius: 8px; font-size: 16px;">Company Location</h3>
+    <div style="margin-bottom: 20px;">
+      <label style="font-weight: bold; display: block; margin-bottom: 10px;">Company Based In *</label>
+      <div style="display: flex; gap: 20px;">
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="radio" name="companyBasedIn" value="Egypt" id="basedInEgypt" required>
+          <span>Egypt</span>
+        </label>
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="radio" name="companyBasedIn" value="Outside Egypt" id="basedOutsideEgypt">
+          <span>Outside Egypt</span>
+        </label>
+      </div>
+    </div>
+    <div id="localPartnerSection" style="display: none; background: rgba(61, 169, 252, 0.1); padding: 15px; border-radius: 8px; margin-top: 10px;">
+      <label style="font-weight: bold; display: block; margin-bottom: 10px;">Do you work with local Egyptian partners?</label>
+      <div style="display: flex; gap: 20px;">
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="radio" name="hasLocalPartner" value="Yes" id="partnerYes">
+          <span>Yes</span>
+        </label>
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="radio" name="hasLocalPartner" value="No (need support)" id="partnerNo">
+          <span>No (need support)</span>
+        </label>
+      </div>
+    </div>
+
+    <h3 style="margin: 30px 0 10px; color: #ffffff; background: #3da9fc; padding: 12px 16px; border-radius: 8px; font-size: 16px;">Languages Operated In</h3>
+    <div class="checkbox-group" id="languagesGroup">
+      <div class="checkbox-item"><input type="checkbox" id="lang-english" value="English"><label for="lang-english">English</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="lang-arabic" value="Arabic"><label for="lang-arabic">Arabic</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="lang-german" value="German"><label for="lang-german">German</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="lang-russian" value="Russian"><label for="lang-russian">Russian</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="lang-french" value="French"><label for="lang-french">French</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="lang-italian" value="Italian"><label for="lang-italian">Italian</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="lang-spanish" value="Spanish"><label for="lang-spanish">Spanish</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="lang-chinese" value="Chinese"><label for="lang-chinese">Chinese</label></div>
+      <div class="checkbox-item"><input type="checkbox" id="lang-other" value="Other"><label for="lang-other">Other</label></div>
+    </div>
+    <div id="languageOtherInput" style="display: none; margin-top: 10px;">
+      <input class="input" id="languageOtherText" placeholder="Please specify other languages">
+    </div>
+
+    <h3 style="margin: 30px 0 10px; color: #ffffff; background: #3da9fc; padding: 12px 16px; border-radius: 8px; font-size: 16px;">Account Security</h3>
+    <div class="form-grid">
+      <div>
+        <label>Password *</label>
+        <input class="input" type="password" id="password" required minlength="8" placeholder="Minimum 8 characters">
+      </div>
+      <div>
+        <label>Confirm Password *</label>
+        <input class="input" type="password" id="confirmPassword" required placeholder="Re-enter password">
+      </div>
+    </div>
+
+    <h3 style="margin: 30px 0 10px; color: #ffffff; background: #3da9fc; padding: 12px 16px; border-radius: 8px; font-size: 16px;">Social Media & Branding (Optional)</h3>
+    <div class="form-grid">
+      <div style="grid-column:1/-1">
+        <label>Company Logo / Photo</label>
+        <input type="file" id="photo-url" class="input" accept="image/*" style="margin-bottom: 8px;">
+        <input id="photo-url-backup" class="input" placeholder="Or paste logo URL" style="margin-bottom: 6px;">
+        <input type="hidden" id="photoUrl">
+      </div>
+      <div>
+        <label>Facebook</label>
+        <input class="input" id="facebook" placeholder="https://facebook.com/yourcompany">
+      </div>
+      <div>
+        <label>Instagram</label>
+        <input class="input" id="instagram" placeholder="https://instagram.com/yourcompany">
+      </div>
+    </div>
+
+    <h3 style="margin: 30px 0 10px; color: #ffffff; background: #27ae60; padding: 12px 16px; border-radius: 8px; font-size: 16px;">Confirmation</h3>
+    <div style="background: rgba(39, 174, 96, 0.1); border: 2px solid #27ae60; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+      <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer; margin-bottom: 15px;">
+        <input type="checkbox" id="termsConfirmation" required style="width: 20px; height: 20px; margin-top: 2px;">
+        <span style="line-height: 1.5;">I confirm that all listed products and services are related to Egypt tourism and I agree to the platform terms.</span>
+      </label>
+      
+      <div id="egyptAgencyLegalSection" style="display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(39, 174, 96, 0.3);">
+        <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer;">
+          <input type="checkbox" id="egyptAgencyLegalConfirmation" style="width: 20px; height: 20px; margin-top: 2px;">
+          <span style="line-height: 1.5;">I confirm that our company is a legally licensed Egyptian travel agency and that all tourism services listed on EgTravelMarket are operated in full compliance with Egyptian Ministry of Tourism regulations.</span>
+        </label>
+      </div>
+      
+      <div id="foreignAgencyLegalSection" style="display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(39, 174, 96, 0.3);">
+        <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer;">
+          <input type="checkbox" id="foreignAgencyLegalConfirmation" style="width: 20px; height: 20px; margin-top: 2px;">
+          <span style="line-height: 1.5;">I confirm that our company is a foreign travel agency and does not operate tourism services inside Egypt. All services in Egypt will be operated by licensed Egyptian partners in accordance with local regulations.</span>
+        </label>
+      </div>
+    </div>
+
+    <div id="error-message" style="display:none; color: #ff4d4d; margin: 20px 0; padding: 12px; background: rgba(255,77,77,0.1); border-radius: 8px;"></div>
+    <div id="success-message" style="display:none; color: #28a745; margin: 20px 0; padding: 12px; background: #e6ffe6; border-radius: 6px;"></div>
+
+    <div style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap">
+      <button type="submit" class="btn primary">Submit Registration</button>
+      <a class="btn" href="/agency-login.html">🔑 Sign In</a>
+      <a class="btn" href="/index.html">Back</a>
+    </div>
+    <p class="note" style="margin-top: 16px;">Already have an account? <a href="/agency-login.html" style="color: #3da9fc;">Log in here</a> | <a href="/forgot-password.html" style="color: #3da9fc;">Forgot password?</a></p>
+    <p class="note">* After submission, our admin team will review your registration. You will receive an email notification once approved.</p>
+  </form>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <h5>Discover Our Products</h5>
+        <div class="list">
+          <a href="/index.html#tours">Tours & Activities</a><a href="/index.html#diving">Diving</a>
+          <a href="/mice.html">MICE & Conferences</a><a href="/investment.html">Investments</a>
+          <a href="/medical.html">Medical Services</a>
+        </div>
+      </div>
+      <div>
+        <h5>Meet Our Experts</h5>
+        <div class="list"><a href="/guides.html">Guides</a><a href="/divers.html">Divers</a></div>
+      </div>
+      <div>
+        <h5>Support & Legal</h5>
+        <div class="list"><a href="/faq.html">Help / FAQ</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms & Conditions</a><a href="/cookies.html">Cookies Policy</a></div>
+      </div>
+      <div>
+        <h5>Partners & Affiliates</h5>
+        <div class="list"><a href="/partners.html">Our Partners</a><a href="/affiliate.html">Become an Affiliate</a></div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:14px">© Eg Travel Market. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="/js/api-client.js"></script>
+<script src="/js/email-validator.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const emailInput = document.getElementById('email');
+    const emailMessage = document.getElementById('email-message');
+    if (emailInput && emailMessage) {
+      setupEmailValidation(emailInput, emailMessage);
+    }
+
+    const form = document.getElementById('agency-signup-form');
+    const errorMessage = document.getElementById('error-message');
+    const successMessage = document.getElementById('success-message');
+
+    const countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cabo Verde","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo","Costa Rica","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"];
+    const countrySelect = document.getElementById('countryOfRegistration');
+    countries.forEach(country => {
+      const option = document.createElement('option');
+      option.value = country;
+      option.textContent = country;
+      countrySelect.appendChild(option);
+    });
+
+    const sellsEgyptYes = document.getElementById('sellsEgyptYes');
+    const sellsEgyptNo = document.getElementById('sellsEgyptNo');
+    const egyptProductsWarning = document.getElementById('egyptProductsWarning');
+    
+    sellsEgyptNo.addEventListener('change', function() {
+      if (this.checked) {
+        egyptProductsWarning.style.display = 'block';
+      }
+    });
+    sellsEgyptYes.addEventListener('change', function() {
+      if (this.checked) {
+        egyptProductsWarning.style.display = 'none';
+      }
+    });
+
+    const egyptDestOther = document.getElementById('egypt-dest-other');
+    const egyptDestOtherInput = document.getElementById('egyptDestOtherInput');
+    egyptDestOther.addEventListener('change', function() {
+      egyptDestOtherInput.style.display = this.checked ? 'block' : 'none';
+    });
+
+    const productOther = document.getElementById('product-other');
+    const productOtherInput = document.getElementById('productOtherInput');
+    productOther.addEventListener('change', function() {
+      productOtherInput.style.display = this.checked ? 'block' : 'none';
+    });
+
+    const langOther = document.getElementById('lang-other');
+    const languageOtherInput = document.getElementById('languageOtherInput');
+    langOther.addEventListener('change', function() {
+      languageOtherInput.style.display = this.checked ? 'block' : 'none';
+    });
+
+    const basedOutsideEgypt = document.getElementById('basedOutsideEgypt');
+    const basedInEgypt = document.getElementById('basedInEgypt');
+    const localPartnerSection = document.getElementById('localPartnerSection');
+    const tourismLicenseSection = document.getElementById('tourismLicenseSection');
+    const licenseNumberLabel = document.getElementById('licenseNumberLabel');
+    const licenseNumberHelper = document.getElementById('licenseNumberHelper');
+    const licenseNumberInput = document.getElementById('licenseNumber');
+    const egyptAgencyLegalSection = document.getElementById('egyptAgencyLegalSection');
+    const foreignAgencyLegalSection = document.getElementById('foreignAgencyLegalSection');
+    
+    function updateEgyptBasedFields(isEgypt) {
+      if (isEgypt) {
+        localPartnerSection.style.display = 'none';
+        tourismLicenseSection.style.display = 'block';
+        licenseNumberLabel.innerHTML = 'License Number *';
+        licenseNumberHelper.style.display = 'block';
+        egyptAgencyLegalSection.style.display = 'block';
+        foreignAgencyLegalSection.style.display = 'none';
+        document.getElementById('foreignAgencyLegalConfirmation').checked = false;
+      } else {
+        localPartnerSection.style.display = 'block';
+        tourismLicenseSection.style.display = 'none';
+        licenseNumberLabel.innerHTML = 'License Number';
+        licenseNumberHelper.style.display = 'none';
+        egyptAgencyLegalSection.style.display = 'none';
+        foreignAgencyLegalSection.style.display = 'block';
+        document.getElementById('egyptAgencyLegalConfirmation').checked = false;
+      }
+    }
+    
+    basedOutsideEgypt.addEventListener('change', function() {
+      if (this.checked) updateEgyptBasedFields(false);
+    });
+    basedInEgypt.addEventListener('change', function() {
+      if (this.checked) updateEgyptBasedFields(true);
+    });
+
+    const businessLicenseFile = document.getElementById('businessLicenseFile');
+    businessLicenseFile.addEventListener('change', async function(e) {
+      const file = this.files[0];
+      if (!file) return;
+      try {
+        const uploadFormData = new FormData();
+        uploadFormData.append('file', file);
+        const response = await fetch('/api/upload-signup-photo', {
+          method: 'POST',
+          body: uploadFormData
+        });
+        const data = await response.json();
+        if (data.success) {
+          document.getElementById('businessLicenseUrl').value = data.photoUrl;
+          console.log('Business license uploaded:', data.photoUrl);
+        } else {
+          alert('Upload failed: ' + (data.error || 'Unknown error'));
+        }
+      } catch (error) {
+        alert('Error uploading file: ' + error.message);
+      }
+    });
+    
+    const tourismLicenseFile = document.getElementById('tourismLicenseFile');
+    tourismLicenseFile.addEventListener('change', async function(e) {
+      const file = this.files[0];
+      if (!file) return;
+      if (file.size > 10 * 1024 * 1024) {
+        alert('File size must be under 10MB');
+        this.value = '';
+        return;
+      }
+      try {
+        const uploadFormData = new FormData();
+        uploadFormData.append('file', file);
+        const response = await fetch('/api/upload-signup-photo', {
+          method: 'POST',
+          body: uploadFormData
+        });
+        const data = await response.json();
+        if (data.success) {
+          document.getElementById('tourismLicenseUrl').value = data.photoUrl;
+          console.log('Tourism license uploaded:', data.photoUrl);
+        } else {
+          alert('Upload failed: ' + (data.error || 'Unknown error'));
+        }
+      } catch (error) {
+        alert('Error uploading file: ' + error.message);
+      }
+    });
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (password !== confirmPassword) {
+        errorMessage.textContent = 'Passwords do not match';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      if (!document.getElementById('sellsEgyptYes').checked) {
+        errorMessage.textContent = 'You must confirm that you sell Egypt-based travel products to register on this platform.';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      const egyptDestinations = [];
+      document.querySelectorAll('#egyptDestinationsGroup input[type="checkbox"]:checked').forEach(cb => {
+        egyptDestinations.push(cb.value);
+      });
+      const egyptDestOtherText = document.getElementById('egyptDestOtherText').value.trim();
+      if (egyptDestOtherText) egyptDestinations.push(egyptDestOtherText);
+
+      if (egyptDestinations.length === 0) {
+        errorMessage.textContent = 'Please select at least one Egypt destination you operate in.';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      if (!document.getElementById('termsConfirmation').checked) {
+        errorMessage.textContent = 'You must confirm that your products are related to Egypt tourism and agree to the platform terms.';
+        errorMessage.style.display = 'block';
+        return;
+      }
+      
+      const companyBasedInValue = document.querySelector('input[name="companyBasedIn"]:checked')?.value || '';
+      const isEgyptBased = companyBasedInValue === 'Egypt';
+      
+      if (isEgyptBased) {
+        const licenseNumber = document.getElementById('licenseNumber').value.trim();
+        if (!licenseNumber) {
+          errorMessage.textContent = 'Tourism License Number is required for Egyptian travel agencies.';
+          errorMessage.style.display = 'block';
+          return;
+        }
+        
+        const tourismLicenseUrl = document.getElementById('tourismLicenseUrl').value.trim();
+        if (!tourismLicenseUrl) {
+          errorMessage.textContent = 'Official tourism license upload is required for Egyptian agencies.';
+          errorMessage.style.display = 'block';
+          return;
+        }
+        
+        if (!document.getElementById('egyptAgencyLegalConfirmation').checked) {
+          errorMessage.textContent = 'You must confirm that your company is a legally licensed Egyptian travel agency.';
+          errorMessage.style.display = 'block';
+          return;
+        }
+      } else if (companyBasedInValue === 'Outside Egypt') {
+        if (!document.getElementById('foreignAgencyLegalConfirmation').checked) {
+          errorMessage.textContent = 'You must confirm that your company is a foreign travel agency and will operate through licensed Egyptian partners.';
+          errorMessage.style.display = 'block';
+          return;
+        }
+      }
+
+      const productsOffered = [];
+      document.querySelectorAll('#productsOfferedGroup input[type="checkbox"]:checked').forEach(cb => {
+        productsOffered.push(cb.value);
+      });
+      const productOtherText = document.getElementById('productOtherText').value.trim();
+      if (productOtherText) productsOffered.push(productOtherText);
+
+      const languagesOperated = [];
+      document.querySelectorAll('#languagesGroup input[type="checkbox"]:checked').forEach(cb => {
+        languagesOperated.push(cb.value);
+      });
+      const languageOtherText = document.getElementById('languageOtherText').value.trim();
+      if (languageOtherText) languagesOperated.push(languageOtherText);
+
+      let websiteUrl = document.getElementById('websiteUrl').value.trim();
+      if (websiteUrl && !websiteUrl.startsWith('http://') && !websiteUrl.startsWith('https://')) {
+        websiteUrl = 'https://' + websiteUrl;
+      }
+
+      const companyBasedIn = document.querySelector('input[name="companyBasedIn"]:checked')?.value || '';
+      const hasLocalPartner = document.querySelector('input[name="hasLocalPartner"]:checked')?.value || '';
+      
+      const formData = {
+        email: document.getElementById('email').value.trim(),
+        password: password,
+        fullName: document.getElementById('fullName').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        userType: 'agency',
+        companyName: document.getElementById('companyName').value.trim(),
+        companyDescription: document.getElementById('companyDescription').value.trim(),
+        location: document.getElementById('location').value.trim(),
+        licenseNumber: document.getElementById('licenseNumber').value.trim(),
+        yearsInBusiness: parseInt(document.getElementById('yearsInBusiness').value) || null,
+        websiteUrl: websiteUrl,
+        whatsapp: document.getElementById('phone').value.trim(),
+        facebook: document.getElementById('facebook').value.trim(),
+        instagram: document.getElementById('instagram').value.trim(),
+        logoUrl: document.getElementById('photoUrl').value.trim() || null,
+        countryOfRegistration: document.getElementById('countryOfRegistration').value,
+        cityOfRegistration: document.getElementById('cityOfRegistration').value.trim(),
+        businessType: document.getElementById('businessType').value,
+        taxVatNumber: document.getElementById('taxVatNumber').value.trim() || null,
+        businessLicenseUrl: document.getElementById('businessLicenseUrl').value.trim() || null,
+        tourismLicenseUrl: document.getElementById('tourismLicenseUrl').value.trim() || null,
+        sellsEgyptProducts: true,
+        egyptDestinations: egyptDestinations,
+        productsOffered: productsOffered,
+        companyBasedIn: companyBasedIn,
+        hasLocalPartner: hasLocalPartner || null,
+        languagesOperated: languagesOperated,
+        termsConfirmed: true,
+        agencyLegalConfirmation: document.getElementById('egyptAgencyLegalConfirmation').checked,
+        foreignAgencyConfirmation: document.getElementById('foreignAgencyLegalConfirmation').checked
+      };
+
+      try {
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Submitting...';
+
+        const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          if (window.MetaPixelEvents) {
+            window.MetaPixelEvents.trackCompleteRegistration('travel_agency');
+          }
+          successMessage.textContent = data.message || 'Registration submitted successfully! Your account is pending admin approval. You will receive an email once approved.';
+          successMessage.style.display = 'block';
+          form.reset();
+          
+          setTimeout(() => {
+            window.location.href = '/agency-login.html';
+          }, 3000);
+        } else {
+          const msg = data.message || 'Registration failed. Please try again.';
+          if (msg.includes('already registered') || data.code === 'EMAIL_EXISTS') {
+            errorMessage.innerHTML = `This email is already registered. Please <a href="/agency-login.html" style="color: #3da9fc; text-decoration: underline;">log in here</a> or <a href="/forgot-password.html" style="color: #3da9fc; text-decoration: underline;">reset your password</a>.`;
+          } else {
+            errorMessage.textContent = msg;
+          }
+          errorMessage.style.display = 'block';
+          errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          submitButton.disabled = false;
+          submitButton.textContent = 'Submit Registration';
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        errorMessage.textContent = 'Network error: Please check your connection and try again.';
+        errorMessage.style.display = 'block';
+        errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = false;
+        submitButton.textContent = 'Submit Registration';
+      }
+    });
+
+    function compressImage(file, callback) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const maxDim = 1200;
+          if (width > height) {
+            if (width > maxDim) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            }
+          } else {
+            if (height > maxDim) {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob(callback, 'image/jpeg', 0.8);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    document.getElementById('photo-url').addEventListener('change', async function(e) {
+      const fileInput = document.getElementById('photo-url');
+      const file = fileInput.files[0];
+      if (!file) {
+        alert('Please select a logo file');
+        return;
+      }
+      try {
+        const uploadFormData = new FormData();
+        uploadFormData.append('file', file);
+        const response = await fetch('/api/upload-signup-photo', {
+          method: 'POST',
+          body: uploadFormData
+        });
+        const data = await response.json();
+        if (data.success) {
+          document.getElementById('photoUrl').value = data.photoUrl;
+          console.log('Logo uploaded:', data.photoUrl);
+        } else {
+          console.error('Upload failed:', data);
+          alert('Upload failed: ' + (data.error || 'Unknown error'));
+        }
+      } catch (error) {
+        alert('Error uploading file: ' + error.message);
+        console.error('Upload error:', error);
+      }
+    });
+  });
+</script>
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

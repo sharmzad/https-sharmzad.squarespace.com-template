@@ -1,0 +1,158 @@
+Subject: Traveler Requests – Offer Flow Bugs + UI Improvements (All Provider Types)
+
+Hello,
+
+After enabling Traveler Requests for all provider types (guides, divers, agencies, mentors, admin, etc.), we completed full end-to-end testing and identified several blocking issues that must be fixed globally, not only for guides.
+
+Please review and fix the following without changing the core business logic.
+
+1️⃣ Offer Modal UI Is Not Professional (UI ISSUE)
+
+The current Send Offer / Bid modal works functionally but looks unfinished and confusing.
+
+Required UI Improvements:
+
+Clear layout and spacing
+
+Clear field labels:
+
+Offer Price (USD)
+
+Message to Traveler (what’s included, availability, notes)
+
+Improve typography and contrast
+
+Professional buttons:
+
+Primary: Send Offer
+
+Secondary: Cancel
+
+Helpful hint text (example):
+
+“A clear, personalized message increases your chance of being selected.”
+
+⚠️ No logic changes — UI/UX only.
+
+2️⃣ Same Provider Can Send Multiple Offers to the Same Request (BUG)
+Current Behavior:
+
+A provider can send an offer
+
+The request card does not update visually
+
+The same provider can send multiple offers to the same traveler request
+
+Required Behavior:
+
+A provider can send ONLY ONE offer per traveler request
+
+After sending an offer:
+
+Disable or hide Send Offer / Bid button
+
+Replace it with:
+
+“Offer Sent – View in My Offers”
+
+This rule must apply to ALL provider types.
+
+3️⃣ Sent Offer Not Reflected Immediately on Request Card (BUG)
+
+After sending an offer:
+
+The request card still looks “open”
+
+No visual indication that the provider already responded
+
+Required Fix:
+
+Update request card state immediately after offer submission
+
+Show clear status:
+
+“Offer Sent”
+
+Or badge/icon indicating response sent
+
+4️⃣ “My Offers” Page Fails to Load (CRITICAL BUG)
+Current Issue:
+
+After sending an offer, navigating to My Offers shows:
+
+“Error loading your offers. Please try again later.”
+
+This happens even though the offer was successfully sent.
+
+Required Fix:
+
+Ensure My Offers loads correctly
+
+Ensure offers are fetched and displayed properly
+
+Show:
+
+Request title
+
+Traveler
+
+Offered price
+
+Status (Pending / Accepted / Rejected)
+
+Submission date
+
+This must work for all provider roles, not only guides.
+
+5️⃣ Global Rule (VERY IMPORTANT – ARCHITECTURE)
+
+Traveler Requests are a shared marketplace feature.
+
+All fixes above must apply to:
+
+Guides
+
+Divers
+
+Travel Agencies
+
+Dive Centers
+
+Mentors
+
+Experts
+
+Admin (EgTravelMarket Offer)
+
+Any future provider types
+
+⚠️ Do NOT implement role-specific fixes.
+⚠️ Do NOT hardcode logic to “guide” or “expert”.
+
+🚫 DO NOT CHANGE
+
+Database schema
+
+Core traveler request logic
+
+Offer submission flow
+
+Approval flow
+
+This is bug fixing + UX polish, not a redesign.
+
+🎯 PRIORITY
+
+These issues affect:
+
+Trust
+
+Professional appearance
+
+Offer integrity
+
+Marketplace fairness
+
+They must be resolved before public launch.
+
+Thank you.

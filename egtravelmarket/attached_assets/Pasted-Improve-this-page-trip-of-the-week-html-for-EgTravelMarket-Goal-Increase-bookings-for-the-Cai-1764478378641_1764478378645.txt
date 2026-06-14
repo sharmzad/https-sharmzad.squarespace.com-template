@@ -1,0 +1,70 @@
+Improve this page: trip-of-the-week.html for EgTravelMarket.
+
+Goal: Increase bookings for the “Cairo Day Trip by Flight from Sharm El Sheikh” and highlight the special bonuses (free 20 GB SIM card + 15‑minute Turkish bath massage) without breaking any backend logic or forms.​
+
+Tasks:
+
+Hero section
+
+Create a clear hero with:
+
+Title: “Cairo Day Trip by Flight from Sharm El Sheikh – Trip of the Week”.
+
+Short subtitle mentioning Pyramids, Sphinx and Grand Egyptian Museum in one day.
+
+Visible price and a colored “Trip of the Week” label.
+
+A bonus badge: “Includes FREE 20 GB SIM + 15‑min Turkish Bath”.
+
+Primary CTA: “Book This Wednesday Trip” that scrolls to the booking form.​
+
+Bonuses emphasis
+
+Add a small “Included Bonuses” box near the hero and again near the booking form with:
+
+“Free Egypt SIM card with 20 GB data.”
+
+“15‑minute Turkish bath massage session during your stay in Sharm.”​
+
+Use simple icons (phone/data, spa/steam) next to each line.
+
+Itinerary & inclusions layout
+
+Keep the current itinerary content but make it easier to scan (clean table or cards).
+
+Split inclusions into:
+
+“What’s Included” (flights, transfers, guide, lunch, entrance fees, SIM, Turkish bath, etc.).
+
+“What’s Not Included” (e.g., visa, tips, drinks if applicable – add placeholders I can edit).​
+
+Booking form UX
+
+Improve field labels and placeholders (date, full name, WhatsApp number with country code, email, hotel name, room type, adults, children).
+
+Add basic front‑end validation and friendly error messages.
+
+Main button text: “Proceed to Secure Payment”.
+
+Add a secondary link/button: “Ask us on WhatsApp” with a placeholder WhatsApp link I can change.​
+
+Trust & reassurance
+
+Turn existing trust texts (Secure Checkout, Verified Egyptian DMC, Top Rated Trips, 24/7 Support, etc.) into a horizontal row of icon + text badges placed close to price and booking button.​
+
+Add a small “Why travelers love this trip” block with 3 short bullets (I will edit the text later).
+
+SEO & structure
+
+Keep one H1 only and logical H2/H3 for sections.
+
+Under the H1, add a short unique intro that mentions:
+“Cairo day trip from Sharm El Sheikh by plane”, “Pyramids & Sphinx”, “Grand Egyptian Museum”, and “one‑day tour”.​
+
+Constraints:
+
+Do not change existing URLs, form actions, or payment/analytics integration.
+
+Use semantic HTML and responsive CSS.
+
+Comment your code changes so a non‑developer founder can understand what you changed and where.

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EgTravelMarket | Faith Across the Ages – Religion & Spiritual Life in Egypt</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{background:#fdfaf6;color:#222;line-height:1.7;}
+    a{text-decoration:none;color:#0a3d62;}
+    img{max-width:100%;display:block;}
+
+    /* ===== HERO ===== */
+    .hero{
+      background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+                 url('https://images.unsplash.com/photo-1551554781-2670a9a86a6a') center/cover no-repeat;
+      height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+      text-align:center;color:#fff;padding:0 15px;
+    }
+    .hero h1{font-size:2.8rem;margin-bottom:10px;}
+    .hero p{max-width:700px;color:#ddd;}
+
+    /* ===== ARTICLE ===== */
+    .article{padding:60px 10%;max-width:900px;margin:auto;}
+    .article h2{color:#0a3d62;margin-bottom:20px;}
+    .article p{margin-bottom:20px;font-size:1.05rem;color:#333;}
+
+    /* ===== RELATED TRIPS ===== */
+    .related-trips{background:#fff;padding:50px 10%;text-align:center;}
+    .related-trips h2{color:#0a3d62;margin-bottom:30px;}
+    .trips{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;}
+    .trip-card{background:#f9f9f9;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);overflow:hidden;transition:.3s;}
+    .trip-card:hover{transform:translateY(-5px);}
+    .trip-card img{height:180px;object-fit:cover;width:100%;}
+    .trip-card h3{color:#0a3d62;font-size:1.1rem;margin:15px;}
+    .trip-card a{display:inline-block;background:#0a3d62;color:#fff;margin:0 0 15px;padding:8px 15px;border-radius:6px;transition:.3s;}
+    .trip-card a:hover{background:#062f4e;}
+
+    footer{background:#0a3d62;color:#fff;text-align:center;padding:30px 15px;font-size:.9rem;margin-top:50px;}
+    footer p{margin:5px 0;}
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <h1>Faith Across the Ages – Religion & Spiritual Life in Egypt</h1>
+    <p>From ancient temples to modern mosques and monasteries, Egypt’s spirit of faith connects civilizations and hearts.</p>
+  </section>
+
+  <!-- ===== ARTICLE CONTENT ===== -->
+  <section class="article">
+    <h2>A Land Touched by the Divine</h2>
+    <p>
+      Few countries in the world carry such a deep, unbroken spiritual story as Egypt.
+      From the sun temples of Ra to the monasteries of St. Catherine and the minarets of Islamic Cairo,
+      this land has been a meeting point for faith, philosophy, and prayer for over 5,000 years.
+    </p>
+
+    <h2>Echoes of Ancient Belief</h2>
+    <p>
+      The Ancient Egyptians saw divinity in everything — the river that gave life, the sun that renewed the world each morning,
+      and the stars that guided their souls. Their temples were not merely places of worship; they were cosmic maps,
+      aligning architecture with the heavens in harmony with life itself.
+    </p>
+
+    <h2>Crossroads of Faith</h2>
+    <p>
+      With the rise of Christianity, Egypt became a cradle of early Coptic faith.
+      Coptic Cairo still holds the Hanging Church and the Cave Church, standing as symbols of peace and endurance.
+      Later, the Islamic golden age gifted Cairo with some of the world’s most stunning mosques —
+      Ibn Tulun, Al-Azhar, and Sultan Hassan — each one a masterpiece of devotion and design.
+    </p>
+
+    <p>
+      Here, faith is not a theory — it’s life itself. Egyptians, regardless of religion, share a deep sense of spirituality
+      reflected in daily kindness, respect for the sacred, and belief in destiny.
+    </p>
+
+    <h2>Experience Sacred Egypt</h2>
+    <p>
+      EgTravelMarket offers guided cultural journeys that bridge ancient and modern faith.
+      Walk through Coptic Cairo’s churches, visit the sacred Mount Sinai at St. Catherine’s Monastery,
+      or explore the call to prayer echoing between the mosques of old Cairo.
+      Each visit reminds travelers that Egypt’s greatest monument is not made of stone —
+      it is the enduring soul of its people.
+    </p>
+  </section>
+
+  <!-- ===== RELATED TRIPS ===== -->
+  <section class="related-trips">
+    <h2>Related Experiences</h2>
+    <div class="trips">
+      <div class="trip-card">
+        <img src="/assets/trips/st-catherine.jpg" alt="St. Catherine Monastery">
+        <h3>St. Catherine Monastery Excursion</h3>
+        <a href="/trip-st-catherine.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/coptic-cairo.jpg" alt="Coptic Cairo">
+        <h3>Coptic Cairo Heritage Tour</h3>
+        <a href="/trip-coptic-cairo.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/islamic-cairo.jpg" alt="Islamic Cairo">
+        <h3>Islamic Cairo & Mosques Walk</h3>
+        <a href="/trip-islamic-cairo.html">View Trip</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 EgTravelMarket – All Rights Reserved</p>
+    <p>Backed & Managed by GoMundo Travel</p>
+  </footer>
+
+</body>
+</html>
+✅ Step 3 — Upload Optional Images
+Upload to /assets/trips/:
+
+Copy code
+st-catherine.jpg
+coptic-cairo.jpg
+islamic-cairo.jpg
+(You can use Unsplash placeholders for now.)
+
+✅ Step 4 — Connect from Discover Egypt Page
+In your discover-egypt.html, find:
+
+html
+Copy code
+<h3>Religion & Spiritual Life</h3>
+and wrap it with:
+
+html
+Copy code
+<a href="/religion-spiritual-life.html">
+  <h3>Religion & Spiritual Life</h3>
+</a>
+✅ Step 5 — Run and Test
+Click Run → open /religion-spiritual-life.html
+
+You’ll see:
+
+Sacred, elegant design
+
+Deep storytelling
+
+Related trips linking directly to your packages

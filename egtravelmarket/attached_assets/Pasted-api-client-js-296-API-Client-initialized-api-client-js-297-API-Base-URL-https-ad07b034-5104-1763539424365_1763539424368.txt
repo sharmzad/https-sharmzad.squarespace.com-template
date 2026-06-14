@@ -1,0 +1,117 @@
+api-client.js:296 ✅ API Client initialized
+api-client.js:297 📡 API Base URL: https://ad07b034-5104-4742-ab1b-5fd6a4c4c387-00-3jcgxvcz1yndv.kirk.replit.dev
+admin-comprehensive.html:600 Uncaught TypeError: apiClient.getToken is not a function
+    at loadOverview (admin-comprehensive.html:600:44)
+    at admin-comprehensive.html:595:1
+admin-comprehensive.html:654 Uncaught TypeError: apiClient.getToken is not a function
+    at loadTrips (admin-comprehensive.html:654:44)
+    at loadTabData (admin-comprehensive.html:621:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:654 Uncaught TypeError: apiClient.getToken is not a function
+    at loadTrips (admin-comprehensive.html:654:44)
+    at loadTabData (admin-comprehensive.html:621:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:717 Uncaught TypeError: apiClient.getToken is not a function
+    at loadBookings (admin-comprehensive.html:717:44)
+    at loadTabData (admin-comprehensive.html:624:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:775 Uncaught TypeError: apiClient.getToken is not a function
+    at loadRequests (admin-comprehensive.html:775:44)
+    at loadTabData (admin-comprehensive.html:627:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:844 Uncaught TypeError: apiClient.getToken is not a function
+    at loadWhatsApp (admin-comprehensive.html:844:44)
+    at loadTabData (admin-comprehensive.html:630:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:911 Uncaught TypeError: apiClient.getToken is not a function
+    at searchUsers (admin-comprehensive.html:911:44)
+    at loadTabData (admin-comprehensive.html:633:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:966 Uncaught TypeError: apiClient.getToken is not a function
+    at loadExperts (admin-comprehensive.html:966:44)
+    at loadTabData (admin-comprehensive.html:636:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:1015 Uncaught TypeError: apiClient.getToken is not a function
+    at loadFlashOffers (admin-comprehensive.html:1015:44)
+    at loadTabData (admin-comprehensive.html:639:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:1076 Uncaught TypeError: apiClient.getToken is not a function
+    at loadAnalytics (admin-comprehensive.html:1076:44)
+    at loadTabData (admin-comprehensive.html:642:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:1098 Uncaught TypeError: apiClient.getToken is not a function
+    at loadSettings (admin-comprehensive.html:1098:44)
+    at loadTabData (admin-comprehensive.html:645:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:775 Uncaught TypeError: apiClient.getToken is not a function
+    at loadRequests (admin-comprehensive.html:775:44)
+    at loadTabData (admin-comprehensive.html:627:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:844 Uncaught TypeError: apiClient.getToken is not a function
+    at loadWhatsApp (admin-comprehensive.html:844:44)
+    at loadTabData (admin-comprehensive.html:630:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:654 Uncaught TypeError: apiClient.getToken is not a function
+    at loadTrips (admin-comprehensive.html:654:44)
+    at loadTabData (admin-comprehensive.html:621:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:717 Uncaught TypeError: apiClient.getToken is not a function
+    at loadBookings (admin-comprehensive.html:717:44)
+    at loadTabData (admin-comprehensive.html:624:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:775 Uncaught TypeError: apiClient.getToken is not a function
+    at loadRequests (admin-comprehensive.html:775:44)
+    at loadTabData (admin-comprehensive.html:627:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:844 Uncaught TypeError: apiClient.getToken is not a function
+    at loadWhatsApp (admin-comprehensive.html:844:44)
+    at loadTabData (admin-comprehensive.html:630:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:911 Uncaught TypeError: apiClient.getToken is not a function
+    at searchUsers (admin-comprehensive.html:911:44)
+    at loadTabData (admin-comprehensive.html:633:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:966 Uncaught TypeError: apiClient.getToken is not a function
+    at loadExperts (admin-comprehensive.html:966:44)
+    at loadTabData (admin-comprehensive.html:636:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:1015 Uncaught TypeError: apiClient.getToken is not a function
+    at loadFlashOffers (admin-comprehensive.html:1015:44)
+    at loadTabData (admin-comprehensive.html:639:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:1076 Uncaught TypeError: apiClient.getToken is not a function
+    at loadAnalytics (admin-comprehensive.html:1076:44)
+    at loadTabData (admin-comprehensive.html:642:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:654 Uncaught TypeError: apiClient.getToken is not a function
+    at loadTrips (admin-comprehensive.html:654:44)
+    at loadTabData (admin-comprehensive.html:621:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:775 Uncaught TypeError: apiClient.getToken is not a function
+    at loadRequests (admin-comprehensive.html:775:44)
+    at loadTabData (admin-comprehensive.html:627:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:654 Uncaught TypeError: apiClient.getToken is not a function
+    at loadTrips (admin-comprehensive.html:654:44)
+    at loadTabData (admin-comprehensive.html:621:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:775 Uncaught TypeError: apiClient.getToken is not a function
+    at loadRequests (admin-comprehensive.html:775:44)
+    at loadTabData (admin-comprehensive.html:627:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:717 Uncaught TypeError: apiClient.getToken is not a function
+    at loadBookings (admin-comprehensive.html:717:44)
+    at loadTabData (admin-comprehensive.html:624:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:844 Uncaught TypeError: apiClient.getToken is not a function
+    at loadWhatsApp (admin-comprehensive.html:844:44)
+    at loadTabData (admin-comprehensive.html:630:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:775 Uncaught TypeError: apiClient.getToken is not a function
+    at loadRequests (admin-comprehensive.html:775:44)
+    at loadTabData (admin-comprehensive.html:627:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)
+admin-comprehensive.html:717 Uncaught TypeError: apiClient.getToken is not a function
+    at loadBookings (admin-comprehensive.html:717:44)
+    at loadTabData (admin-comprehensive.html:624:7)
+    at HTMLButtonElement.<anonymous> (admin-comprehensive.html:585:5)

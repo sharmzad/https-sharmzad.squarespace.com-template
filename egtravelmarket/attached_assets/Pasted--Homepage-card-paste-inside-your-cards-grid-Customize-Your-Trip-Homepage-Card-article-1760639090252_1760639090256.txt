@@ -1,0 +1,327 @@
+) Homepage card (paste inside your cards grid)
+<!-- Customize Your Trip – Homepage Card -->
+<article class="package-card" id="customize-your-trip-card" style="border-radius:18px;overflow:hidden;box-shadow:0 10px 25px rgba(0,0,0,.08);background:#0a2b52;color:#fff;display:flex;flex-direction:column;">
+  <div style="position:relative;">
+    <img src="images/customize-your-trip-hero.jpg" alt="Customize your Egypt trip with EgyTravelMarket" style="width:100%;height:220px;object-fit:cover;">
+    <span style="position:absolute;bottom:12px;left:12px;background:rgba(0,0,0,.55);padding:6px 10px;border-radius:999px;font-size:.85rem;">Tailor-Made • Private • Flexible</span>
+  </div>
+
+  <div style="padding:18px 18px 8px;">
+    <h3 style="margin:0 0 8px;font-size:1.25rem;">🧭 Customize Your Trip — Your Journey, Your Way</h3>
+    <p style="margin:0 0 10px;line-height:1.55;">
+      Can’t find your dream experience among our 
+      <a href="/packages" style="color:#a9d4ff;text-decoration:underline;">Packages</a>, 
+      <a href="/tours" style="color:#a9d4ff;text-decoration:underline;">Featured Tours</a>, 
+      <a href="/trip-of-the-week" style="color:#a9d4ff;text-decoration:underline;">Trip of the Week</a>, or 
+      <a href="/diving" style="color:#a9d4ff;text-decoration:underline;">Diving Packages</a>? 
+      Tell us what you wish—our experts will send a tailored itinerary, pro advice, and a <strong>competitive price</strong>.
+    </p>
+    <p style="margin:0 0 14px;line-height:1.55;">
+      Prefer a private journey? We’ll make it unforgettable. Just fill the request form or message us on WhatsApp.
+      Also, if you want to browse more tours quickly, tap <a href="/tours" style="color:#ffd27a;text-decoration:underline;"><strong>CARD TRIPS</strong></a>.
+    </p>
+    <ul style="display:flex;gap:8px;flex-wrap:wrap;list-style:none;padding:0;margin:0 0 14px;">
+      <li style="background:#0f3a73;padding:6px 10px;border-radius:999px;font-size:.85rem;">Competitive Quote</li>
+      <li style="background:#0f3a73;padding:6px 10px;border-radius:999px;font-size:.85rem;">Private Options</li>
+      <li style="background:#0f3a73;padding:6px 10px;border-radius:999px;font-size:.85rem;">Expert Advice</li>
+      <li style="background:#0f3a73;padding:6px 10px;border-radius:999px;font-size:.85rem;">Fast Reply</li>
+    </ul>
+  </div>
+
+  <div style="display:flex;gap:10px;padding:0 18px 18px;">
+    <a href="/customize-your-trip.html" class="btn" style="flex:1;text-align:center;background:#18a0fb;color:#fff;padding:12px 14px;border-radius:12px;font-weight:600;text-decoration:none;">Start Planning</a>
+    <a href="https://wa.me/201023889959" target="_blank" rel="noopener" class="btn" style="flex:1;text-align:center;background:#25D366;color:#0a2b52;padding:12px 14px;border-radius:12px;font-weight:700;text-decoration:none;">WhatsApp</a>
+  </div>
+</article>
+
+
+Tip: replace images/customize-your-trip-hero.jpg with any header image you like (keep ~1600×900, compressed).
+
+2) Full page: customize-your-trip.html
+
+Create a new file named customize-your-trip.html in your Replit project and paste everything below.
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Customize Your Trip | Tailor-Made Egypt Itineraries | EgyTravelMarket</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Build your tailor-made Egypt itinerary with EgyTravelMarket. Private tours, flexible dates, expert advice, and a competitive quote—designed around you.">
+  <link rel="canonical" href="https://www.egtravelmarket.com/customize-your-trip.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Customize Your Trip — Your Journey, Your Way">
+  <meta property="og:description" content="Tell us what you wish. We’ll reply with a detailed plan, expert advice, and a competitive quote. Private options available.">
+  <meta property="og:image" content="https://www.egtravelmarket.com/images/customize-your-trip-hero.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- JSON-LD: Service schema -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Service",
+    "name":"Customize Your Trip",
+    "provider":{
+      "@type":"TravelAgency",
+      "name":"EgyTravelMarket",
+      "areaServed":"Egypt",
+      "telephone":"+20 1023889959",
+      "url":"https://www.egtravelmarket.com"
+    },
+    "serviceType":"Tailor-made tours & private journeys",
+    "description":"Design a personalized Egypt trip. Get a detailed itinerary, expert advice, and a competitive quote."
+  }
+  </script>
+
+  <style>
+    :root{
+      --bg:#071c36;
+      --panel:#0b2f5a;
+      --muted:#9fc7ff;
+      --brand:#18a0fb;
+      --accent:#ffd27a;
+      --ok:#25D366;
+      --text:#ffffff;
+    }
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;}
+    .wrap{max-width:1100px;margin:auto;padding:20px;}
+    .hero{border-radius:20px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,.18);position:relative;}
+    .hero img{width:100%;height:360px;object-fit:cover;display:block;}
+    .hero .title{position:absolute;bottom:18px;left:18px;background:rgba(0,0,0,.5);padding:10px 14px;border-radius:14px;font-size:1.25rem}
+    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;margin-top:22px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    .panel{background:var(--panel);border-radius:18px;padding:20px;box-shadow:0 10px 28px rgba(0,0,0,.12)}
+    a{color:var(--muted)}
+    .btn{display:inline-block;background:var(--brand);color:#fff;text-decoration:none;padding:12px 16px;border-radius:12px;font-weight:700}
+    .btn-whatsapp{background:var(--ok);color:#0a2b52;font-weight:800}
+    .badges{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+    .badge{background:#0f3a73;border-radius:999px;padding:6px 10px;font-size:.85rem}
+    form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:700px){form .row{grid-template-columns:1fr}}
+    label{display:block;margin:10px 0 6px;font-weight:600}
+    input,select,textarea{width:100%;padding:12px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:#0a2548;color:#fff;outline:none}
+    textarea{min-height:140px}
+    .help{font-size:.92rem;color:#cddffb}
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .note{font-size:.95rem;color:#e8f1ff}
+    .cards-links a{display:inline-block;margin-right:10px;margin-top:8px}
+    .success-pop{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.55);z-index:999}
+    .success-pop .box{background:#0b2f5a;border-radius:16px;padding:20px 22px;max-width:420px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+  </style>
+</head>
+<body>
+
+  <!-- If you have a shared header include, keep it above; otherwise use your site header here -->
+
+  <main class="wrap">
+    <section class="hero">
+      <img src="images/customize-your-trip-hero.jpg" alt="Private, tailor-made Egypt trip planning by EgyTravelMarket">
+      <div class="title">🧭 Customize Your Trip — Your Journey, Your Way</div>
+    </section>
+
+    <section class="grid" aria-label="Customize content and form">
+      <div class="panel">
+        <h1 style="margin-top:0">Design Your Dream Adventure in Egypt</h1>
+        <p>
+          Welcome to <strong>Customize Your Trip</strong>—your gateway to a fully personalized travel experience.
+          If you don’t find exactly what you want in our ready-made 
+          <a href="/packages">Packages</a>, 
+          <a href="/tours">Featured Tours</a>, 
+          <a href="/trip-of-the-week">Trip of the Week</a>, or 
+          <a href="/diving">Diving Packages</a>, simply tell us your preferences.
+          We’ll reply with a <strong>detailed itinerary</strong>, <strong>expert advice</strong>, and a <strong>competitive quotation</strong> crafted around your dates, style, and budget.
+        </p>
+        <p class="note">
+          Want a private journey? We’ll make your vacation truly <em>unforgettable</em>—from door-to-door private transfers to luxury stays and exclusive tours.
+        </p>
+
+        <div class="badges">
+          <span class="badge">Tailor-Made</span>
+          <span class="badge">Private Options</span>
+          <span class="badge">Expert Local Team</span>
+          <span class="badge">Fast Quotes</span>
+        </div>
+
+        <div class="cards-links" style="margin:14px 0 0;">
+          Browse more quickly via <a href="/tours"><strong>CARD TRIPS</strong></a>.
+        </div>
+
+        <div class="cta-row">
+          <a class="btn" href="#request-form">Start Planning</a>
+          <a class="btn btn-whatsapp" href="https://wa.me/201023889959" target="_blank" rel="noopener">Chat on WhatsApp</a>
+        </div>
+      </div>
+
+      <aside class="panel" id="request-form">
+        <h2 style="margin-top:0;">Tell Us What You Want</h2>
+        <p class="help">Fill the form below. We’ll reply with options, a clear itinerary, and a competitive quote.</p>
+
+        <form id="customizeForm" method="post" action="#">
+          <div class="row">
+            <div>
+              <label for="name">Full Name *</label>
+              <input id="name" name="name" type="text" required placeholder="e.g., Ahmed Hassan">
+            </div>
+            <div>
+              <label for="email">Email *</label>
+              <input id="email" name="email" type="email" required placeholder="name@example.com">
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="phone">Phone / WhatsApp *</label>
+              <input id="phone" name="phone" type="tel" required placeholder="+20 10xxxxxxx">
+            </div>
+            <div>
+              <label for="city">Starting City</label>
+              <input id="city" name="city" type="text" placeholder="Sharm El-Sheikh, Cairo, Hurghada…">
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="start">Start Date</label>
+              <input id="start" name="start" type="date">
+            </div>
+            <div>
+              <label for="end">End Date</label>
+              <input id="end" name="end" type="date">
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="adults">Adults *</label>
+              <select id="adults" name="adults" required>
+                <option value="" disabled selected>Select</option>
+                <option>1</option><option>2</option><option>3</option><option>4</option>
+                <option>5</option><option>6</option><option>7</option><option>8+</option>
+              </select>
+            </div>
+            <div>
+              <label for="children">Children</label>
+              <select id="children" name="children">
+                <option>0</option><option>1</option><option>2</option><option>3</option>
+                <option>4</option><option>5+</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="style">Trip Style</label>
+              <select id="style" name="style">
+                <option>Private</option>
+                <option>Shared / Group</option>
+                <option>Mix (Some private)</option>
+              </select>
+            </div>
+            <div>
+              <label for="budget">Budget (per person, USD)</label>
+              <select id="budget" name="budget">
+                <option>Flexible</option>
+                <option>&lt; 300</option>
+                <option>300–600</option>
+                <option>600–1000</option>
+                <option>1000–2000</option>
+                <option>&gt; 2000</option>
+              </select>
+            </div>
+          </div>
+
+          <label>Interests (choose any)</label>
+          <div class="row">
+            <div>
+              <label><input type="checkbox" name="interests" value="Cairo & Pyramids"> Cairo & Pyramids</label><br>
+              <label><input type="checkbox" name="interests" value="Grand Egyptian Museum"> Grand Egyptian Museum</label><br>
+              <label><input type="checkbox" name="interests" value="Red Sea / Snorkeling"> Red Sea / Snorkeling</label><br>
+              <label><input type="checkbox" name="interests" value="Diving"> Diving</label>
+            </div>
+            <div>
+              <label><input type="checkbox" name="interests" value="Desert Safari / Quads"> Desert Safari / Quads</label><br>
+              <label><input type="checkbox" name="interests" value="Luxor / Aswan / Nile"> Luxor / Aswan / Nile</label><br>
+              <label><input type="checkbox" name="interests" value="Family / Kids"> Family / Kids</label><br>
+              <label><input type="checkbox" name="interests" value="VIP / Luxury"> VIP / Luxury</label>
+            </div>
+          </div>
+
+          <label for="notes">Tell Us More (hotels you like, special requests, etc.)</label>
+          <textarea id="notes" name="notes" placeholder="Example: 5 nights in Sharm + 2 in Cairo, private guide, birthday surprise dinner…"></textarea>
+
+          <input type="hidden" name="page" value="customize-your-trip">
+
+          <div class="cta-row">
+            <button type="submit" class="btn">Request My Custom Plan</button>
+            <a class="btn btn-whatsapp" href="https://wa.me/201023889959" target="_blank" rel="noopener">Message on WhatsApp</a>
+          </div>
+
+          <p class="help" style="margin-top:8px;">
+            By submitting, you agree to our <a href="/privacy.html">Privacy Policy</a> & <a href="/terms.html">Terms</a>.
+          </p>
+        </form>
+      </aside>
+    </section>
+
+    <section class="panel" style="margin-top:22px">
+      <h2>How It Works</h2>
+      <ol>
+        <li><strong>Tell us your wishes</strong> in the form (dates, style, interests, budget).</li>
+        <li>We reply fast with <strong>options, advice, and a clear itinerary</strong>.</li>
+        <li>You confirm, and we secure everything at a <strong>competitive price</strong>.</li>
+      </ol>
+      <p>
+        Not sure where to start? Explore our ready ideas via 
+        <a href="/packages">Packages</a>, <a href="/tours">Featured Tours</a>, 
+        <a href="/trip-of-the-week">Trip of the Week</a>, or <a href="/diving">Diving Packages</a>—or jump straight to 
+        <a href="/tours"><strong>CARD TRIPS</strong></a> to scan all tours quickly.
+      </p>
+    </section>
+  </main>
+
+  <!-- Success popup -->
+  <div class="success-pop" id="successPop" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+    <div class="box">
+      <h3 id="successTitle">Thank you! 🎉</h3>
+      <p>We’ve received your request. Our team will contact you shortly with tailored options and a competitive quote.</p>
+      <p><a class="btn btn-whatsapp" href="https://wa.me/201023889959" target="_blank" rel="noopener">Chat on WhatsApp now</a></p>
+      <p><button class="btn" id="closePop">Close</button></p>
+    </div>
+  </div>
+
+  <!-- Lightweight front-end submit (no backend yet) -->
+  <script>
+    const form = document.getElementById('customizeForm');
+    const pop = document.getElementById('successPop');
+    const closeBtn = document.getElementById('closePop');
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      // Basic front-end validation
+      const required = ['name','email','phone'];
+      for (const id of required){
+        const el = document.getElementById(id);
+        if(!el.value.trim()){
+          alert('Please complete required fields.');
+          el.focus();
+          return;
+        }
+      }
+
+      // OPTIONAL: send to a future backend endpoint
+      // fetch('/api/customize', { method:'POST', body: new FormData(form) });
+
+      pop.style.display = 'grid';
+      form.reset();
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+
+    closeBtn.addEventListener('click', ()=> pop.style.display='none');
+    pop.addEventListener('click', (ev)=> { if(ev.target===pop) pop.style.display='none'; });
+  </script>
+
+  <!-- If you have a shared footer include, keep it below; otherwise use your site footer here -->
+</body>
+</html>

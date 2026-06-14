@@ -1,0 +1,305 @@
+Delete the old Meet the Team and Board of Advisors code from your HTML,
+then copy-paste this complete version before the footer.
+
+✅ Full Updated HTML
+<!-- ===== CINEMATIC HEADER IMAGE ===== -->
+<section class="cinematic-header">
+  <img src="images/meet-team-header.jpg" alt="Meet the Team & Board Advisory">
+  <div class="cinematic-overlay">
+    <h1>Meet The Team</h1>
+    <p>Our Founders & Expert Advisors Guiding EgTravelMarket’s Vision</p>
+  </div>
+</section>
+
+<!-- ====== MEET THE TEAM ====== -->
+<section class="team-section" id="meet-team">
+  <h2 class="section-title">Founders & Local Partner</h2>
+  <p class="section-subtitle">The visionaries behind EgTravelMarket</p>
+
+  <div class="team-container">
+    <!-- Founder -->
+    <div class="team-card">
+      <img src="images/ahmed-hassan.jpg" alt="Ahmed Hassan">
+      <h3>Ahmed Hassan</h3>
+      <p class="title">Founder & CEO</p>
+      <p class="bio">With over 25 years of tourism experience in Sharm El-Sheikh, Ahmed founded EgTravelMarket to connect Egypt’s travel world to the globe.</p>
+      <a href="https://wa.me/201227903329" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+    <!-- Co-Founder -->
+    <div class="team-card">
+      <img src="images/alla-abo-alla.jpg" alt="Alla Abo Alla">
+      <h3>Alla Abo Alla</h3>
+      <p class="title">Co-Founder & Partner</p>
+      <p class="bio">Alla leads the marketing & strategy side of EgTravelMarket, focusing on building trust and innovative digital solutions.</p>
+      <a href="https://wa.me/201002955428" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+    <!-- Local Partner -->
+    <div class="team-card">
+      <img src="images/mohamed-ghally.jpg" alt="Mohamed Ghally">
+      <h3>Mohamed Ghally</h3>
+      <p class="title">Owner at GoMundo Travel<br><span>Local Handling Partner</span></p>
+      <p class="bio">GoMundo Travel, registered at the Egyptian Tourism Ministry, powers EgTravelMarket as our DMC and ground-handling partner.</p>
+      <a href="https://wa.me/200000000" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== BOARD OF ADVISORS ====== -->
+<section class="advisory-section" id="board-advisory">
+  <h2 class="section-title">Board of Advisors</h2>
+  <p class="section-subtitle">A network of specialists guiding every step — from diving to desert adventures.</p>
+
+  <div class="advisory-container">
+    <!-- Advisor 1 -->
+    <div class="advisor-card">
+      <img src="images/hatem-soliman.jpg" alt="Hatem Soliman">
+      <h3>Hatem Soliman</h3>
+      <p class="role">Chairman, Dive Center Owners</p>
+      <p class="bio">Expert in diving operations and safety, advising on all underwater experiences.</p>
+    </div>
+
+    <!-- Advisor 2 -->
+    <div class="advisor-card">
+      <img src="images/osama-ramadan.jpg" alt="Osama Ramadan">
+      <h3>Osama Ramadan</h3>
+      <p class="role">Chairman, Sea Trips Company</p>
+      <p class="bio">Renowned expert in boat and sea excursions, supervising EgTravelMarket’s marine trips.</p>
+    </div>
+
+    <!-- Advisor 3 -->
+    <div class="advisor-card">
+      <img src="images/sheikh-ahmed-soraya.jpg" alt="Sheikh Ahmed Abou Soraya">
+      <h3>Sheikh Ahmed Abou Soraya</h3>
+      <p class="role">Sinai Bedouin Advisor</p>
+      <p class="bio">A respected Bedouin leader, guiding our authentic desert safari experiences.</p>
+    </div>
+
+    <!-- Advisor 4 -->
+    <div class="advisor-card">
+      <img src="images/mohamed-salah.jpg" alt="Mohamed Salah">
+      <h3>Mohamed Salah</h3>
+      <p class="role">Medical Insurance Consultant</p>
+      <p class="bio">Specialist in medical coverage for tourists across all nationalities.</p>
+    </div>
+
+    <!-- Advisor 5 -->
+    <div class="advisor-card">
+      <img src="images/hesham-mohy.jpg" alt="Hesham Mohy">
+      <h3>Hesham Mohy</h3>
+      <p class="role">Chief Guide of South Sinai</p>
+      <p class="bio">Creator of unique itineraries and unforgettable cultural journeys.</p>
+    </div>
+
+    <!-- Advisor 6 -->
+    <div class="advisor-card">
+      <img src="images/yasser-moawad.jpg" alt="Yasser Moawad">
+      <h3>Yasser Moawad</h3>
+      <p class="role">Tourism Management Advisor</p>
+      <p class="bio">Expert in Spanish-speaking markets and group coordination.</p>
+    </div>
+
+    <!-- Advisor 7 -->
+    <div class="advisor-card">
+      <img src="images/gamal-mohamed.jpg" alt="Gamal Mohamed">
+      <h3>Gamal Mohamed</h3>
+      <p class="role">Tourism Management Advisor</p>
+      <p class="bio">Expert in Italian-speaking groups and operations logistics.</p>
+    </div>
+
+    <!-- Advisor 8 -->
+    <div class="advisor-card">
+      <img src="images/ahmed-abd.jpg" alt="Ahmed Abd El-Hamied">
+      <h3>Ahmed Abd El-Hamied</h3>
+      <p class="role">Tourism Advisor</p>
+      <p class="bio">Manages English-speaking group programs and guest relations.</p>
+    </div>
+
+    <!-- Advisor 9 -->
+    <div class="advisor-card">
+      <img src="images/waleed-ali.jpg" alt="Waleed Ali">
+      <h3>Waleed Ali</h3>
+      <p class="role">Transportation Specialist</p>
+      <p class="bio">Expert in limousine & car rental management ensuring comfort & safety.</p>
+    </div>
+
+    <!-- Advisor 10 -->
+    <div class="advisor-card">
+      <img src="images/mohamed-abbas.jpg" alt="Mohamed Abbas">
+      <h3>Mohamed Abbas</h3>
+      <p class="role">Investment Advisor</p>
+      <p class="bio">Dutch citizen with deep expertise in tourism and investment growth.</p>
+    </div>
+
+    <!-- Advisor 11 -->
+    <div class="advisor-card">
+      <img src="images/sameh-elmasry.jpg" alt="Sameh El-Masry">
+      <h3>Sameh El-Masry</h3>
+      <p class="role">Real Estate Advisor</p>
+      <p class="bio">Italian citizen with strong background in property development.</p>
+    </div>
+
+    <!-- Advisor 12 -->
+    <div class="advisor-card">
+      <img src="images/ali-mohamed.jpg" alt="Ali Mohamed">
+      <h3>Ali Mohamed</h3>
+      <p class="role">Legal Consultant</p>
+      <p class="bio">Famous lawyer in Sharm, providing consultation for EgTravelMarket clients.</p>
+    </div>
+  </div>
+</section>
+
+🎨 Step 2: Replace your CSS with this Updated Version
+
+Add this to your styles.css (you can remove old team/advisory styles first):
+
+/* ===== CINEMATIC HEADER ===== */
+.cinematic-header {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.cinematic-header img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(70%);
+}
+
+.cinematic-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  background: rgba(0, 35, 82, 0.3);
+}
+
+.cinematic-overlay h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.cinematic-overlay p {
+  font-size: 1.1rem;
+  max-width: 700px;
+  color: #e0e0e0;
+}
+
+/* ===== MEET TEAM & ADVISORY ===== */
+.team-section,
+.advisory-section {
+  text-align: center;
+  padding: 70px 20px;
+  background: linear-gradient(180deg, #e8f1ff 0%, #f5f8ff 100%);
+}
+
+.section-title {
+  font-size: 2rem;
+  color: #004aad;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.section-subtitle {
+  color: #555;
+  margin-bottom: 40px;
+}
+
+.team-container,
+.advisory-container {
+  display: grid;
+  gap: 30px;
+  justify-content: center;
+}
+.team-container {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.advisory-container {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.team-card,
+.advisor-card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.team-card:hover,
+.advisor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+.team-card img,
+.advisor-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+.advisor-card img {
+  border-radius: 12px;
+}
+.team-card h3,
+.advisor-card h3 {
+  font-size: 1.2rem;
+  color: #003366;
+  margin-bottom: 5px;
+}
+.title,
+.role {
+  font-weight: 600;
+  color: #0066cc;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+.bio {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* WhatsApp Icon */
+.whatsapp {
+  color: #25D366;
+  font-size: 1.4rem;
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+  transition: color 0.3s;
+}
+.whatsapp:hover {
+  color: #1ebe5d;
+}
+
+@media (max-width: 768px) {
+  .cinematic-header {
+    height: 300px;
+  }
+  .team-container,
+  .advisory-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+🧩 Step 3: Make sure Font Awesome is loaded
+
+Add this inside <head> if it’s not there yet:
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+✅ Step 4: Save and Run

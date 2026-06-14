@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Admin Login | EgyTravelMarket Jobs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --dark-bg: #0b1526;
+      --primary: #3da9fc;
+      --card-bg: #1a2332;
+      --text: #ffffff;
+      --muted: #8b9dc3;
+      --success: #27ae60;
+      --error: #e74c3c;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: var(--dark-bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .login-container {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 40px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    
+    .logo-section {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .logo-section h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--primary), #50b7ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .logo-section p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--dark-bg);
+      border: 2px solid transparent;
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--primary), #50b7ff);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(61, 169, 252, 0.4);
+    }
+    
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .error-message {
+      background: rgba(231, 76, 60, 0.1);
+      border: 1px solid var(--error);
+      color: var(--error);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      display: none;
+    }
+    
+    .success-message {
+      background: rgba(39, 174, 96, 0.1);
+      border: 1px solid var(--success);
+      color: var(--success);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      display: none;
+    }
+    
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    .back-link a {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<div class="login-container">
+  <div class="logo-section">
+    <h1>🔐 Admin Portal</h1>
+    <p>EgyTravelMarket Jobs Platform</p>
+  </div>
+  
+  <div id="error-message" class="error-message"></div>
+  <div id="success-message" class="success-message"></div>
+  
+  <form id="login-form">
+    <div class="form-group">
+      <label for="email">Admin Email</label>
+      <input type="email" id="email" name="email" placeholder="admin@egytravelmarket.com" required autofocus>
+    </div>
+    
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required>
+    </div>
+    
+    <button type="submit" class="btn" id="login-btn">Sign In</button>
+  </form>
+  
+  <div class="back-link">
+    <a href="/index.html">← Back to Homepage</a>
+  </div>
+</div>
+
+<script>
+const form = document.getElementById('login-form');
+const loginBtn = document.getElementById('login-btn');
+const errorMessage = document.getElementById('error-message');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  
+  loginBtn.disabled = true;
+  loginBtn.textContent = 'Signing in...';
+  errorMessage.style.display = 'none';
+  
+  try {
+    console.log('Attempting login for:', email);
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+      credentials: 'include'
+    });
+    
+    console.log('Response status:', response.status);
+    const text = await response.text();
+    console.log('Response text:', text);
+    
+    if (!text) {
+      throw new Error('Empty response from server');
+    }
+    
+    const data = JSON.parse(text);
+    
+    if (!response.ok) {
+      throw new Error(data.message || data.error || 'Login failed');
+    }
+    
+    if (!data.token) {
+      throw new Error('No token in response');
+    }
+    
+    // Store token and user info (lightweight to prevent quota errors)
+    localStorage.setItem('authToken', data.token);
+    const user = data.user || {};
+    const essentialUser = {
+      id: user.id,
+      name: user.name || user.displayName || '',
+      email: user.email,
+      role: user.role || user.userType || 'admin',
+      token: data.token,
+      expertType: user.expertType || null,
+      slug: user.slug || null,
+      photoUrl: user.photoUrl || null,
+      isVerified: user.isVerified || false,
+      isApproved: user.isApproved || false
+    };
+    localStorage.setItem('currentUser', JSON.stringify(essentialUser));
+    console.log('Token stored, redirecting...');
+    
+    // Redirect to dashboard
+    setTimeout(() => {
+      window.location.href = '/admin-comprehensive.html';
+    }, 500);
+  } catch (error) {
+    console.error('Login error:', error);
+    errorMessage.textContent = error.message || 'Login failed. Please try again.';
+    errorMessage.style.display = 'block';
+    loginBtn.disabled = false;
+    loginBtn.textContent = 'Sign In';
+  }
+});
+</script>
+
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+Now that the Meta (Facebook) Pixel base code is live on all pages, please implement a unified, scalable Meta Pixel event setup across the entire website to cover all current and future services.
+
+Pixel ID: 1217512659898780
+Implementation method: Manual code-based events only (do NOT use Meta Event Setup Tool).
+
+1️⃣ Global Rule
+
+Use a single Pixel
+
+Use standard Meta events
+
+Differentiate services and user types using parameters
+
+Ensure events fire only once per action (no duplicates)
+
+Apply this logic to all new pages/features added in the future
+
+2️⃣ Registration (All User Types)
+
+User types include:
+
+Guides
+
+Divers
+
+Travel Agencies
+
+Dive Centers
+
+Travel Mentors
+
+Event: CompleteRegistration
+
+Trigger this only when the user successfully signs up and sees the Thank You / verification message, regardless of email verification click.
+
+<script>
+if (window.fbq) {
+  fbq('track', 'CompleteRegistration', {
+    user_type: 'guide | diver | travel_agency | dive_center | mentor'
+  });
+}
+</script>
+
+
+Note: Email verification is optional for login, so registration completion = Thank You message displayed.
+
+3️⃣ Signup Funnel Events
+a) Signup Page View
+
+(Event fires on any signup page load)
+
+<script>
+if (window.fbq) {
+  fbq('track', 'ViewContent', { content_name: 'signup_page' });
+}
+</script>
+
+b) Form Submit
+
+(Event fires when user clicks submit, before redirect)
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.querySelector('form');
+  if (!form) return;
+
+  form.addEventListener('submit', function () {
+    if (window.fbq) {
+      fbq('track', 'Lead', { lead_type: 'signup_submit' });
+    }
+  });
+});
+</script>
+
+4️⃣ Service Leads (B2B & Special Services)
+
+Applies to:
+
+MICE & Events
+
+DMC Services
+
+Local Agent Requests
+
+Medical Insurance Support
+
+Any Contact / Inquiry forms
+
+Event: Lead
+<script>
+if (window.fbq) {
+  fbq('track', 'Lead', {
+    service_type: 'mice | dmc | local_agent | medical_insurance'
+  });
+}
+</script>
+
+5️⃣ Traveller Requests
+
+When a traveller submits a travel request:
+
+<script>
+if (window.fbq) {
+  fbq('track', 'Lead', {
+    lead_type: 'traveller_request'
+  });
+}
+</script>
+
+6️⃣ Trip Booking (Highest Value Event)
+
+When a traveller completes a booking request (even if payment is offline):
+
+Event: Purchase
+<script>
+if (window.fbq) {
+  fbq('track', 'Purchase', {
+    value: BOOKING_VALUE,
+    currency: 'USD',
+    product: 'trip_booking'
+  });
+}
+</script>
+
+
+BOOKING_VALUE should reflect the actual or estimated booking value.
+
+7️⃣ Testing & Deployment
+
+Test all events using Meta Pixel Helper and Test Events
+
+Confirm:
+
+ViewContent → signup page load
+
+Lead → form submit / requests
+
+CompleteRegistration → Thank You message
+
+Purchase → booking confirmation
+
+After confirmation, republish once to production
+
+Thank you.

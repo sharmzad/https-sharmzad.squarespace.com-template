@@ -1,0 +1,310 @@
+/* Diving Booking Form Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(180deg, #0a3d9b 0%, #004aad 100%);
+  color: #1d2f4f;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.dv-header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 1rem 0;
+}
+
+.dv-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.dv-header .dv-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #003366;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.brand:hover {
+  color: #0077cc;
+}
+
+.dv-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.dv-nav a {
+  color: #003366;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+.dv-nav a:hover,
+.dv-nav a.active {
+  color: #0077cc;
+}
+
+.dv-nav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #0077cc;
+}
+
+main.dv-wrap {
+  padding: 3rem 1.5rem;
+}
+
+.dv-form-wrap {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.dv-form-wrap h1 {
+  color: #003366;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.hint {
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.dv-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.dv-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #003366;
+  font-size: 0.95rem;
+}
+
+.dv-form input,
+.dv-form select,
+.dv-form textarea {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  background: white;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dv-form input:focus,
+.dv-form select:focus,
+.dv-form textarea:focus {
+  outline: none;
+  border-color: #0077cc;
+  box-shadow: 0 0 0 3px rgba(0, 119, 204, 0.1);
+}
+
+.dv-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.dv-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.dv-grid-3 label {
+  min-width: 0;
+}
+
+.dv-grid-3 input {
+  min-width: 0;
+  width: 100%;
+}
+
+.dv-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.dv-btn {
+  background: #0077cc;
+  color: white;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.1s;
+  flex: 1;
+}
+
+.dv-btn:hover {
+  background: #005fa3;
+  transform: translateY(-1px);
+}
+
+.dv-btn:active {
+  transform: translateY(0);
+}
+
+.dv-btn-outline {
+  background: transparent;
+  color: #0077cc;
+  border: 2px solid #0077cc;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  flex: 1;
+}
+
+.dv-btn-outline:hover {
+  background: #0077cc;
+  color: white;
+}
+
+.dv-msg {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-weight: 500;
+  background: #e6f4ea;
+  color: #1e7e34;
+  border-left: 4px solid #28a745;
+}
+
+.dv-note {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f8faff;
+  border-radius: 12px;
+  border-left: 4px solid #0077cc;
+}
+
+.dv-note p {
+  color: #1d2f4f;
+  margin: 0.5rem 0;
+}
+
+.dv-note strong {
+  color: #003366;
+}
+
+.dv-footer {
+  background: rgba(0, 51, 102, 0.95);
+  color: white;
+  padding: 2rem 0;
+  margin-top: 4rem;
+  text-align: center;
+}
+
+.dv-footer a {
+  color: #8ec5fc;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.dv-footer a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .dv-grid-2,
+  .dv-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .dv-nav {
+    gap: 1rem;
+  }
+
+  .dv-form-wrap {
+    padding: 1.5rem;
+  }
+
+  .dv-actions {
+    flex-direction: column;
+  }
+}
+
+.etm-trust-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(90deg, #005b96, #007acc);
+  color: white;
+  padding: 14px 20px;
+  border-radius: 18px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  margin: 25px auto;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.etm-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.1);
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.etm-badge i {
+  color: gold;
+}
+
+.etm-badge:hover {
+  background: rgba(255,255,255,0.2);
+  transform: translateY(-2px);
+}

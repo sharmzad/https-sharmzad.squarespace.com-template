@@ -1,0 +1,127 @@
+Hi Replit Agent,
+
+PLEASE READ CAREFULLY.
+There must be NO removal, NO renaming, and NO restructuring of any existing fields or logic.
+I only need to ADD validations and ADD new legal items.
+
+====================================
+A) EXISTING FIELD – MAKE MANDATORY
+====================================
+1) License Number
+- This field already exists but is currently optional.
+- Make it MANDATORY ONLY IF:
+  Company Based In = Egypt
+- Validation message:
+  “Tourism License Number is required for Egyptian travel agencies.”
+
+Do NOT rename the field.
+Do NOT move the field.
+
+====================================
+B) ADD NEW REQUIRED FILE UPLOAD
+====================================
+2) Upload Tourism Ministry / ETAA License (NEW FIELD)
+
+Add ONE new upload field:
+
+Label:
+“Upload Tourism Ministry / ETAA License (Required)”
+
+Small helper text:
+“This must be the official tourism license issued by the Egyptian Ministry of Tourism / ETAA.”
+
+Technical:
+- Input name: tourism_license_file
+- Accepted formats: PDF, JPG, PNG
+- Max size: 10MB
+
+Validation:
+- REQUIRED ONLY IF Company Based In = Egypt
+- Block signup submission if missing
+- Error message:
+  “Official tourism license upload is required for Egyptian agencies.”
+
+Backend:
+- Use existing upload system.
+- Store file URL in DB:
+  tourism_license_url TEXT
+
+====================================
+C) ADD LEGAL CONFIRMATION CHECKBOXES
+====================================
+
+IMPORTANT:
+Do NOT remove existing Terms & Conditions checkbox.
+Add NEW legal confirmation checkbox(es) as below.
+
+------------------------------------
+1) Egyptian Agency Legal Checkbox
+------------------------------------
+Show ONLY if Company Based In = Egypt
+
+Checkbox text (REQUIRED):
+“I confirm that our company is a legally licensed Egyptian travel agency and that all tourism services listed on EgTravelMarket are operated in full compliance with Egyptian Ministry of Tourism regulations.”
+
+- Checkbox is REQUIRED to submit
+- Store value:
+  agency_legal_confirmation = true
+
+------------------------------------
+2) Foreign Agency Legal Checkbox
+------------------------------------
+Show ONLY if Company Based In = Outside Egypt
+
+Checkbox text (REQUIRED):
+“I confirm that our company is a foreign travel agency and does not operate tourism services inside Egypt. All services in Egypt will be operated by licensed Egyptian partners in accordance with local regulations.”
+
+- Checkbox is REQUIRED to submit
+- Store value:
+  foreign_agency_confirmation = true
+
+====================================
+D) WHAT IS MANDATORY (CLEAR RULES)
+====================================
+
+FOR ALL AGENCIES (Egyptian & Foreign):
+- Company Name *
+- Contact Person *
+- Email *
+- Country of Registration *
+- City of Registration *
+- Business Type *
+- Password / Confirm Password *
+- Existing Terms & Conditions checkbox *
+- ONE legal confirmation checkbox (based on Egypt / Foreign)
+
+FOR EGYPTIAN AGENCIES ONLY:
+- License Number (MANDATORY)
+- Upload Tourism Ministry / ETAA License (MANDATORY)
+- Egyptian Agency Legal Checkbox (MANDATORY)
+
+FOR FOREIGN AGENCIES ONLY:
+- NO Egypt tourism license required
+- NO Egypt license number required
+- Foreign Agency Legal Checkbox (MANDATORY)
+
+====================================
+E) ADMIN PANEL
+====================================
+In Admin → Signup Approval → Agency Details:
+- Show clearly:
+  - Company Based In (Egypt / Outside Egypt)
+  - License Number (if Egypt)
+  - Clickable link:
+    “Tourism License (View / Download)”
+  - Legal confirmation status (checked / yes)
+
+Admin approval flow remains unchanged.
+
+====================================
+F) STRICT NO-CHANGE RULE
+====================================
+- Do NOT remove any existing fields
+- Do NOT modify current signup workflow
+- Do NOT change UI layout except adding the new items
+- Do NOT affect existing users
+
+Thanks

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin - Traveller Requests | EgTravelMarket</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/header.css" />
+  <style>
+    .page-wrap { max-width: 1200px; margin: 2rem auto; padding: 1.5rem; background: var(--card); border-radius: 1rem; box-shadow: var(--shadow); }
+    .page-wrap h1 { margin-bottom: 0.5rem; color: var(--accent); }
+    .page-wrap p { color: var(--muted); margin-bottom: 1rem; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .stat-card { background: var(--bg-soft); padding: 1rem; border-radius: 0.75rem; text-align: center; }
+    .stat-card h3 { font-size: 2rem; color: var(--brand); margin: 0; }
+    .stat-card p { margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--muted); }
+    .request-card { background: var(--bg-soft); padding: 1rem; border-radius: 0.75rem; margin-bottom: 1rem; border-left: 4px solid var(--brand); }
+    .request-card.pending-approval { border-left-color: #faad14; }
+    .request-card.rejected { border-left-color: #ff4d4f; opacity: 0.7; }
+    .request-header { display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+    .request-header h3 { margin: 0; color: var(--text); }
+    .request-info { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem; }
+    .bids-section { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1); }
+    .bids-section h4 { font-size: 0.9rem; color: var(--text); margin: 0 0 0.5rem; }
+    .bid-item { background: var(--bg); padding: 0.6rem; border-radius: 0.5rem; margin-bottom: 0.5rem; font-size: 0.85rem; }
+    .bid-item.admin-bid { border-left: 3px solid var(--brand); background: rgba(61, 169, 252, 0.08); }
+    .status-badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+    .status-open { background: rgba(82,196,26,0.2); color: #52c41a; }
+    .status-closed { background: rgba(140,140,140,0.2); color: #8c8c8c; }
+    .status-cancelled { background: rgba(255,77,79,0.2); color: #ff4d4f; }
+    .approval-badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; margin-left: 6px; }
+    .approval-pending { background: rgba(250,173,20,0.2); color: #faad14; }
+    .approval-approved { background: rgba(82,196,26,0.2); color: #52c41a; }
+    .approval-rejected { background: rgba(255,77,79,0.2); color: #ff4d4f; }
+    .loading { text-align: center; padding: 2rem; color: var(--muted); }
+    .action-buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .btn-approve { background: #52c41a; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; }
+    .btn-approve:hover { background: #45a814; }
+    .btn-reject { background: #ff4d4f; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; }
+    .btn-reject:hover { background: #e04446; }
+    .btn-offer { background: var(--accent); color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; }
+    .btn-offer:hover { background: #2b8fd9; }
+    .btn-disabled { opacity: 0.5; cursor: not-allowed !important; }
+    .filter-tabs { display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; }
+    .filter-tab { padding: 8px 16px; background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; cursor: pointer; color: var(--muted); font-size: 14px; }
+    .filter-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .offer-modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+    .offer-modal-overlay.active { display: flex; }
+    .offer-modal { background: #1a2332; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+    .offer-modal-header { padding: 20px 24px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .offer-modal-header h3 { margin: 0; color: var(--text); font-size: 18px; }
+    .offer-modal-header p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+    .offer-modal-body { padding: 24px; }
+    .offer-modal-body .form-group { margin-bottom: 20px; }
+    .offer-modal-body label { display: block; color: #e5e7eb; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+    .offer-modal-body .helper-text { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .offer-modal-body input, .offer-modal-body textarea { width: 100%; padding: 12px 14px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; color: #0f172a; box-sizing: border-box; }
+    .offer-modal-body input:focus, .offer-modal-body textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(61, 169, 252, 0.15); }
+    .offer-modal-body textarea { min-height: 120px; resize: vertical; line-height: 1.5; }
+    .offer-modal-footer { padding: 16px 24px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; gap: 12px; justify-content: flex-end; }
+    .offer-modal-footer .btn-cancel { padding: 10px 20px; background: transparent; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: var(--muted); cursor: pointer; font-size: 14px; }
+    .offer-modal-footer .btn-cancel:hover { background: rgba(255,255,255,0.05); }
+    .offer-modal-footer .btn-submit { padding: 10px 24px; background: var(--accent); border: none; border-radius: 8px; color: white; cursor: pointer; font-size: 14px; font-weight: 500; }
+    .offer-modal-footer .btn-submit:hover { background: #2b8fd9; }
+    .offer-modal-footer .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="page-wrap">
+    <h1>🔐 Admin - Traveller Requests Dashboard</h1>
+    <p>Review, approve, and manage all travel requests. Send official EgTravelMarket offers.</p>
+
+    <div id="statsSection" class="stats" style="display:none;">
+      <div class="stat-card">
+        <h3 id="statTotal">0</h3>
+        <p>Total Requests</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="statPending">0</h3>
+        <p>Pending Approval</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="statApproved">0</h3>
+        <p>Approved</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="statBids">0</h3>
+        <p>Total Bids</p>
+      </div>
+    </div>
+
+    <div class="filter-tabs" id="filterTabs" style="display:none;">
+      <button class="filter-tab active" data-filter="all">All Requests</button>
+      <button class="filter-tab" data-filter="pending">Pending Approval</button>
+      <button class="filter-tab" data-filter="approved">Approved</button>
+      <button class="filter-tab" data-filter="rejected">Rejected</button>
+    </div>
+
+    <div id="loadingSection" class="loading">
+      <p>Loading admin dashboard...</p>
+    </div>
+
+    <div id="requestsContainer"></div>
+  </main>
+
+  <div id="send-offer-modal" class="offer-modal-overlay">
+    <div class="offer-modal">
+      <div class="offer-modal-header">
+        <h3>💼 Send EgTravelMarket Offer</h3>
+        <p id="offer-modal-request-title">For: Request Title</p>
+      </div>
+      <div class="offer-modal-body">
+        <div style="background: rgba(61, 169, 252, 0.08); border: 1px solid rgba(61, 169, 252, 0.2); border-radius: 8px; padding: 12px 14px; margin-bottom: 20px;">
+          <p style="margin: 0; font-size: 13px; color: var(--accent);">This offer will be labeled as <strong>"EgTravelMarket Offer"</strong> and appear prominently to the traveler.</p>
+        </div>
+        <div class="form-group">
+          <label for="offer-price">Offer Price (USD) *</label>
+          <input type="number" id="offer-price" min="1" step="0.01" placeholder="e.g., 150">
+          <p class="helper-text">Enter the complete package price for this request.</p>
+        </div>
+        <div class="form-group">
+          <label for="offer-message">Message to Traveler *</label>
+          <textarea id="offer-message" placeholder="Hello! EgTravelMarket is pleased to offer you...&#10;&#10;- What's included...&#10;- Special arrangements...&#10;- Contact information..."></textarea>
+          <p class="helper-text">Provide details about what's included and any special arrangements.</p>
+        </div>
+      </div>
+      <div class="offer-modal-footer">
+        <button type="button" class="btn-cancel" onclick="closeOfferModal()">Cancel</button>
+        <button type="button" class="btn-submit" id="submit-offer-btn" onclick="submitAdminOffer()">Send Offer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/header.js"></script>
+  <script src="/js/api-client.js"></script>
+  <script>
+    fetch('/header.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('header-placeholder').innerHTML = html;
+      });
+
+    const loadingSection = document.getElementById('loadingSection');
+    const statsSection = document.getElementById('statsSection');
+    const filterTabs = document.getElementById('filterTabs');
+    const requestsContainer = document.getElementById('requestsContainer');
+    let allRequests = [];
+    let currentFilter = 'all';
+    let currentOfferRequestId = null;
+    let currentOfferRequestTitle = '';
+
+    function escapeHtml(unsafe) {
+      if (!unsafe) return '';
+      const div = document.createElement('div');
+      div.textContent = unsafe;
+      return div.innerHTML;
+    }
+
+    function getStatusBadge(status) {
+      const statusClass = status === 'open' ? 'status-open' : status === 'closed' ? 'status-closed' : 'status-cancelled';
+      return `<span class="status-badge ${statusClass}">${escapeHtml(status)}</span>`;
+    }
+
+    function getApprovalBadge(approvalStatus) {
+      if (!approvalStatus || approvalStatus === 'pending') {
+        return '<span class="approval-badge approval-pending">⏳ Pending Approval</span>';
+      } else if (approvalStatus === 'approved') {
+        return '<span class="approval-badge approval-approved">✅ Approved</span>';
+      } else if (approvalStatus === 'rejected') {
+        return '<span class="approval-badge approval-rejected">❌ Rejected</span>';
+      }
+      return '';
+    }
+
+    async function approveRequest(requestId) {
+      if (!confirm('Approve this request? It will become visible to all experts and the traveler will be notified.')) return;
+      
+      try {
+        const token = apiClient.getAuthToken();
+        const res = await fetch(`/api/travel-requests/admin/${requestId}/approval`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ approval_status: 'approved' })
+        });
+        
+        if (!res.ok) throw new Error('Failed to approve');
+        
+        alert('Request approved! The traveler has been notified by email.');
+        loadAdminData();
+      } catch (err) {
+        console.error(err);
+        alert('Error approving request. Please try again.');
+      }
+    }
+
+    async function rejectRequest(requestId) {
+      const notes = prompt('Optional: Add a reason for rejection (visible to admin only):');
+      if (notes === null) return;
+      
+      try {
+        const token = apiClient.getAuthToken();
+        const res = await fetch(`/api/travel-requests/admin/${requestId}/approval`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ approval_status: 'rejected', notes: notes || undefined })
+        });
+        
+        if (!res.ok) throw new Error('Failed to reject');
+        
+        alert('Request rejected.');
+        loadAdminData();
+      } catch (err) {
+        console.error(err);
+        alert('Error rejecting request. Please try again.');
+      }
+    }
+
+    function openOfferModal(requestId, requestTitle) {
+      currentOfferRequestId = requestId;
+      currentOfferRequestTitle = requestTitle;
+      document.getElementById('offer-modal-request-title').textContent = `For: ${requestTitle}`;
+      document.getElementById('offer-price').value = '';
+      document.getElementById('offer-message').value = '';
+      document.getElementById('send-offer-modal').classList.add('active');
+    }
+
+    function closeOfferModal() {
+      document.getElementById('send-offer-modal').classList.remove('active');
+      currentOfferRequestId = null;
+      currentOfferRequestTitle = '';
+    }
+
+    async function submitAdminOffer() {
+      const price = document.getElementById('offer-price').value;
+      const message = document.getElementById('offer-message').value.trim();
+      
+      if (!price || parseFloat(price) <= 0) {
+        alert('Please enter a valid offer price.');
+        return;
+      }
+      if (!message) {
+        alert('Please add a message to your offer.');
+        return;
+      }
+      
+      const submitBtn = document.getElementById('submit-offer-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      try {
+        const token = apiClient.getAuthToken();
+        const response = await fetch(`/api/travel-requests/${currentOfferRequestId}/bids`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            price: parseFloat(price),
+            currency: 'USD',
+            message: message
+          })
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to send offer');
+        }
+
+        closeOfferModal();
+        alert(`EgTravelMarket offer sent successfully!\n\nThe traveler will receive an email notification.`);
+        loadAdminData();
+      } catch (error) {
+        console.error('Error sending offer:', error);
+        alert('Error sending offer: ' + error.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Offer';
+      }
+    }
+
+    document.getElementById('send-offer-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeOfferModal();
+    });
+
+    function renderRequests(requests) {
+      requestsContainer.innerHTML = '';
+      
+      const filtered = currentFilter === 'all' ? requests : requests.filter(r => {
+        const approval = r.approval_status || 'pending';
+        return approval === currentFilter;
+      });
+
+      filtered.forEach(r => {
+        const approvalStatus = r.approval_status || 'pending';
+        const isApproved = approvalStatus === 'approved';
+        const isPending = approvalStatus === 'pending';
+        const isRejected = approvalStatus === 'rejected';
+        
+        const card = document.createElement('div');
+        card.className = 'request-card' + (isPending ? ' pending-approval' : '') + (isRejected ? ' rejected' : '');
+        
+        const bidsHtml = r.bids && r.bids.length > 0 ? r.bids.map(b => `
+          <div class="bid-item ${b.expert_type === 'admin' ? 'admin-bid' : ''}">
+            <strong>${escapeHtml(b.expert_name)}</strong> ${b.expert_type === 'admin' ? '<span style="color: var(--accent);">(Official)</span>' : `(${escapeHtml(b.expert_type)})`}<br>
+            Price: ${b.price ? escapeHtml(String(b.price)) + ' ' + escapeHtml(b.currency || 'USD') : 'Not specified'}<br>
+            Message: ${escapeHtml(b.message)}<br>
+            <small>Submitted: ${escapeHtml(new Date(b.created_at).toLocaleString())}</small>
+          </div>
+        `).join('') : '<p style="color: var(--muted); font-size: 0.85rem;">No bids yet</p>';
+
+        let actionButtons = '';
+        if (isPending) {
+          actionButtons = `
+            <button class="btn-approve" onclick="approveRequest(${r.id})">✓ Approve</button>
+            <button class="btn-reject" onclick="rejectRequest(${r.id})">✗ Reject</button>
+          `;
+        } else if (isApproved && r.status === 'open') {
+          actionButtons = `<button class="btn-offer" onclick="openOfferModal(${r.id}, '${escapeHtml(r.title).replace(/'/g, "\\'")}')">💼 Send Offer</button>`;
+        }
+
+        card.innerHTML = `
+          <div class="request-header">
+            <h3>${escapeHtml(r.title)} ${getApprovalBadge(approvalStatus)} ${getStatusBadge(r.status)}</h3>
+            <small style="color: var(--muted);">Code: ${escapeHtml(r.code)}</small>
+          </div>
+          <div class="request-info">
+            <strong>Traveler:</strong> ${escapeHtml(r.name)} (${escapeHtml(r.email)})
+            ${r.whatsapp ? ' | WhatsApp: ' + escapeHtml(r.whatsapp) : ''}<br>
+            <strong>Type:</strong> ${escapeHtml(r.category || '-')} | 
+            <strong>Location:</strong> ${escapeHtml(r.location || '-')} | 
+            <strong>Date:</strong> ${escapeHtml(r.travel_date || '-')}<br>
+            <strong>Travelers:</strong> ${escapeHtml(String(r.travelers || '-'))} | 
+            <strong>Budget:</strong> ${escapeHtml(r.budget || 'Not specified')}<br>
+            <strong>Details:</strong> ${escapeHtml(r.details || '-')}<br>
+            <small>Submitted: ${escapeHtml(new Date(r.created_at).toLocaleString())}</small>
+          </div>
+          <div class="action-buttons">${actionButtons}</div>
+          <div class="bids-section">
+            <h4>Bids & Offers (${r.bids ? r.bids.length : 0})</h4>
+            ${bidsHtml}
+          </div>
+        `;
+        requestsContainer.appendChild(card);
+      });
+
+      if (filtered.length === 0) {
+        requestsContainer.innerHTML = '<p style="text-align: center; color: var(--muted);">No requests found for this filter.</p>';
+      }
+    }
+
+    async function loadAdminData() {
+      try {
+        const token = apiClient.getAuthToken();
+        if (!token) {
+          loadingSection.innerHTML = '<p>Please <a href="/admin-login.html" style="color: var(--brand);">login as admin</a> to view this dashboard.</p>';
+          return;
+        }
+
+        const res = await fetch('/api/travel-requests/admin/all', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!res.ok) {
+          if (res.status === 403) {
+            loadingSection.innerHTML = '<p>Access denied. Admin privileges required.</p>';
+            return;
+          }
+          throw new Error('Server error');
+        }
+
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message || 'Error');
+
+        allRequests = data.requests || [];
+        
+        const totalBids = allRequests.reduce((sum, r) => sum + (r.bids ? r.bids.length : 0), 0);
+        const pendingCount = allRequests.filter(r => !r.approval_status || r.approval_status === 'pending').length;
+        const approvedCount = allRequests.filter(r => r.approval_status === 'approved').length;
+
+        document.getElementById('statTotal').textContent = allRequests.length;
+        document.getElementById('statPending').textContent = pendingCount;
+        document.getElementById('statApproved').textContent = approvedCount;
+        document.getElementById('statBids').textContent = totalBids;
+
+        loadingSection.style.display = 'none';
+        statsSection.style.display = 'grid';
+        filterTabs.style.display = 'flex';
+
+        renderRequests(allRequests);
+
+      } catch (err) {
+        console.error(err);
+        loadingSection.innerHTML = '<p style="color: #ff4d4f;">Error loading admin data. Please try again.</p>';
+      }
+    }
+
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        currentFilter = this.dataset.filter;
+        renderRequests(allRequests);
+      });
+    });
+
+    loadAdminData();
+  </script>
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

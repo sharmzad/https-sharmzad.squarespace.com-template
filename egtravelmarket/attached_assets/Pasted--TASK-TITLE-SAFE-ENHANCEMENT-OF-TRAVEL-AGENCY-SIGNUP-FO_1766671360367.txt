@@ -1,0 +1,348 @@
+🔴 TASK TITLE
+
+SAFE ENHANCEMENT OF TRAVEL AGENCY SIGNUP FORM (NO BREAKING CHANGES)
+
+1️⃣ PAGE SCOPE (IMPORTANT – READ FIRST)
+
+Page to update:
+/agency-signup.html
+
+This task is ONLY about improving the signup form.
+❌ Do NOT touch dashboard
+❌ Do NOT touch jobs
+❌ Do NOT touch payments
+❌ Do NOT touch expert trips
+❌ Do NOT refactor backend logic unless required to STORE new fields
+
+The goal is to ADD fields without breaking existing logic.
+
+2️⃣ PURPOSE OF THIS SIGNUP (DO NOT CHANGE)
+
+This signup is for:
+
+Egyptian travel agencies
+
+International travel agencies
+
+As long as they:
+✔ Sell or plan to sell Egypt-based tourism products
+
+Country of the agency must NOT be restricted.
+
+3️⃣ ABSOLUTE RULES (VERY IMPORTANT)
+
+❌ DO NOT remove any existing input fields
+
+❌ DO NOT rename existing field names or IDs
+
+❌ DO NOT change validation of existing fields
+
+❌ DO NOT create a new signup flow
+
+❌ DO NOT split the form into multiple pages
+
+ONLY append new sections clearly.
+
+4️⃣ FIELDS THAT MUST STAY EXACTLY AS THEY ARE
+
+Keep ALL existing fields and logic for:
+
+Company & Contact
+
+Company Name
+
+Contact Person
+
+Email
+
+Phone
+
+WhatsApp
+
+Website
+
+Business Info
+
+Years in Business
+
+License Number
+
+Company Description
+
+Branding
+
+Company Logo Upload
+
+Social Media Links
+
+Security
+
+Password
+
+Confirm Password
+
+⚠️ These fields already work — DO NOT TOUCH THEM.
+
+5️⃣ NEW FIELDS TO ADD (STEP BY STEP)
+🔹 SECTION A: BUSINESS LOCATION
+
+Add AFTER company basic info
+
+Add the following fields:
+
+Country of Registration
+
+Type: dropdown
+
+Required: YES
+
+Values: all countries (do NOT hardcode Egypt)
+
+Purpose: distinguish local vs international agencies
+
+City of Registration
+
+Type: text
+
+Required: YES
+
+🔹 SECTION B: BUSINESS CLASSIFICATION
+
+Add the following:
+
+Business Type
+
+Type: dropdown (single select)
+
+Required: YES
+
+Options (exact text):
+
+Travel Agency
+
+Tour Operator
+
+DMC (Local Handling Agent)
+
+Tax / VAT Number
+
+Type: text
+
+Required: NO
+
+Upload Business License
+
+Type: file (PDF / JPG / PNG)
+
+Required: NO
+
+🔹 SECTION C: EGYPT DESTINATION FOCUS
+
+THIS SECTION IS MANDATORY
+
+Add a new section with title:
+“Egypt Destination Focus”
+
+Do you sell Egypt-based travel products?
+
+Type: radio button
+
+Required: YES
+
+Allowed value: ONLY “Yes”
+
+If not Yes → block submit
+
+Egypt Destinations You Operate In
+
+Type: multi-select
+
+Required: YES
+
+Options:
+
+Cairo
+
+Giza
+
+Alexandria
+
+Sharm El Sheikh
+
+Hurghada
+
+Dahab
+
+Marsa Alam
+
+Luxor
+
+Aswan
+
+Abu Simbel
+
+Siwa Oasis
+
+Nile Cruises
+
+Red Sea (General)
+
+Other (show text input)
+
+🔹 SECTION D: PRODUCTS & SERVICES OFFERED
+
+Products & Services Offered
+
+Type: multi-select + “Other”
+
+Required: NO (but recommended)
+
+Options:
+
+Classic sightseeing tours
+
+Private / tailor-made tours
+
+Group packages
+
+Luxury travel
+
+Budget travel
+
+Day tours & excursions
+
+Nile cruises
+
+Diving packages (as reseller)
+
+Safari & adventure trips
+
+Transportation services
+
+Airport transfers
+
+MICE / Groups / Incentives
+
+Religious tourism
+
+Medical tourism
+
+Educational / cultural trips
+
+Cruise shore excursions
+
+Other (text input)
+
+🔹 SECTION E: LOCAL VS INTERNATIONAL FLAG
+
+Company Based In
+
+Type: radio button
+
+Required: YES
+
+Options:
+
+Egypt
+
+Outside Egypt
+
+If Outside Egypt, show:
+
+Do you work with local Egyptian partners?
+
+Yes
+
+No (need support)
+
+⚠️ This field is informational only (NO logic yet).
+
+🔹 SECTION F: LANGUAGES
+
+Languages Operated In
+
+Type: multi-select + Other
+
+Required: NO
+
+Options:
+
+English
+
+Arabic
+
+German
+
+Russian
+
+French
+
+Italian
+
+Spanish
+
+Chinese
+
+Other (text input)
+
+🔹 SECTION G: CONFIRMATION
+
+Confirmation Checkbox (REQUIRED)
+Text:
+
+“I confirm that all listed products and services are related to Egypt tourism and I agree to the platform terms.”
+
+Block submit if unchecked.
+
+6️⃣ BACKEND / DATABASE REQUIREMENTS (DO NOT BREAK EXISTING)
+
+On submit:
+
+Keep existing submit logic
+
+Append new fields only
+
+Store new values as:
+
+account_type: "business"
+role: "travel_agency"
+country
+city
+business_type
+egypt_destinations[]
+products_offered[]
+languages[]
+company_based_in
+has_local_partner
+status: "pending_review"
+
+
+❌ Do NOT create new tables
+❌ Do NOT change login logic
+❌ Do NOT auto-approve accounts
+
+7️⃣ WHAT MUST NOT BE ADDED (IMPORTANT)
+
+❌ No job posting fields
+❌ No payment or commission fields
+❌ No guarantee / representative options
+❌ No dashboard redirects change
+
+Signup = identity + capability only
+
+8️⃣ FINAL EXPECTED RESULT
+
+After this task:
+
+✔ Egyptian agencies can sign up
+✔ International agencies can sign up
+✔ Egypt remains the destination focus
+✔ No existing functionality is broken
+✔ Signup is future-proof for later steps
+
+🔴 VERY IMPORTANT FINAL NOTE
+
+This task is additive only.
+If anything existing stops working, ROLL BACK and re-apply carefully.
+
+✅ END OF TASK

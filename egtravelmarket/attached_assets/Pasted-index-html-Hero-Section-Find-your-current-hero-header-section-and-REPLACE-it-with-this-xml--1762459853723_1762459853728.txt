@@ -1,0 +1,555 @@
+index.html (Hero Section)
+Find your current hero/header section and REPLACE it with this:
+
+xml
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">Your Trusted Egypt Travel Partner</h1>
+    <p class="hero-subtitle">25+ Years Local Experience • Verified DMC • Instant WhatsApp Support</p>
+    
+    <!-- Quick Search Widget -->
+    <div class="hero-search-widget">
+      <div class="search-tabs">
+        <button class="search-tab active" data-tab="tours">🏛️ Tours</button>
+        <button class="search-tab" data-tab="diving">🤿 Diving</button>
+        <button class="search-tab" data-tab="custom">✨ Custom Trip</button>
+      </div>
+      
+      <div class="search-form">
+        <select class="search-input" id="destination">
+          <option value="">📍 Where to?</option>
+          <option value="sharm">Sharm El Sheikh</option>
+          <option value="cairo">Cairo & Pyramids</option>
+          <option value="luxor">Luxor & Temples</option>
+          <option value="dahab">Dahab</option>
+          <option value="petra">Petra, Jordan</option>
+          <option value="hurghada">Hurghada</option>
+        </select>
+        
+        <input type="date" class="search-input" id="travel-date" placeholder="📅 When?">
+        
+        <select class="search-input" id="travelers">
+          <option value="">👥 Travelers</option>
+          <option value="1">1 Person</option>
+          <option value="2">2 People</option>
+          <option value="3-5">3-5 People</option>
+          <option value="6-10">6-10 People</option>
+          <option value="10+">Group (10+)</option>
+        </select>
+        
+        <button class="search-btn">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+          Search Trips
+        </button>
+      </div>
+    </div>
+    
+    <!-- Trust Indicators -->
+    <div class="hero-trust-badges">
+      <div class="trust-badge">
+        <span class="trust-icon">✓</span>
+        <span>Verified DMC</span>
+      </div>
+      <div class="trust-badge">
+        <span class="trust-icon">⭐</span>
+        <span>4.9/5 Rating</span>
+      </div>
+      <div class="trust-badge">
+        <span class="trust-icon">🔒</span>
+        <span>Secure Booking</span>
+      </div>
+      <div class="trust-badge">
+        <span class="trust-icon">💬</span>
+        <span>24/7 Support</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Scroll Down Indicator -->
+  <div class="scroll-indicator">
+    <svg width="24" height="24" fill="none" stroke="white" stroke-width="2">
+      <path d="M12 5v14M19 12l-7 7-7-7"/>
+    </svg>
+  </div>
+</section>
+📁 FILE 2: style.css (Add to the END of your CSS file)
+css
+/* ============================================
+   HERO SECTION - PHASE 1 IMPROVEMENTS
+   ============================================ */
+
+.hero-section {
+  position: relative;
+  height: 85vh;
+  min-height: 650px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%);
+  /* Replace with your Egypt image */
+  background-image: url('https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  overflow: hidden;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, 
+    rgba(0,0,0,0.35) 0%, 
+    rgba(0,0,0,0.55) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 950px;
+  padding: 0 24px;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-title {
+  font-size: 3.75rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 1.25rem;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+  font-size: 1.35rem;
+  color: rgba(255,255,255,0.95);
+  margin-bottom: 3rem;
+  font-weight: 500;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+
+/* Search Widget */
+.hero-search-widget {
+  background: white;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.35);
+  margin-bottom: 2.5rem;
+  backdrop-filter: blur(10px);
+  animation: slideInUp 0.8s ease-out 0.2s both;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.search-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 14px;
+  justify-content: center;
+}
+
+.search-tab {
+  padding: 10px 24px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.search-tab.active {
+  background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(14,165,233,0.3);
+}
+
+.search-tab:hover:not(.active) {
+  background: #e0f2fe;
+  color: #0ea5e9;
+  transform: translateY(-2px);
+}
+
+.search-form {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  align-items: end;
+}
+
+.search-input {
+  padding: 16px 18px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+  font-family: inherit;
+  color: #1e293b;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 4px rgba(14,165,233,0.12);
+  transform: translateY(-2px);
+}
+
+.search-input::placeholder {
+  color: #94a3b8;
+}
+
+.search-btn {
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(14,165,233,0.4);
+  font-family: inherit;
+}
+
+.search-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(14,165,233,0.5);
+  background: linear-gradient(135deg, #0284c7 0%, #0891b2 100%);
+}
+
+.search-btn:active {
+  transform: translateY(-1px);
+}
+
+/* Trust Badges */
+.hero-trust-badges {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  animation: fadeIn 0.8s ease-out 0.4s both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 10px 20px;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(12px);
+  border-radius: 50px;
+  border: 1px solid rgba(255,255,255,0.35);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.trust-badge:hover {
+  background: rgba(255,255,255,0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.trust-icon {
+  font-size: 1.35rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 2s infinite;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+  z-index: 3;
+}
+
+.scroll-indicator:hover {
+  opacity: 1;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-12px);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 968px) {
+  .hero-section {
+    height: auto;
+    min-height: 650px;
+    padding: 60px 0;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.15rem;
+  }
+  
+  .search-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .hero-search-widget {
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-section {
+    min-height: 580px;
+    background-attachment: scroll;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .search-tabs {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .search-tab {
+    width: 100%;
+    padding: 12px;
+  }
+  
+  .hero-trust-badges {
+    gap: 12px;
+  }
+  
+  .trust-badge {
+    font-size: 0.9rem;
+    padding: 8px 14px;
+  }
+  
+  .scroll-indicator {
+    bottom: 20px;
+  }
+}
+📁 FILE 3: script.js (Add to the END of your JS file)
+javascript
+// ============================================
+// HERO SECTION FUNCTIONALITY
+// ============================================
+
+// Search Widget Tabs
+document.addEventListener('DOMContentLoaded', function() {
+  
+  // Tab Switching
+  const searchTabs = document.querySelectorAll('.search-tab');
+  searchTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      // Remove active from all
+      searchTabs.forEach(t => t.classList.remove('active'));
+      // Add active to clicked
+      this.classList.add('active');
+      
+      const tabType = this.dataset.tab;
+      console.log('Active tab:', tabType);
+      
+      // Optional: Customize form based on tab
+      // Example: Show different fields for diving vs tours
+    });
+  });
+  
+  // Search Button Click Handler
+  const searchBtn = document.querySelector('.search-btn');
+  if (searchBtn) {
+    searchBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      const destination = document.getElementById('destination').value;
+      const date = document.getElementById('travel-date').value;
+      const travelers = document.getElementById('travelers').value;
+      const activeTab = document.querySelector('.search-tab.active').dataset.tab;
+      
+      // Validation
+      if (!destination) {
+        alert('⚠️ Please select a destination');
+        document.getElementById('destination').focus();
+        return;
+      }
+      
+      // Build search URL
+      const params = new URLSearchParams({
+        type: activeTab,
+        destination: destination,
+        date: date || '',
+        travelers: travelers || ''
+      });
+      
+      // Redirect to your trips/search page
+      window.location.href = `/trips?${params.toString()}`;
+      
+      // Or if you don't have a trips page yet, just log it
+      console.log('Search params:', {
+        type: activeTab,
+        destination,
+        date,
+        travelers
+      });
+    });
+  }
+  
+  // Scroll Indicator Click
+  const scrollIndicator = document.querySelector('.scroll-indicator');
+  if (scrollIndicator) {
+    scrollIndicator.addEventListener('click', function() {
+      const nextSection = document.querySelector('.hero-section').nextElementSibling;
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
+  
+  // Set minimum date to today for date input
+  const dateInput = document.getElementById('travel-date');
+  if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+  }
+  
+});
+
+// Optional: Parallax effect on scroll
+window.addEventListener('scroll', function() {
+  const heroSection = document.querySelector('.hero-section');
+  if (heroSection) {
+    const scrolled = window.pageYOffset;
+    const parallax = scrolled * 0.5;
+    heroSection.style.transform = `translateY(${parallax}px)`;
+  }
+});
+🎨 BONUS: Better Background Image
+Replace the placeholder image URL in CSS with one of these options:
+
+Option 1: Upload Your Own Image
+In Replit, click "Files" → Upload
+
+Upload a high-quality Egypt photo (Pyramids, Red Sea, Sharm, etc.)
+
+In style.css, change the line to:
+
+css
+background-image: url('your-image-name.jpg');
+Option 2: Use a Free Stock Photo
+Replace the URL in CSS with one of these (already tested):
+
+css
+/* Pyramids at sunset */
+background-image: url('https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=1920&q=80');
+
+/* Red Sea diving */
+background-image: url('https://images.unsplash.com/photo-1582967788606-a171c1080cb0?w=1920&q=80');
+
+/* Sharm El Sheikh beach */
+background-image: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&q=80');
+
+/* Luxor temple */
+background-image: url('https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=1920&q=80');
+✅ Installation Checklist
+ Copy HTML code → paste into index.html (replace old hero)
+
+ Copy CSS code → paste at END of style.css
+
+ Copy JavaScript code → paste at END of script.js
+
+ Replace background image URL with your photo
+
+ Save all files
+
+ Click "Run" in Replit
+
+ Test on mobile (click device preview icon)
+
+🔧 Quick Customization Guide
+Change colors:
+
+css
+/* Primary color (blue) - Line 19 in CSS */
+background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+
+/* Change to your brand color, example teal: */
+background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+Change hero title:
+
+xml
+<h1 class="hero-title">Your Trusted Egypt Travel Partner</h1>
+<!-- Change to whatever you want -->
+Adjust hero height:
+
+css
+/* Line 9 in CSS */
+height: 85vh; /* Change 85 to 70 or 100 */
+Ready to paste? Let me know if you run into any issues or want the next improvements (Sticky Navigation, Mobile Menu, or CTA Buttons)! 🚀
+
+
+
+
+
+

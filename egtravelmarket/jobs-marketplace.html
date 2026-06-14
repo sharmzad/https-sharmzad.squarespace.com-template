@@ -1,0 +1,1053 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- PRIMARY OG IMAGE -->
+  <meta property="og:title" content="EgTravelMarket – Your Gateway to Explore Egypt" />
+  <meta property="og:description" content="Discover trips, experts, diving, MICE, medical services, and full travel experiences across Egypt." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.egtravelmarket.com/" />
+  <meta property="og:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.egtravelmarket.com/static/images/og-image.jpg" />
+
+  <!-- TELL CRAWLERS TO REFRESH OG IMAGE -->
+  <meta property="og:image:secure_url" content="https://www.egtravelmarket.com/static/images/og-image.jpg?v=2" />
+<title>Travel Agency Job Marketplace - Hire Guides, Divers & Mentors | Eg Travel Market</title>
+<meta name="description" content="Egypt's premier job marketplace connecting travel agencies with expert tour guides, diving instructors, and travel mentors. Post jobs or find opportunities in tourism.">
+<meta name="copyright" content="© 2025 Eg Travel Market. All rights reserved.">
+
+<link rel="canonical" href="https://egytravelmarket.com/jobs-marketplace.html">
+<link rel="stylesheet" href="/assets/styles.css">
+<style>
+  .hero-flex {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+  }
+  @media(max-width: 900px) {
+    .hero-flex { flex-direction: column; }
+  }
+  .stats-bar {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .stat-item {
+    text-align: center;
+  }
+  .stat-number {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .job-card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    padding: 20px;
+    transition: all 0.2s;
+  }
+  .job-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 12px;
+    gap: 16px;
+  }
+  .job-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 6px;
+  }
+  .job-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .job-description {
+    color: var(--text);
+    line-height: 1.6;
+    margin: 12px 0;
+  }
+  .job-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .badge-type {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+  .badge-guide {
+    background: rgba(46, 166, 255, 0.15);
+    color: var(--accent);
+    border: 1px solid rgba(46, 166, 255, 0.3);
+  }
+  .badge-diver {
+    background: rgba(39, 174, 96, 0.15);
+    color: #27ae60;
+    border: 1px solid rgba(39, 174, 96, 0.3);
+  }
+  .badge-mentor {
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+  }
+  .empty-state {
+    text-align: center;
+    padding: 64px 24px;
+    color: var(--muted);
+  }
+  .empty-state svg {
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+  }
+  .modal.active {
+    display: flex;
+  }
+  .modal-content {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-content h3 {
+    margin: 0 0 16px;
+    color: var(--text);
+  }
+  .modal-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    justify-content: flex-end;
+  }
+  .form-group {
+    margin-bottom: 16px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  textarea {
+    width: 100%;
+    min-height: 120px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    color: var(--text);
+    padding: 12px;
+    border-radius: 12px;
+    font-family: inherit;
+    resize: vertical;
+  }
+  .login-prompt {
+    background: rgba(255, 193, 7, 0.15);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    color: #ffc107;
+    padding: 16px;
+    border-radius: 12px;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  @media(max-width: 768px) {
+    .hero-flex {
+      gap: 24px;
+    }
+    
+    .stats-bar {
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+    }
+    
+    .stat-item {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    
+    .stat-item:last-child {
+      border-bottom: none;
+    }
+    
+    .stat-number {
+      font-size: 24px;
+    }
+    
+    .stat-label {
+      font-size: 12px;
+    }
+    
+    .filters {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    
+    .input, .select {
+      padding: 12px 14px;
+      min-height: 44px;
+      font-size: 16px;
+    }
+    
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .job-card {
+      padding: 16px;
+    }
+    
+    .job-title {
+      font-size: 18px;
+    }
+    
+    .job-meta {
+      gap: 8px;
+      font-size: 13px;
+    }
+    
+    .job-actions {
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    
+    .job-actions button {
+      padding: 10px 14px;
+      min-height: 44px;
+      font-size: 0.95em;
+      flex: 1;
+    }
+    
+    .modal-content {
+      max-width: 95%;
+      padding: 16px;
+    }
+    
+    .modal-buttons {
+      flex-direction: column;
+      gap: 8px;
+      justify-content: stretch;
+    }
+    
+    .modal-buttons button {
+      padding: 12px 16px;
+      min-height: 44px;
+      width: 100%;
+    }
+    
+    .form-group {
+      margin-bottom: 14px;
+    }
+    
+    textarea {
+      padding: 12px;
+      font-size: 16px;
+      min-height: 120px;
+    }
+  }
+
+  @media(max-width: 480px) {
+    .hero-flex {
+      flex-direction: column !important;
+      gap: 16px;
+    }
+    
+    .hero-flex > div:last-child {
+      max-width: 100% !important;
+    }
+    
+    .stats-bar {
+      padding: 12px;
+      gap: 8px;
+    }
+    
+    .stat-item {
+      padding: 6px 0;
+    }
+    
+    .stat-number {
+      font-size: 20px;
+    }
+    
+    .stat-label {
+      font-size: 11px;
+    }
+    
+    .filters {
+      gap: 8px;
+      padding: 0;
+    }
+    
+    .input, .select {
+      padding: 11px 12px;
+      font-size: 16px;
+      border-radius: 8px;
+    }
+    
+    .job-card {
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .job-header {
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .job-title {
+      font-size: 16px;
+    }
+    
+    .job-meta {
+      font-size: 12px;
+      gap: 6px;
+    }
+    
+    .badge-type {
+      padding: 4px 10px;
+      font-size: 11px;
+    }
+    
+    .job-description {
+      font-size: 14px;
+      margin: 8px 0;
+    }
+    
+    .job-actions {
+      gap: 4px;
+      margin-top: 12px;
+    }
+    
+    .job-actions button {
+      padding: 9px 12px;
+      font-size: 0.9em;
+      min-height: 40px;
+      flex: 1;
+    }
+    
+    .modal-content {
+      max-width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 16px 16px 0 0;
+      padding: 14px;
+    }
+    
+    .modal-content h3 {
+      margin: 0 0 12px;
+      font-size: 16px;
+    }
+    
+    .modal-buttons {
+      gap: 6px;
+      margin-top: 16px;
+    }
+    
+    .modal-buttons button {
+      padding: 11px 14px;
+      min-height: 40px;
+      font-size: 0.95em;
+    }
+    
+    .form-group {
+      margin-bottom: 12px;
+    }
+    
+    .form-group label {
+      font-size: 12px;
+    }
+    
+    textarea {
+      padding: 10px;
+      font-size: 16px;
+    }
+    
+    .empty-state {
+      padding: 40px 16px;
+    }
+  }
+</style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9Z2B97VS02"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9Z2B97VS02');
+  </script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<header class="header">
+  <div class="container nav">
+    <a href="/index.html" class="brand"><div class="logo"></div><span>Eg Travel Market</span></a>
+    <nav class="menu" id="main-menu">
+      <a href="/index.html">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/divers.html">Divers</a>
+      <a href="/jobs-marketplace.html" class="active">Jobs</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-flex">
+    <div style="flex: 1;">
+      <h1>Travel Industry Job Marketplace</h1>
+      <p style="font-size: 18px; line-height: 1.7; margin-bottom: 20px;">
+        Connect travel agencies with expert professionals in Egypt's tourism sector. Agencies post job opportunities for guides, diving instructors, and travel mentors. Experts browse and apply directly.
+      </p>
+      <div style="background: rgba(61, 169, 252, 0.1); border: 1px solid rgba(61, 169, 252, 0.3); border-radius: 12px; padding: 16px; margin-top: 20px;">
+        <h3 style="margin: 0 0 12px; font-size: 16px; color: var(--accent);">How It Works:</h3>
+        <ul style="margin: 0; padding-left: 20px; color: var(--text); line-height: 1.8;">
+          <li><strong>Travel Agencies:</strong> Create an account and post job openings for tourism professionals</li>
+          <li><strong>Experts (Guides/Divers/Mentors):</strong> Browse jobs, filter by type and location, and apply instantly</li>
+          <li><strong>Admin Approval:</strong> All jobs are reviewed and approved to ensure quality and legitimacy</li>
+        </ul>
+      </div>
+    </div>
+    <div style="flex: 0 0 auto; max-width: 400px;">
+      <img loading="lazy" src="/attached_assets/stock_images/professional_job_int_f7d5bfc9.jpg" alt="Job Marketplace - Travel Agency Hiring" style="width: 100%; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.35);">
+    </div>
+  </div>
+</section>
+
+<section class="container" style="margin-top: 24px;">
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-number" id="total-jobs">0</div>
+      <div class="stat-label">Active Jobs</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" id="guide-jobs">0</div>
+      <div class="stat-label">Guide Positions</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" id="diver-jobs">0</div>
+      <div class="stat-label">Diver Positions</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" id="mentor-jobs">0</div>
+      <div class="stat-label">Mentor Positions</div>
+    </div>
+  </div>
+
+  <div class="filters">
+    <input type="text" id="search-input" class="input" placeholder="🔍 Search jobs...">
+    <select id="type-filter" class="select">
+      <option value="">All Types</option>
+      <option value="guide">Guide</option>
+      <option value="diver">Diver</option>
+      <option value="mentor">Mentor</option>
+    </select>
+    <select id="location-filter" class="select">
+      <option value="">All Locations</option>
+    </select>
+    <select id="salary-filter" class="select">
+      <option value="">All Salaries</option>
+      <option value="0-1000">$0 - $1000</option>
+      <option value="1000-2000">$1000 - $2000</option>
+      <option value="2000-5000">$2000 - $5000</option>
+      <option value="5000+">$5000+</option>
+    </select>
+  </div>
+
+  <div id="jobs-container" class="grid" style="margin-bottom: 60px;">
+    <div class="empty-state" style="grid-column: 1 / -1;">
+      <p>Loading jobs...</p>
+    </div>
+  </div>
+</section>
+
+<div id="job-detail-modal" class="modal">
+  <div class="modal-content">
+    <div id="job-detail-content">
+      <p>Loading...</p>
+    </div>
+    <div class="modal-buttons">
+      <button type="button" class="btn" onclick="closeDetailModal()">Close</button>
+      <button type="button" id="apply-from-detail" class="btn primary">Apply Now</button>
+    </div>
+  </div>
+</div>
+
+<div id="apply-modal" class="modal">
+  <div class="modal-content">
+    <h3>Apply for Job</h3>
+    <div id="apply-job-title" style="margin-bottom: 20px; color: var(--muted);"></div>
+    <div id="login-prompt" class="login-prompt" style="display: none;">
+      You must be logged in as an expert to apply for jobs.
+      <div style="margin-top: 12px; display: flex; gap: 8px; justify-content: center;">
+        <a href="/guide-login.html" class="btn">Guide Login</a>
+        <a href="/diver-login.html" class="btn">Diver Login</a>
+        <a href="/mentor-login.html" class="btn">Mentor Login</a>
+      </div>
+    </div>
+    <form id="apply-form" style="display: none;">
+      <div class="form-group">
+        <label for="cover-letter">Cover Letter (Optional)</label>
+        <textarea id="cover-letter" placeholder="Tell the employer why you're a great fit for this position..."></textarea>
+      </div>
+      <div class="modal-buttons">
+        <button type="button" class="btn" onclick="closeApplyModal()">Cancel</button>
+        <button type="submit" class="btn primary">Submit Application</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+const API_URL = '/api';
+
+let authToken = localStorage.getItem('authToken');
+let currentUser = null;
+let currentJobForApply = null;
+let currentJobIsExpired = false;
+let allJobs = [];
+
+const egyptLocations = [
+  'Cairo',
+  'Giza',
+  'Sharm El Sheikh',
+  'Hurghada',
+  'Luxor',
+  'Aswan',
+  'Alexandria',
+  'Dahab',
+  'Marsa Alam',
+  'El Gouna',
+  'Ain Sokhna',
+  'Port Said',
+  'Suez',
+  'Siwa Oasis',
+  'Fayoum'
+];
+
+const templateJobs = [
+  {
+    id: 'template-1',
+    title: 'Experienced Tour Guide Needed - Pyramids & Cairo Tours',
+    expertType: 'guide',
+    description: 'We are looking for an experienced, licensed tour guide fluent in English and Arabic to lead our daily tours to the Pyramids of Giza, Egyptian Museum, and Cairo attractions. Must have excellent knowledge of ancient Egyptian history and be able to engage international tourists.',
+    location: 'Cairo',
+    salaryMin: 1500,
+    salaryMax: 2500,
+    requirements: 'Licensed Egyptian tour guide, 2+ years experience, fluent in English and Arabic, knowledge of Pharaonic history',
+    postedAt: '2025-01-10',
+    isTemplate: true,
+    agency: {
+      companyName: 'Example Travel Agency',
+      location: 'Cairo'
+    }
+  },
+  {
+    id: 'template-2',
+    title: 'PADI Diving Instructor - Red Sea Diving Center',
+    expertType: 'diver',
+    description: 'Join our established diving center in Sharm El Sheikh! We need a certified PADI diving instructor to teach courses from beginner to advanced levels. You will lead daily diving excursions to world-famous Red Sea dive sites including Ras Mohammed and Tiran Island.',
+    location: 'Sharm El Sheikh',
+    salaryMin: 2000,
+    salaryMax: 3500,
+    requirements: 'PADI Instructor certification, minimum 500 logged dives, rescue diver certification, experience with recreational and technical diving',
+    postedAt: '2025-01-08',
+    isTemplate: true,
+    agency: {
+      companyName: 'Red Sea Dive Adventures',
+      location: 'Sharm El Sheikh'
+    }
+  },
+  {
+    id: 'template-3',
+    title: 'Adventure Travel Mentor - Desert Safari Specialist',
+    expertType: 'mentor',
+    description: 'Seeking a passionate adventure travel mentor to guide our clients through Sahara desert experiences, Bedouin cultural tours, and outdoor adventures. You will mentor new guides and ensure high-quality customer experiences in remote desert locations.',
+    location: 'Siwa Oasis',
+    salaryMin: 1200,
+    salaryMax: 2000,
+    requirements: 'Experience in desert travel and adventure tourism, leadership skills, knowledge of Bedouin culture, first aid certification',
+    postedAt: '2025-01-05',
+    isTemplate: true,
+    agency: {
+      companyName: 'Sahara Adventure Co.',
+      location: 'Siwa Oasis'
+    }
+  },
+  {
+    id: 'template-4',
+    title: 'Multilingual Tour Guide - Luxor Historical Sites',
+    expertType: 'guide',
+    description: 'High-end tour operator seeks exceptional guide for Luxor Valley of the Kings tours. Must speak English, French, or German fluently. Responsible for leading VIP clients through temples, tombs, and archaeological sites with expert commentary on ancient Egyptian civilization.',
+    location: 'Luxor',
+    salaryMin: 2000,
+    salaryMax: 3000,
+    requirements: 'Licensed guide, fluent in English + (French or German), Egyptology background preferred, 3+ years experience',
+    postedAt: '2025-01-12',
+    isTemplate: true,
+    agency: {
+      companyName: 'Luxor Premium Tours',
+      location: 'Luxor'
+    }
+  },
+  {
+    id: 'template-5',
+    title: 'Freediving & Snorkeling Instructor - Dahab',
+    expertType: 'diver',
+    description: 'Looking for a certified freediving instructor to join our team in the beautiful Blue Hole area of Dahab. Teach freediving courses, lead snorkeling trips, and ensure safety for all water activities. Great opportunity in a relaxed beach town atmosphere.',
+    location: 'Dahab',
+    salaryMin: 1500,
+    salaryMax: 2200,
+    requirements: 'Freediving instructor certification (AIDA/SSI/PADI), CPR and first aid, experience with beginners, good communication skills',
+    postedAt: '2025-01-14',
+    isTemplate: true,
+    agency: {
+      companyName: 'Blue Hole Divers',
+      location: 'Dahab'
+    }
+  },
+  {
+    id: 'template-6',
+    title: 'Travel Mentor - Sustainable Tourism Guide',
+    expertType: 'mentor',
+    description: 'Join our eco-tourism initiative focused on sustainable travel experiences in Fayoum. Mentor local guides, develop responsible tourism programs, and lead educational tours highlighting environmental conservation and local community engagement.',
+    location: 'Fayoum',
+    salaryMin: 1800,
+    salaryMax: 2500,
+    requirements: 'Background in sustainable tourism or environmental studies, mentoring experience, passion for eco-tourism, community development skills',
+    postedAt: '2025-01-11',
+    isTemplate: true,
+    agency: {
+      companyName: 'EcoEgypt Tourism',
+      location: 'Fayoum'
+    }
+  }
+];
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+function formatSalary(min, max) {
+  if (!min && !max) return 'Salary not specified';
+  if (min && max) return `$${min} - $${max}`;
+  if (min) return `From $${min}`;
+  return `Up to $${max}`;
+}
+
+async function checkAuth() {
+  if (!authToken) return;
+
+  try {
+    const response = await fetch(`${API_URL}/auth/me`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      currentUser = { ...data.user, expertProfile: data.expertProfile, agencyProfile: data.agencyProfile, diveCenterProfile: data.diveCenterProfile };
+      updateMenuForLoggedInUser();
+    } else {
+      localStorage.removeItem('authToken');
+      authToken = null;
+    }
+  } catch (error) {
+    console.error('Auth check failed:', error);
+  }
+}
+
+function updateMenuForLoggedInUser() {
+  if (!currentUser) return;
+
+  const menu = document.getElementById('main-menu');
+  
+  if (currentUser.userType === 'agency') {
+    menu.innerHTML = `
+      <a href="/index.html">Home</a>
+      <a href="/jobs-marketplace.html" class="active">Jobs</a>
+      <a href="/agency-dashboard.html">Dashboard</a>
+      <a href="#" id="logout-btn">Logout</a>
+    `;
+  } else if (currentUser.userType === 'admin') {
+    menu.innerHTML = `
+      <a href="/index.html">Home</a>
+      <a href="/jobs-marketplace.html" class="active">Jobs</a>
+      <a href="/admin-dashboard.html">Admin</a>
+      <a href="#" id="logout-btn">Logout</a>
+    `;
+  } else if (['guide', 'diver', 'mentor'].includes(currentUser.userType)) {
+    menu.innerHTML = `
+      <a href="/index.html">Home</a>
+      <a href="/jobs-marketplace.html" class="active">Jobs</a>
+      <a href="/expert-dashboard-enhanced.html?type=${currentUser.userType}">Dashboard</a>
+      <a href="#" id="logout-btn">Logout</a>
+    `;
+  }
+
+  const logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('authToken');
+        window.location.reload();
+      }
+    });
+  }
+}
+
+async function loadJobs() {
+  try {
+    const response = await fetch(`${API_URL}/jobs?limit=100`, {
+      headers: authToken ? { 'Authorization': `Bearer ${authToken}` } : {}
+    });
+
+    if (!response.ok) {
+      console.log('Could not load jobs from API');
+      allJobs = [];
+    } else {
+      const data = await response.json();
+      allJobs = Array.isArray(data) ? data : (data.jobs || []);
+    }
+    
+    updateStats();
+    displayJobs(allJobs);
+    populateLocationFilter();
+  } catch (error) {
+    console.error('Error loading jobs:', error);
+    allJobs = [];
+    updateStats();
+    displayJobs(allJobs);
+    populateLocationFilter();
+  }
+}
+
+function populateLocationFilter() {
+  const locationFilter = document.getElementById('location-filter');
+  locationFilter.innerHTML = '<option value="">All Locations</option>' + 
+    egyptLocations.map(loc => `<option value="${loc}">${loc}</option>`).join('');
+}
+
+function updateStats() {
+  document.getElementById('total-jobs').textContent = allJobs.length;
+  document.getElementById('guide-jobs').textContent = allJobs.filter(j => j.expertType === 'guide' || j.expert_type === 'guide').length;
+  document.getElementById('diver-jobs').textContent = allJobs.filter(j => j.expertType === 'diver' || j.expert_type === 'diver').length;
+  document.getElementById('mentor-jobs').textContent = allJobs.filter(j => j.expertType === 'mentor' || j.expert_type === 'mentor').length;
+}
+
+function displayJobs(jobs) {
+  const container = document.getElementById('jobs-container');
+  
+  if (jobs.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state" style="grid-column: 1 / -1;">
+        <p>No jobs found matching your criteria.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = jobs.map(job => {
+    const expertType = job.expertType || job.expert_type;
+    const salaryMin = job.salaryMin || job.salary_min;
+    const salaryMax = job.salaryMax || job.salary_max;
+    const createdAt = job.postedAt || job.created_at;
+    const duration = job.duration;
+    const deadline = job.applicationDeadline || job.application_deadline;
+    const isTemplate = job.isTemplate || false;
+    const isExpired = deadline ? (() => {
+      const deadlineDate = new Date(deadline);
+      deadlineDate.setHours(23, 59, 59, 999);
+      return deadlineDate < new Date();
+    })() : false;
+    
+    return `
+    <div class="card">
+      <div class="body" style="padding-top: 20px;">
+        ${isTemplate ? '<div style="background: rgba(255,193,7,0.1); border: 1px solid rgba(255,193,7,0.3); padding: 6px 12px; border-radius: 8px; margin-bottom: 12px; font-size: 12px; color: #ffc107; text-align: center;"><strong>📋 Example Job</strong> - Shows what real job posts will look like</div>' : ''}
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+          <h3 style="margin: 0;">${job.title}</h3>
+          <span class="badge-type badge-${expertType}">${expertType}</span>
+        </div>
+        <div class="meta" style="margin-bottom: 12px;">
+          <span>📍 ${job.location || 'Remote'}</span>
+          <span>💰 ${formatSalary(salaryMin, salaryMax)}/month</span>
+          ${duration ? `<span>⏱️ ${duration.replace('-', ' ')}</span>` : ''}
+        </div>
+        ${isExpired ? `<div style="background: rgba(255, 77, 77, 0.15); border-left: 3px solid #ff4d4d; padding: 8px 12px; margin-bottom: 12px; font-size: 13px; color: #ff4d4d;">❌ <strong>Application Deadline Expired:</strong> ${formatDate(deadline)}<br><span style="font-size: 12px; opacity: 0.9;">The agency set a limited time for applications to find the best candidate quickly.</span></div>` : deadline ? `<div style="background: rgba(255, 77, 77, 0.1); border-left: 3px solid #ff4d4d; padding: 6px 10px; margin-bottom: 12px; font-size: 13px; color: #ff4d4d;">⏰ <strong>Apply by:</strong> ${formatDate(deadline)}</div>` : ''}
+        <p style="color: var(--muted); margin: 0 0 12px 0;">${job.description.substring(0, 150)}${job.description.length > 150 ? '...' : ''}</p>
+        <p style="font-size: 13px; color: var(--muted); margin: 0;">
+          <strong>Posted by:</strong> 
+          ${job.company?.slug ? `<a href="/agency/${job.company.slug}" target="_blank" style="color: #3da9fc; text-decoration: none; font-weight: 600; border-bottom: 1px solid #3da9fc;">${job.company?.name || 'Agency'} 🔗</a>` : (job.agency?.companyName || job.agency_name || 'Agency')}
+        </p>
+      </div>
+      <div class="actions">
+        <button class="btn" onclick='viewJobDetail(${JSON.stringify(job.id)})'>View Details</button>
+        ${isExpired ? '<button class="btn" disabled style="opacity: 0.5; cursor: not-allowed;" title="Application deadline has passed">Deadline Expired</button>' : !isTemplate ? `<button class="btn primary" onclick='openApplyModal(${JSON.stringify(job.id)})'>Apply Now</button>` : '<button class="btn" title="This is just an example to show how job posts look"><span style="cursor: help;">📋 Example Only</span></button>'}
+      </div>
+    </div>
+  `;
+  }).join('');
+}
+
+function filterJobs() {
+  const search = document.getElementById('search-input').value.toLowerCase();
+  const type = document.getElementById('type-filter').value;
+  const location = document.getElementById('location-filter').value;
+  const salary = document.getElementById('salary-filter').value;
+
+  let filtered = allJobs;
+
+  if (search) {
+    filtered = filtered.filter(job => 
+      job.title.toLowerCase().includes(search) || 
+      job.description.toLowerCase().includes(search)
+    );
+  }
+
+  if (type) {
+    filtered = filtered.filter(job => (job.expertType || job.expert_type) === type);
+  }
+
+  if (location) {
+    filtered = filtered.filter(job => job.location === location);
+  }
+
+  if (salary) {
+    filtered = filtered.filter(job => {
+      const min = job.salaryMin || job.salary_min || 0;
+      const max = job.salaryMax || job.salary_max || Infinity;
+      
+      if (salary === '0-1000') return min <= 1000;
+      if (salary === '1000-2000') return min <= 2000 && max >= 1000;
+      if (salary === '2000-5000') return min <= 5000 && max >= 2000;
+      if (salary === '5000+') return max >= 5000;
+      return true;
+    });
+  }
+
+  displayJobs(filtered);
+}
+
+async function viewJobDetail(jobId) {
+  const job = allJobs.find(j => j.id === jobId);
+  if (!job) return;
+
+  try {
+    await fetch(`${API_URL}/jobs/${jobId}`, {
+      headers: authToken ? { 'Authorization': `Bearer ${authToken}` } : {}
+    });
+  } catch (error) {
+    console.log('Failed to track view');
+  }
+
+  const isExpired = job.application_deadline ? (() => {
+    const deadlineDate = new Date(job.application_deadline);
+    deadlineDate.setHours(23, 59, 59, 999);
+    return deadlineDate < new Date();
+  })() : false;
+
+  document.getElementById('job-detail-content').innerHTML = `
+    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+      <h3 style="margin: 0;">${job.title}</h3>
+      <span class="badge-type badge-${job.expert_type}">${job.expert_type}</span>
+    </div>
+    <div class="meta" style="margin: 12px 0; gap: 16px;">
+      <span>📍 ${job.location || 'Remote'}</span>
+      <span>💰 ${formatSalary(job.salary_min, job.salary_max)}</span>
+      ${job.duration ? `<span>⏱️ Duration: ${job.duration.replace('-', ' ')}</span>` : ''}
+      <span>📅 Posted: ${formatDate(job.created_at)}</span>
+      <span>👁️ ${job.views || 0} views</span>
+    </div>
+    <div style="margin-bottom: 16px; padding: 12px; background: rgba(255,255,255,.02); border-radius: 8px; font-size: 14px;">
+      <strong style="color: var(--text);">Posted by:</strong> 
+      ${job.company?.slug ? `<a href="/agency/${job.company.slug}" target="_blank" style="color: #3da9fc; text-decoration: none; font-weight: 600; border-bottom: 1px solid #3da9fc;">${job.company?.name || 'Agency'} 🔗</a>` : `<span style="color: var(--muted);">${job.agency?.companyName || job.agency_name || 'Agency'}</span>`}
+    </div>
+    ${isExpired ? `<div style="background: rgba(255, 77, 77, 0.15); border-left: 3px solid #ff4d4d; padding: 12px 16px; margin: 12px 0; border-radius: 6px; font-size: 14px; color: #ff4d4d;">❌ <strong>Application Deadline Expired:</strong> ${formatDate(job.application_deadline)}<br><span style="font-size: 13px; opacity: 0.9; margin-top: 4px; display: block;">This job is no longer accepting applications. The agency set a limited time to find the best candidate quickly.</span></div>` : job.application_deadline ? `<div style="background: rgba(255, 77, 77, 0.1); border-left: 3px solid #ff4d4d; padding: 10px 16px; margin: 12px 0; border-radius: 6px; font-size: 14px; color: #ff4d4d;">⏰ <strong>Application Deadline:</strong> ${formatDate(job.application_deadline)} - Apply before this date!</div>` : ''}
+    <div style="margin: 24px 0;">
+      <h4 style="color: var(--text); margin: 0 0 8px;">Job Description</h4>
+      <p style="color: var(--muted); line-height: 1.6; white-space: pre-wrap;">${job.description}</p>
+    </div>
+    ${job.contact_email || job.contact_phone || job.contact_whatsapp ? `
+      <div style="margin: 24px 0; padding: 16px; background: rgba(255,255,255,.02); border-radius: 12px;">
+        <h4 style="color: var(--text); margin: 0 0 12px;">Contact Information</h4>
+        ${job.contact_email ? `<div style="color: var(--muted); margin: 6px 0;">📧 Email: ${job.contact_email}</div>` : ''}
+        ${job.contact_phone ? `<div style="color: var(--muted); margin: 6px 0;">📱 Phone: ${job.contact_phone}</div>` : ''}
+        ${job.contact_whatsapp ? `<div style="color: var(--muted); margin: 6px 0;">💬 WhatsApp: ${job.contact_whatsapp}</div>` : ''}
+      </div>
+    ` : ''}
+  `;
+
+  currentJobForApply = job;
+  currentJobIsExpired = isExpired;
+  
+  const applyBtn = document.getElementById('apply-from-detail');
+  if (isExpired) {
+    applyBtn.textContent = 'Deadline Expired';
+    applyBtn.disabled = true;
+    applyBtn.style.opacity = '0.5';
+    applyBtn.style.cursor = 'not-allowed';
+    applyBtn.onclick = null;
+  } else {
+    applyBtn.textContent = 'Apply Now';
+    applyBtn.disabled = false;
+    applyBtn.style.opacity = '1';
+    applyBtn.style.cursor = 'pointer';
+    applyBtn.onclick = () => {
+      closeDetailModal();
+      openApplyModal(job.id);
+    };
+  }
+  
+  document.getElementById('job-detail-modal').classList.add('active');
+}
+
+function closeDetailModal() {
+  document.getElementById('job-detail-modal').classList.remove('active');
+}
+
+function openApplyModal(jobId) {
+  const job = allJobs.find(j => j.id === jobId);
+  if (!job) return;
+
+  const deadline = job.applicationDeadline || job.application_deadline;
+  const isExpired = deadline ? (() => {
+    const deadlineDate = new Date(deadline);
+    deadlineDate.setHours(23, 59, 59, 999);
+    return deadlineDate < new Date();
+  })() : false;
+  
+  if (isExpired) {
+    alert('⏰ Application deadline has expired!\n\nThis job is no longer accepting applications. The agency set a limited time to find the best candidate quickly.\n\nDeadline was: ' + formatDate(deadline));
+    return;
+  }
+
+  currentJobForApply = job;
+  document.getElementById('apply-job-title').textContent = `Applying for: ${job.title}`;
+  document.getElementById('cover-letter').value = '';
+  
+  if (!authToken || !currentUser || !['guide', 'diver', 'mentor'].includes(currentUser.userType)) {
+    document.getElementById('login-prompt').style.display = 'block';
+    document.getElementById('apply-form').style.display = 'none';
+  } else {
+    document.getElementById('login-prompt').style.display = 'none';
+    document.getElementById('apply-form').style.display = 'block';
+  }
+  
+  document.getElementById('apply-modal').classList.add('active');
+}
+
+function closeApplyModal() {
+  currentJobForApply = null;
+  document.getElementById('apply-modal').classList.remove('active');
+}
+
+document.getElementById('apply-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  if (!currentJobForApply || !authToken) return;
+
+  const coverLetter = document.getElementById('cover-letter').value.trim();
+
+  try {
+    const response = await fetch(`${API_URL}/applications`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        jobId: currentJobForApply.id,
+        coverMessage: coverLetter || null
+      })
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to submit application');
+    }
+
+    alert('Application submitted successfully! The agency will review your application and contact you.');
+    closeApplyModal();
+  } catch (error) {
+    let errorText = 'Error: ' + error.message;
+    if (error.message && error.message.includes('Failed to fetch') || error.name === 'TypeError') {
+      errorText = 'Application couldn\'t be submitted because your browser or network security is blocking the connection. Please disable ad-blockers or privacy extensions, or try another browser, then submit again.';
+    }
+    alert(errorText);
+  }
+});
+
+document.getElementById('search-input').addEventListener('input', filterJobs);
+document.getElementById('type-filter').addEventListener('change', filterJobs);
+document.getElementById('location-filter').addEventListener('change', filterJobs);
+document.getElementById('salary-filter').addEventListener('change', filterJobs);
+
+checkAuth().then(() => loadJobs());
+</script>
+
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

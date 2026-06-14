@@ -1,0 +1,58 @@
+FINAL TASK – MENTOR SIGNUP LEGAL CLARITY (ADDITIONS ONLY)
+
+Please review the existing Mentor signup page:
+https://www.egtravelmarket.com/be-mentor.html
+
+IMPORTANT RULES:
+- Do NOT remove any existing fields
+- Do NOT rename any existing fields
+- Do NOT duplicate existing fields
+- Only ADD the clarifications and checkboxes below
+- Reuse the existing Admin Approval system
+- Do NOT add any certification badge for Mentors at this stage
+
+================================================
+1) ROLE CLARIFICATION CHECKBOX (NEW – REQUIRED)
+================================================
+
+Add ONE required checkbox before form submission:
+
+Text:
+"I confirm that I provide planning and consultation services only, and that EgTravelMarket handles all bookings and trip execution."
+
+This is to clearly distinguish Mentors from Guides, Agencies, and other service operators.
+
+================================================
+2) LEGAL CHECKBOXES – REQUIRED
+================================================
+
+Add THREE required legal checkboxes:
+
+1) Terms Agreement
+"I agree to the Mentor Terms, EgTravelMarket Platform Terms, and the commission & payment policy."
+
+2) Accuracy Confirmation
+"I confirm that all information provided is accurate and up to date."
+
+3) Verification Consent
+"I consent to EgTravelMarket verifying my information if required."
+
+Form submission must be blocked unless ALL checkboxes are checked.
+
+================================================
+3) ADMIN APPROVAL (REUSE EXISTING FLOW)
+================================================
+
+- On Mentor signup:
+  - Set certification_status = 'pending'
+- Admin can review mentor data and approve or reject
+- Mentor profiles must NOT appear publicly until approved
+
+================================================
+4) NO BADGE FOR MENTORS (IMPORTANT)
+================================================
+
+- Do NOT add any Certified / Verified badge for mentors
+- Admin approval is a quality gate only, not a legal certification
+- Badge logic should remain limited to licensed entities
+  (Guides, Travel Agencies, Dive Centers)

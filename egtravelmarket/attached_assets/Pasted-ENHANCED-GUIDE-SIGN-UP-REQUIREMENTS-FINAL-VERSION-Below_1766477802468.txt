@@ -1,0 +1,244 @@
+ENHANCED GUIDE SIGN-UP REQUIREMENTS (FINAL VERSION)
+
+Below is the improved + completed version of your requirements, written clearly for implementation.
+
+1️⃣ LANGUAGES (DROPDOWN – MULTI SELECT + OTHER)
+✅ What we do
+
+Change Language from free text → dropdown
+
+Guide can choose one or more languages
+
+Include most common 10 languages
+
+Add “Other” option
+
+If “Other” selected → allow guide to type the language
+
+🔹 Languages list (10 core)
+
+Arabic
+
+English
+
+French
+
+German
+
+Italian
+
+Spanish
+
+Russian
+
+Chinese
+
+Japanese
+
+Portuguese
+
+🔹 COPY-PASTE (Signup)
+<label>Languages Spoken</label>
+<select name="languages[]" id="languagesSelect" multiple required>
+  <option>Arabic</option>
+  <option>English</option>
+  <option>French</option>
+  <option>German</option>
+  <option>Italian</option>
+  <option>Spanish</option>
+  <option>Russian</option>
+  <option>Chinese</option>
+  <option>Japanese</option>
+  <option>Portuguese</option>
+  <option value="Other">Other</option>
+</select>
+
+<input type="text"
+       name="language_other"
+       id="languageOther"
+       placeholder="Enter other language"
+       style="display:none;">
+
+2️⃣ SPECIALIST / TOUR STYLE (DROPDOWN – MULTI SELECT)
+✅ What we do
+
+Add Specialist / Tour Style as dropdown
+
+Guide can choose one or more
+
+No free text (clean data)
+
+🔹 Specialist list (conversion focused)
+
+Egyptology / Ancient History
+
+Islamic History
+
+Coptic Heritage
+
+Cultural Tours
+
+Private Tours
+
+Group Tours
+
+Custom Itineraries
+
+Family Friendly
+
+Couples / Honeymoon
+
+Solo Travelers
+
+Desert Safari
+
+Photography Tours
+
+Food & Local Cuisine
+
+Religious Tours
+
+Educational Tours
+
+🔹 COPY-PASTE
+<label>Specialist / Tour Style</label>
+<select name="specialties[]" multiple required>
+  <option>Egyptology / Ancient History</option>
+  <option>Islamic History</option>
+  <option>Coptic Heritage</option>
+  <option>Cultural Tours</option>
+  <option>Private Tours</option>
+  <option>Group Tours</option>
+  <option>Custom Itineraries</option>
+  <option>Family Friendly</option>
+  <option>Couples / Honeymoon</option>
+  <option>Solo Travelers</option>
+  <option>Desert Safari</option>
+  <option>Photography Tours</option>
+  <option>Food & Local Cuisine</option>
+  <option>Religious Tours</option>
+  <option>Educational Tours</option>
+</select>
+
+3️⃣ CERTIFICATION → MINISTRY OF TOURISM LICENSE
+✅ What we change
+
+Rename Certification → Ministry of Tourism License
+
+User chooses Yes / No
+
+If Yes → must write License Number
+
+🔹 COPY-PASTE
+<label>Ministry of Tourism License</label>
+<label>
+  <input type="radio" name="has_tourism_license" value="yes" required>
+  Yes
+</label>
+<label>
+  <input type="radio" name="has_tourism_license" value="no">
+  No
+</label>
+
+<input type="text"
+       name="tourism_license_number"
+       id="licenseNumber"
+       placeholder="Enter license number"
+       style="display:none;">
+
+4️⃣ LOCATION → TOURISTIC CITIES (DROPDOWN – MULTI SELECT)
+✅ What we do
+
+Change Location to dropdown
+
+Guide can choose one or more cities
+
+Only touristic cities in Egypt
+
+Clean & filterable
+
+🔹 Cities list
+
+Cairo
+
+Giza
+
+Alexandria
+
+Luxor
+
+Aswan
+
+Hurghada
+
+Sharm El Sheikh
+
+Dahab
+
+Marsa Alam
+
+El Gouna
+
+Ain Sokhna
+
+North Coast
+
+Siwa Oasis
+
+Fayoum
+
+🔹 COPY-PASTE
+<label>Touristic Locations You Cover</label>
+<select name="locations[]" multiple required>
+  <option>Cairo</option>
+  <option>Giza</option>
+  <option>Alexandria</option>
+  <option>Luxor</option>
+  <option>Aswan</option>
+  <option>Hurghada</option>
+  <option>Sharm El Sheikh</option>
+  <option>Dahab</option>
+  <option>Marsa Alam</option>
+  <option>El Gouna</option>
+  <option>Ain Sokhna</option>
+  <option>North Coast</option>
+  <option>Siwa Oasis</option>
+  <option>Fayoum</option>
+</select>
+
+5️⃣ SAFE JS (SHOW / HIDE “OTHER” & LICENSE NUMBER)
+<script>
+document.getElementById('languagesSelect').addEventListener('change', function () {
+  const selected = Array.from(this.selectedOptions).map(o => o.value);
+  document.getElementById('languageOther').style.display =
+    selected.includes('Other') ? 'block' : 'none';
+});
+
+document.querySelectorAll('input[name="has_tourism_license"]').forEach(radio => {
+  radio.addEventListener('change', function () {
+    document.getElementById('licenseNumber').style.display =
+      this.value === 'yes' ? 'block' : 'none';
+  });
+});
+</script>
+
+🔧 BACKEND SAVE RULES (IMPORTANT – SEND WITH ABOVE)
+On guide signup:
+- Save languages[] as array
+- If languages includes 'Other', replace with language_other
+- Save specialties[] as array
+- Save locations[] as array
+- Save has_tourism_license (boolean)
+- Save tourism_license_number only if license = yes
+- Do NOT change login/auth/session logic
+- No CSS or layout changes
+
+✅ RESULT YOU WILL GET
+
+✔ Clean signup
+✔ Multi-language support
+✔ Professional specialist selection
+✔ Official Ministry license handling
+✔ Strong filters later
+✔ Same design & colors
+✔ No bugs

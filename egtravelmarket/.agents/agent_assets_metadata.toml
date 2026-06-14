@@ -1,0 +1,14 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "GkISgjy1jsKJbWtKxe3sP"
+uri = "file://TECHNICAL_HANDOVER.md"
+type = "text"
+title = "EG Travel Market — Technical Handover Document"
+
+[[outputs]]
+id = "5bY8r4YAvDpC7tKOZH4tp"
+uri = "file://ALAA_ONBOARDING.md"
+type = "text"
+title = "Alaa's Developer Onboarding Summary"

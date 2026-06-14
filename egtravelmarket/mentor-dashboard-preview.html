@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mentor Dashboard Preview | Eg Travel Market</title>
+<link rel="stylesheet" href="/assets/styles.css">
+<style>
+.dashboard-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+.dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.dashboard-card { background: white; border-radius: 12px; padding: 30px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+.dashboard-card h2 { color: #1a1a1a; font-size: 24px; font-weight: 700; margin-bottom: 10px; }
+.dashboard-card h3 { color: #1a1a1a; font-size: 18px; font-weight: 600; margin: 20px 0 10px 0; }
+.dashboard-card p { color: #333; line-height: 1.6; }
+.profile-url-box { background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 20px 0; display: flex; justify-content: space-between; align-items: center; }
+.profile-url-box input { flex: 1; border: none; background: transparent; font-family: monospace; font-size: 14px; color: #1a1a1a; font-weight: 500; }
+.copy-btn { background: #0066cc; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; }
+.copy-btn:hover { background: #0052a3; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; }
+.stat-card h3 { margin: 0 0 5px 0; font-size: 32px; font-weight: 700; }
+.stat-card p { margin: 0; opacity: 0.9; font-size: 14px; }
+.profile-photo { width: 120px; height: 120px; border-radius: 16px; object-fit: cover; border: 4px solid #0066cc; }
+.profile-header { display: flex; gap: 30px; align-items: flex-start; margin-bottom: 30px; }
+.profile-header h2 { color: #1a1a1a; font-size: 28px; font-weight: 700; margin-bottom: 10px; }
+.profile-header p { color: #333; }
+.profile-header strong { color: #1a1a1a; }
+</style>
+  </script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1217512659898780');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1217512659898780&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<header class="header">
+  <div class="container nav">
+    <a href="/index.html" class="brand"><div class="logo"></div><span>Eg Travel Market</span></a>
+    <nav class="menu">
+      <a href="/index.html">Home</a>
+      <a href="/mentor.html">Find Mentors</a>
+      <a href="#" style="color: #dc3545;">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <div>
+      <h1>Mentor Dashboard</h1>
+      <p style="color: #666;">Manage your expert profile</p>
+    </div>
+    <button class="btn primary">✏️ Edit Profile</button>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3>89</h3>
+      <p>Profile Views</p>
+    </div>
+    <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+      <h3>15</h3>
+      <p>Total Bookings</p>
+    </div>
+    <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+      <h3>Active</h3>
+      <p>Profile Status</p>
+    </div>
+  </div>
+
+  <div class="dashboard-card">
+    <h2>Your Profile URL</h2>
+    <p style="color: #666; margin-bottom: 15px;">Share this link on social media to promote your services</p>
+    <div class="profile-url-box">
+      <input type="text" readonly value="https://egtravelmarket.com/mentor/sara-mohamed">
+      <button class="copy-btn">📋 Copy</button>
+    </div>
+  </div>
+
+  <div class="dashboard-card" id="view-section">
+    <div class="profile-header">
+      <img loading="lazy" src="/attached_assets/mentor-hero-optimized.webp" alt="Profile" class="profile-photo">
+      <div>
+        <h2>Sara Mohamed</h2>
+        <p style="color: #666; margin: 5px 0;"><strong>Location:</strong> Cairo, Egypt</p>
+        <p style="color: #666; margin: 5px 0;"><strong>Languages:</strong> English, Arabic, French</p>
+        <p style="color: #666; margin: 5px 0;"><strong>Experience:</strong> 12 years</p>
+      </div>
+    </div>
+    <div>
+      <h3>About Me</h3>
+      <p style="line-height: 1.6; color: #333;">Professional travel mentor with extensive experience in Egypt and the Middle East. I help travelers plan perfect trips, navigate local customs, and discover hidden gems. My passion is making your Egyptian adventure unforgettable and stress-free.</p>
+    </div>
+    <div style="margin-top: 20px;">
+      <h3>Expertise</h3>
+      <p style="color: #333;">Travel Planning, Budget Travel, Cultural Insights, Local Navigation, Safety Tips, Hidden Destinations</p>
+    </div>
+    <div style="margin-top: 20px;">
+      <h3>Contact</h3>
+      <p style="color: #333;"><strong>Email:</strong> sara.mentor@example.com</p>
+      <p style="color: #333;"><strong>Phone/WhatsApp:</strong> +20 123 789 4560</p>
+    </div>
+  </div>
+
+  <div class="dashboard-card" id="edit-section" style="display: none;">
+    <h2>Edit Profile</h2>
+    <form style="margin-top: 20px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div><label style="display: block; margin-bottom: 5px; color: #333; font-weight: 600;">Display Name</label><input type="text" value="Sara Mohamed" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"></div>
+        <div><label style="display: block; margin-bottom: 5px; color: #333; font-weight: 600;">Email</label><input type="email" value="sara.mentor@example.com" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"></div>
+        <div><label style="display: block; margin-bottom: 5px; color: #333; font-weight: 600;">Phone/WhatsApp</label><input type="text" value="+20 123 789 4560" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"></div>
+        <div><label style="display: block; margin-bottom: 5px; color: #333; font-weight: 600;">Location</label><input type="text" value="Cairo, Egypt" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"></div>
+        <div><label style="display: block; margin-bottom: 5px; color: #333; font-weight: 600;">Languages</label><input type="text" value="English, Arabic, French" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"></div>
+        <div><label style="display: block; margin-bottom: 5px; color: #333; font-weight: 600;">Years of Experience</label><input type="number" value="12" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"></div>
+        <div style="grid-column: 1 / -1;"><label style="display: block; margin-bottom: 5px; color: #333; font-weight: 600;">Expertise Areas</label><input type="text" value="Travel Planning, Budget Travel, Cultural Insights, Local Navigation, Safety Tips, Hidden Destinations" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"></div>
+        <div style="grid-column: 1 / -1;"><label style="display: block; margin-bottom: 5px; color: #333; font-weight: 600;">About Me</label><textarea rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">Professional travel mentor with extensive experience in Egypt and the Middle East. I help travelers plan perfect trips, navigate local customs, and discover hidden gems. My passion is making your Egyptian adventure unforgettable and stress-free.</textarea></div>
+      </div>
+      <div style="margin-top: 20px; display: flex; gap: 10px;">
+        <button type="button" class="btn primary" onclick="alert('Profile updated! (This is a preview)')">💾 Save Changes</button>
+        <button type="button" class="btn" id="cancel-btn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const copyBtn = document.querySelector('.copy-btn');
+  const urlInput = document.querySelector('.profile-url-box input');
+  const editBtn = document.querySelector('.btn.primary');
+  const cancelBtn = document.getElementById('cancel-btn');
+  const viewSection = document.getElementById('view-section');
+  const editSection = document.getElementById('edit-section');
+  
+  copyBtn.addEventListener('click', function() {
+    urlInput.select();
+    urlInput.setSelectionRange(0, 99999);
+    
+    navigator.clipboard.writeText(urlInput.value).then(function() {
+      const originalText = copyBtn.textContent;
+      copyBtn.textContent = '✓ Copied!';
+      copyBtn.style.background = '#27ae60';
+      
+      setTimeout(function() {
+        copyBtn.textContent = originalText;
+        copyBtn.style.background = '#0066cc';
+      }, 2000);
+    }).catch(function(err) {
+      alert('URL copied: ' + urlInput.value);
+    });
+  });
+  
+  editBtn.addEventListener('click', function() {
+    viewSection.style.display = 'none';
+    editSection.style.display = 'block';
+    window.scrollTo({ top: editSection.offsetTop - 100, behavior: 'smooth' });
+  });
+  
+  cancelBtn.addEventListener('click', function() {
+    editSection.style.display = 'none';
+    viewSection.style.display = 'block';
+    window.scrollTo({ top: viewSection.offsetTop - 100, behavior: 'smooth' });
+  });
+});
+</script>
+<script src="/js/meta-pixel-events.js"></script>
+</body>
+</html>

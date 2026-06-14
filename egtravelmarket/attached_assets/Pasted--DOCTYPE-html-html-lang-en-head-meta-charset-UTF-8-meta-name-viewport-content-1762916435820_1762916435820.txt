@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EgTravelMarket | Understanding the Egyptian Smile – Mind & Mentality</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{background:#fdfaf6;color:#222;line-height:1.7;}
+    a{text-decoration:none;color:#0a3d62;}
+    img{max-width:100%;display:block;}
+
+    /* ===== HERO ===== */
+    .hero{
+      background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+                 url('https://images.unsplash.com/photo-1562170131-83ff97a3f3b6') center/cover no-repeat;
+      height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+      text-align:center;color:#fff;padding:0 15px;
+    }
+    .hero h1{font-size:2.8rem;margin-bottom:10px;}
+    .hero p{max-width:700px;color:#ddd;}
+
+    /* ===== ARTICLE ===== */
+    .article{padding:60px 10%;max-width:900px;margin:auto;}
+    .article h2{color:#0a3d62;margin-bottom:20px;}
+    .article p{margin-bottom:20px;font-size:1.05rem;color:#333;}
+
+    /* ===== RELATED TRIPS ===== */
+    .related-trips{background:#fff;padding:50px 10%;text-align:center;}
+    .related-trips h2{color:#0a3d62;margin-bottom:30px;}
+    .trips{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;}
+    .trip-card{background:#f9f9f9;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);overflow:hidden;transition:.3s;}
+    .trip-card:hover{transform:translateY(-5px);}
+    .trip-card img{height:180px;object-fit:cover;width:100%;}
+    .trip-card h3{color:#0a3d62;font-size:1.1rem;margin:15px;}
+    .trip-card a{display:inline-block;background:#0a3d62;color:#fff;margin:0 0 15px;padding:8px 15px;border-radius:6px;transition:.3s;}
+    .trip-card a:hover{background:#062f4e;}
+
+    footer{background:#0a3d62;color:#fff;text-align:center;padding:30px 15px;font-size:.9rem;margin-top:50px;}
+    footer p{margin:5px 0;}
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <h1>Understanding the Egyptian Smile – Mind & Mentality</h1>
+    <p>Discover the warmth, humor, and resilience that make the Egyptian spirit truly unforgettable.</p>
+  </section>
+
+  <!-- ===== ARTICLE CONTENT ===== -->
+  <section class="article">
+    <h2>The Art of the Smile</h2>
+    <p>
+      To understand Egypt, you must first understand its smile.  
+      In Egypt, a smile is not just politeness — it’s a way of surviving, connecting, and finding light in any situation.
+      Whether a taxi driver joking in traffic, a vendor offering tea, or a child waving on the street,
+      humor is the common language that unites everyone.
+    </p>
+
+    <h2>Strength in Simplicity</h2>
+    <p>
+      Egyptians carry a deep philosophy: “El hamdullilah” — gratitude in all things.  
+      This simple phrase reveals an unshakable optimism; even in difficulty, people find faith and laughter.
+      It’s why travelers so often describe Egypt as “chaotic but kind,” “busy but beautiful,” or “real and full of heart.”
+    </p>
+
+    <h2>Wisdom of the Streets</h2>
+    <p>
+      Egypt’s wisdom isn’t found only in books — it lives in its people.  
+      A market seller can quote proverbs older than pyramids, a coffee shop poet may teach more about life than any philosopher.
+      Egyptians see the world with irony and hope, using stories and jokes to make sense of it all.
+    </p>
+
+    <h2>Experience Egyptian Spirit</h2>
+    <p>
+      EgTravelMarket helps travelers not just see Egypt, but feel it — through real connections with locals.
+      Join a walking tour led by a Cairo storyteller, share lunch with a Nubian family in Aswan,
+      or laugh with fishermen in Hurghada as they tell tales of the sea.
+      In every encounter, you’ll find that same smile — open, genuine, unforgettable.
+    </p>
+  </section>
+
+  <!-- ===== RELATED TRIPS ===== -->
+  <section class="related-trips">
+    <h2>Related Experiences</h2>
+    <div class="trips">
+      <div class="trip-card">
+        <img src="/assets/trips/local-guide.jpg" alt="Local Guide Experience">
+        <h3>Local Guide Experience</h3>
+        <a href="/trip-local-guide.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/village-visit.jpg" alt="Cultural Village Visit">
+        <h3>Cultural Village Visit</h3>
+        <a href="/trip-village-visit.html">View Trip</a>
+      </div>
+      <div class="trip-card">
+        <img src="/assets/trips/market-tour.jpg" alt="Street Food & Market Tour">
+        <h3>Street Food & Market Tour</h3>
+        <a href="/trip-market-tour.html">View Trip</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 EgTravelMarket – All Rights Reserved</p>
+    <p>Backed & Managed by GoMundo Travel</p>
+  </footer>
+
+</body>
+</html>
+✅ Step 3 — Upload Images (Optional)
+Upload to /assets/trips/:
+
+lua
+Copy code
+local-guide.jpg  
+village-visit.jpg  
+market-tour.jpg  
+✅ Step 4 — Connect from Discover Egypt Page
+In your discover-egypt.html, find:
+
+html
+Copy code
+<h3>Egyptian Mind & Mentality</h3>
+and wrap it:
+
+html
+Copy code
+<a href="/egyptian-mind.html">
+  <h3>Egyptian Mind & Mentality</h3>
+</a>
+✅ Step 5 — Run & Preview
+Click Run, open /egyptian-mind.html
+You’ll see a heartfelt, uplifting page that shows the emotional side of Egypt —
+the people, humor, and resilience that make travelers fall in love with the country ❤️
+

@@ -1,0 +1,47 @@
+# Robots.txt for EG Travel Market
+# Last Updated: 2026-01-04
+
+# Allow all search engines
+User-agent: *
+Allow: /
+
+# Disallow admin and internal pages
+Disallow: /admin/
+Disallow: /admin-*.html
+Disallow: *-dashboard*.html
+Disallow: /*-workspace.html
+
+# Disallow backup files
+Disallow: /*-BACKUP.html
+Disallow: /*-OLD.html
+
+# Disallow sensitive paths
+Disallow: /.env
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /backend/
+Disallow: /*.map
+
+# Allow public API endpoints
+Allow: /api/
+
+# Sitemap location
+Sitemap: https://www.egtravelmarket.com/sitemap.xml
+
+# Crawl delay (requests per 10 seconds)
+Crawl-delay: 1
+
+# Request rate limit for aggressive crawlers
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Allow Google Bot full access
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0

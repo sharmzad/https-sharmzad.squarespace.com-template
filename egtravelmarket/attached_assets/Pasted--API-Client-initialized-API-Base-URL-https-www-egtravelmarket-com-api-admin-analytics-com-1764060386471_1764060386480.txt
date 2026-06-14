@@ -1,0 +1,322 @@
+ ✅ API Client initialized
+ 📡 API Base URL: https://www.egtravelmarket.com
+api/admin/analytics/comprehensive:1  Failed to load resource: the server responded with a status of 500 ()
+api/admin/analytics/comprehensive?:1  Failed to load resource: the server responded with a status of 500 ()
+api/admin/bookings?status=pending:1  Failed to load resource: the server responded with a status of 500 ()
+api/admin/bookings?:1  Failed to load resource: the server responded with a status of 500 ()
+ Error loading bookings: 
+(anonymous) @ admin-comprehensive.html:3368
+ 📍 STEP 1: Loading trips...
+ 📍 STEP 1: Loading trips...
+api/trips?t=1764060199118:1  Failed to load resource: the server responded with a status of 500 ()
+ 📨 STEP 2: Response status: 500
+ ❌ ERROR in loadTrips: HTTP 500
+(anonymous) @ admin-comprehensive.html:1113
+api/trips?t=1764060199117:1  Failed to load resource: the server responded with a status of 500 ()
+ 📨 STEP 2: Response status: 500
+ ❌ ERROR in loadTrips: HTTP 500
+(anonymous) @ admin-comprehensive.html:1113
+ Error loading analytics: 
+(anonymous) @ admin-comprehensive.html:2411
+ 📍 STEP 1: Loading trips...
+ 📍 STEP 1: Loading trips...
+ 📨 STEP 2: Response status: 200
+ 📦 STEP 3: Full response object: {"success":true,"trips":[{"id":1,"title":"Package A – Cairo by Air","slug":"package-a","trip_type":"package","short_title":"Package A","description":"Day trip to Cairo by flight with museum and pyramids.","main_image":"/img/trips/package-a.jpg","price":"250.00","currency":"USD","duration_text":"Full Day","location":"Cairo","is_flexible_date":false,"is_fixed_date":true,"is_popular":true,"is_trip_of_week":false,"is_deal":false,"is_goodbye_sharm":false,"created_at":"2025-11-19T05:14:39.094Z","updat
+ 📦 STEP 3b: data.success = true
+ 📦 STEP 3c: data.trips type = object is array? true
+ 📦 STEP 3d: data.trips length = 22
+ 📦 STEP 3e: Final trips array length: 22
+ ✅ STEP 4: Valid trips array found! Count: 22
+ ✅ STEP 5: Calling renderTrips with 22 trips
+ 🎨 RENDER: Called with 22 trips
+ 🎨 RENDER: Array length: 22
+ 🎨 RENDER: Sorted 22 trips
+ 🎨 RENDER: Trip 1: ID=1, Title=Package A – Cairo by Air, Adult=320.00
+ 🎨 RENDER: Trip 2: ID=2, Title=Goodbye Sharm – Last Day Program, Adult=15.00
+ 🎨 RENDER: Trip 3: ID=3, Title=Private Airport Transfer – Sharm, Adult=40.00
+ 🎨 RENDER: Trip 4: ID=4, Title=Cairo by Flight, Adult=260.00
+ 🎨 RENDER: Trip 5: ID=5, Title=Luxor by Flight, Adult=270.00
+ 🎨 RENDER: Trip 6: ID=6, Title=Pirates Boat – Ras Mohamed, Adult=60.00
+ 🎨 RENDER: Trip 7: ID=7, Title=Petra by Boat, Adult=250.00
+ 🎨 RENDER: Trip 8: ID=8, Title=Ras Mohamed Snorkeling, Adult=35.00
+ 🎨 RENDER: Trip 9: ID=9, Title=Package C - Egyptian Explorer Triple Pack, Adult=360.00
+ 🎨 RENDER: Trip 10: ID=10, Title=Package D - Pirates Boat & Jeep Safari, Adult=110.00
+ 🎨 RENDER: Trip 11: ID=11, Title=Package E - Land & Sea Experience, Adult=65.00
+ 🎨 RENDER: Trip 12: ID=12, Title=Package K - Ultimate Egyptian Immersion, Adult=285.00
+ 🎨 RENDER: Trip 13: ID=13, Title=Dahab Discovery Trip, Adult=60.00
+ 🎨 RENDER: Trip 14: ID=14, Title=Nabeq National Park Jeep Safari, Adult=60.00
+ 🎨 RENDER: Trip 15: ID=15, Title=Package B - Custom Egypt Experience, Adult=295.00
+ 🎨 RENDER: Trip 16: ID=16, Title=Trip of the Week – Cairo Discovery, Adult=180.00
+ 🎨 RENDER: Trip 17: ID=17, Title=Package 1 — Two-Day Certified Diver Program, Adult=150.00
+ 🎨 RENDER: Trip 18: ID=18, Title=Package 2 — Three Separate Diving Days, Adult=220.00
+ 🎨 RENDER: Trip 19: ID=19, Title=Package 3 — Local Diving + Thistlegorm Wreck, Adult=260.00
+ 🎨 RENDER: Trip 20: ID=20, Title=Package 6 — Five Separate Diving Days, Adult=350.00
+ 🎨 RENDER: Trip 21: ID=21, Title=Package 4 — PADI Open Water Diver Course, Adult=470.00
+ 🎨 RENDER: Trip 22: ID=22, Title=Package 5 — PADI Advanced Open Water Course, Adult=400.00
+ ✅ RENDER: Successfully rendered 22 trips in table
+ ✅ STEP 6: renderTrips completed
+ 📨 STEP 2: Response status: 200
+ 📦 STEP 3: Full response object: {"success":true,"trips":[{"id":1,"title":"Package A – Cairo by Air","slug":"package-a","trip_type":"package","short_title":"Package A","description":"Day trip to Cairo by flight with museum and pyramids.","main_image":"/img/trips/package-a.jpg","price":"250.00","currency":"USD","duration_text":"Full Day","location":"Cairo","is_flexible_date":false,"is_fixed_date":true,"is_popular":true,"is_trip_of_week":false,"is_deal":false,"is_goodbye_sharm":false,"created_at":"2025-11-19T05:14:39.094Z","updat
+ 📦 STEP 3b: data.success = true
+ 📦 STEP 3c: data.trips type = object is array? true
+ 📦 STEP 3d: data.trips length = 22
+ 📦 STEP 3e: Final trips array length: 22
+ ✅ STEP 4: Valid trips array found! Count: 22
+ ✅ STEP 5: Calling renderTrips with 22 trips
+ 🎨 RENDER: Called with 22 trips
+ 🎨 RENDER: Array length: 22
+ 🎨 RENDER: Sorted 22 trips
+ 🎨 RENDER: Trip 1: ID=1, Title=Package A – Cairo by Air, Adult=320.00
+ 🎨 RENDER: Trip 2: ID=2, Title=Goodbye Sharm – Last Day Program, Adult=15.00
+ 🎨 RENDER: Trip 3: ID=3, Title=Private Airport Transfer – Sharm, Adult=40.00
+ 🎨 RENDER: Trip 4: ID=4, Title=Cairo by Flight, Adult=260.00
+ 🎨 RENDER: Trip 5: ID=5, Title=Luxor by Flight, Adult=270.00
+ 🎨 RENDER: Trip 6: ID=6, Title=Pirates Boat – Ras Mohamed, Adult=60.00
+ 🎨 RENDER: Trip 7: ID=7, Title=Petra by Boat, Adult=250.00
+ 🎨 RENDER: Trip 8: ID=8, Title=Ras Mohamed Snorkeling, Adult=35.00
+ 🎨 RENDER: Trip 9: ID=9, Title=Package C - Egyptian Explorer Triple Pack, Adult=360.00
+ 🎨 RENDER: Trip 10: ID=10, Title=Package D - Pirates Boat & Jeep Safari, Adult=110.00
+ 🎨 RENDER: Trip 11: ID=11, Title=Package E - Land & Sea Experience, Adult=65.00
+ 🎨 RENDER: Trip 12: ID=12, Title=Package K - Ultimate Egyptian Immersion, Adult=285.00
+ 🎨 RENDER: Trip 13: ID=13, Title=Dahab Discovery Trip, Adult=60.00
+ 🎨 RENDER: Trip 14: ID=14, Title=Nabeq National Park Jeep Safari, Adult=60.00
+ 🎨 RENDER: Trip 15: ID=15, Title=Package B - Custom Egypt Experience, Adult=295.00
+ 🎨 RENDER: Trip 16: ID=16, Title=Trip of the Week – Cairo Discovery, Adult=180.00
+ 🎨 RENDER: Trip 17: ID=17, Title=Package 1 — Two-Day Certified Diver Program, Adult=150.00
+ 🎨 RENDER: Trip 18: ID=18, Title=Package 2 — Three Separate Diving Days, Adult=220.00
+ 🎨 RENDER: Trip 19: ID=19, Title=Package 3 — Local Diving + Thistlegorm Wreck, Adult=260.00
+ 🎨 RENDER: Trip 20: ID=20, Title=Package 6 — Five Separate Diving Days, Adult=350.00
+ 🎨 RENDER: Trip 21: ID=21, Title=Package 4 — PADI Open Water Diver Course, Adult=470.00
+ 🎨 RENDER: Trip 22: ID=22, Title=Package 5 — PADI Advanced Open Water Course, Adult=400.00
+ ✅ RENDER: Successfully rendered 22 trips in table
+ ✅ STEP 6: renderTrips completed
+ Error loading bookings: 
+(anonymous) @ admin-comprehensive.html:3368
+ Error loading bookings: 
+(anonymous) @ admin-comprehensive.html:3368
+ 📍 STEP 1: Loading trips...
+ 📍 STEP 1: Loading trips...
+ 📨 STEP 2: Response status: 200
+ 📦 STEP 3: Full response object: {"success":true,"trips":[{"id":1,"title":"Package A – Cairo by Air","slug":"package-a","trip_type":"package","short_title":"Package A","description":"Day trip to Cairo by flight with museum and pyramids.","main_image":"/img/trips/package-a.jpg","price":"250.00","currency":"USD","duration_text":"Full Day","location":"Cairo","is_flexible_date":false,"is_fixed_date":true,"is_popular":true,"is_trip_of_week":false,"is_deal":false,"is_goodbye_sharm":false,"created_at":"2025-11-19T05:14:39.094Z","updat
+ 📦 STEP 3b: data.success = true
+ 📦 STEP 3c: data.trips type = object is array? true
+ 📦 STEP 3d: data.trips length = 22
+ 📦 STEP 3e: Final trips array length: 22
+ ✅ STEP 4: Valid trips array found! Count: 22
+ ✅ STEP 5: Calling renderTrips with 22 trips
+ 🎨 RENDER: Called with 22 trips
+ 🎨 RENDER: Array length: 22
+ 🎨 RENDER: Sorted 22 trips
+ 🎨 RENDER: Trip 1: ID=1, Title=Package A – Cairo by Air, Adult=320.00
+ 🎨 RENDER: Trip 2: ID=2, Title=Goodbye Sharm – Last Day Program, Adult=15.00
+ 🎨 RENDER: Trip 3: ID=3, Title=Private Airport Transfer – Sharm, Adult=40.00
+ 🎨 RENDER: Trip 4: ID=4, Title=Cairo by Flight, Adult=260.00
+ 🎨 RENDER: Trip 5: ID=5, Title=Luxor by Flight, Adult=270.00
+ 🎨 RENDER: Trip 6: ID=6, Title=Pirates Boat – Ras Mohamed, Adult=60.00
+ 🎨 RENDER: Trip 7: ID=7, Title=Petra by Boat, Adult=250.00
+ 🎨 RENDER: Trip 8: ID=8, Title=Ras Mohamed Snorkeling, Adult=35.00
+ 🎨 RENDER: Trip 9: ID=9, Title=Package C - Egyptian Explorer Triple Pack, Adult=360.00
+ 🎨 RENDER: Trip 10: ID=10, Title=Package D - Pirates Boat & Jeep Safari, Adult=110.00
+ 🎨 RENDER: Trip 11: ID=11, Title=Package E - Land & Sea Experience, Adult=65.00
+ 🎨 RENDER: Trip 12: ID=12, Title=Package K - Ultimate Egyptian Immersion, Adult=285.00
+ 🎨 RENDER: Trip 13: ID=13, Title=Dahab Discovery Trip, Adult=60.00
+ 🎨 RENDER: Trip 14: ID=14, Title=Nabeq National Park Jeep Safari, Adult=60.00
+ 🎨 RENDER: Trip 15: ID=15, Title=Package B - Custom Egypt Experience, Adult=295.00
+ 🎨 RENDER: Trip 16: ID=16, Title=Trip of the Week – Cairo Discovery, Adult=180.00
+ 🎨 RENDER: Trip 17: ID=17, Title=Package 1 — Two-Day Certified Diver Program, Adult=150.00
+ 🎨 RENDER: Trip 18: ID=18, Title=Package 2 — Three Separate Diving Days, Adult=220.00
+ 🎨 RENDER: Trip 19: ID=19, Title=Package 3 — Local Diving + Thistlegorm Wreck, Adult=260.00
+ 🎨 RENDER: Trip 20: ID=20, Title=Package 6 — Five Separate Diving Days, Adult=350.00
+ 🎨 RENDER: Trip 21: ID=21, Title=Package 4 — PADI Open Water Diver Course, Adult=470.00
+ 🎨 RENDER: Trip 22: ID=22, Title=Package 5 — PADI Advanced Open Water Course, Adult=400.00
+ ✅ RENDER: Successfully rendered 22 trips in table
+ ✅ STEP 6: renderTrips completed
+ 📨 STEP 2: Response status: 200
+ 📦 STEP 3: Full response object: {"success":true,"trips":[{"id":1,"title":"Package A – Cairo by Air","slug":"package-a","trip_type":"package","short_title":"Package A","description":"Day trip to Cairo by flight with museum and pyramids.","main_image":"/img/trips/package-a.jpg","price":"250.00","currency":"USD","duration_text":"Full Day","location":"Cairo","is_flexible_date":false,"is_fixed_date":true,"is_popular":true,"is_trip_of_week":false,"is_deal":false,"is_goodbye_sharm":false,"created_at":"2025-11-19T05:14:39.094Z","updat
+ 📦 STEP 3b: data.success = true
+ 📦 STEP 3c: data.trips type = object is array? true
+ 📦 STEP 3d: data.trips length = 22
+ 📦 STEP 3e: Final trips array length: 22
+ ✅ STEP 4: Valid trips array found! Count: 22
+ ✅ STEP 5: Calling renderTrips with 22 trips
+ 🎨 RENDER: Called with 22 trips
+ 🎨 RENDER: Array length: 22
+ 🎨 RENDER: Sorted 22 trips
+ 🎨 RENDER: Trip 1: ID=1, Title=Package A – Cairo by Air, Adult=320.00
+ 🎨 RENDER: Trip 2: ID=2, Title=Goodbye Sharm – Last Day Program, Adult=15.00
+ 🎨 RENDER: Trip 3: ID=3, Title=Private Airport Transfer – Sharm, Adult=40.00
+ 🎨 RENDER: Trip 4: ID=4, Title=Cairo by Flight, Adult=260.00
+ 🎨 RENDER: Trip 5: ID=5, Title=Luxor by Flight, Adult=270.00
+ 🎨 RENDER: Trip 6: ID=6, Title=Pirates Boat – Ras Mohamed, Adult=60.00
+ 🎨 RENDER: Trip 7: ID=7, Title=Petra by Boat, Adult=250.00
+ 🎨 RENDER: Trip 8: ID=8, Title=Ras Mohamed Snorkeling, Adult=35.00
+ 🎨 RENDER: Trip 9: ID=9, Title=Package C - Egyptian Explorer Triple Pack, Adult=360.00
+ 🎨 RENDER: Trip 10: ID=10, Title=Package D - Pirates Boat & Jeep Safari, Adult=110.00
+ 🎨 RENDER: Trip 11: ID=11, Title=Package E - Land & Sea Experience, Adult=65.00
+ 🎨 RENDER: Trip 12: ID=12, Title=Package K - Ultimate Egyptian Immersion, Adult=285.00
+ 🎨 RENDER: Trip 13: ID=13, Title=Dahab Discovery Trip, Adult=60.00
+ 🎨 RENDER: Trip 14: ID=14, Title=Nabeq National Park Jeep Safari, Adult=60.00
+ 🎨 RENDER: Trip 15: ID=15, Title=Package B - Custom Egypt Experience, Adult=295.00
+ 🎨 RENDER: Trip 16: ID=16, Title=Trip of the Week – Cairo Discovery, Adult=180.00
+ 🎨 RENDER: Trip 17: ID=17, Title=Package 1 — Two-Day Certified Diver Program, Adult=150.00
+ 🎨 RENDER: Trip 18: ID=18, Title=Package 2 — Three Separate Diving Days, Adult=220.00
+ 🎨 RENDER: Trip 19: ID=19, Title=Package 3 — Local Diving + Thistlegorm Wreck, Adult=260.00
+ 🎨 RENDER: Trip 20: ID=20, Title=Package 6 — Five Separate Diving Days, Adult=350.00
+ 🎨 RENDER: Trip 21: ID=21, Title=Package 4 — PADI Open Water Diver Course, Adult=470.00
+ 🎨 RENDER: Trip 22: ID=22, Title=Package 5 — PADI Advanced Open Water Course, Adult=400.00
+ ✅ RENDER: Successfully rendered 22 trips in table
+ ✅ STEP 6: renderTrips completed
+ Error loading analytics: 
+(anonymous) @ admin-comprehensive.html:2411
+ Error loading bookings: 
+(anonymous) @ admin-comprehensive.html:3368
+ 📍 STEP 1: Loading trips...
+ 📍 STEP 1: Loading trips...
+ 📨 STEP 2: Response status: 200
+ 📦 STEP 3: Full response object: {"success":true,"trips":[{"id":1,"title":"Package A – Cairo by Air","slug":"package-a","trip_type":"package","short_title":"Package A","description":"Day trip to Cairo by flight with museum and pyramids.","main_image":"/img/trips/package-a.jpg","price":"250.00","currency":"USD","duration_text":"Full Day","location":"Cairo","is_flexible_date":false,"is_fixed_date":true,"is_popular":true,"is_trip_of_week":false,"is_deal":false,"is_goodbye_sharm":false,"created_at":"2025-11-19T05:14:39.094Z","updat
+ 📦 STEP 3b: data.success = true
+ 📦 STEP 3c: data.trips type = object is array? true
+ 📦 STEP 3d: data.trips length = 22
+ 📦 STEP 3e: Final trips array length: 22
+ ✅ STEP 4: Valid trips array found! Count: 22
+ ✅ STEP 5: Calling renderTrips with 22 trips
+ 🎨 RENDER: Called with 22 trips
+ 🎨 RENDER: Array length: 22
+ 🎨 RENDER: Sorted 22 trips
+ 🎨 RENDER: Trip 1: ID=1, Title=Package A – Cairo by Air, Adult=320.00
+ 🎨 RENDER: Trip 2: ID=2, Title=Goodbye Sharm – Last Day Program, Adult=15.00
+ 🎨 RENDER: Trip 3: ID=3, Title=Private Airport Transfer – Sharm, Adult=40.00
+ 🎨 RENDER: Trip 4: ID=4, Title=Cairo by Flight, Adult=260.00
+ 🎨 RENDER: Trip 5: ID=5, Title=Luxor by Flight, Adult=270.00
+ 🎨 RENDER: Trip 6: ID=6, Title=Pirates Boat – Ras Mohamed, Adult=60.00
+ 🎨 RENDER: Trip 7: ID=7, Title=Petra by Boat, Adult=250.00
+ 🎨 RENDER: Trip 8: ID=8, Title=Ras Mohamed Snorkeling, Adult=35.00
+ 🎨 RENDER: Trip 9: ID=9, Title=Package C - Egyptian Explorer Triple Pack, Adult=360.00
+ 🎨 RENDER: Trip 10: ID=10, Title=Package D - Pirates Boat & Jeep Safari, Adult=110.00
+ 🎨 RENDER: Trip 11: ID=11, Title=Package E - Land & Sea Experience, Adult=65.00
+ 🎨 RENDER: Trip 12: ID=12, Title=Package K - Ultimate Egyptian Immersion, Adult=285.00
+ 🎨 RENDER: Trip 13: ID=13, Title=Dahab Discovery Trip, Adult=60.00
+ 🎨 RENDER: Trip 14: ID=14, Title=Nabeq National Park Jeep Safari, Adult=60.00
+ 🎨 RENDER: Trip 15: ID=15, Title=Package B - Custom Egypt Experience, Adult=295.00
+ 🎨 RENDER: Trip 16: ID=16, Title=Trip of the Week – Cairo Discovery, Adult=180.00
+ 🎨 RENDER: Trip 17: ID=17, Title=Package 1 — Two-Day Certified Diver Program, Adult=150.00
+ 🎨 RENDER: Trip 18: ID=18, Title=Package 2 — Three Separate Diving Days, Adult=220.00
+ 🎨 RENDER: Trip 19: ID=19, Title=Package 3 — Local Diving + Thistlegorm Wreck, Adult=260.00
+ 🎨 RENDER: Trip 20: ID=20, Title=Package 6 — Five Separate Diving Days, Adult=350.00
+ 🎨 RENDER: Trip 21: ID=21, Title=Package 4 — PADI Open Water Diver Course, Adult=470.00
+ 🎨 RENDER: Trip 22: ID=22, Title=Package 5 — PADI Advanced Open Water Course, Adult=400.00
+ ✅ RENDER: Successfully rendered 22 trips in table
+ ✅ STEP 6: renderTrips completed
+ 📨 STEP 2: Response status: 200
+ 📦 STEP 3: Full response object: {"success":true,"trips":[{"id":1,"title":"Package A – Cairo by Air","slug":"package-a","trip_type":"package","short_title":"Package A","description":"Day trip to Cairo by flight with museum and pyramids.","main_image":"/img/trips/package-a.jpg","price":"250.00","currency":"USD","duration_text":"Full Day","location":"Cairo","is_flexible_date":false,"is_fixed_date":true,"is_popular":true,"is_trip_of_week":false,"is_deal":false,"is_goodbye_sharm":false,"created_at":"2025-11-19T05:14:39.094Z","updat
+ 📦 STEP 3b: data.success = true
+ 📦 STEP 3c: data.trips type = object is array? true
+ 📦 STEP 3d: data.trips length = 22
+ 📦 STEP 3e: Final trips array length: 22
+ ✅ STEP 4: Valid trips array found! Count: 22
+ ✅ STEP 5: Calling renderTrips with 22 trips
+ 🎨 RENDER: Called with 22 trips
+ 🎨 RENDER: Array length: 22
+ 🎨 RENDER: Sorted 22 trips
+ 🎨 RENDER: Trip 1: ID=1, Title=Package A – Cairo by Air, Adult=320.00
+ 🎨 RENDER: Trip 2: ID=2, Title=Goodbye Sharm – Last Day Program, Adult=15.00
+ 🎨 RENDER: Trip 3: ID=3, Title=Private Airport Transfer – Sharm, Adult=40.00
+ 🎨 RENDER: Trip 4: ID=4, Title=Cairo by Flight, Adult=260.00
+ 🎨 RENDER: Trip 5: ID=5, Title=Luxor by Flight, Adult=270.00
+ 🎨 RENDER: Trip 6: ID=6, Title=Pirates Boat – Ras Mohamed, Adult=60.00
+ 🎨 RENDER: Trip 7: ID=7, Title=Petra by Boat, Adult=250.00
+ 🎨 RENDER: Trip 8: ID=8, Title=Ras Mohamed Snorkeling, Adult=35.00
+ 🎨 RENDER: Trip 9: ID=9, Title=Package C - Egyptian Explorer Triple Pack, Adult=360.00
+ 🎨 RENDER: Trip 10: ID=10, Title=Package D - Pirates Boat & Jeep Safari, Adult=110.00
+ 🎨 RENDER: Trip 11: ID=11, Title=Package E - Land & Sea Experience, Adult=65.00
+ 🎨 RENDER: Trip 12: ID=12, Title=Package K - Ultimate Egyptian Immersion, Adult=285.00
+ 🎨 RENDER: Trip 13: ID=13, Title=Dahab Discovery Trip, Adult=60.00
+ 🎨 RENDER: Trip 14: ID=14, Title=Nabeq National Park Jeep Safari, Adult=60.00
+ 🎨 RENDER: Trip 15: ID=15, Title=Package B - Custom Egypt Experience, Adult=295.00
+ 🎨 RENDER: Trip 16: ID=16, Title=Trip of the Week – Cairo Discovery, Adult=180.00
+ 🎨 RENDER: Trip 17: ID=17, Title=Package 1 — Two-Day Certified Diver Program, Adult=150.00
+ 🎨 RENDER: Trip 18: ID=18, Title=Package 2 — Three Separate Diving Days, Adult=220.00
+ 🎨 RENDER: Trip 19: ID=19, Title=Package 3 — Local Diving + Thistlegorm Wreck, Adult=260.00
+ 🎨 RENDER: Trip 20: ID=20, Title=Package 6 — Five Separate Diving Days, Adult=350.00
+ 🎨 RENDER: Trip 21: ID=21, Title=Package 4 — PADI Open Water Diver Course, Adult=470.00
+ 🎨 RENDER: Trip 22: ID=22, Title=Package 5 — PADI Advanced Open Water Course, Adult=400.00
+ ✅ RENDER: Successfully rendered 22 trips in table
+ ✅ STEP 6: renderTrips completed
+ Error loading bookings: 
+(anonymous) @ admin-comprehensive.html:3368
+ 📍 STEP 1: Loading trips...
+ 📍 STEP 1: Loading trips...
+ 📨 STEP 2: Response status: 200
+ 📨 STEP 2: Response status: 200
+ 📦 STEP 3: Full response object: {"success":true,"trips":[{"id":1,"title":"Package A – Cairo by Air","slug":"package-a","trip_type":"package","short_title":"Package A","description":"Day trip to Cairo by flight with museum and pyramids.","main_image":"/img/trips/package-a.jpg","price":"250.00","currency":"USD","duration_text":"Full Day","location":"Cairo","is_flexible_date":false,"is_fixed_date":true,"is_popular":true,"is_trip_of_week":false,"is_deal":false,"is_goodbye_sharm":false,"created_at":"2025-11-19T05:14:39.094Z","updat
+ 📦 STEP 3b: data.success = true
+ 📦 STEP 3c: data.trips type = object is array? true
+ 📦 STEP 3d: data.trips length = 22
+ 📦 STEP 3e: Final trips array length: 22
+ ✅ STEP 4: Valid trips array found! Count: 22
+ ✅ STEP 5: Calling renderTrips with 22 trips
+ 🎨 RENDER: Called with 22 trips
+ 🎨 RENDER: Array length: 22
+ 🎨 RENDER: Sorted 22 trips
+ 🎨 RENDER: Trip 1: ID=1, Title=Package A – Cairo by Air, Adult=320.00
+ 🎨 RENDER: Trip 2: ID=2, Title=Goodbye Sharm – Last Day Program, Adult=15.00
+ 🎨 RENDER: Trip 3: ID=3, Title=Private Airport Transfer – Sharm, Adult=40.00
+ 🎨 RENDER: Trip 4: ID=4, Title=Cairo by Flight, Adult=260.00
+ 🎨 RENDER: Trip 5: ID=5, Title=Luxor by Flight, Adult=270.00
+ 🎨 RENDER: Trip 6: ID=6, Title=Pirates Boat – Ras Mohamed, Adult=60.00
+ 🎨 RENDER: Trip 7: ID=7, Title=Petra by Boat, Adult=250.00
+ 🎨 RENDER: Trip 8: ID=8, Title=Ras Mohamed Snorkeling, Adult=35.00
+ 🎨 RENDER: Trip 9: ID=9, Title=Package C - Egyptian Explorer Triple Pack, Adult=360.00
+ 🎨 RENDER: Trip 10: ID=10, Title=Package D - Pirates Boat & Jeep Safari, Adult=110.00
+ 🎨 RENDER: Trip 11: ID=11, Title=Package E - Land & Sea Experience, Adult=65.00
+ 🎨 RENDER: Trip 12: ID=12, Title=Package K - Ultimate Egyptian Immersion, Adult=285.00
+ 🎨 RENDER: Trip 13: ID=13, Title=Dahab Discovery Trip, Adult=60.00
+ 🎨 RENDER: Trip 14: ID=14, Title=Nabeq National Park Jeep Safari, Adult=60.00
+ 🎨 RENDER: Trip 15: ID=15, Title=Package B - Custom Egypt Experience, Adult=295.00
+ 🎨 RENDER: Trip 16: ID=16, Title=Trip of the Week – Cairo Discovery, Adult=180.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 17: ID=17, Title=Package 1 — Two-Day Certified Diver Program, Adult=150.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 18: ID=18, Title=Package 2 — Three Separate Diving Days, Adult=220.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 19: ID=19, Title=Package 3 — Local Diving + Thistlegorm Wreck, Adult=260.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 20: ID=20, Title=Package 6 — Five Separate Diving Days, Adult=350.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 21: ID=21, Title=Package 4 — PADI Open Water Diver Course, Adult=470.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 22: ID=22, Title=Package 5 — PADI Advanced Open Water Course, Adult=400.00
+admin-comprehensive.html:1185 ✅ RENDER: Successfully rendered 22 trips in table
+admin-comprehensive.html:1103 ✅ STEP 6: renderTrips completed
+admin-comprehensive.html:1084 📦 STEP 3: Full response object: {"success":true,"trips":[{"id":1,"title":"Package A – Cairo by Air","slug":"package-a","trip_type":"package","short_title":"Package A","description":"Day trip to Cairo by flight with museum and pyramids.","main_image":"/img/trips/package-a.jpg","price":"250.00","currency":"USD","duration_text":"Full Day","location":"Cairo","is_flexible_date":false,"is_fixed_date":true,"is_popular":true,"is_trip_of_week":false,"is_deal":false,"is_goodbye_sharm":false,"created_at":"2025-11-19T05:14:39.094Z","updat
+admin-comprehensive.html:1085 📦 STEP 3b: data.success = true
+admin-comprehensive.html:1086 📦 STEP 3c: data.trips type = object is array? true
+admin-comprehensive.html:1087 📦 STEP 3d: data.trips length = 22
+admin-comprehensive.html:1092 📦 STEP 3e: Final trips array length: 22
+admin-comprehensive.html:1095 ✅ STEP 4: Valid trips array found! Count: 22
+admin-comprehensive.html:1101 ✅ STEP 5: Calling renderTrips with 22 trips
+admin-comprehensive.html:1119 🎨 RENDER: Called with 22 trips
+admin-comprehensive.html:1133 🎨 RENDER: Array length: 22
+admin-comprehensive.html:1143 🎨 RENDER: Sorted 22 trips
+admin-comprehensive.html:1146 🎨 RENDER: Trip 1: ID=1, Title=Package A – Cairo by Air, Adult=320.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 2: ID=2, Title=Goodbye Sharm – Last Day Program, Adult=15.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 3: ID=3, Title=Private Airport Transfer – Sharm, Adult=40.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 4: ID=4, Title=Cairo by Flight, Adult=260.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 5: ID=5, Title=Luxor by Flight, Adult=270.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 6: ID=6, Title=Pirates Boat – Ras Mohamed, Adult=60.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 7: ID=7, Title=Petra by Boat, Adult=250.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 8: ID=8, Title=Ras Mohamed Snorkeling, Adult=35.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 9: ID=9, Title=Package C - Egyptian Explorer Triple Pack, Adult=360.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 10: ID=10, Title=Package D - Pirates Boat & Jeep Safari, Adult=110.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 11: ID=11, Title=Package E - Land & Sea Experience, Adult=65.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 12: ID=12, Title=Package K - Ultimate Egyptian Immersion, Adult=285.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 13: ID=13, Title=Dahab Discovery Trip, Adult=60.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 14: ID=14, Title=Nabeq National Park Jeep Safari, Adult=60.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 15: ID=15, Title=Package B - Custom Egypt Experience, Adult=295.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 16: ID=16, Title=Trip of the Week – Cairo Discovery, Adult=180.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 17: ID=17, Title=Package 1 — Two-Day Certified Diver Program, Adult=150.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 18: ID=18, Title=Package 2 — Three Separate Diving Days, Adult=220.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 19: ID=19, Title=Package 3 — Local Diving + Thistlegorm Wreck, Adult=260.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 20: ID=20, Title=Package 6 — Five Separate Diving Days, Adult=350.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 21: ID=21, Title=Package 4 — PADI Open Water Diver Course, Adult=470.00
+admin-comprehensive.html:1146 🎨 RENDER: Trip 22: ID=22, Title=Package 5 — PADI Advanced Open Water Course, Adult=400.00
+admin-comprehensive.html:1185 ✅ RENDER: Successfully rendered 22 trips in table
+admin-comprehensive.html:1103 ✅ STEP 6: renderTrips completed
+admin-comprehensive.html:3368 Error loading bookings: TypeError: (stats.total_revenue || 0).toFixed is not a function
+    at renderBookings (admin-comprehensive.html:3381:96)
+    at admin-comprehensive.html:3362:7
+(anonymous) @ admin-comprehensive.html:3368

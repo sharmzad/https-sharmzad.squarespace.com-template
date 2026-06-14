@@ -1,0 +1,35 @@
+NDczNTQ1.js?t=473545:1 [tp] entrypoint init
+chunk.C-bsn-S_.js:15 ✅ API Client initialized
+chunk.C-bsn-S_.js:15 📡 API Base URL: https://ad07b034-5104-4742-ab1b-5fd6a4c4c387-00-3jcgxvcz1yndv.kirk.replit.dev
+chunk.C-bsn-S_.js:15 ✅ Expert login form initialized for: guide
+chunk.BekirI1o.js:2 The PerformanceObserver does not support buffered flag with the entryTypes argument.
+startObserver @ chunk.BekirI1o.js:2
+chunk.C-bsn-S_.js:15 [tp] bb init
+chunk.C-bsn-S_.js:15 🔐 Attempting login for: testguide@test.com
+chunk.C-bsn-S_.js:15 📡 API Request to: https://ad07b034-5104-4742-ab1b-5fd6a4c4c387-00-3jcgxvcz1yndv.kirk.replit.dev/api/auth/login
+api/auth/login:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)
+chunk.C-bsn-S_.js:15 📥 Response status: 401 Unauthorized
+chunk.C-bsn-S_.js:15 ❌ Login failed: Object
+(anonymous) @ chunk.C-bsn-S_.js:15
+chunk.C-bsn-S_.js:15 Login error: Error: Invalid email or password
+    at Object.login (api-client.js:77:15)
+    at async HTMLFormElement.<anonymous> (expert-login.js:38:22)
+(anonymous) @ chunk.C-bsn-S_.js:15
+chunk.C-bsn-S_.js:15 Login error: Error: Invalid email or password
+    at Object.login (api-client.js:77:15)
+    at async HTMLFormElement.<anonymous> (expert-login.js:38:22)
+(anonymous) @ chunk.C-bsn-S_.js:15
+chunk.C-bsn-S_.js:15 🔐 Attempting login for: testguide@test.com
+chunk.C-bsn-S_.js:15 📡 API Request to: https://ad07b034-5104-4742-ab1b-5fd6a4c4c387-00-3jcgxvcz1yndv.kirk.replit.dev/api/auth/login
+api/auth/login:1  Failed to load resource: the server responded with a status of 401 (Unauthorized)
+chunk.C-bsn-S_.js:15 📥 Response status: 401 Unauthorized
+chunk.C-bsn-S_.js:15 ❌ Login failed: Object
+(anonymous) @ chunk.C-bsn-S_.js:15
+chunk.C-bsn-S_.js:15 Login error: Error: Invalid email or password
+    at Object.login (api-client.js:77:15)
+    at async HTMLFormElement.<anonymous> (expert-login.js:38:22)
+(anonymous) @ chunk.C-bsn-S_.js:15
+chunk.C-bsn-S_.js:15 Login error: Error: Invalid email or password
+    at Object.login (api-client.js:77:15)
+    at async HTMLFormElement.<anonymous> (expert-login.js:38:22)
+(anonymous) @ chunk.C-bsn-S_.js:15
