@@ -79,12 +79,9 @@ function setupSponsor() {
 
 // Animated motion-graphics intro, once per app launch (per browser session)
 function playSponsorIntro(s) {
-  // show once per calendar day per device
-  const key = `sponsor_intro_${new Date().toLocaleDateString("en-CA")}`;
-  if (localStorage.getItem(key)) return;
+  // play on every app open
   const intro = $("#sponsorIntro");
   if (!intro) return;
-  localStorage.setItem(key, "1");
 
   // logo if provided, otherwise an animated two-tone wordmark from the name
   if (s.logo) {
@@ -108,7 +105,7 @@ function playSponsorIntro(s) {
     intro.classList.add("done");
     setTimeout(() => intro.classList.add("hidden"), 600);
   };
-  const timer = setTimeout(dismiss, 3600);
+  const timer = setTimeout(dismiss, 8600);
   $("#introSkip").onclick = () => { clearTimeout(timer); dismiss(); };
 }
 

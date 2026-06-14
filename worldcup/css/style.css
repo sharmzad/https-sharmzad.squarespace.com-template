@@ -335,12 +335,12 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
 }
 .intro-car {
   position: absolute; top: -20px; left: 0; font-size: 26px;
-  animation: introDrive 2.2s cubic-bezier(.45,0,.55,1) 1.1s forwards;
+  animation: introDrive 2.6s linear 1.1s infinite;
 }
 @keyframes introDrive { 0% { left: -12%; } 100% { left: 102%; } }
 
 .intro-bar { width: 120px; height: 3px; border-radius: 3px; background: var(--line); margin: 26px auto 0; overflow: hidden; }
-.intro-bar i { display: block; height: 100%; width: 0; background: var(--gold); animation: introBar 3.2s linear forwards; }
+.intro-bar i { display: block; height: 100%; width: 0; background: var(--gold); animation: introBar 8.6s linear forwards; }
 @keyframes introBar { to { width: 100%; } }
 
 .intro-skip {
