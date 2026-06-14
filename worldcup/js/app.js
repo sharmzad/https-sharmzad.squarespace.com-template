@@ -673,7 +673,7 @@ function shareCard(title, desc, kind) {
 function buildMessage(kind) {
   const today = new Date();
   const sameDay = (d) => d.toDateString() === today.toDateString();
-  const appUrl = location.href.split("#")[0];
+  const appUrl = window.APP_LINK || location.href.split("#")[0];
 
   if (kind === "today") {
     const list = matches.filter((m) => sameDay(m.kickoff) && m.state === "pre");
@@ -724,7 +724,7 @@ function inviteMessage() {
     `Each match: pick the *winner* + the *exact score*\n` +
     `✅ Winner = ${POINTS.WINNER} pts · 🎯 Exact score = +${POINTS.EXACT} pts bonus\n` +
     `🔒 Bets close 1 hour before kickoff (today only: open till end of 1st half ⚡)\n\n` +
-    `Join here 👇 (group code: *${window.GROUP_CODE}*)\n${location.href.split("#")[0]}`
+    `Join here 👇 (group code: *${window.GROUP_CODE}*)\n${window.APP_LINK || location.href.split("#")[0]}`
   );
 }
 

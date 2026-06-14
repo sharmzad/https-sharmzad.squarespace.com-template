@@ -31,6 +31,9 @@ window.BONUS_POINTS = { "*": 2, "Alaa": 0 };
 // Web push notifications (Firebase Cloud Messaging).
 window.VAPID_KEY = "BJeCjL3Ge6h9UzWfSzM0hFIgO5EBvwdyY2ADVkBjwqXfdyQfBA4304ljAFb1hDx-pYcEFjXtoR6B3HIELHgG11o";
 
+// Clean public link used in WhatsApp invite/share messages.
+window.APP_LINK = "https://tinyurl.com/El3eshaWC26";
+
 // -----------------------------------------------------------------------------
 // Sponsor (set to null to hide all sponsor branding everywhere).
 //   name    : shown in the strip, splash, WhatsApp footer
