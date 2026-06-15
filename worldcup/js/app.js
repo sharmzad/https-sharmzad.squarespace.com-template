@@ -96,8 +96,8 @@ function showAnnouncement() {
   if (!a || !el) return;
   localStorage.setItem(`announce_${a.id}`, "1");
   $("#announceTitle").textContent = a.title || "🎉";
-  $("#announceBody").textContent = a.body || "";
   el.classList.remove("hidden");
+  fillAnnouncement();   // body (with player names) — refreshed again once data loads
 
   const stop = runFireworks($("#fireworks"), 7000);
   let closed = false;
@@ -109,6 +109,35 @@ function showAnnouncement() {
   };
   $("#announceClose").onclick = close;
   setTimeout(close, 8000);
+}
+
+// Players who predicted the exact final score named in ANNOUNCEMENT.exact
+function announcementExactNames() {
+  const ex = window.ANNOUNCEMENT?.exact;
+  if (!ex || !matches.length) return [];
+  const m = matches
+    .filter((x) => x.completed && x.home.score === ex.home && x.away.score === ex.away &&
+      [x.home.name, x.away.name].some((n) => n.toLowerCase().includes(ex.team.toLowerCase())))
+    .sort((a, b) => b.kickoff - a.kickoff)[0];
+  if (!m) return [];
+  return players
+    .filter((p) => {
+      const pr = predictions[`${m.id}_${p.id}`];
+      return pr && isValidPrediction(pr, m) && pr.home === m.home.score && pr.away === m.away.score;
+    })
+    .map((p) => `${p.emoji} ${p.name}`);
+}
+
+// Fill the announcement body, injecting live player names for {names}.
+function fillAnnouncement() {
+  const a = window.ANNOUNCEMENT, el = $("#announce");
+  if (!a || !el || el.classList.contains("hidden")) return;
+  let text = a.body || "";
+  if (text.includes("{names}")) {
+    const names = announcementExactNames();
+    text = text.replace("{names}", names.length ? names.join(" & ") : "Someone");
+  }
+  $("#announceBody").textContent = text;
 }
 
 // Compact canvas fireworks; returns a stop() function.
@@ -554,6 +583,7 @@ function buildStandings() {
 // ---------------------------------------------------------------------------
 function render() {
   renderAdminHealth();
+  fillAnnouncement();   // reveal exact-score player names once data is loaded
   if (activeTab === "matches") renderMatches();
   else if (activeTab === "table") renderTable();
   else if (activeTab === "share") renderShare();

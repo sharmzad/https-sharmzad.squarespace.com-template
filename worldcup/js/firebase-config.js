@@ -39,7 +39,9 @@ window.APP_LINK = "https://tinyurl.com/El3eshaWC26";
 window.ANNOUNCEMENT = {
   id: "first-exact-egypt-1-1",
   title: "🎯 FIRST EXACT SCORE!",
-  body: "Egypt 1–1 — someone nailed the exact score for +7 points! 🎆 Who's next?",
+  // {names} is filled live with whoever predicted the exact score below.
+  body: "{names} nailed Egypt 1–1 — the first +7 of the cup! 🎆 Who's next?",
+  exact: { team: "Egypt", home: 1, away: 1 },
 };
 
 // -----------------------------------------------------------------------------
