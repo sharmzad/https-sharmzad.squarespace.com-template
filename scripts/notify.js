@@ -97,9 +97,20 @@ async function main() {
   const db = admin.firestore();
   const markers = db.collection("notifications");
 
+  // Heartbeat so the admin can see the notifier is alive (read in the app).
+  const heartbeat = (extra = {}) =>
+    db.collection("health").doc("notify").set(
+      { at: admin.firestore.FieldValue.serverTimestamp(), ...extra },
+      { merge: true }
+    );
+
   // No devices yet? Do nothing, so no event gets burned.
   const tokens = (await db.collection("tokens").get()).docs.map((d) => d.id);
-  if (!tokens.length) { console.log("No registered devices yet."); return; }
+  if (!tokens.length) {
+    console.log("No registered devices yet.");
+    await heartbeat({ devices: 0, messages: 0 });
+    return;
+  }
 
   const res = await fetch(ESPN_URL);
   if (!res.ok) throw new Error(`ESPN responded ${res.status}`);
@@ -261,8 +272,13 @@ async function main() {
     }
   }
 
-  if (!sendList.length) { console.log("Nothing to send this run."); return; }
+  if (!sendList.length) {
+    console.log("Nothing to send this run.");
+    await heartbeat({ devices: tokens.length, messages: 0 });
+    return;
+  }
 
+  let failures = 0;
   for (const item of sendList) {
     const resp = await admin.messaging().sendEachForMulticast({
       tokens,
@@ -272,6 +288,7 @@ async function main() {
         notification: { icon: `${APP_URL}group.jpg`, badge: `${APP_URL}group.jpg` },
       },
     });
+    failures += resp.failureCount;
     console.log(`Sent "${item.title}" — ok: ${resp.successCount}, failed: ${resp.failureCount}`);
     // Prune dead tokens so the list stays clean
     await Promise.all(
@@ -282,6 +299,8 @@ async function main() {
       )
     );
   }
+
+  await heartbeat({ devices: tokens.length, messages: sendList.length, failures });
 }
 
 main().catch((err) => { console.error(err); process.exit(1); });

@@ -23,6 +23,7 @@ const ESPN_URL =
   `?dates=${TOURNAMENT_RANGE}&limit=200`;
 const POLL_MS = 60_000;
 const EMOJIS = ["🦁", "🐺", "🦅", "🐉", "🦂", "🐍", "🦈", "🐅", "🦍", "🐎", "🦊", "🐢"];
+const ADMIN_NAME = "Alaa"; // only this player sees the notifier health pill
 
 // ---------------------------------------------------------------------------
 // State
@@ -36,6 +37,7 @@ let fbApp = null;          // Firebase app (needed for messaging)
 let activeTab = "matches";
 let matchFilter = "today";
 let draft = {};            // unsaved stepper values { matchId: {home, away} }
+let health = null;         // notifier heartbeat doc (admin-only indicator)
 
 const $ = (sel) => document.querySelector(sel);
 const view = $("#view");
@@ -280,6 +282,11 @@ async function initFirebase() {
       });
       render();
     });
+    // notifier heartbeat — drives the admin-only "live" pill
+    fs.onSnapshot(fs.doc(db, "health", "notify"), (d) => {
+      health = d.exists() ? d.data() : null;
+      renderAdminHealth();
+    });
   } catch (err) {
     console.error("Firebase init failed", err);
     showBanner("⚠️ Could not connect to the game database. Live scores still work.");
@@ -415,10 +422,35 @@ function buildStandings() {
 // Rendering
 // ---------------------------------------------------------------------------
 function render() {
+  renderAdminHealth();
   if (activeTab === "matches") renderMatches();
   else if (activeTab === "table") renderTable();
   else if (activeTab === "share") renderShare();
   else renderRules();
+}
+
+// Admin-only (Alaa) pill showing the notifier heartbeat. Hidden for everyone else.
+function renderAdminHealth() {
+  const el = $("#adminHealth");
+  if (!el) return;
+  if (!me || me.name !== ADMIN_NAME || !health) { el.classList.add("hidden"); return; }
+
+  const ms = health.at?.toMillis?.() ? Date.now() - health.at.toMillis() : null;
+  const mins = ms == null ? null : Math.round(ms / 60000);
+  let status = "bad", label = "notifier offline";
+  if (mins != null && mins <= 12) { status = "ok"; label = "notifier live"; }
+  else if (mins != null && mins <= 30) { status = "warn"; label = "notifier slow"; }
+
+  const ago = mins == null ? "never"
+    : mins <= 0 ? "just now"
+    : mins < 60 ? `${mins} min ago`
+    : `${Math.round(mins / 60)} h ago`;
+  const extra = health.messages != null ? ` · last run sent ${health.messages}` : "";
+  const fail = health.failures ? ` · ⚠️ ${health.failures} failed` : "";
+
+  el.className = `admin-health ${status}`;
+  el.innerHTML = `<span class="dot"></span>${label} · updated ${ago}${extra}${fail}`;
+  el.classList.remove("hidden");
 }
 
 function renderMatches() {
