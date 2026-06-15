@@ -34,6 +34,14 @@ window.VAPID_KEY = "BJeCjL3Ge6h9UzWfSzM0hFIgO5EBvwdyY2ADVkBjwqXfdyQfBA4304ljAFb1
 // Clean public link used in WhatsApp invite/share messages.
 window.APP_LINK = "https://tinyurl.com/El3eshaWC26";
 
+// One-time celebratory announcement shown (with fireworks) once per device on
+// open. Set to null to disable. Bump `id` to show a new announcement again.
+window.ANNOUNCEMENT = {
+  id: "first-exact-egypt-1-1",
+  title: "🎯 FIRST EXACT SCORE!",
+  body: "Egypt 1–1 — someone nailed the exact score for +7 points! 🎆 Who's next?",
+};
+
 // -----------------------------------------------------------------------------
 // Sponsor (set to null to hide all sponsor branding everywhere).
 //   name    : shown in the strip, splash, WhatsApp footer

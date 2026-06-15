@@ -49,7 +49,9 @@ init();
 
 async function init() {
   bindChrome();
-  setupSponsor();
+  const announcing = announcementPending();
+  setupSponsor(announcing);             // skip the long sponsor intro on the celebration open
+  if (announcing) showAnnouncement();
   await initFirebase();
   if (!me && db) await tryRestoreLogin();
   if (db) refreshPushToken();           // keep this device's push token fresh
@@ -61,7 +63,7 @@ async function init() {
 // ---------------------------------------------------------------------------
 // Sponsor branding (see SPONSOR in firebase-config.js; hidden when null)
 // ---------------------------------------------------------------------------
-function setupSponsor() {
+function setupSponsor(skipIntro) {
   const s = window.SPONSOR;
   if (!s || !s.name) return;
 
@@ -77,7 +79,99 @@ function setupSponsor() {
   const dock = document.querySelector(".bottom-dock");
   if (dock) document.body.style.paddingBottom = `${dock.offsetHeight + 12}px`;
 
-  playSponsorIntro(s);
+  if (!skipIntro) playSponsorIntro(s);
+}
+
+// ---------------------------------------------------------------------------
+// One-time fireworks announcement (shown once per device on open)
+// ---------------------------------------------------------------------------
+function announcementPending() {
+  const a = window.ANNOUNCEMENT;
+  return !!(a && a.id && !localStorage.getItem(`announce_${a.id}`));
+}
+
+function showAnnouncement() {
+  const a = window.ANNOUNCEMENT;
+  const el = $("#announce");
+  if (!a || !el) return;
+  localStorage.setItem(`announce_${a.id}`, "1");
+  $("#announceTitle").textContent = a.title || "🎉";
+  $("#announceBody").textContent = a.body || "";
+  el.classList.remove("hidden");
+
+  const stop = runFireworks($("#fireworks"), 7000);
+  let closed = false;
+  const close = () => {
+    if (closed) return; closed = true;
+    if (stop) stop();
+    el.classList.add("done");
+    setTimeout(() => el.classList.add("hidden"), 500);
+  };
+  $("#announceClose").onclick = close;
+  setTimeout(close, 8000);
+}
+
+// Compact canvas fireworks; returns a stop() function.
+function runFireworks(canvas, duration) {
+  if (!canvas || !canvas.getContext) return null;
+  const ctx = canvas.getContext("2d");
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let W, H;
+  const resize = () => {
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+  resize();
+  window.addEventListener("resize", resize);
+  const colors = ["#f4c542", "#35d07f", "#19b6e6", "#ff6b6b", "#ffffff", "#ff9ff3", "#feca57"];
+  const parts = [], rockets = [];
+  const start = performance.now();
+  let lastLaunch = 0, raf = 0, running = true;
+
+  const explode = (x, y, c) => {
+    const n = 48;
+    for (let i = 0; i < n; i++) {
+      const ang = (Math.PI * 2 * i) / n + Math.random() * 0.12;
+      const sp = 1.5 + Math.random() * 4.5;
+      parts.push({ x, y, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, a: 1, c });
+    }
+  };
+
+  const loop = (t) => {
+    if (!running) return;
+    const el = t - start;
+    ctx.fillStyle = "rgba(6,15,9,0.25)";
+    ctx.fillRect(0, 0, W, H);
+
+    if (el < duration - 1200 && t - lastLaunch > 380) {
+      lastLaunch = t;
+      rockets.push({
+        x: W * (0.15 + Math.random() * 0.7), y: H,
+        ty: H * (0.16 + Math.random() * 0.32),
+        c: colors[(Math.random() * colors.length) | 0],
+      });
+    }
+    for (let i = rockets.length - 1; i >= 0; i--) {
+      const r = rockets[i]; r.y -= 9;
+      ctx.globalAlpha = 1; ctx.fillStyle = r.c;
+      ctx.beginPath(); ctx.arc(r.x, r.y, 2, 0, 7); ctx.fill();
+      if (r.y <= r.ty) { explode(r.x, r.y, r.c); rockets.splice(i, 1); }
+    }
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i];
+      p.vy += 0.06; p.x += p.vx; p.y += p.vy; p.a -= 0.012;
+      if (p.a <= 0) { parts.splice(i, 1); continue; }
+      ctx.globalAlpha = Math.max(p.a, 0); ctx.fillStyle = p.c;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 2.2, 0, 7); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    if (el < duration || parts.length || rockets.length) raf = requestAnimationFrame(loop);
+    else { running = false; window.removeEventListener("resize", resize); }
+  };
+  raf = requestAnimationFrame(loop);
+  return () => { running = false; cancelAnimationFrame(raf); window.removeEventListener("resize", resize); };
 }
 
 // Animated motion-graphics intro, once per app launch (per browser session)
