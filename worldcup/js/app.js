@@ -52,6 +52,7 @@ async function init() {
   setupSponsor();
   await initFirebase();
   if (!me && db) await tryRestoreLogin();
+  if (db) refreshPushToken();           // keep this device's push token fresh
   await loadMatches();
   render();
   setInterval(async () => { await loadMatches(); render(); }, POLL_MS);
@@ -109,6 +110,34 @@ function playSponsorIntro(s) {
   };
   const timer = setTimeout(dismiss, 8600);
   $("#introSkip").onclick = () => { clearTimeout(timer); dismiss(); };
+}
+
+// Silently re-register this device's push token on every app open. iOS
+// invalidates web-push tokens when the app updates / is re-added to the Home
+// Screen, so refreshing here keeps the stored token valid and self-heals
+// delivery without the player having to tap the bell again.
+async function refreshPushToken() {
+  try {
+    if (!window.VAPID_KEY || localStorage.getItem("gangcup_notif") !== "1") return;
+    if (!("Notification" in window) || Notification.permission !== "granted") return;
+    const msgMod = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js");
+    if (!(await msgMod.isSupported())) return;
+    const reg = await navigator.serviceWorker.register("firebase-messaging-sw.js");
+    const token = await msgMod.getToken(msgMod.getMessaging(fbApp), {
+      vapidKey: window.VAPID_KEY,
+      serviceWorkerRegistration: reg,
+    });
+    if (!token) return;
+    localStorage.setItem("gangcup_fcm", token);
+    await fs.setDoc(fs.doc(db, "tokens", token), {
+      token,
+      player: me?.name || "anonymous",
+      playerId: me?.id || null,
+      updatedAt: fs.serverTimestamp(),
+    }, { merge: true });
+  } catch (err) {
+    console.warn("Push token refresh failed", err);
+  }
 }
 
 // one-line sponsor footer for WhatsApp messages ("" when no sponsor)
