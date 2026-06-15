@@ -271,7 +271,15 @@ async function enableNotifications() {
     msgMod.onMessage(messaging, (p) => {
       if (p.notification?.title) toast(`${p.notification.title} — ${p.notification.body || ""}`);
     });
-    toast("🔔 Notifications ON — match reminders & results incoming!");
+    // Immediate proof this device can show notifications (tests permission +
+    // service worker; the banner appears even clearer when the app is backgrounded).
+    try {
+      await reg.showNotification("✅ El 3eshّa WC26", {
+        body: "Test — notifications are working on this device! 🔔",
+        icon: "group.jpg", badge: "group.jpg",
+      });
+    } catch { /* ignore */ }
+    toast("🔔 Device registered — sent a test notification. Lock your phone to see banners!");
   } catch (err) {
     console.error("Notifications failed", err);
     toast(`⚠️ ${err?.code || err?.message || "Couldn't enable notifications on this device."}`);
