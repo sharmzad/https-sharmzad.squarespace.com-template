@@ -42,6 +42,9 @@ window.ANNOUNCEMENT = {
   // {names} is filled live with whoever predicted the exact score below.
   body: "{names} nailed Egypt 1–1 — the first +7 of the cup! 🎆 Who's next?",
   exact: { team: "Egypt", home: 1, away: 1 },
+  // With `until` set, it replays on EVERY open until this time, then stops.
+  // (Without `until` it would show once per device.)
+  until: "2026-06-15T22:11:00Z",
 };
 
 // -----------------------------------------------------------------------------

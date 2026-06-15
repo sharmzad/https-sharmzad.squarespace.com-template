@@ -87,14 +87,16 @@ function setupSponsor(skipIntro) {
 // ---------------------------------------------------------------------------
 function announcementPending() {
   const a = window.ANNOUNCEMENT;
-  return !!(a && a.id && !localStorage.getItem(`announce_${a.id}`));
+  if (!a || !a.id) return false;
+  if (a.until) return Date.now() < new Date(a.until).getTime();   // replay until expiry
+  return !localStorage.getItem(`announce_${a.id}`);               // else once per device
 }
 
 function showAnnouncement() {
   const a = window.ANNOUNCEMENT;
   const el = $("#announce");
   if (!a || !el) return;
-  localStorage.setItem(`announce_${a.id}`, "1");
+  if (!a.until) localStorage.setItem(`announce_${a.id}`, "1");   // only mark seen in once-per-device mode
   $("#announceTitle").textContent = a.title || "🎉";
   el.classList.remove("hidden");
   fillAnnouncement();   // body (with player names) — refreshed again once data loads
