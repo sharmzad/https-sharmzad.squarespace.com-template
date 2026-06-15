@@ -888,13 +888,23 @@ async function submitJoin() {
   if (!name || name.length < 2) return fail("Enter your name (at least 2 letters).");
   if (!/^\d{4}$/.test(pin)) return fail("PIN must be exactly 4 digits.");
 
-  const existing = players.find((p) => p.name.toLowerCase() === name.toLowerCase());
+  const existingLocal = players.find((p) => p.name.toLowerCase() === name.toLowerCase());
   try {
+    // Re-check against the LIVE database (not the maybe-unloaded local list)
+    // so we never create a duplicate name due to a slow first snapshot.
+    let all = players;
+    try {
+      const snap = await fs.getDocs(fs.collection(db, "players"));
+      all = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    } catch { /* offline — fall back to local list */ }
+    const existing = all.find((p) => (p.name || "").trim().toLowerCase() === name.toLowerCase())
+      || existingLocal;
+
     if (existing) {
       if (existing.pin !== pin) return fail("That name is taken and the PIN doesn't match.");
       me = { id: existing.id, name: existing.name, emoji: existing.emoji };
     } else {
-      if (players.length >= (window.MAX_PLAYERS || 10)) return fail("The game is full! 🙈");
+      if (all.length >= (window.MAX_PLAYERS || 10)) return fail("The game is full! 🙈");
       const ref = await fs.addDoc(fs.collection(db, "players"), {
         name, pin, emoji: chosenEmoji, joinedAt: fs.serverTimestamp(),
       });
