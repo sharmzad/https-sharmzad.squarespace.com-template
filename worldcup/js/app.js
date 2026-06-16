@@ -584,8 +584,13 @@ function isOpen(m) {
 // ---------------------------------------------------------------------------
 const resultOf = (hs, as) => (hs > as ? "home" : hs < as ? "away" : "draw");
 
-// older predictions may not have a winner pick — derive it from the score
-const predWinner = (pred) => pred.winner || resultOf(pred.home, pred.away);
+// The winner is taken from the score when the score is decisive (a 0–2 can't be
+// a "draw" — that's a mis-tap). For a drawn score, the explicit pick stands
+// (lets you back a team to win while leaving the exact guess at a draw).
+const predWinner = (pred) => {
+  const dir = resultOf(pred.home, pred.away);
+  return dir !== "draw" ? dir : (pred.winner || "draw");
+};
 
 function scorePrediction(pred, hs, as) {
   let pts = 0;
@@ -813,7 +818,9 @@ async function onSave(e) {
   if (!m || !me || !db) return;
   if (!isOpen(m)) { toast("🔒 Too late — predictions are locked!"); render(); return; }
   const d = draft[matchId];
-  const winner = d.winner || resultOf(d.home, d.away); // no pick? derive from score
+  // decisive score → winner follows the score; drawn score → keep the pick
+  const dir = resultOf(d.home, d.away);
+  const winner = dir !== "draw" ? dir : (d.winner || "draw");
   try {
     await fs.setDoc(fs.doc(db, "predictions", `${matchId}_${me.id}`), {
       matchId,

@@ -53,7 +53,10 @@ const isOverridden = (m) =>
   );
 
 const resultOf = (hs, as) => (hs > as ? "home" : hs < as ? "away" : "draw");
-const predWinner = (pred) => pred.winner || resultOf(pred.home, pred.away);
+const predWinner = (pred) => {
+  const dir = resultOf(pred.home, pred.away);
+  return dir !== "draw" ? dir : (pred.winner || "draw");
+};
 
 function scorePrediction(pred, hs, as) {
   let pts = 0;
