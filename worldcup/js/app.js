@@ -22,7 +22,9 @@ const ESPN_URL =
   `https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard` +
   `?dates=${TOURNAMENT_RANGE}&limit=200`;
 const POLL_MS = 60_000;
-const EMOJIS = ["🦁", "🐺", "🦅", "🐉", "🦂", "🐍", "🦈", "🐅", "🦍", "🐎", "🦊", "🐢"];
+const EMOJIS = ["🦁", "🐺", "🦅", "🐉", "🦂", "🐍", "🦈", "🐅", "🦍", "🐎", "🦊", "🐢",
+  "🐻", "🐼", "🐨", "🐯", "🦄", "🐗", "🦏", "🦛", "🐊", "🦅", "🦇", "🐙",
+  "🦖", "🐲", "🦬", "🐆", "🦣", "🦓"];
 const ADMIN_NAME = "Alaa"; // only this player sees the notifier health pill
 
 // ---------------------------------------------------------------------------

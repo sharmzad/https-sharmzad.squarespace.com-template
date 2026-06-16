@@ -21,7 +21,7 @@ window.FIREBASE_CONFIG = {
 };
 
 // Maximum number of players allowed to join
-window.MAX_PLAYERS = 10;
+window.MAX_PLAYERS = 40;
 
 // Manual point adjustments, added to the leaderboard totals.
 // "*" applies to every player without an explicit entry.
