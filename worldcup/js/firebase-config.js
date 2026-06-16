@@ -34,18 +34,11 @@ window.VAPID_KEY = "BJeCjL3Ge6h9UzWfSzM0hFIgO5EBvwdyY2ADVkBjwqXfdyQfBA4304ljAFb1
 // Clean public link used in WhatsApp invite/share messages.
 window.APP_LINK = "https://tinyurl.com/El3eshaWC26";
 
-// One-time celebratory announcement shown (with fireworks) once per device on
-// open. Set to null to disable. Bump `id` to show a new announcement again.
-window.ANNOUNCEMENT = {
-  id: "first-exact-egypt-1-1",
-  title: "🎯 FIRST EXACT SCORE!",
-  // {names} is filled live with whoever predicted the exact score below.
-  body: "{names} nailed Egypt 1–1 — the first +7 of the cup! 🎆 Who's next?",
-  exact: { team: "Egypt", home: 1, away: 1 },
-  // With `until` set, it replays on EVERY open until this time, then stops.
-  // (Without `until` it would show once per device.)
-  until: "2026-06-15T22:11:00Z",
-};
+// Exact-score celebrations are now AUTOMATIC: the notifier flags every
+// exact-score win at full time (health/celebration in Firestore) and the app
+// shows the fireworks + winners' names on open for one hour after the match.
+// This is an optional MANUAL override for a custom announcement (null = off).
+window.ANNOUNCEMENT = null;
 
 // -----------------------------------------------------------------------------
 // Sponsor (set to null to hide all sponsor branding everywhere).

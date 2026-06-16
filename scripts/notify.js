@@ -215,7 +215,8 @@ async function main() {
     if (m.completed && m.home.score != null) {
       if (await claim(`ft_${m.id}`)) {
         anyFullTime = true;
-        const lines = validPreds(m)
+        const finished = validPreds(m);
+        const lines = finished
           .map((p) => ({ ...p, pts: scorePrediction(p, m.home.score, m.away.score) }))
           .sort((a, b) => b.pts - a.pts)
           .map((r) => `${r.emoji} ${r.name} +${r.pts}`);
@@ -223,6 +224,21 @@ async function main() {
           title: `🏁 FT: ${m.home.name} ${m.home.score}–${m.away.score} ${m.away.name}`,
           body: lines.length ? `Points: ${lines.join(" · ")}` : "Nobody predicted this one 🙈",
         });
+
+        // 🎯 exact-score celebration: flagged for 1 hour after full time,
+        // shown with fireworks (+ names) to everyone who opens the app.
+        const exact = finished
+          .filter((p) => p.home === m.home.score && p.away === m.away.score)
+          .map((p) => `${p.emoji} ${p.name}`);
+        if (exact.length) {
+          await db.collection("health").doc("celebration").set({
+            id: `exact_${m.id}`,
+            title: "🎯 EXACT SCORE!",
+            body: `${exact.join(" & ")} nailed ${m.home.name} ${m.home.score}–${m.away.score} ${m.away.name} for +7! 🎆 Who's next?`,
+            until: admin.firestore.Timestamp.fromMillis(Date.now() + 60 * 60 * 1000),
+            at: admin.firestore.FieldValue.serverTimestamp(),
+          });
+        }
       }
     }
   }

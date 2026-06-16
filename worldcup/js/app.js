@@ -51,9 +51,11 @@ init();
 
 async function init() {
   bindChrome();
-  const announcing = announcementPending();
-  setupSponsor(announcing);             // skip the long sponsor intro on the celebration open
-  if (announcing) showAnnouncement();
+  const manual = announcementPending();
+  const celeb = manual ? null : getActiveCelebration();
+  setupSponsor(manual || !!celeb);      // skip the long sponsor intro on a celebration open
+  if (manual) showAnnouncement();
+  else if (celeb) showCelebration(celeb);
   await initFirebase();
   if (!me && db) await tryRestoreLogin();
   if (db) refreshPushToken();           // keep this device's push token fresh
@@ -142,6 +144,35 @@ function fillAnnouncement() {
     text = text.replace("{names}", names.length ? names.join(" & ") : "Someone");
   }
   $("#announceBody").textContent = text;
+}
+
+// Active exact-score celebration cached from Firestore (null when expired).
+function getActiveCelebration() {
+  try {
+    const c = JSON.parse(localStorage.getItem("active_celebration") || "null");
+    return c && c.until > Date.now() ? c : null;
+  } catch { return null; }
+}
+
+// Show the fireworks celebration once per app launch (per celebration id).
+function showCelebration(c) {
+  const el = $("#announce");
+  if (!el || !c || !c.id) return;
+  if (sessionStorage.getItem(`celeb_${c.id}`)) return;
+  sessionStorage.setItem(`celeb_${c.id}`, "1");
+  $("#announceTitle").textContent = c.title || "🎯 EXACT SCORE!";
+  $("#announceBody").textContent = c.body || "";
+  el.classList.remove("hidden");
+  const stop = runFireworks($("#fireworks"), 7000);
+  let closed = false;
+  const close = () => {
+    if (closed) return; closed = true;
+    if (stop) stop();
+    el.classList.add("done");
+    setTimeout(() => el.classList.add("hidden"), 500);
+  };
+  $("#announceClose").onclick = close;
+  setTimeout(close, 8000);
 }
 
 // Compact canvas fireworks; returns a stop() function.
@@ -450,6 +481,18 @@ async function initFirebase() {
     fs.onSnapshot(fs.doc(db, "health", "notify"), (d) => {
       health = d.exists() ? d.data() : null;
       renderAdminHealth();
+    });
+    // exact-score celebration — auto-set by the notifier, active for 1h after FT
+    fs.onSnapshot(fs.doc(db, "health", "celebration"), (d) => {
+      const data = d.exists() ? d.data() : null;
+      const until = data?.until?.toMillis?.() ?? data?.until ?? 0;
+      if (data && until > Date.now()) {
+        const c = { id: data.id || "celebration", title: data.title, body: data.body, until };
+        localStorage.setItem("active_celebration", JSON.stringify(c));
+        showCelebration(c);
+      } else {
+        localStorage.removeItem("active_celebration");
+      }
     });
   } catch (err) {
     console.error("Firebase init failed", err);
