@@ -741,8 +741,8 @@ const FIFA_RANKS = [
   ["netherlands",7],["japan",18],["sweden",38],["tunisia",44],
   ["belgium",9],["egypt",29],["iran",21],["new zealand",85],
   ["spain",2],["cabo verde",69],["cape verde",69],["saudi",61],["uruguay",17],
-  ["france",1],["senegal",14],["iraq",57],["norway",31],
-  ["argentina",3],["algeria",28],["austria",24],["jordan",63],
+  ["france",3],["senegal",14],["iraq",57],["norway",31],
+  ["argentina",1],["algeria",28],["austria",24],["jordan",63],
   ["portugal",5],["dr congo",46],["congo",46],["uzbek",50],["colombia",13],
   ["england",4],["croatia",11],["ghana",74],["panama",33],
 ];
