@@ -411,7 +411,10 @@ async function enableNotifications() {
     }
     const perm = await Notification.requestPermission();
     if (perm !== "granted") {
-      toast("🔕 Blocked. Enable it in Settings → Notifications → El 3eshّa WC26, then retry.");
+      const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+      toast(isIOS
+        ? "🔕 Blocked. iPhone Settings → El 3eshّa WC26 → Notifications → Allow, then tap 🔔 again."
+        : "🔕 Blocked. Tap the 🔒 (or ⓘ) icon left of the address bar → Permissions/Notifications → Allow, then tap 🔔 again.");
       return;
     }
     const reg = await navigator.serviceWorker.register("firebase-messaging-sw.js");
