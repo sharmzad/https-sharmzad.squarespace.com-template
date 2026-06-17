@@ -40,6 +40,7 @@ let activeTab = "matches";
 let matchFilter = "today";
 let draft = {};            // unsaved stepper values { matchId: {home, away} }
 let health = null;         // notifier heartbeat doc (admin-only indicator)
+let rankBaseline = null;   // ranks captured at app open, for standings movement arrows
 
 const $ = (sel) => document.querySelector(sel);
 const view = $("#view");
@@ -843,7 +844,7 @@ async function onSave(e) {
 // ---------------------------------------------------------------------------
 function renderTable() {
   if (!db) {
-    view.innerHTML = `<div class="empty">🏅 The leaderboard appears once the admin connects the database.<br>See the setup guide in the README.</div>`;
+    view.innerHTML = `<div class="empty">🏅 The standings appear once the admin connects the database.<br>See the setup guide in the README.</div>`;
     return;
   }
   const rows = buildStandings();
@@ -851,21 +852,56 @@ function renderTable() {
     view.innerHTML = `<div class="empty">No players yet — be the first to join! 🎉</div>`;
     return;
   }
-  const medal = (i) => ["🥇", "🥈", "🥉"][i] || `${i + 1}`;
+  const completedCount = matches.filter((m) => m.completed && m.home.score != null).length;
+  const curRanks = {};
+  rows.forEach((r, i) => (curRanks[r.id] = i + 1));
+  // movement = change since the player's last app open (baseline set once per session)
+  if (rankBaseline === null) {
+    const stored = JSON.parse(localStorage.getItem("gangcup_ranks") || "null");
+    rankBaseline = (stored && stored.ranks) || curRanks;
+    localStorage.setItem("gangcup_ranks", JSON.stringify({ ranks: curRanks, count: completedCount }));
+  }
+  const glyph = { up: "▲", down: "▼", same: "–" };
+
+  const html = rows.map((r, i) => {
+    const rank = i + 1;
+    const medal = ["🥇", "🥈", "🥉"][i] || rank;
+    const rcls = rank <= 3 ? ` r${rank}` : "";
+    const prevRank = rankBaseline[r.id];
+    const mv = prevRank == null ? "same" : (prevRank - rank > 0 ? "up" : prevRank - rank < 0 ? "down" : "same");
+    const dots = formDots(r.id).map((f) => `<span class="st-dot ${f}"></span>`).join("");
+    const meCls = me && r.id === me.id ? " me" : "";
+    return `
+      <div class="st-row${meCls}">
+        <div class="st-rank${rcls}">${medal}</div>
+        <div class="st-move ${mv}">${glyph[mv]}</div>
+        <div class="st-av">${r.emoji}</div>
+        <div class="st-meta">
+          <div class="st-name">${esc(r.name)}${meCls ? '<span class="st-you">YOU</span>' : ""}</div>
+          <div class="st-sub">Played ${r.played} · 🎯 ${r.exact} exact <span class="st-form">${dots}</span></div>
+        </div>
+        <div class="st-pts"><b>${r.pts}</b><span>pts</span></div>
+      </div>`;
+  }).join("");
+
   view.innerHTML = `
-    <div class="section-title">Gang standings</div>
-    <table class="lb">
-      <tr><th>#</th><th>Player</th><th>Played</th><th>Exact 🎯</th><th>Pts</th></tr>
-      ${rows.map((r, i) => `
-        <tr class="${me && r.id === me.id ? "me" : ""}">
-          <td class="rank">${medal(i)}</td>
-          <td>${r.emoji} ${esc(r.name)}</td>
-          <td>${r.played}</td>
-          <td>${r.exact}</td>
-          <td class="total">${r.pts}</td>
-        </tr>`).join("")}
-    </table>
-    <p class="lock-note" style="margin-top:10px">Tiebreakers: exact scores 🎯, then correct results.</p>`;
+    <div class="section-title">🏅 Standings</div>
+    ${html}
+    <p class="lock-note" style="margin-top:10px">Tiebreakers: most exact scores 🎯, then correct results · ▲▼ since your last visit.</p>`;
+}
+
+// Last 3 completed matches as form dots: "ex" (exact +7), "win" (any points), "" (none)
+function formDots(playerId) {
+  const last3 = matches
+    .filter((m) => m.completed && m.home.score != null)
+    .sort((a, b) => a.kickoff - b.kickoff)
+    .slice(-3);
+  return last3.map((m) => {
+    const pr = predictions[`${m.id}_${playerId}`];
+    if (!pr || !isValidPrediction(pr, m)) return "";
+    const exact = pr.home === m.home.score && pr.away === m.away.score;
+    return exact ? "ex" : (scorePrediction(pr, m.home.score, m.away.score) > 0 ? "win" : "");
+  });
 }
 
 // ---------------------------------------------------------------------------
