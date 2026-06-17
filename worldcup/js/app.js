@@ -431,7 +431,8 @@ async function enableNotifications() {
     localStorage.setItem("gangcup_notif", "1");
     $("#bellBtn").classList.add("on");
     msgMod.onMessage(messaging, (p) => {
-      if (p.notification?.title) toast(`${p.notification.title} — ${p.notification.body || ""}`);
+      const d = p.data || p.notification || {};
+      if (d.title) toast(`${d.title} — ${d.body || ""}`);
     });
     // Immediate proof this device can show notifications (tests permission +
     // service worker; the banner appears even clearer when the app is backgrounded).

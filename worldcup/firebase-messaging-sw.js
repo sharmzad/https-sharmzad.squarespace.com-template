@@ -14,13 +14,23 @@ firebase.initializeApp({
   appId: "1:618744827340:web:4d74f6a8af830ae0f92169",
 });
 
-// Messages sent by scripts/notify.js carry a `notification` payload, which
-// the browser displays automatically — displaying it here too would show
-// every notification twice. We only keep messaging initialized for token
-// management and handle taps below.
-firebase.messaging();
+// scripts/notify.js sends DATA-only messages, so we display them explicitly
+// here. This guarantees exactly one notification AND that it actually shows
+// (relying on the browser's auto-display of notification payloads was
+// unreliable and silently dropped pushes).
+const messaging = firebase.messaging();
+messaging.onBackgroundMessage((payload) => {
+  const d = payload.data || {};
+  self.registration.showNotification(d.title || "El 3eshّa WC26", {
+    body: d.body || "",
+    icon: d.icon || "group.jpg",
+    badge: "group.jpg",
+    tag: d.tag || undefined,
+    data: { url: d.link || "./" },
+  });
+});
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  event.waitUntil(clients.openWindow("./"));
+  event.waitUntil(clients.openWindow(event.notification.data?.url || "./"));
 });

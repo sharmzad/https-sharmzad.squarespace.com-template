@@ -327,11 +327,14 @@ async function main() {
   for (const item of sendList) {
     const resp = await admin.messaging().sendEachForMulticast({
       tokens,
-      notification: { title: item.title, body: item.body },
-      webpush: {
-        fcmOptions: { link: APP_URL },
-        notification: { icon: `${APP_URL}group.jpg`, badge: `${APP_URL}group.jpg` },
+      // DATA-only so the service worker displays it once, reliably
+      data: {
+        title: item.title,
+        body: item.body,
+        link: APP_URL,
+        icon: `${APP_URL}group.jpg`,
       },
+      webpush: { fcmOptions: { link: APP_URL } },
     });
     failures += resp.failureCount;
     console.log(`Sent "${item.title}" — ok: ${resp.successCount}, failed: ${resp.failureCount}`);
