@@ -40,7 +40,7 @@ let activeTab = "matches";
 let matchFilter = "today";
 let draft = {};            // unsaved stepper values { matchId: {home, away} }
 let health = null;         // notifier heartbeat doc (admin-only indicator)
-let rankBaseline = null;   // ranks captured at app open, for standings movement arrows
+let standingsSnap = null;  // { ranks, prevRanks } from the notifier, for movement arrows
 
 const $ = (sel) => document.querySelector(sel);
 const view = $("#view");
@@ -495,6 +495,11 @@ async function initFirebase() {
         localStorage.removeItem("active_celebration");
       }
     });
+    // rank snapshot (prev vs current) for the standings movement arrows
+    fs.onSnapshot(fs.doc(db, "health", "standings"), (d) => {
+      standingsSnap = d.exists() ? d.data() : null;
+      render();
+    });
   } catch (err) {
     console.error("Firebase init failed", err);
     showBanner("⚠️ Could not connect to the game database. Live scores still work.");
@@ -852,22 +857,14 @@ function renderTable() {
     view.innerHTML = `<div class="empty">No players yet — be the first to join! 🎉</div>`;
     return;
   }
-  const completedCount = matches.filter((m) => m.completed && m.home.score != null).length;
-  const curRanks = {};
-  rows.forEach((r, i) => (curRanks[r.id] = i + 1));
-  // movement = change since the player's last app open (baseline set once per session)
-  if (rankBaseline === null) {
-    const stored = JSON.parse(localStorage.getItem("gangcup_ranks") || "null");
-    rankBaseline = (stored && stored.ranks) || curRanks;
-    localStorage.setItem("gangcup_ranks", JSON.stringify({ ranks: curRanks, count: completedCount }));
-  }
+  const prevRanks = standingsSnap?.prevRanks || null;  // ranks before the last finished match
   const glyph = { up: "▲", down: "▼", same: "–" };
 
   const html = rows.map((r, i) => {
     const rank = i + 1;
     const medal = ["🥇", "🥈", "🥉"][i] || rank;
     const rcls = rank <= 3 ? ` r${rank}` : "";
-    const prevRank = rankBaseline[r.id];
+    const prevRank = prevRanks ? prevRanks[r.id] : null;
     const mv = prevRank == null ? "same" : (prevRank - rank > 0 ? "up" : prevRank - rank < 0 ? "down" : "same");
     const dots = formDots(r.id).map((f) => `<span class="st-dot ${f}"></span>`).join("");
     const meCls = me && r.id === me.id ? " me" : "";
@@ -887,7 +884,7 @@ function renderTable() {
   view.innerHTML = `
     <div class="section-title">🏅 Standings</div>
     ${html}
-    <p class="lock-note" style="margin-top:10px">Tiebreakers: most exact scores 🎯, then correct results · ▲▼ since your last visit.</p>`;
+    <p class="lock-note" style="margin-top:10px">Tiebreakers: most exact scores 🎯, then correct results · ▲▼ since the last match.</p>`;
 }
 
 // Last 3 completed matches as form dots: "ex" (exact +7), "win" (any points), "" (none)

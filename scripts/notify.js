@@ -273,6 +273,32 @@ async function main() {
         });
       }
     }
+
+    // 📊 rank snapshot for the standings movement arrows (same tiebreak as the app)
+    const stat = {};
+    for (const [id, p] of Object.entries(players)) {
+      stat[id] = { pts: bonusFor(p.name), exact: 0, outcomes: 0, name: p.name };
+    }
+    for (const m of matches) {
+      if (!m.completed || m.home.score == null) continue;
+      for (const pr of allPreds) {
+        if (pr.matchId !== m.id || !players[pr.playerId]) continue;
+        if (!(isOverridden(m) || (pr.updatedAt?.toMillis?.() ?? 0) <= lockMs(m))) continue;
+        const s = stat[pr.playerId];
+        s.pts += scorePrediction(pr, m.home.score, m.away.score);
+        if (pr.home === m.home.score && pr.away === m.away.score) s.exact++;
+        if (predWinner(pr) === resultOf(m.home.score, m.away.score)) s.outcomes++;
+      }
+    }
+    const order = Object.keys(stat).sort((a, b) =>
+      stat[b].pts - stat[a].pts || stat[b].exact - stat[a].exact ||
+      stat[b].outcomes - stat[a].outcomes || stat[a].name.localeCompare(stat[b].name));
+    const ranks = {};
+    order.forEach((id, i) => (ranks[id] = i + 1));
+    const standRef = db.collection("health").doc("standings");
+    const prevStand = await standRef.get();
+    const prevRanks = prevStand.exists ? (prevStand.data().ranks || ranks) : ranks;
+    await standRef.set({ ranks, prevRanks, at: admin.firestore.FieldValue.serverTimestamp() });
   }
 
   // ✍️ bet placed/updated on upcoming matches (score stays secret until lock)
