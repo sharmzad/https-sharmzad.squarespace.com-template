@@ -160,6 +160,17 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
 .ko-time { font-size: 17px; font-weight: 700; }
 .clock { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
+/* pre-match win-probability bar */
+.wp { margin-top: 13px; padding-top: 11px; border-top: 1px dashed var(--line); }
+.wp-h { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); text-align: center; margin-bottom: 7px; }
+.wp-bar { display: flex; height: 8px; border-radius: 5px; overflow: hidden; background: #33503e; }
+.wp-bar i { display: block; height: 100%; }
+.wp-bar .h { background: var(--green); }
+.wp-bar .d { background: #5b7384; }
+.wp-bar .a { background: #19b6e6; }
+.wp-legend { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--muted); margin-top: 6px; }
+.wp-legend b { color: var(--text); }
+
 /* winner (1X2) pick */
 .winner-row {
   display: flex; gap: 8px; margin-top: 12px; padding-top: 12px;

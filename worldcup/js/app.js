@@ -705,6 +705,15 @@ function renderMatches() {
   }
   view.innerHTML = html;
 
+  // background-fetch ESPN's real predictor for soon upcoming matches (≤36h),
+  // then re-render so the estimate upgrades to ESPN's numbers
+  const soon = list.filter((m) =>
+    m.state === "pre" && m.kickoff - Date.now() < 36 * 3_600_000 && !matchDetails[m.id]);
+  if (soon.length) {
+    Promise.all(soon.map((m) => fetchMatchDetail(m.id)))
+      .then(() => { if (activeTab === "matches") renderMatches(); });
+  }
+
   view.querySelectorAll(".pill").forEach((b) =>
     b.addEventListener("click", () => { matchFilter = b.dataset.filter; renderMatches(); })
   );
@@ -799,7 +808,51 @@ function parseMatchDetail(data) {
     const h = pick(byId.home, key), a = pick(byId.away, key);
     if (h != null || a != null) stats.push({ label, home: h ?? "–", away: a ?? "–" });
   }
-  return { goals, stats };
+
+  // ESPN pre-match win prediction (matchup predictor)
+  let predictor = null;
+  const pr = data?.predictor;
+  if (pr) {
+    const h = parseFloat(pr.homeTeam?.gameProjection ?? pr.homeTeam?.teamChanceWin);
+    const a = parseFloat(pr.awayTeam?.gameProjection ?? pr.awayTeam?.teamChanceWin);
+    if (!isNaN(h) && !isNaN(a)) {
+      predictor = { home: h, draw: Math.max(0, 100 - h - a), away: a };
+    }
+  }
+  return { goals, stats, predictor };
+}
+
+// FIFA-rank fallback estimate when ESPN has no predictor
+function winProbFromRanks(rh, ra) {
+  if (rh == null || ra == null) return null;
+  const rate = (r) => 1900 - 7.2 * r;
+  const eh = 1 / (1 + Math.pow(10, (rate(ra) - rate(rh)) / 400));
+  const draw = 0.27 * (1 - Math.abs(2 * eh - 1) * 0.85);
+  let home = Math.max(eh - draw / 2, 0.02);
+  let away = Math.max((1 - eh) - draw / 2, 0.02);
+  const s = home + draw + away;
+  return { home: home / s * 100, draw: draw / s * 100, away: away / s * 100, est: true };
+}
+
+// ESPN prediction if fetched, else the FIFA estimate (so the bar shows instantly)
+function matchWinProb(m) {
+  const det = matchDetails[m.id];
+  if (det && det.predictor) return det.predictor;
+  return winProbFromRanks(fifaRank(m.home.name), fifaRank(m.away.name));
+}
+
+function winProbHtml(m, p) {
+  const R = (x) => Math.round(x);
+  return `
+    <div class="wp">
+      <div class="wp-h">${p.est ? "🔮 Win prediction" : "🔮 ESPN prediction"}</div>
+      <div class="wp-bar"><i class="h" style="width:${p.home}%"></i><i class="d" style="width:${p.draw}%"></i><i class="a" style="width:${p.away}%"></i></div>
+      <div class="wp-legend">
+        <span><b>${esc(m.home.abbr)}</b> ${R(p.home)}%</span>
+        <span>Draw ${R(p.draw)}%</span>
+        <span>${R(p.away)}% <b>${esc(m.away.abbr)}</b></span>
+      </div>
+    </div>`;
 }
 
 function matchDetailHtml(m) {
@@ -888,6 +941,10 @@ function matchCard(m) {
     : "";
   const detail = (canDetail && expanded) ? matchDetailHtml(m) : "";
 
+  // pre-match win prediction (hint before betting) — upcoming matches only
+  const probP = m.state === "pre" ? matchWinProb(m) : null;
+  const prob = probP ? winProbHtml(m, probP) : "";
+
   return `
     <div class="match">
       <div class="match-top"><span>${esc(m.group || "World Cup 2026")}</span>${badge}</div>
@@ -896,6 +953,7 @@ function matchCard(m) {
         <div class="center">${center}</div>
         ${teamHtml(m.away)}
       </div>
+      ${prob}
       ${body}
       ${detailToggle}
       ${detail}
