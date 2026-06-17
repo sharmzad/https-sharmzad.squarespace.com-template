@@ -21,6 +21,7 @@ const TOURNAMENT_RANGE = "20260611-20260719"; // WC2026: Jun 11 – Jul 19
 const ESPN_URL =
   `https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard` +
   `?dates=${TOURNAMENT_RANGE}&limit=200`;
+const SUMMARY_BASE = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary";
 const POLL_MS = 60_000;
 const EMOJIS = ["🦁", "🐺", "🦅", "🐉", "🦂", "🐍", "🦈", "🐅", "🦍", "🐎", "🦊", "🐢",
   "🐻", "🐼", "🐨", "🐯", "🦄", "🐗", "🦏", "🦛", "🐊", "🦅", "🦇", "🐙",
@@ -41,6 +42,8 @@ let matchFilter = "today";
 let draft = {};            // unsaved stepper values { matchId: {home, away} }
 let health = null;         // notifier heartbeat doc (admin-only indicator)
 let standingsSnap = null;  // { ranks, prevRanks } from the notifier, for movement arrows
+let expandedMatch = null;  // match id whose detail panel is open
+let matchDetails = {};     // cache: matchId -> { goals, stats } | { error: true }
 
 const $ = (sel) => document.querySelector(sel);
 const view = $("#view");
@@ -715,6 +718,112 @@ function renderMatches() {
         .forEach((x) => x.classList.toggle("sel", x === e.currentTarget));
     })
   );
+  view.querySelectorAll("[data-expand]").forEach((b) =>
+    b.addEventListener("click", async () => {
+      const id = b.dataset.expand;
+      if (expandedMatch === id) { expandedMatch = null; renderMatches(); return; }
+      expandedMatch = id;
+      renderMatches();
+      if (!matchDetails[id]) { await fetchMatchDetail(id); if (expandedMatch === id) renderMatches(); }
+    })
+  );
+}
+
+// ---------------------------------------------------------------------------
+// FIFA rankings (tournament reference) + match detail (ESPN summary endpoint)
+// ---------------------------------------------------------------------------
+const FIFA_RANKS = [
+  ["mexico",15],["south africa",60],["korea",25],["czech",41],
+  ["canada",30],["bosnia",65],["qatar",55],["switzerland",19],
+  ["brazil",6],["morocco",8],["haiti",83],["scotland",43],
+  ["united states",16],["usa",16],["paraguay",40],["australia",27],["türkiye",22],["turkey",22],
+  ["germany",10],["curaç",82],["curac",82],["ivory",34],["côte",34],["cote",34],["ecuador",23],
+  ["netherlands",7],["japan",18],["sweden",38],["tunisia",44],
+  ["belgium",9],["egypt",29],["iran",21],["new zealand",85],
+  ["spain",2],["cabo verde",69],["cape verde",69],["saudi",61],["uruguay",17],
+  ["france",1],["senegal",14],["iraq",57],["norway",31],
+  ["argentina",3],["algeria",28],["austria",24],["jordan",63],
+  ["portugal",5],["dr congo",46],["congo",46],["uzbek",50],["colombia",13],
+  ["england",4],["croatia",11],["ghana",74],["panama",33],
+];
+function fifaRank(name) {
+  const n = (name || "").toLowerCase();
+  for (const [k, r] of FIFA_RANKS) if (n.includes(k)) return r;
+  return null;
+}
+
+async function fetchMatchDetail(id) {
+  if (matchDetails[id]) return matchDetails[id];
+  try {
+    const res = await fetch(`${SUMMARY_BASE}?event=${id}`);
+    if (!res.ok) throw new Error(res.status);
+    matchDetails[id] = parseMatchDetail(await res.json());
+  } catch (err) {
+    console.warn("match detail fetch failed", err);
+    matchDetails[id] = { error: true };
+  }
+  return matchDetails[id];
+}
+
+function parseMatchDetail(data) {
+  const comps = data?.header?.competitions?.[0]?.competitors || [];
+  const homeC = comps.find((c) => c.homeAway === "home") || {};
+  const homeId = homeC.id || homeC.team?.id;
+  const sideOf = (tid) => (String(tid) === String(homeId) ? "home" : "away");
+
+  const goals = [];
+  for (const e of (data?.keyEvents || [])) {
+    const txt = (e.type?.text || "").toLowerCase();
+    if (!txt.includes("goal") || txt.includes("disallow") || txt.includes("no goal")) continue;
+    const name = e.athletesInvolved?.[0]?.displayName
+      || e.participants?.[0]?.athlete?.displayName || "Goal";
+    goals.push({
+      side: sideOf(e.team?.id),
+      name, min: e.clock?.displayValue || "",
+      own: txt.includes("own"), pen: txt.includes("penalty"),
+    });
+  }
+
+  const wanted = [["possession", "Possession"], ["totalshots", "Shots"],
+    ["shotsontarget", "On target"], ["woncorners", "Corners"]];
+  const teams = data?.boxscore?.teams || [];
+  const byId = {};
+  for (const t of teams) byId[sideOf(t.team?.id)] = t.statistics || [];
+  const pick = (arr, key) => {
+    const s = (arr || []).find((x) =>
+      (x.name || "").toLowerCase().replace(/[^a-z]/g, "").includes(key));
+    return s ? s.displayValue : null;
+  };
+  const stats = [];
+  for (const [key, label] of wanted) {
+    const h = pick(byId.home, key), a = pick(byId.away, key);
+    if (h != null || a != null) stats.push({ label, home: h ?? "–", away: a ?? "–" });
+  }
+  return { goals, stats };
+}
+
+function matchDetailHtml(m) {
+  const d = matchDetails[m.id];
+  if (!d) return `<div class="md-loading">Loading match details…</div>`;
+  if (d.error) return `<div class="md-loading">Live details aren't available for this match.</div>`;
+  const goalList = (side) =>
+    d.goals.filter((g) => g.side === side)
+      .map((g) => `<div class="md-goal">⚽ ${esc(g.name)} <span>${esc(g.min)}${g.pen ? " (P)" : ""}${g.own ? " (OG)" : ""}</span></div>`)
+      .join("") || `<div class="md-goal md-none">—</div>`;
+  const statRow = (s) => {
+    const hn = parseFloat(s.home) || 0, an = parseFloat(s.away) || 0, tot = hn + an || 1;
+    return `<div class="md-statline"><span class="md-h">${esc(String(s.home))}</span>` +
+      `<span class="md-label">${s.label}</span><span class="md-a">${esc(String(s.away))}</span></div>` +
+      `<div class="md-bar"><i style="width:${(hn / tot) * 100}%"></i></div>`;
+  };
+  if (!d.goals.length && !d.stats.length) {
+    return `<div class="md-loading">No goals or stats logged yet.</div>`;
+  }
+  return `
+    <div class="mdetail">
+      ${d.goals.length ? `<div class="md-goals"><div>${goalList("home")}</div><div>${goalList("away")}</div></div>` : ""}
+      ${d.stats.map(statRow).join("")}
+    </div>`;
 }
 
 function matchCard(m) {
@@ -768,15 +877,28 @@ function matchCard(m) {
     body = revealBlock(m);
   }
 
+  const teamHtml = (t) => {
+    const r = fifaRank(t.name);
+    return `<div class="team">${flag(t)}<b>${esc(t.name)}</b>${r != null ? `<span class="fifa">#${r}</span>` : ""}</div>`;
+  };
+  const canDetail = m.state === "in" || m.completed;
+  const expanded = expandedMatch === m.id;
+  const detailToggle = canDetail
+    ? `<button class="md-toggle" data-expand="${m.id}">${expanded ? "Hide details ▲" : "📊 Match details ▾"}</button>`
+    : "";
+  const detail = (canDetail && expanded) ? matchDetailHtml(m) : "";
+
   return `
     <div class="match">
       <div class="match-top"><span>${esc(m.group || "World Cup 2026")}</span>${badge}</div>
       <div class="teams">
-        <div class="team">${flag(m.home)}<b>${esc(m.home.name)}</b></div>
+        ${teamHtml(m.home)}
         <div class="center">${center}</div>
-        <div class="team">${flag(m.away)}<b>${esc(m.away.name)}</b></div>
+        ${teamHtml(m.away)}
       </div>
       ${body}
+      ${detailToggle}
+      ${detail}
     </div>`;
 }
 
@@ -790,25 +912,34 @@ function stepper(matchId, side, val) {
 }
 
 function revealBlock(m) {
-  const rows = players
+  const done = m.completed && m.home.score != null;
+  const list = players
     .map((p) => {
       const pred = predictions[`${m.id}_${p.id}`];
       if (!pred) return null;
       const late = !isValidPrediction(pred, m);
-      let ptsHtml = "";
-      if (m.completed && m.home.score != null && !late) {
-        const pts = scorePrediction(pred, m.home.score, m.away.score);
-        ptsHtml = `<span class="pts p${pts}">+${pts}</span>`;
-      }
-      return `
-        <div class="reveal-row ${me && p.id === me.id ? "mine" : ""}">
-          <span>${p.emoji} ${esc(p.name)}</span>
-          <span><b>${pickLabel(pred, m)}</b> ${late ? '<span class="late">(late ⛔)</span>' : ""} ${ptsHtml}</span>
-        </div>`;
+      const pts = (done && !late) ? scorePrediction(pred, m.home.score, m.away.score) : null;
+      return { p, pred, late, pts };
     })
     .filter(Boolean);
-  if (!rows.length) return `<div class="lock-note">No predictions for this match 🤷</div>`;
-  return `<div class="reveal">${rows.join("")}</div>`;
+  if (!list.length) return `<div class="lock-note">No predictions for this match 🤷</div>`;
+  if (done) list.sort((a, b) => (b.pts ?? -1) - (a.pts ?? -1));
+
+  const rows = list.map(({ p, pred, late, pts }) => {
+    const w = predWinner(pred);
+    const team = w === "draw" ? "Draw" : esc(w === "home" ? m.home.abbr : m.away.abbr);
+    const ptsHtml = late
+      ? `<span class="pr-pts late">late</span>`
+      : (pts != null ? `<span class="pr-pts p${pts}">+${pts}</span>` : `<span class="pr-pts pending">—</span>`);
+    return `
+      <div class="pr-row ${me && p.id === me.id ? "mine" : ""}">
+        <div class="pr-av">${p.emoji}</div>
+        <div class="pr-name">${esc(p.name)}</div>
+        <div class="pr-pick"><b>${pred.home}–${pred.away}</b><span class="pr-team">${team}</span></div>
+        ${ptsHtml}
+      </div>`;
+  }).join("");
+  return `<div class="reveal">${rows}</div>`;
 }
 
 function onStep(e) {
