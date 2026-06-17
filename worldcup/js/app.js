@@ -733,7 +733,12 @@ function renderMatches() {
       if (expandedMatch === id) { expandedMatch = null; renderMatches(); return; }
       expandedMatch = id;
       renderMatches();
-      if (!matchDetails[id]) { await fetchMatchDetail(id); if (expandedMatch === id) renderMatches(); }
+      const mm = matches.find((x) => x.id === id);
+      const live = mm?.state === "in";              // live → refresh on each open
+      if (!matchDetails[id] || live) {
+        await fetchMatchDetail(id, live);
+        if (expandedMatch === id) renderMatches();
+      }
     })
   );
 }
@@ -761,8 +766,8 @@ function fifaRank(name) {
   return null;
 }
 
-async function fetchMatchDetail(id) {
-  if (matchDetails[id]) return matchDetails[id];
+async function fetchMatchDetail(id, force) {
+  if (matchDetails[id] && !force) return matchDetails[id];
   try {
     const res = await fetch(`${SUMMARY_BASE}?event=${id}`);
     if (!res.ok) throw new Error(res.status);
@@ -869,11 +874,13 @@ function matchDetailHtml(m) {
       `<span class="md-label">${s.label}</span><span class="md-a">${esc(String(s.away))}</span></div>` +
       `<div class="md-bar"><i style="width:${(hn / tot) * 100}%"></i></div>`;
   };
-  if (!d.goals.length && !d.stats.length) {
+  const probBar = d.predictor ? winProbHtml(m, d.predictor) : "";
+  if (!d.goals.length && !d.stats.length && !d.predictor) {
     return `<div class="md-loading">No goals or stats logged yet.</div>`;
   }
   return `
     <div class="mdetail">
+      ${probBar}
       ${d.goals.length ? `<div class="md-goals"><div>${goalList("home")}</div><div>${goalList("away")}</div></div>` : ""}
       ${d.stats.map(statRow).join("")}
     </div>`;
