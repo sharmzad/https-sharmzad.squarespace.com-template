@@ -1317,126 +1317,115 @@ function formDots(playerId) {
 // ---------------------------------------------------------------------------
 // WhatsApp tab
 // ---------------------------------------------------------------------------
+// Build live World Cup group tables from the match results in `matches`.
+// Teams are seeded from every group fixture; only COMPLETED matches are tallied
+// (official standings don't count a game until full time).
+function buildGroupStandings() {
+  const groups = {};
+  for (const m of matches) {
+    const g = (m.group || "").match(/group\s+([a-l])/i);
+    if (!g) continue;                              // skip knockout / unlabelled
+    const key = "Group " + g[1].toUpperCase();
+    const tbl = groups[key] || (groups[key] = {});
+    const row = (t) => tbl[t.name] ||
+      (tbl[t.name] = { name: t.name, logo: t.logo, mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0 });
+    const H = row(m.home), A = row(m.away);        // seed both teams
+    if (!m.completed || m.home.score == null || m.away.score == null) continue;
+    const hs = m.home.score, as = m.away.score;
+    H.mp++; A.mp++;
+    H.gf += hs; H.ga += as; A.gf += as; A.ga += hs;
+    if (hs > as) { H.w++; H.pts += 3; A.l++; }
+    else if (hs < as) { A.w++; A.pts += 3; H.l++; }
+    else { H.d++; A.d++; H.pts++; A.pts++; }
+  }
+  const out = {};
+  for (const key of Object.keys(groups).sort()) {
+    out[key] = Object.values(groups[key]).sort((a, b) =>
+      b.pts - a.pts ||
+      (b.gf - b.ga) - (a.gf - a.ga) ||
+      b.gf - a.gf ||
+      a.name.localeCompare(b.name));
+  }
+  return out;
+}
+
 function renderShare() {
-  const today = new Date();
-  const sameDay = (d) => d.toDateString() === today.toDateString();
-  const all = matches.slice().sort((a, b) => a.kickoff - b.kickoff);
+  const groups = buildGroupStandings();
+  const keys = Object.keys(groups);
 
   let html = `
     <div class="sched-bar">
-      <div class="sched-title">📅 World Cup 2026 — Full schedule</div>
-      <div class="sched-sub">${all.length ? `All ${all.length} fixtures · ` : ""}times in your local timezone</div>
+      <div class="sched-title">🌍 World Cup 2026 — Group standings</div>
+      <div class="sched-sub">Live tournament tables · updates from results · top 2 advance 🟢</div>
       <div class="share-actions">
-        <button class="btn wa" data-share="today">📲 Share today</button>
-        <button class="btn ghost" data-share="live">🔴 Share results</button>
+        <button class="btn wa" data-share-groups>📲 Share standings</button>
         <button class="btn ghost" data-share-invite>🔗 Invite</button>
       </div>
     </div>`;
 
-  if (!all.length) {
-    html += `<div class="empty">😴 Schedule isn't loaded yet — check your connection and pull to refresh.</div>`;
+  if (!keys.length) {
+    html += `<div class="empty">⚽ No group results yet.<br>Tables fill in as the group matches are played.</div>`;
     view.innerHTML = html;
-    wireShareButtons();
+    wireGroupButtons();
     return;
   }
 
-  let lastDay = "";
-  for (const m of all) {
-    const day = m.kickoff.toLocaleDateString([], { weekday: "long", day: "numeric", month: "long" });
-    if (day !== lastDay) {
-      const isToday = sameDay(m.kickoff);
-      html += `<div class="date-head${isToday ? " today" : ""}"${isToday ? ' id="sched-today"' : ""}>📅 ${day}${isToday ? " · Today" : ""}</div>`;
-      lastDay = day;
-    }
-    html += schedRow(m);
+  for (const key of keys) {
+    html += `
+      <div class="grp">
+        <div class="grp-head">${key}</div>
+        <div class="grp-row grp-h">
+          <span class="grp-pos">#</span>
+          <span class="grp-team">Team</span>
+          <span>MP</span>
+          <span>G</span>
+          <span class="grp-pts">PTS</span>
+        </div>`;
+    groups[key].forEach((t, i) => {
+      const flag = t.logo
+        ? `<img src="${esc(t.logo)}" alt="" loading="lazy" onerror="this.outerHTML='<span class=grp-fb>⚽</span>'">`
+        : `<span class="grp-fb">⚽</span>`;
+      html += `
+        <div class="grp-row${i < 2 ? " adv" : ""}">
+          <span class="grp-pos">${i + 1}</span>
+          <span class="grp-team">${flag}<b>${esc(t.name)}</b></span>
+          <span>${t.mp}</span>
+          <span class="grp-g">${t.gf}:${t.ga}</span>
+          <span class="grp-pts">${t.pts}</span>
+        </div>`;
+    });
+    html += `</div>`;
   }
 
   view.innerHTML = html;
-  wireShareButtons();
-
-  // Jump straight to today's fixtures (the list is long — 100+ matches).
-  const t = view.querySelector("#sched-today");
-  if (t) requestAnimationFrame(() => t.scrollIntoView({ block: "start" }));
+  wireGroupButtons();
 }
 
-function wireShareButtons() {
-  view.querySelectorAll("[data-share]").forEach((b) =>
-    b.addEventListener("click", () => openWhatsApp(buildMessage(b.dataset.share)))
-  );
+function wireGroupButtons() {
+  const g = view.querySelector("[data-share-groups]");
+  if (g) g.addEventListener("click", () => openWhatsApp(groupsMessage()));
   const inv = view.querySelector("[data-share-invite]");
   if (inv) inv.addEventListener("click", () => openWhatsApp(inviteMessage()));
 }
 
-// Compact one-line schedule row: home — time/score — away, with status badge.
-function schedRow(m) {
-  const flag = (t) => t.logo
-    ? `<img src="${esc(t.logo)}" alt="" loading="lazy" onerror="this.outerHTML='<span class=sched-fb>⚽</span>'">`
-    : `<span class="sched-fb">⚽</span>`;
-
-  let mid, cls = "";
-  if (m.state === "in") {
-    mid = `<span class="sched-score live">${m.home.score ?? "-"}–${m.away.score ?? "-"}</span><span class="badge live">● LIVE</span>`;
-    cls = "live";
-  } else if (m.completed) {
-    mid = `<span class="sched-score">${m.home.score ?? "-"}–${m.away.score ?? "-"}</span><span class="badge ft">FT</span>`;
-    cls = "done";
-  } else {
-    mid = `<span class="sched-time">${fmtTime(m.kickoff)}</span>`;
-  }
-
-  return `
-    <div class="sched-row ${cls}">
-      <div class="sched-team h"><b>${esc(m.home.name)}</b>${flag(m.home)}</div>
-      <div class="sched-mid">${mid}</div>
-      <div class="sched-team a">${flag(m.away)}<b>${esc(m.away.name)}</b></div>
-    </div>`;
-}
-
-function buildMessage(kind) {
-  const today = new Date();
-  const sameDay = (d) => d.toDateString() === today.toDateString();
+function groupsMessage() {
+  const groups = buildGroupStandings();
   const appUrl = window.APP_LINK || location.href.split("#")[0];
-
-  if (kind === "today") {
-    const list = matches.filter((m) => sameDay(m.kickoff) && m.state === "pre");
-    if (!list.length) return `🏆 *EL 3ESHّA WORLD CUP 26* 🏆\n\nNo more matches today 😴 — rest day for the gang!\n\n${appUrl}`;
-    let msg = `🏆 *EL 3ESHّA WORLD CUP 26* 🏆\n📅 *Today's matches — place your bets!*\n\n`;
-    for (const m of list) {
-      msg += `⚽ *${m.home.name}* 🆚 *${m.away.name}*\n   🕐 ${fmtTime(m.kickoff)} · 🔒 betting closes ${fmtTime(lockTime(m))}\n\n`;
-    }
-    msg += `🎯 Predict now 👇\n${appUrl}`;
-    return msg;
+  let msg = `🏆 *WORLD CUP 2026 — GROUP STANDINGS* 🏆\n\n`;
+  const keys = Object.keys(groups);
+  if (!keys.length) {
+    msg += `No group results yet 😴\n\n`;
+    return msg + appUrl;
   }
-
-  if (kind === "live") {
-    const live = matches.filter((m) => m.state === "in");
-    const done = matches.filter((m) => sameDay(m.kickoff) && m.completed);
-    let msg = `🏆 *EL 3ESHّA WORLD CUP 26* 🏆\n\n`;
-    if (live.length) {
-      msg += `🔴 *LIVE NOW*\n`;
-      for (const m of live) msg += `⚽ ${m.home.name} *${m.home.score}–${m.away.score}* ${m.away.name} (${m.detail})\n`;
-      msg += `\n`;
-    }
-    if (done.length) {
-      msg += `✅ *FULL TIME today*\n`;
-      for (const m of done) msg += `⚽ ${m.home.name} *${m.home.score}–${m.away.score}* ${m.away.name}\n`;
-      msg += `\n`;
-    }
-    if (!live.length && !done.length) msg += `No live matches right now 😴\n\n`;
-    msg += appUrl;
-    return msg;
+  for (const key of keys) {
+    msg += `*${key}*\n`;
+    groups[key].forEach((t, i) => {
+      const tick = i < 2 ? "🟢" : "  ";
+      msg += `${tick} ${i + 1}. ${t.name} — *${t.pts}* pts · ${t.mp} MP · ${t.gf}:${t.ga}\n`;
+    });
+    msg += `\n`;
   }
-
-  // leaderboard
-  const rows = buildStandings();
-  let msg = `🏆 *EL 3ESHّA WC26 — STANDINGS* 🏆\n\n`;
-  if (!rows.length) msg += `Nobody has joined yet — be the first! 🎉\n\n`;
-  rows.forEach((r, i) => {
-    const medal = ["🥇", "🥈", "🥉"][i] || ` ${i + 1}.`;
-    msg += `${medal} ${r.emoji} *${r.name}* — ${r.pts} pts (🎯 ${r.exact} exact)\n`;
-  });
-  msg += `\n${appUrl}`;
-  return msg;
+  return msg + appUrl;
 }
 
 function inviteMessage() {

@@ -186,28 +186,37 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
 }
 .sched-title { font-size: 16px; font-weight: 800; color: var(--gold); }
 .sched-sub { font-size: 12px; color: var(--muted); margin: 4px 0 12px; }
-.sched-row {
-  display: grid; grid-template-columns: 1fr auto 1fr;
-  align-items: center; gap: 8px;
+
+/* Group standings tables */
+.grp {
   background: var(--card); border: 1px solid var(--line);
-  border-radius: 12px; padding: 9px 10px; margin-bottom: 6px;
+  border-radius: var(--radius); padding: 6px 8px 8px; margin-bottom: 12px;
 }
-.sched-row.live { border-color: var(--live); background: rgba(225,55,55,.06); }
-.sched-row.done { opacity: .82; }
-.sched-team { display: flex; align-items: center; gap: 7px; min-width: 0; }
-.sched-team b { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sched-team.h { justify-content: flex-end; text-align: right; }
-.sched-team.a { justify-content: flex-start; text-align: left; }
-.sched-team img { width: 22px; height: 16px; object-fit: cover; border-radius: 3px; flex: 0 0 auto; }
-.sched-fb { font-size: 15px; }
-.sched-mid {
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  min-width: 64px;
+.grp-head {
+  font-size: 14px; font-weight: 800; color: var(--gold);
+  padding: 8px 6px 6px;
 }
-.sched-time { font-size: 13px; font-weight: 700; color: var(--muted); }
-.sched-score { font-size: 15px; font-weight: 800; }
-.sched-score.live { color: var(--live); }
-.sched-mid .badge { font-size: 9.5px; padding: 2px 7px; }
+.grp-row {
+  display: grid;
+  grid-template-columns: 22px 1fr 26px 46px 30px;
+  align-items: center; gap: 6px;
+  padding: 8px 6px; border-top: 1px solid var(--line);
+  font-size: 13px;
+}
+.grp-row > span:not(.grp-team):not(.grp-pos) { text-align: center; }
+.grp-h {
+  font-size: 10.5px; color: var(--muted); text-transform: uppercase;
+  letter-spacing: .03em; border-top: none;
+}
+.grp-pos { color: var(--muted); font-weight: 700; text-align: center; }
+.grp-row.adv .grp-pos { color: var(--green); }
+.grp-team { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.grp-team b { font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.grp-team img { width: 24px; height: 17px; object-fit: cover; border-radius: 3px; flex: 0 0 auto; }
+.grp-fb { font-size: 16px; }
+.grp-g { color: var(--muted); font-variant-numeric: tabular-nums; }
+.grp-pts { font-weight: 800; color: var(--gold); text-align: center; }
+.grp-row.adv { background: rgba(45,194,107,.07); }
 
 /* ---------- Match card ---------- */
 .match {
