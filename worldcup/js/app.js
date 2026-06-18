@@ -44,6 +44,7 @@ let health = null;         // notifier heartbeat doc (admin-only indicator)
 let standingsSnap = null;  // { ranks, prevRanks } from the notifier, for movement arrows
 let expandedMatch = null;  // match id whose detail panel is open
 let matchDetails = {};     // cache: matchId -> { goals, stats } | { error: true }
+let analyticsLog = null;   // Google Analytics logEvent (when Analytics is enabled)
 
 const $ = (sel) => document.querySelector(sel);
 const view = $("#view");
@@ -381,6 +382,61 @@ function bindChrome() {
   const bell = $("#bellBtn");
   bell.classList.toggle("on", localStorage.getItem("gangcup_notif") === "1");
   bell.addEventListener("click", enableNotifications);
+  // admin (Alaa) taps the health pill to open the analytics dashboard
+  $("#adminHealth").addEventListener("click", () => {
+    if (me && me.name === ADMIN_NAME) openDashboard();
+  });
+  $("#dashClose").addEventListener("click", () => $("#dashModal").classList.add("hidden"));
+}
+
+// ---------------------------------------------------------------------------
+// Admin analytics dashboard (Alaa only)
+// ---------------------------------------------------------------------------
+function trackEvent(name, params) { if (analyticsLog) analyticsLog(name, params); }
+
+function openDashboard() {
+  const todayKey = new Date().toLocaleDateString("en-CA");
+  const isToday = (ms) => ms && new Date(ms).toLocaleDateString("en-CA") === todayKey;
+  const preds = Object.values(predictions);
+  const total = preds.length;
+  const predsToday = preds.filter((p) => isToday(p.updatedAtMs));
+  const activeIds = new Set(predsToday.map((p) => p.playerId));
+
+  const byPlayer = {};
+  preds.forEach((p) => { byPlayer[p.playerId] = (byPlayer[p.playerId] || 0) + 1; });
+  let topId = null, topN = 0;
+  for (const [id, n] of Object.entries(byPlayer)) if (n > topN) { topN = n; topId = id; }
+  const top = players.find((p) => p.id === topId);
+  const avg = players.length ? (total / players.length).toFixed(1) : "0";
+
+  const next = matches.filter((m) => isOpen(m)).sort((a, b) => a.kickoff - b.kickoff)[0];
+  const nextBets = next ? preds.filter((p) => p.matchId === next.id).length : 0;
+
+  const devices = health && health.devices != null ? health.devices : "—";
+  const notifAgo = (() => {
+    const t = health?.at?.toMillis?.();
+    if (!t) return "—";
+    const m = Math.round((Date.now() - t) / 60000);
+    return m <= 0 ? "just now" : m < 60 ? `${m}m ago` : `${Math.round(m / 60)}h ago`;
+  })();
+
+  const card = (icon, label, value, sub) => `
+    <div class="dash-cell">
+      <div class="dash-val">${icon} ${value}</div>
+      <div class="dash-label">${label}</div>
+      ${sub ? `<div class="dash-sub">${sub}</div>` : ""}
+    </div>`;
+
+  $("#dashBody").innerHTML =
+    card("👥", "Players", players.length) +
+    card("🟢", "Active today", activeIds.size, "made a pick today") +
+    card("🎯", "Predictions", total, `${predsToday.length} today`) +
+    card("📈", "Avg / player", avg) +
+    card("🔥", "Most active", top ? `${top.emoji}` : "—", top ? `${esc(top.name)} · ${topN} picks` : "") +
+    card("🔔", "Notif devices", devices, `notifier ${notifAgo}`) +
+    (next ? card("⏭️", "Next match bets", nextBets, `${esc(next.home.abbr)}–${esc(next.away.abbr)}`) : "");
+
+  $("#dashModal").classList.remove("hidden");
 }
 
 // ---------------------------------------------------------------------------
@@ -445,6 +501,7 @@ async function enableNotifications() {
         icon: "group.jpg", badge: "group.jpg",
       });
     } catch { /* ignore */ }
+    trackEvent("notifications_enabled");
     toast("🔔 Device registered — sent a test notification. Lock your phone to see banners!");
   } catch (err) {
     console.error("Notifications failed", err);
@@ -472,6 +529,16 @@ async function initFirebase() {
     fs = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
     fbApp = initializeApp(window.FIREBASE_CONFIG);
     db = fs.getFirestore(fbApp);
+
+    // Google Analytics — activates once Analytics is enabled (measurementId set)
+    if (window.FIREBASE_CONFIG.measurementId) {
+      import("https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js")
+        .then((m) => {
+          const inst = m.getAnalytics(fbApp);
+          analyticsLog = (name, params) => { try { m.logEvent(inst, name, params || {}); } catch {} };
+        })
+        .catch((e) => console.warn("Analytics unavailable", e));
+    }
 
     fs.onSnapshot(fs.collection(db, "players"), (snap) => {
       players = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
@@ -1037,6 +1104,7 @@ async function onSave(e) {
       kickoff: m.kickoff.toISOString(),
       updatedAt: fs.serverTimestamp(),
     });
+    trackEvent("prediction_saved", { match: `${m.home.abbr}-${m.away.abbr}` });
     toast(`🎯 Saved: ${pickLabel({ winner, home: d.home, away: d.away }, m)}`);
   } catch (err) {
     console.error(err);
@@ -1339,6 +1407,7 @@ async function submitJoin() {
     }
     $("#joinModal").classList.add("hidden");
     render();
+    trackEvent("player_joined", { name: me.name });
     toast(`${me.emoji} Welcome, ${me.name}! Go predict ⚽`);
   } catch (err) {
     console.error(err);

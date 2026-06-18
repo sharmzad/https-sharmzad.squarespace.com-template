@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="group.jpg">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="stylesheet" href="css/style.css?v=38">
+  <link rel="stylesheet" href="css/style.css?v=39">
 </head>
 <body>
 
@@ -107,7 +107,18 @@
 
   <div id="toast" class="toast hidden"></div>
 
-  <script src="js/firebase-config.js?v=38"></script>
-  <script type="module" src="js/app.js?v=38"></script>
+  <!-- Admin analytics dashboard (Alaa only) -->
+  <div id="dashModal" class="modal hidden">
+    <div class="modal-card">
+      <h2>📊 Game analytics</h2>
+      <div id="dashBody" class="dash-grid"></div>
+      <div class="modal-actions">
+        <button id="dashClose" class="btn primary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/firebase-config.js?v=39"></script>
+  <script type="module" src="js/app.js?v=39"></script>
 </body>
 </html>
