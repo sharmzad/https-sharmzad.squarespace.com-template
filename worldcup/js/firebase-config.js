@@ -17,7 +17,8 @@ window.FIREBASE_CONFIG = {
   projectId: "gang-cup-2026",
   storageBucket: "gang-cup-2026.firebasestorage.app",
   messagingSenderId: "618744827340",
-  appId: "1:618744827340:web:4d74f6a8af830ae0f92169"
+  appId: "1:618744827340:web:4d74f6a8af830ae0f92169",
+  measurementId: "G-H5JY1CMNM3"
 };
 
 // Maximum number of players allowed to join
