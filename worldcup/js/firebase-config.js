@@ -36,7 +36,14 @@ window.VAPID_KEY = "BJeCjL3Ge6h9UzWfSzM0hFIgO5EBvwdyY2ADVkBjwqXfdyQfBA4304ljAFb1
 window.APP_LINK = "https://tinyurl.com/El3eshaWC26";
 
 // Current app version (shown at the bottom of the Rules tab). Bump on updates.
-window.APP_VERSION = "2.0";
+window.APP_VERSION = "2.1";
+
+// Scoring rules / bonuses. `bonusFrom` (YYYY-MM-DD, local) is the date new
+// bonuses start counting, so earlier rounds aren't changed retroactively.
+window.RULES = {
+  onlyWinnerBonus: 2,                    // +2 to the SOLE player who scored on a match
+  bonusFrom: "2026-06-18T00:00:00Z",     // Round 2 onward (fixed UTC moment)
+};
 
 // Exact-score celebrations are now AUTOMATIC: the notifier flags every
 // exact-score win at full time (health/celebration in Firestore) and the app

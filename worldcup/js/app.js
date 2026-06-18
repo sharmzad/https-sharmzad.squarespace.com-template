@@ -735,9 +735,34 @@ function buildStandings(live = false) {
       }
     }
   }
+  // "Only winner" bonus: sole scorer on a completed match (from RULES.bonusFrom)
+  const owb = onlyWinnerBonuses();
+  for (const [id, b] of Object.entries(owb)) if (byId[id]) byId[id].pts += b;
+
   return rows.sort(
     (a, b) => b.pts - a.pts || b.exact - a.exact || b.outcomes - a.outcomes || a.name.localeCompare(b.name)
   );
+}
+
+// { playerId: bonusPoints } — +RULES.onlyWinnerBonus to the lone scorer of each
+// completed match (everyone else got 0), counted only from RULES.bonusFrom.
+function onlyWinnerBonuses() {
+  const R = window.RULES || {};
+  const out = {};
+  if (!R.onlyWinnerBonus) return out;
+  const fromMs = R.bonusFrom ? Date.parse(R.bonusFrom) : 0;
+  for (const m of matches) {
+    if (!m.completed || m.home.score == null) continue;
+    if (m.kickoff.getTime() < fromMs) continue;
+    const scorers = [];
+    for (const p of players) {
+      const pred = predictions[`${m.id}_${p.id}`];
+      if (!pred || !isValidPrediction(pred, m)) continue;
+      if (scorePrediction(pred, m.home.score, m.away.score) > 0) scorers.push(p.id);
+    }
+    if (scorers.length === 1) out[scorers[0]] = (out[scorers[0]] || 0) + R.onlyWinnerBonus;
+  }
+  return out;
 }
 
 // ---------------------------------------------------------------------------
@@ -1362,6 +1387,15 @@ function renderRules() {
         <li>❌ <b>0 pts</b> — wrong on everything, habibi 😅</li>
       </ul>
     </div>
+    ${window.RULES?.onlyWinnerBonus ? `
+    <div class="rules-card">
+      <h3>🏅 Only-Winner Bonus <span style="font-size:11px;color:var(--green)">NEW · Round 2</span></h3>
+      <ul>
+        <li>If you're the <b>ONLY</b> player to score on a match (everyone else got 0), you get <b>+${window.RULES.onlyWinnerBonus} bonus</b>! 🔥</li>
+        <li>So a lone correct winner = <b>${POINTS.WINNER + window.RULES.onlyWinnerBonus} pts</b>, and a lone exact score = <b>${POINTS.WINNER + POINTS.EXACT + window.RULES.onlyWinnerBonus} pts</b>.</li>
+        <li>Reward for the brave, unique pick! 💪</li>
+      </ul>
+    </div>` : ""}
     <div class="rules-card">
       <h3>📲 Install the app & turn on notifications</h3>
       <ul>

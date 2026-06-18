@@ -27,10 +27,12 @@ const GRACE_DAY = "2026-06-12"; // Egypt local date, lock = KO + 50 min
 const GRACE_AFTER_MIN = 50;
 const OPEN_OVERRIDES = [["KOR", "CZE"]];
 const REMIND_WINDOW_MIN = 75; // notify when lock is at most this far away
-// Keep in sync with BONUS_POINTS in worldcup/js/firebase-config.js
+// Keep in sync with BONUS_POINTS / RULES in worldcup/js/firebase-config.js
 const BONUS_POINTS = { "*": 2, "Alaa": 0 };
 const bonusFor = (name) =>
   BONUS_POINTS[name] !== undefined ? BONUS_POINTS[name] : (BONUS_POINTS["*"] || 0);
+const ONLY_WINNER_BONUS = 2;
+const BONUS_FROM_MS = Date.parse("2026-06-18T00:00:00Z"); // Round 2 onward
 
 function dayKeyCairo(d) {
   return d.toLocaleDateString("en-CA", { timeZone: "Africa/Cairo" });
@@ -222,9 +224,15 @@ async function main() {
           .map((p) => ({ ...p, pts: scorePrediction(p, m.home.score, m.away.score) }))
           .sort((a, b) => b.pts - a.pts)
           .map((r) => `${r.emoji} ${r.name} +${r.pts}`);
+        // 🏅 only-winner bonus: sole scorer this match (Round 2 onward)
+        let onlyLine = "";
+        if (m.kickoff.getTime() >= BONUS_FROM_MS) {
+          const scorers = finished.filter((p) => scorePrediction(p, m.home.score, m.away.score) > 0);
+          if (scorers.length === 1) onlyLine = ` · 🏅 ${scorers[0].emoji} ${scorers[0].name} ONLY winner +${ONLY_WINNER_BONUS}!`;
+        }
         sendList.push({
           title: `🏁 FT: ${m.home.name} ${m.home.score}–${m.away.score} ${m.away.name}`,
-          body: lines.length ? `Points: ${lines.join(" · ")}` : "Nobody predicted this one 🙈",
+          body: lines.length ? `Points: ${lines.join(" · ")}${onlyLine}` : "Nobody predicted this one 🙈",
         });
 
         // 🎯 exact-score celebration: flagged for 1 hour after full time,
@@ -280,13 +288,20 @@ async function main() {
     }
     for (const m of matches) {
       if (!m.completed || m.home.score == null) continue;
+      const scorers = [];
       for (const pr of allPreds) {
         if (pr.matchId !== m.id || !players[pr.playerId]) continue;
         if (!(isOverridden(m) || (pr.updatedAt?.toMillis?.() ?? 0) <= lockMs(m))) continue;
         const s = stat[pr.playerId];
-        s.pts += scorePrediction(pr, m.home.score, m.away.score);
+        const pts = scorePrediction(pr, m.home.score, m.away.score);
+        s.pts += pts;
+        if (pts > 0) scorers.push(pr.playerId);
         if (pr.home === m.home.score && pr.away === m.away.score) s.exact++;
         if (predWinner(pr) === resultOf(m.home.score, m.away.score)) s.outcomes++;
+      }
+      // 🏅 only-winner bonus (sole scorer, Round 2 onward)
+      if (m.kickoff.getTime() >= BONUS_FROM_MS && scorers.length === 1) {
+        stat[scorers[0]].pts += ONLY_WINNER_BONUS;
       }
     }
     const order = Object.keys(stat).sort((a, b) =>
