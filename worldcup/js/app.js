@@ -690,19 +690,26 @@ function bonusFor(name) {
   return b[name] !== undefined ? b[name] : (b["*"] || 0);
 }
 
-function buildStandings() {
-  const rows = players.map((p) => ({ ...p, pts: bonusFor(p.name), exact: 0, outcomes: 0, played: 0 }));
+function buildStandings(live = false) {
+  const rows = players.map((p) => ({ ...p, pts: bonusFor(p.name), exact: 0, outcomes: 0, played: 0, livePts: 0 }));
   const byId = Object.fromEntries(rows.map((r) => [r.id, r]));
   for (const m of matches) {
-    if (!m.completed || m.home.score == null) continue;
+    const final = m.completed && m.home.score != null;
+    const inPlay = live && m.state === "in" && m.home.score != null;
+    if (!final && !inPlay) continue;
     for (const p of players) {
       const pred = predictions[`${m.id}_${p.id}`];
       if (!pred || !isValidPrediction(pred, m)) continue;
       const r = byId[p.id];
-      r.played++;
-      r.pts += scorePrediction(pred, m.home.score, m.away.score);
-      if (pred.home === m.home.score && pred.away === m.away.score) r.exact++;
-      if (predWinner(pred) === resultOf(m.home.score, m.away.score)) r.outcomes++;
+      const pts = scorePrediction(pred, m.home.score, m.away.score);
+      r.pts += pts;
+      if (final) {
+        r.played++;
+        if (pred.home === m.home.score && pred.away === m.away.score) r.exact++;
+        if (predWinner(pred) === resultOf(m.home.score, m.away.score)) r.outcomes++;
+      } else {
+        r.livePts += pts; // provisional, from an in-progress match
+      }
     }
   }
   return rows.sort(
@@ -1120,12 +1127,22 @@ function renderTable() {
     view.innerHTML = `<div class="empty">🏅 The standings appear once the admin connects the database.<br>See the setup guide in the README.</div>`;
     return;
   }
-  const rows = buildStandings();
+  const liveMatches = matches.filter((m) => m.state === "in" && m.home.score != null);
+  const isLive = liveMatches.length > 0;
+  const rows = buildStandings(isLive);
   if (!rows.length) {
     view.innerHTML = `<div class="empty">No players yet — be the first to join! 🎉</div>`;
     return;
   }
-  const prevRanks = standingsSnap?.prevRanks || null;  // ranks before the last finished match
+  // When live, movement shows the shuffle caused by in-play results (vs the
+  // confirmed table); otherwise it's "since the last finished match".
+  let prevRanks;
+  if (isLive) {
+    prevRanks = {};
+    buildStandings(false).forEach((r, i) => (prevRanks[r.id] = i + 1));
+  } else {
+    prevRanks = standingsSnap?.prevRanks || null;
+  }
   const glyph = { up: "▲", down: "▼", same: "–" };
 
   const html = rows.map((r, i) => {
@@ -1136,8 +1153,9 @@ function renderTable() {
     const mv = prevRank == null ? "same" : (prevRank - rank > 0 ? "up" : prevRank - rank < 0 ? "down" : "same");
     const dots = formDots(r.id).map((f) => `<span class="st-dot ${f}"></span>`).join("");
     const meCls = me && r.id === me.id ? " me" : "";
+    const livePts = isLive && r.livePts ? `<span class="st-live">+${r.livePts}</span>` : "";
     return `
-      <div class="st-row${meCls}">
+      <div class="st-row${meCls}${r.livePts ? " gaining" : ""}">
         <div class="st-rank${rcls}">${medal}</div>
         <div class="st-move ${mv}">${glyph[mv]}</div>
         <div class="st-av">${r.emoji}</div>
@@ -1145,14 +1163,21 @@ function renderTable() {
           <div class="st-name">${esc(r.name)}${meCls ? '<span class="st-you">YOU</span>' : ""}</div>
           <div class="st-sub">Played ${r.played} · 🎯 ${r.exact} exact <span class="st-form">${dots}</span></div>
         </div>
-        <div class="st-pts"><b>${r.pts}</b><span>pts</span></div>
+        <div class="st-pts"><b>${r.pts}</b>${livePts}<span>pts</span></div>
       </div>`;
   }).join("");
 
+  const liveBanner = isLive
+    ? `<div class="st-livebar">🔴 LIVE — table updates with every goal · ${liveMatches
+        .map((m) => `${esc(m.home.abbr)} ${m.home.score}–${m.away.score} ${esc(m.away.abbr)}`)
+        .join(" · ")} · final at full time</div>`
+    : "";
+
   view.innerHTML = `
-    <div class="section-title">🏅 Standings</div>
+    <div class="section-title">🏅 Standings${isLive ? ' <span class="st-livetag">LIVE</span>' : ""}</div>
+    ${liveBanner}
     ${html}
-    <p class="lock-note" style="margin-top:10px">Tiebreakers: most exact scores 🎯, then correct results · ▲▼ since the last match.</p>`;
+    <p class="lock-note" style="margin-top:10px">Tiebreakers: most exact scores 🎯, then correct results · ▲▼ ${isLive ? "live movement from in-play results" : "since the last match"}.</p>`;
 }
 
 // Last 3 completed matches as form dots: "ex" (exact +7), "win" (any points), "" (none)
