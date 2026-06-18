@@ -682,11 +682,6 @@ function isOpen(m) {
   return Date.now() < lockTime(m).getTime();
 }
 
-// Predictions are allowed only for matches played TODAY (local date).
-const isTodayMatch = (m) => m.kickoff.toDateString() === new Date().toDateString();
-// Bettable = open AND today (overridden matches are exempt from the today rule).
-const isBettable = (m) => isOpen(m) && (isOverridden(m) || isTodayMatch(m));
-
 // ---------------------------------------------------------------------------
 // Scoring — two predictions per match: winner (1X2) + exact score
 // ---------------------------------------------------------------------------
@@ -994,17 +989,13 @@ function matchDetailHtml(m) {
 
 function matchCard(m) {
   const open = isOpen(m);
-  const bettable = isBettable(m);
-  const futureDay = open && !bettable; // open by clock but not today → not yet bettable
   const badge = m.state === "in"
     ? `<span class="badge live">● LIVE</span>`
     : m.completed
       ? `<span class="badge ft">FT</span>`
-      : bettable
+      : open
         ? `<span class="badge open">OPEN</span>`
-        : futureDay
-          ? `<span class="badge soon">🗓️ ${m.kickoff.toLocaleDateString([], { weekday: "short" })}</span>`
-          : `<span class="badge locked">🔒 LOCKED</span>`;
+        : `<span class="badge locked">🔒 LOCKED</span>`;
 
   const center = m.state === "pre"
     ? `<div class="ko-time">${fmtTime(m.kickoff)}</div><div class="clock">kickoff</div>`
@@ -1016,9 +1007,7 @@ function matchCard(m) {
     : `<div class="flag-fallback">⚽</div>`;
 
   let body = "";
-  if (futureDay && db) {
-    body = `<div class="lock-note">🗓️ Predictions open on match day · ${m.kickoff.toLocaleDateString([], { weekday: "long", day: "numeric", month: "long" })}</div>`;
-  } else if (bettable && db && me) {
+  if (open && db && me) {
     const mine = predictions[`${m.id}_${me.id}`];
     const d = draft[m.id] || {
       home: mine?.home ?? 0,
@@ -1043,7 +1032,7 @@ function matchCard(m) {
       <div class="lock-note">${mine ? `✅ Your bet: <b>${pickLabel(mine, m)}</b> · ` : ""}${
         isOverridden(m) ? "🔓 Re-opened by admin — closes when the 2nd half starts!" : `🔒 Locks at ${fmtTime(lockTime(m))}`
       }</div>`;
-  } else if (bettable && db && !me) {
+  } else if (open && db && !me) {
     body = `<div class="lock-note">👤 <a href="#" onclick="document.getElementById('playerChip').click();return false" style="color:var(--gold)">Join the game</a> to predict · 🔒 locks at ${fmtTime(lockTime(m))}</div>`;
   } else if (!open && db) {
     body = revealBlock(m);
@@ -1131,7 +1120,6 @@ async function onSave(e) {
   const m = matches.find((x) => x.id === matchId);
   if (!m || !me || !db) return;
   if (!isOpen(m)) { toast("🔒 Too late — predictions are locked!"); render(); return; }
-  if (!isBettable(m)) { toast("🗓️ You can only predict today's matches!"); render(); return; }
   const d = draft[matchId];
   // decisive score → winner follows the score; drawn score → keep the pick
   const dir = resultOf(d.home, d.away);
