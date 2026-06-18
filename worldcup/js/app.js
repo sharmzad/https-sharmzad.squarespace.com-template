@@ -106,6 +106,7 @@ function showAnnouncement() {
   const el = $("#announce");
   if (!a || !el) return;
   if (!a.until) localStorage.setItem(`announce_${a.id}`, "1");   // only mark seen in once-per-device mode
+  if (a.emoji) $("#announceEmoji").textContent = a.emoji;
   $("#announceTitle").textContent = a.title || "🎉";
   el.classList.remove("hidden");
   fillAnnouncement();   // body (with player names) — refreshed again once data loads

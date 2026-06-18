@@ -39,7 +39,14 @@ window.APP_LINK = "https://tinyurl.com/El3eshaWC26";
 // exact-score win at full time (health/celebration in Firestore) and the app
 // shows the fireworks + winners' names on open for one hour after the match.
 // This is an optional MANUAL override for a custom announcement (null = off).
-window.ANNOUNCEMENT = null;
+// `until` replays it on every open until that time; set null to switch off.
+window.ANNOUNCEMENT = {
+  id: "update-2026-06-18-live",
+  emoji: "🆕⚡",
+  title: "BIG UPDATE!",
+  body: "🔴 LIVE Standings — the table now re-ranks DURING matches, watch your spot move with every goal! Plus: 🔮 win predictions before you bet, 📊 tap any match for goals & stats, and FIFA ranks on every team. Yalla! ⚽",
+  until: "2026-06-19T22:00:00Z",
+};
 
 // -----------------------------------------------------------------------------
 // Sponsor (set to null to hide all sponsor branding everywhere).
