@@ -162,6 +162,52 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
   font-size: 14px; font-weight: 700; color: var(--gold);
   margin: 18px 4px 8px;
 }
+.date-head.today {
+  color: var(--green);
+  background: #0e2a1c; border-radius: 10px; padding: 7px 10px;
+}
+
+/* ---------- Pinned live game (Matches tab) ---------- */
+.pinned-live {
+  border: 1px solid var(--live); border-radius: var(--radius);
+  background: rgba(225,55,55,.06);
+  padding: 8px 8px 2px; margin-bottom: 14px;
+}
+.pinned-head {
+  font-size: 12px; font-weight: 800; letter-spacing: .04em;
+  color: var(--live); text-transform: uppercase; margin: 2px 4px 8px;
+}
+.pinned-live .match { margin-bottom: 8px; }
+
+/* ---------- Schedule tab ---------- */
+.sched-bar {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 14px; margin-bottom: 6px;
+}
+.sched-title { font-size: 16px; font-weight: 800; color: var(--gold); }
+.sched-sub { font-size: 12px; color: var(--muted); margin: 4px 0 12px; }
+.sched-row {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: center; gap: 8px;
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 12px; padding: 9px 10px; margin-bottom: 6px;
+}
+.sched-row.live { border-color: var(--live); background: rgba(225,55,55,.06); }
+.sched-row.done { opacity: .82; }
+.sched-team { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.sched-team b { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sched-team.h { justify-content: flex-end; text-align: right; }
+.sched-team.a { justify-content: flex-start; text-align: left; }
+.sched-team img { width: 22px; height: 16px; object-fit: cover; border-radius: 3px; flex: 0 0 auto; }
+.sched-fb { font-size: 15px; }
+.sched-mid {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  min-width: 64px;
+}
+.sched-time { font-size: 13px; font-weight: 700; color: var(--muted); }
+.sched-score { font-size: 15px; font-weight: 800; }
+.sched-score.live { color: var(--live); }
+.sched-mid .badge { font-size: 9.5px; padding: 2px 7px; }
 
 /* ---------- Match card ---------- */
 .match {

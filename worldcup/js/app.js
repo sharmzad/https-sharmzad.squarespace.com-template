@@ -845,12 +845,24 @@ function renderMatches() {
   else if (matchFilter === "upcoming") list = matches.filter((m) => m.state === "pre");
   else if (matchFilter === "finished") list = matches.filter((m) => m.completed);
 
+  // Always pin live match(es) to the very top, no matter which filter is on,
+  // and drop them from the list below so they aren't shown twice.
+  const pinned = matches.filter((m) => m.state === "in");
+  const pinnedIds = new Set(pinned.map((m) => m.id));
+  if (pinned.length) list = list.filter((m) => !pinnedIds.has(m.id));
+
   const pills = ["today", "upcoming", "finished", "all"]
     .map((f) => `<button class="pill ${f === matchFilter ? "active" : ""}" data-filter="${f}">${cap(f)}</button>`)
     .join("");
 
-  let html = `<div class="pills">${pills}</div>`;
-  if (!list.length) {
+  let html = "";
+  if (pinned.length) {
+    html += `<div class="pinned-live"><div class="pinned-head">📌 Live now</div>`;
+    for (const m of pinned) html += matchCard(m);
+    html += `</div>`;
+  }
+  html += `<div class="pills">${pills}</div>`;
+  if (!list.length && !pinned.length) {
     html += `<div class="empty">😴 No matches here.<br>${
       matchFilter === "today" ? "Check <b>Upcoming</b> for the next fixtures!" : ""
     }</div>`;
@@ -1306,48 +1318,77 @@ function formDots(playerId) {
 // WhatsApp tab
 // ---------------------------------------------------------------------------
 function renderShare() {
-  view.innerHTML = `
-    <div class="section-title">Send to the gang group 😁</div>
-    ${shareCard("📅 Today's matches", "Fixtures, kickoff times and when betting closes — send this every morning.", "today")}
-    ${shareCard("🔴 Live & results", "Current scores of live matches plus today's finished results.", "live")}
-    ${shareCard("🏅 Leaderboard", "Current standings with medals — perfect after each match day.", "table")}
-    <div class="share-card">
-      <h3>🔔 Push notifications</h3>
-      <p>Get "betting closes soon" reminders and full-time results with points, even with the app closed.
-      <b>iPhone:</b> first Share → <b>Add to Home Screen</b>, then open the app from the new icon and tap the button.
-      <b>Android:</b> just tap and allow.</p>
+  const today = new Date();
+  const sameDay = (d) => d.toDateString() === today.toDateString();
+  const all = matches.slice().sort((a, b) => a.kickoff - b.kickoff);
+
+  let html = `
+    <div class="sched-bar">
+      <div class="sched-title">📅 World Cup 2026 — Full schedule</div>
+      <div class="sched-sub">${all.length ? `All ${all.length} fixtures · ` : ""}times in your local timezone</div>
       <div class="share-actions">
-        <button class="btn primary" data-notif>Enable on this device 🔔</button>
-      </div>
-    </div>
-    <div class="share-card">
-      <h3>🔗 Invite link</h3>
-      <p>Pin this app link + the group code in your WhatsApp group description so everyone can join.</p>
-      <div class="share-actions">
-        <button class="btn wa" data-share-invite>Share on WhatsApp</button>
-        <button class="btn ghost" data-copy-invite>Copy</button>
+        <button class="btn wa" data-share="today">📲 Share today</button>
+        <button class="btn ghost" data-share="live">🔴 Share results</button>
+        <button class="btn ghost" data-share-invite>🔗 Invite</button>
       </div>
     </div>`;
+
+  if (!all.length) {
+    html += `<div class="empty">😴 Schedule isn't loaded yet — check your connection and pull to refresh.</div>`;
+    view.innerHTML = html;
+    wireShareButtons();
+    return;
+  }
+
+  let lastDay = "";
+  for (const m of all) {
+    const day = m.kickoff.toLocaleDateString([], { weekday: "long", day: "numeric", month: "long" });
+    if (day !== lastDay) {
+      const isToday = sameDay(m.kickoff);
+      html += `<div class="date-head${isToday ? " today" : ""}"${isToday ? ' id="sched-today"' : ""}>📅 ${day}${isToday ? " · Today" : ""}</div>`;
+      lastDay = day;
+    }
+    html += schedRow(m);
+  }
+
+  view.innerHTML = html;
+  wireShareButtons();
+
+  // Jump straight to today's fixtures (the list is long — 100+ matches).
+  const t = view.querySelector("#sched-today");
+  if (t) requestAnimationFrame(() => t.scrollIntoView({ block: "start" }));
+}
+
+function wireShareButtons() {
   view.querySelectorAll("[data-share]").forEach((b) =>
     b.addEventListener("click", () => openWhatsApp(buildMessage(b.dataset.share)))
   );
-  view.querySelectorAll("[data-copy]").forEach((b) =>
-    b.addEventListener("click", () => copyText(buildMessage(b.dataset.copy)))
-  );
-  view.querySelector("[data-share-invite]").addEventListener("click", () => openWhatsApp(inviteMessage()));
-  view.querySelector("[data-copy-invite]").addEventListener("click", () => copyText(inviteMessage()));
-  view.querySelector("[data-notif]").addEventListener("click", enableNotifications);
+  const inv = view.querySelector("[data-share-invite]");
+  if (inv) inv.addEventListener("click", () => openWhatsApp(inviteMessage()));
 }
 
-function shareCard(title, desc, kind) {
+// Compact one-line schedule row: home — time/score — away, with status badge.
+function schedRow(m) {
+  const flag = (t) => t.logo
+    ? `<img src="${esc(t.logo)}" alt="" loading="lazy" onerror="this.outerHTML='<span class=sched-fb>⚽</span>'">`
+    : `<span class="sched-fb">⚽</span>`;
+
+  let mid, cls = "";
+  if (m.state === "in") {
+    mid = `<span class="sched-score live">${m.home.score ?? "-"}–${m.away.score ?? "-"}</span><span class="badge live">● LIVE</span>`;
+    cls = "live";
+  } else if (m.completed) {
+    mid = `<span class="sched-score">${m.home.score ?? "-"}–${m.away.score ?? "-"}</span><span class="badge ft">FT</span>`;
+    cls = "done";
+  } else {
+    mid = `<span class="sched-time">${fmtTime(m.kickoff)}</span>`;
+  }
+
   return `
-    <div class="share-card">
-      <h3>${title}</h3>
-      <p>${desc}</p>
-      <div class="share-actions">
-        <button class="btn wa" data-share="${kind}">Share on WhatsApp</button>
-        <button class="btn ghost" data-copy="${kind}">Copy</button>
-      </div>
+    <div class="sched-row ${cls}">
+      <div class="sched-team h"><b>${esc(m.home.name)}</b>${flag(m.home)}</div>
+      <div class="sched-mid">${mid}</div>
+      <div class="sched-team a">${flag(m.away)}<b>${esc(m.away.name)}</b></div>
     </div>`;
 }
 
