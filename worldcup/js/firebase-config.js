@@ -35,6 +35,9 @@ window.VAPID_KEY = "BJeCjL3Ge6h9UzWfSzM0hFIgO5EBvwdyY2ADVkBjwqXfdyQfBA4304ljAFb1
 // Clean public link used in WhatsApp invite/share messages.
 window.APP_LINK = "https://tinyurl.com/El3eshaWC26";
 
+// Current app version (shown at the bottom of the Rules tab). Bump on updates.
+window.APP_VERSION = "2.0";
+
 // Exact-score celebrations are now AUTOMATIC: the notifier flags every
 // exact-score win at full time (health/celebration in Firestore) and the app
 // shows the fireworks + winners' names on open for one hour after the match.

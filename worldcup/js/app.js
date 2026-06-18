@@ -1387,7 +1387,8 @@ function renderRules() {
       ${window.SPONSOR.logo ? `<img src="${esc(window.SPONSOR.logo)}" alt="${esc(window.SPONSOR.name)}" style="max-width:60%;max-height:90px;border-radius:10px;margin:4px auto 10px;display:block" onerror="this.remove()">` : ""}
       ${window.SPONSOR.tagline ? `<p style="color:var(--muted);font-size:13px">${esc(window.SPONSOR.tagline)}</p>` : ""}
       ${window.SPONSOR.link ? `<div class="share-actions" style="justify-content:center;margin-top:12px"><a class="btn wa" href="${esc(window.SPONSOR.link)}" target="_blank" rel="noopener">${esc(window.SPONSOR.cta || "Visit")}</a></div>` : ""}
-    </div>` : ""}`;
+    </div>` : ""}
+    <p class="app-version">El 3eshّa WC 26 · v${esc(window.APP_VERSION || "1.0")}</p>`;
 }
 
 // ---------------------------------------------------------------------------
