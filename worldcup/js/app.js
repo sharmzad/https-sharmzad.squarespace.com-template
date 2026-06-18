@@ -1317,20 +1317,53 @@ function formDots(playerId) {
 // ---------------------------------------------------------------------------
 // WhatsApp tab
 // ---------------------------------------------------------------------------
-// Build live World Cup group tables from the match results in `matches`.
-// Teams are seeded from every group fixture; only COMPLETED matches are tallied
+// World Cup 2026 group structure, keyed by team-name substrings (same keys as
+// FIFA_RANKS). ESPN's feed doesn't reliably label matches with a group name, so
+// we assign teams to groups ourselves — this keeps all 12 tables on screen from
+// day one and lets standings fill in live as results come in.
+const WC_GROUPS = {
+  A: ["mexico", "south africa", "korea", "czech"],
+  B: ["canada", "bosnia", "qatar", "switzerland"],
+  C: ["brazil", "morocco", "haiti", "scotland"],
+  D: ["united states", "usa", "paraguay", "australia", "türkiye", "turkey"],
+  E: ["germany", "curaç", "curac", "ivory", "côte", "cote", "ecuador"],
+  F: ["netherlands", "japan", "sweden", "tunisia"],
+  G: ["belgium", "egypt", "iran", "new zealand"],
+  H: ["spain", "cabo verde", "cape verde", "saudi", "uruguay"],
+  I: ["france", "senegal", "iraq", "norway"],
+  J: ["argentina", "algeria", "austria", "jordan"],
+  K: ["portugal", "dr congo", "congo", "uzbek", "colombia"],
+  L: ["england", "croatia", "ghana", "panama"],
+};
+function groupOf(name) {
+  const n = (name || "").toLowerCase();
+  for (const [g, keys] of Object.entries(WC_GROUPS))
+    if (keys.some((k) => n.includes(k))) return g;
+  return null;
+}
+
+// Build live World Cup group tables. Every team is seeded from the fixture list
+// (so all 12 tables show immediately), and only COMPLETED matches are tallied
 // (official standings don't count a game until full time).
 function buildGroupStandings() {
-  const groups = {};
+  const groups = {};                               // letter -> { teamName -> row }
+  for (const g of Object.keys(WC_GROUPS)) groups[g] = {};
+  const ensure = (g, t) => groups[g][t.name] ||
+    (groups[g][t.name] = { name: t.name, logo: t.logo, mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0 });
+
+  // seed teams (names + flags) from every fixture they appear in
   for (const m of matches) {
-    const g = (m.group || "").match(/group\s+([a-l])/i);
-    if (!g) continue;                              // skip knockout / unlabelled
-    const key = "Group " + g[1].toUpperCase();
-    const tbl = groups[key] || (groups[key] = {});
-    const row = (t) => tbl[t.name] ||
-      (tbl[t.name] = { name: t.name, logo: t.logo, mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0 });
-    const H = row(m.home), A = row(m.away);        // seed both teams
+    for (const t of [m.home, m.away]) {
+      const g = groupOf(t.name);
+      if (g) ensure(g, t);
+    }
+  }
+  // tally completed group-stage results
+  for (const m of matches) {
     if (!m.completed || m.home.score == null || m.away.score == null) continue;
+    const g = groupOf(m.home.name);
+    if (!g || groupOf(m.away.name) !== g) continue; // both teams in the same group
+    const H = ensure(g, m.home), A = ensure(g, m.away);
     const hs = m.home.score, as = m.away.score;
     H.mp++; A.mp++;
     H.gf += hs; H.ga += as; A.gf += as; A.ga += hs;
@@ -1338,9 +1371,12 @@ function buildGroupStandings() {
     else if (hs < as) { A.w++; A.pts += 3; H.l++; }
     else { H.d++; A.d++; H.pts++; A.pts++; }
   }
+
   const out = {};
-  for (const key of Object.keys(groups).sort()) {
-    out[key] = Object.values(groups[key]).sort((a, b) =>
+  for (const g of Object.keys(WC_GROUPS)) {
+    const rows = Object.values(groups[g]);
+    if (!rows.length) continue;                    // teams not loaded yet
+    out["Group " + g] = rows.sort((a, b) =>
       b.pts - a.pts ||
       (b.gf - b.ga) - (a.gf - a.ga) ||
       b.gf - a.gf ||
@@ -1364,7 +1400,7 @@ function renderShare() {
     </div>`;
 
   if (!keys.length) {
-    html += `<div class="empty">⚽ No group results yet.<br>Tables fill in as the group matches are played.</div>`;
+    html += `<div class="empty">⚽ Loading the group tables…<br>Hang on a sec while fixtures load.</div>`;
     view.innerHTML = html;
     wireGroupButtons();
     return;
