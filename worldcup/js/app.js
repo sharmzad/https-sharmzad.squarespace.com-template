@@ -867,15 +867,6 @@ function renderMatches() {
   }
   view.innerHTML = html;
 
-  // background-fetch ESPN's real predictor for soon upcoming matches (≤36h),
-  // then re-render so the estimate upgrades to ESPN's numbers
-  const soon = list.filter((m) =>
-    m.state === "pre" && m.kickoff - Date.now() < 36 * 3_600_000 && !matchDetails[m.id]);
-  if (soon.length) {
-    Promise.all(soon.map((m) => fetchMatchDetail(m.id)))
-      .then(() => { if (activeTab === "matches") renderMatches(); });
-  }
-
   view.querySelectorAll(".pill").forEach((b) =>
     b.addEventListener("click", () => { matchFilter = b.dataset.filter; renderMatches(); })
   );
@@ -989,11 +980,23 @@ function parseMatchDetail(data) {
   return { goals, stats, predictor };
 }
 
-// FIFA-rank fallback estimate when ESPN has no predictor
-function winProbFromRanks(rh, ra) {
+// The three host nations get a real edge playing on home soil (WC 2026).
+const HOST_NATIONS = ["mexico", "united states", "usa", "canada"];
+function isHostNation(name) {
+  const n = (name || "").toLowerCase();
+  return HOST_NATIONS.some((h) => n.includes(h));
+}
+
+// Win-probability estimate built from FIFA ranks (always available, no API call).
+// Converts ranks to an Elo-style rating, adds a home-soil boost for host nations,
+// then splits into home / draw / away percentages.
+function winProbFromRanks(rh, ra, hostH, hostA) {
   if (rh == null || ra == null) return null;
   const rate = (r) => 1900 - 7.2 * r;
-  const eh = 1 / (1 + Math.pow(10, (rate(ra) - rate(rh)) / 400));
+  let eloH = rate(rh), eloA = rate(ra);
+  if (hostH) eloH += 65;                 // playing in their own country
+  if (hostA) eloA += 65;
+  const eh = 1 / (1 + Math.pow(10, (eloA - eloH) / 400));
   const draw = 0.27 * (1 - Math.abs(2 * eh - 1) * 0.85);
   let home = Math.max(eh - draw / 2, 0.02);
   let away = Math.max((1 - eh) - draw / 2, 0.02);
@@ -1001,11 +1004,14 @@ function winProbFromRanks(rh, ra) {
   return { home: home / s * 100, draw: draw / s * 100, away: away / s * 100, est: true };
 }
 
-// ESPN prediction if fetched, else the FIFA estimate (so the bar shows instantly)
+// ESPN prediction if one is ever published, else the FIFA-rank estimate.
 function matchWinProb(m) {
   const det = matchDetails[m.id];
   if (det && det.predictor) return det.predictor;
-  return winProbFromRanks(fifaRank(m.home.name), fifaRank(m.away.name));
+  return winProbFromRanks(
+    fifaRank(m.home.name), fifaRank(m.away.name),
+    isHostNation(m.home.name), isHostNation(m.away.name)
+  );
 }
 
 function winProbHtml(m, p) {
