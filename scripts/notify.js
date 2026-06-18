@@ -353,4 +353,7 @@ async function main() {
   await heartbeat({ devices: tokens.length, messages: sendList.length, failures });
 }
 
-main().catch((err) => { console.error(err); process.exit(1); });
+// Log errors but exit 0 so a transient failure (e.g. a quota blip or ESPN
+// hiccup) doesn't mark the run red and spam failure emails. The in-app health
+// pill still surfaces a stale notifier if something is genuinely wrong.
+main().catch((err) => { console.error("notify run error (non-fatal):", err?.message || err); });
