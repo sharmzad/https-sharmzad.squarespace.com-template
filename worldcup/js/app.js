@@ -1140,24 +1140,42 @@ function stepper(matchId, side, val) {
 
 function revealBlock(m) {
   const done = m.completed && m.home.score != null;
+  const R = window.RULES || {};
+  const bonusOn = done && (!R.bonusFrom || m.kickoff.getTime() >= Date.parse(R.bonusFrom));
+  const upset = bonusOn && R.underdogBonus ? upsetWinSide(m) : null;
+  // who scored on this match (for the only-winner bonus)
+  const scorerIds = !bonusOn || !R.onlyWinnerBonus ? [] : players
+    .filter((p) => {
+      const pr = predictions[`${m.id}_${p.id}`];
+      return pr && isValidPrediction(pr, m) && scorePrediction(pr, m.home.score, m.away.score) > 0;
+    })
+    .map((p) => p.id);
+  const soleId = scorerIds.length === 1 ? scorerIds[0] : null;
+
   const list = players
     .map((p) => {
       const pred = predictions[`${m.id}_${p.id}`];
       if (!pred) return null;
       const late = !isValidPrediction(pred, m);
-      const pts = (done && !late) ? scorePrediction(pred, m.home.score, m.away.score) : null;
-      return { p, pred, late, pts };
+      const base = (done && !late) ? scorePrediction(pred, m.home.score, m.away.score) : null;
+      let bonus = 0, badges = "";
+      if (base != null && bonusOn) {
+        if (soleId === p.id) { bonus += R.onlyWinnerBonus; badges += "🏅"; }
+        if (upset && predWinner(pred) === upset) { bonus += R.underdogBonus; badges += "🐺"; }
+      }
+      const pts = base == null ? null : base + bonus;
+      return { p, pred, late, base, pts, badges };
     })
     .filter(Boolean);
   if (!list.length) return `<div class="lock-note">No predictions for this match 🤷</div>`;
   if (done) list.sort((a, b) => (b.pts ?? -1) - (a.pts ?? -1));
 
-  const rows = list.map(({ p, pred, late, pts }) => {
+  const rows = list.map(({ p, pred, late, base, pts, badges }) => {
     const w = predWinner(pred);
     const team = w === "draw" ? "Draw" : esc(w === "home" ? m.home.abbr : m.away.abbr);
     const ptsHtml = late
       ? `<span class="pr-pts late">late</span>`
-      : (pts != null ? `<span class="pr-pts p${pts}">+${pts}</span>` : `<span class="pr-pts pending">—</span>`);
+      : (pts != null ? `<span class="pr-pts p${base}">+${pts}${badges ? ` <span class="pr-badge">${badges}</span>` : ""}</span>` : `<span class="pr-pts pending">—</span>`);
     return `
       <div class="pr-row ${me && p.id === me.id ? "mine" : ""}">
         <div class="pr-av">${p.emoji}</div>

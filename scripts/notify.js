@@ -143,7 +143,13 @@ async function main() {
     );
 
   // No devices yet? Do nothing, so no event gets burned.
-  const tokens = (await db.collection("tokens").get()).docs.map((d) => d.id);
+  const tokenDocs = (await db.collection("tokens").get()).docs;
+  const tokens = tokenDocs.map((d) => d.id);
+  const playerTokens = {}; // playerId -> [tokens] (for targeted reminders)
+  for (const d of tokenDocs) {
+    const pid = d.data().playerId;
+    if (pid) (playerTokens[pid] = playerTokens[pid] || []).push(d.id);
+  }
   if (!tokens.length) {
     console.log("No registered devices yet.");
     await heartbeat({ devices: 0, messages: 0 });
@@ -199,13 +205,23 @@ async function main() {
     const vs = `${m.home.name} 🆚 ${m.away.name}`;
     const lock = lockMs(m);
 
-    // ⏰ betting reminder
+    // ⏰ betting reminder — sent ONLY to players who haven't bet on this match yet
     if (!m.completed && m.state === "pre" && lock > now && lock - now <= REMIND_WINDOW_MIN * 60_000) {
       if (await claim(`remind_${m.id}`)) {
-        sendList.push({
-          title: "⏰ Betting closes soon!",
-          body: `${vs} — get your bet in before ${fmtCairo(new Date(lock))} ⚽`,
-        });
+        const betters = new Set(
+          (await validPreds(m)).map((p) => p.playerId)
+        );
+        const target = [];
+        for (const [pid, toks] of Object.entries(playerTokens)) {
+          if (!betters.has(pid)) target.push(...toks);
+        }
+        if (target.length) {
+          sendList.push({
+            title: "⏰ You haven't predicted yet!",
+            body: `${vs} — get your bet in before ${fmtCairo(new Date(lock))} or miss out ⚽`,
+            tokens: target,
+          });
+        }
       }
     }
 
@@ -381,8 +397,10 @@ async function main() {
 
   let failures = 0;
   for (const item of sendList) {
+    const dest = item.tokens || tokens;          // targeted (reminders) or broadcast
+    if (!dest.length) continue;
     const resp = await admin.messaging().sendEachForMulticast({
-      tokens,
+      tokens: dest,
       // DATA-only so the service worker displays it once, reliably
       data: {
         title: item.title,
@@ -393,12 +411,12 @@ async function main() {
       webpush: { fcmOptions: { link: APP_URL } },
     });
     failures += resp.failureCount;
-    console.log(`Sent "${item.title}" — ok: ${resp.successCount}, failed: ${resp.failureCount}`);
+    console.log(`Sent "${item.title}" — to ${dest.length}, ok: ${resp.successCount}, failed: ${resp.failureCount}`);
     // Prune dead tokens so the list stays clean
     await Promise.all(
       resp.responses.map((r, i) =>
         !r.success && r.error?.code === "messaging/registration-token-not-registered"
-          ? db.collection("tokens").doc(tokens[i]).delete()
+          ? db.collection("tokens").doc(dest[i]).delete()
           : null
       )
     );
