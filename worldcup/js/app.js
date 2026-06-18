@@ -45,6 +45,7 @@ let standingsSnap = null;  // { ranks, prevRanks } from the notifier, for moveme
 let expandedMatch = null;  // match id whose detail panel is open
 let matchDetails = {};     // cache: matchId -> { goals, stats } | { error: true }
 let analyticsLog = null;   // Google Analytics logEvent (when Analytics is enabled)
+let whatsNewShown = false; // "What's New" pop-up shown this session
 
 const $ = (sel) => document.querySelector(sel);
 const view = $("#view");
@@ -56,11 +57,12 @@ init();
 
 async function init() {
   bindChrome();
-  const manual = announcementPending();
-  const celeb = manual ? null : getActiveCelebration();
-  setupSponsor(manual || !!celeb);      // skip the long sponsor intro on a celebration open
-  if (manual) showAnnouncement();
-  else if (celeb) showCelebration(celeb);
+  // Only a live exact-score celebration skips the Euro Car intro. The "What's
+  // New" card is a non-blocking notification shown AFTER the intro.
+  const celeb = getActiveCelebration();
+  setupSponsor(!!celeb);
+  if (celeb) showCelebration(celeb);
+  else if (!window.SPONSOR && announcementPending()) setTimeout(maybeShowWhatsNew, 1500);
   await initFirebase();
   if (!me && db) await tryRestoreLogin();
   if (db) refreshPushToken();           // keep this device's push token fresh
@@ -99,6 +101,25 @@ function announcementPending() {
   if (!a || !a.id) return false;
   if (a.until) return Date.now() < new Date(a.until).getTime();   // replay until expiry
   return !localStorage.getItem(`announce_${a.id}`);               // else once per device
+}
+
+// "What's New" notification card — shown once per app launch, after the intro
+function maybeShowWhatsNew() {
+  if (whatsNewShown || !announcementPending()) return;
+  whatsNewShown = true;
+  const a = window.ANNOUNCEMENT, el = $("#whatsnew");
+  if (!a || !el) return;
+  if (a.emoji) $("#wnIcon").textContent = a.emoji;
+  $("#wnTitle").textContent = `What's New${a.version ? ` · v${a.version}` : ""}`;
+  $("#wnBody").textContent = a.body || "";
+  el.classList.remove("hidden");
+  requestAnimationFrame(() => el.classList.add("show"));
+  const close = () => {
+    el.classList.remove("show");
+    setTimeout(() => el.classList.add("hidden"), 450);
+  };
+  $("#wnClose").onclick = close;
+  setTimeout(close, 12000); // auto-dismiss
 }
 
 function showAnnouncement() {
@@ -271,6 +292,7 @@ function playSponsorIntro(s) {
     if (dismissed) return; dismissed = true;
     intro.classList.add("done");
     setTimeout(() => intro.classList.add("hidden"), 600);
+    setTimeout(maybeShowWhatsNew, 700);   // show the What's New card after the intro
   };
   const timer = setTimeout(dismiss, 8600);
   $("#introSkip").onclick = () => { clearTimeout(timer); dismiss(); };

@@ -42,9 +42,9 @@ window.APP_LINK = "https://tinyurl.com/El3eshaWC26";
 // `until` replays it on every open until that time; set null to switch off.
 window.ANNOUNCEMENT = {
   id: "update-2026-06-18-live",
-  emoji: "🆕⚡",
-  title: "BIG UPDATE!",
-  body: "🔴 LIVE Standings — the table now re-ranks DURING matches, watch your spot move with every goal! Plus: 🔮 win predictions before you bet, 📊 tap any match for goals & stats, and FIFA ranks on every team. Yalla! ⚽",
+  version: "2.0",
+  emoji: "🆕",
+  body: "🔴 Live Standings — the table now re-ranks during matches! Plus 🔮 win predictions before you bet, 📊 tap any match for goals & stats, and FIFA ranks on every team. ⚽",
   until: "2026-06-19T22:00:00Z",
 };
 

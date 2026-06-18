@@ -87,6 +87,25 @@ body { padding-bottom: 76px; }
   cursor: pointer;
 }
 
+/* "What's New" notification pop-up */
+.whatsnew {
+  position: fixed; left: 10px; right: 10px; z-index: 70;
+  top: calc(env(safe-area-inset-top, 0px) + 8px);
+  transform: translateY(-150%); opacity: 0;
+  transition: transform .5s cubic-bezier(.2,.9,.3,1.25), opacity .4s ease;
+}
+.whatsnew.show { transform: translateY(0); opacity: 1; }
+.wn-card {
+  display: flex; gap: 11px; align-items: flex-start;
+  background: #16301f; border: 1px solid var(--gold); border-radius: 14px;
+  padding: 12px; box-shadow: 0 12px 32px #000b; max-width: 620px; margin: 0 auto;
+}
+.wn-icon { font-size: 22px; flex: none; }
+.wn-title { font-weight: 800; color: var(--gold); font-size: 14px; }
+.wn-body { font-size: 12.5px; color: var(--text); margin-top: 3px; line-height: 1.5; }
+.wn-close { margin-left: auto; background: none; border: none; color: var(--muted);
+  font-size: 15px; cursor: pointer; flex: none; padding: 0 2px; }
+
 /* live standings */
 .st-livetag { font-size: 10px; font-weight: 800; color: #fff; background: var(--live);
   padding: 2px 7px; border-radius: 999px; vertical-align: middle; animation: pulse 1.4s infinite; }
