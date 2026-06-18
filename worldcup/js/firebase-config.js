@@ -36,13 +36,14 @@ window.VAPID_KEY = "BJeCjL3Ge6h9UzWfSzM0hFIgO5EBvwdyY2ADVkBjwqXfdyQfBA4304ljAFb1
 window.APP_LINK = "https://tinyurl.com/El3eshaWC26";
 
 // Current app version (shown at the bottom of the Rules tab). Bump on updates.
-window.APP_VERSION = "2.1";
+window.APP_VERSION = "2.2";
 
-// Scoring rules / bonuses. `bonusFrom` (YYYY-MM-DD, local) is the date new
-// bonuses start counting, so earlier rounds aren't changed retroactively.
+// Scoring rules / bonuses. `bonusFrom` (fixed UTC moment) is when new bonuses
+// start counting, so earlier rounds aren't changed retroactively.
 window.RULES = {
   onlyWinnerBonus: 2,                    // +2 to the SOLE player who scored on a match
-  bonusFrom: "2026-06-18T00:00:00Z",     // Round 2 onward (fixed UTC moment)
+  underdogBonus: 2,                      // +2 for correctly backing the lower-ranked team to win
+  bonusFrom: "2026-06-18T00:00:00Z",     // Round 2 onward
 };
 
 // Exact-score celebrations are now AUTOMATIC: the notifier flags every
@@ -51,11 +52,11 @@ window.RULES = {
 // This is an optional MANUAL override for a custom announcement (null = off).
 // `until` replays it on every open until that time; set null to switch off.
 window.ANNOUNCEMENT = {
-  id: "update-2026-06-18-live",
-  version: "2.0",
-  emoji: "🆕",
-  body: "🔴 Live Standings — the table now re-ranks during matches! Plus 🔮 win predictions before you bet, 📊 tap any match for goals & stats, and FIFA ranks on every team. ⚽",
-  until: "2026-06-19T22:00:00Z",
+  id: "update-2026-06-18-bonuses",
+  version: "2.2",
+  emoji: "🏅",
+  body: "NEW bonus points for Round 2! 🏅 ONLY-WINNER: be the sole player to score on a match → +2 (lone winner = 4, lone exact = 9). 🐺 UNDERDOG: correctly back the lower-ranked team to win → +2. Stack them for a huge haul! ⚽",
+  until: "2026-06-20T22:00:00Z",
 };
 
 // -----------------------------------------------------------------------------

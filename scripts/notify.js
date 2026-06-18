@@ -32,7 +32,40 @@ const BONUS_POINTS = { "*": 2, "Alaa": 0 };
 const bonusFor = (name) =>
   BONUS_POINTS[name] !== undefined ? BONUS_POINTS[name] : (BONUS_POINTS["*"] || 0);
 const ONLY_WINNER_BONUS = 2;
+const UNDERDOG_BONUS = 2;
 const BONUS_FROM_MS = Date.parse("2026-06-18T00:00:00Z"); // Round 2 onward
+
+// FIFA ranks — keep in sync with FIFA_RANKS in worldcup/js/app.js
+const FIFA_RANKS = [
+  ["mexico",15],["south africa",60],["korea",25],["czech",41],
+  ["canada",30],["bosnia",65],["qatar",55],["switzerland",19],
+  ["brazil",6],["morocco",8],["haiti",83],["scotland",43],
+  ["united states",16],["usa",16],["paraguay",40],["australia",27],["türkiye",22],["turkey",22],
+  ["germany",10],["curaç",82],["curac",82],["ivory",34],["côte",34],["cote",34],["ecuador",23],
+  ["netherlands",7],["japan",18],["sweden",38],["tunisia",44],
+  ["belgium",9],["egypt",29],["iran",21],["new zealand",85],
+  ["spain",2],["cabo verde",69],["cape verde",69],["saudi",61],["uruguay",17],
+  ["france",3],["senegal",14],["iraq",57],["norway",31],
+  ["argentina",1],["algeria",28],["austria",24],["jordan",63],
+  ["portugal",5],["dr congo",46],["congo",46],["uzbek",50],["colombia",13],
+  ["england",4],["croatia",11],["ghana",74],["panama",33],
+];
+const fifaRank = (name) => {
+  const n = (name || "").toLowerCase();
+  for (const [k, r] of FIFA_RANKS) if (n.includes(k)) return r;
+  return null;
+};
+// the lower-ranked side if it WON a decisive match, else null
+const upsetWinSide = (m) => {
+  if (m.home.score == null) return null;
+  const res = resultOf(m.home.score, m.away.score);
+  if (res === "draw") return null;
+  const rh = fifaRank(m.home.name), ra = fifaRank(m.away.name);
+  if (rh == null || ra == null) return null;
+  if (res === "home" && rh > ra) return "home";
+  if (res === "away" && ra > rh) return "away";
+  return null;
+};
 
 function dayKeyCairo(d) {
   return d.toLocaleDateString("en-CA", { timeZone: "Africa/Cairo" });
@@ -224,15 +257,20 @@ async function main() {
           .map((p) => ({ ...p, pts: scorePrediction(p, m.home.score, m.away.score) }))
           .sort((a, b) => b.pts - a.pts)
           .map((r) => `${r.emoji} ${r.name} +${r.pts}`);
-        // 🏅 only-winner bonus: sole scorer this match (Round 2 onward)
-        let onlyLine = "";
+        // 🏅 only-winner / 🐺 underdog bonus callouts (Round 2 onward)
+        let bonusLine = "";
         if (m.kickoff.getTime() >= BONUS_FROM_MS) {
           const scorers = finished.filter((p) => scorePrediction(p, m.home.score, m.away.score) > 0);
-          if (scorers.length === 1) onlyLine = ` · 🏅 ${scorers[0].emoji} ${scorers[0].name} ONLY winner +${ONLY_WINNER_BONUS}!`;
+          if (scorers.length === 1) bonusLine += ` · 🏅 ${scorers[0].emoji} ${scorers[0].name} ONLY winner +${ONLY_WINNER_BONUS}!`;
+          const upset = upsetWinSide(m);
+          if (upset) {
+            const dogs = finished.filter((p) => predWinner(p) === upset).map((p) => `${p.emoji} ${p.name}`);
+            if (dogs.length) bonusLine += ` · 🐺 underdog +${UNDERDOG_BONUS}: ${dogs.join(", ")}`;
+          }
         }
         sendList.push({
           title: `🏁 FT: ${m.home.name} ${m.home.score}–${m.away.score} ${m.away.name}`,
-          body: lines.length ? `Points: ${lines.join(" · ")}${onlyLine}` : "Nobody predicted this one 🙈",
+          body: lines.length ? `Points: ${lines.join(" · ")}${bonusLine}` : "Nobody predicted this one 🙈",
         });
 
         // 🎯 exact-score celebration: flagged for 1 hour after full time,
@@ -288,6 +326,8 @@ async function main() {
     }
     for (const m of matches) {
       if (!m.completed || m.home.score == null) continue;
+      const bonusEligible = m.kickoff.getTime() >= BONUS_FROM_MS;
+      const upset = bonusEligible ? upsetWinSide(m) : null;
       const scorers = [];
       for (const pr of allPreds) {
         if (pr.matchId !== m.id || !players[pr.playerId]) continue;
@@ -298,11 +338,10 @@ async function main() {
         if (pts > 0) scorers.push(pr.playerId);
         if (pr.home === m.home.score && pr.away === m.away.score) s.exact++;
         if (predWinner(pr) === resultOf(m.home.score, m.away.score)) s.outcomes++;
+        if (upset && predWinner(pr) === upset) s.pts += UNDERDOG_BONUS; // 🐺 underdog
       }
       // 🏅 only-winner bonus (sole scorer, Round 2 onward)
-      if (m.kickoff.getTime() >= BONUS_FROM_MS && scorers.length === 1) {
-        stat[scorers[0]].pts += ONLY_WINNER_BONUS;
-      }
+      if (bonusEligible && scorers.length === 1) stat[scorers[0]].pts += ONLY_WINNER_BONUS;
     }
     const order = Object.keys(stat).sort((a, b) =>
       stat[b].pts - stat[a].pts || stat[b].exact - stat[a].exact ||

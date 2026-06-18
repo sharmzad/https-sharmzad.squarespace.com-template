@@ -738,10 +738,46 @@ function buildStandings(live = false) {
   // "Only winner" bonus: sole scorer on a completed match (from RULES.bonusFrom)
   const owb = onlyWinnerBonuses();
   for (const [id, b] of Object.entries(owb)) if (byId[id]) byId[id].pts += b;
+  // "Underdog" bonus: correctly backed the lower-ranked team to win
+  const udb = underdogBonuses();
+  for (const [id, b] of Object.entries(udb)) if (byId[id]) byId[id].pts += b;
 
   return rows.sort(
     (a, b) => b.pts - a.pts || b.exact - a.exact || b.outcomes - a.outcomes || a.name.localeCompare(b.name)
   );
+}
+
+// The lower-FIFA-ranked side if it WON a decisive match (the "upset" winner),
+// else null. Used for the underdog bonus.
+function upsetWinSide(m) {
+  if (m.home.score == null) return null;
+  const res = resultOf(m.home.score, m.away.score);
+  if (res === "draw") return null;
+  const rh = fifaRank(m.home.name), ra = fifaRank(m.away.name);
+  if (rh == null || ra == null) return null;
+  if (res === "home" && rh > ra) return "home"; // home won and is ranked worse
+  if (res === "away" && ra > rh) return "away";
+  return null;
+}
+
+// { playerId: bonusPoints } — +RULES.underdogBonus to players who correctly
+// backed the lower-ranked winner, counted from RULES.bonusFrom.
+function underdogBonuses() {
+  const R = window.RULES || {};
+  const out = {};
+  if (!R.underdogBonus) return out;
+  const fromMs = R.bonusFrom ? Date.parse(R.bonusFrom) : 0;
+  for (const m of matches) {
+    if (!m.completed || m.home.score == null || m.kickoff.getTime() < fromMs) continue;
+    const side = upsetWinSide(m);
+    if (!side) continue;
+    for (const p of players) {
+      const pred = predictions[`${m.id}_${p.id}`];
+      if (!pred || !isValidPrediction(pred, m)) continue;
+      if (predWinner(pred) === side) out[p.id] = (out[p.id] || 0) + R.underdogBonus;
+    }
+  }
+  return out;
 }
 
 // { playerId: bonusPoints } — +RULES.onlyWinnerBonus to the lone scorer of each
@@ -1394,6 +1430,15 @@ function renderRules() {
         <li>If you're the <b>ONLY</b> player to score on a match (everyone else got 0), you get <b>+${window.RULES.onlyWinnerBonus} bonus</b>! 🔥</li>
         <li>So a lone correct winner = <b>${POINTS.WINNER + window.RULES.onlyWinnerBonus} pts</b>, and a lone exact score = <b>${POINTS.WINNER + POINTS.EXACT + window.RULES.onlyWinnerBonus} pts</b>.</li>
         <li>Reward for the brave, unique pick! 💪</li>
+      </ul>
+    </div>` : ""}
+    ${window.RULES?.underdogBonus ? `
+    <div class="rules-card">
+      <h3>🐺 Underdog Bonus <span style="font-size:11px;color:var(--green)">NEW · Round 2</span></h3>
+      <ul>
+        <li>Correctly back the <b>lower-ranked team to win</b> (an upset) and get <b>+${window.RULES.underdogBonus} bonus</b>! 🐺</li>
+        <li>Ranking is the FIFA # shown on each team — back the bigger number to win.</li>
+        <li>Bonuses <b>stack</b>: a lone correct underdog call can be worth a LOT. 💰</li>
       </ul>
     </div>` : ""}
     <div class="rules-card">
