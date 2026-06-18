@@ -35,6 +35,7 @@ index.html              # page markup
 assets/css/style.css    # all styles
 assets/js/app.js         # interactivity + WhatsApp booking logic
 worldcup/               # 🏆 Gang Cup 2026 — World Cup prediction game (see worldcup/README.md)
+meta-ads-uploader/      # 🚀 Meta Ads Bulk Uploader (see meta-ads-uploader/README.md)
 ```
 
 ## 🏆 Gang Cup 2026
@@ -42,6 +43,14 @@ worldcup/               # 🏆 Gang Cup 2026 — World Cup prediction game (see 
 A private World Cup 2026 prediction game for the WhatsApp gang group lives in
 [`worldcup/`](worldcup/) — live scores, automatic points, leaderboard and
 one-tap WhatsApp updates. Setup guide: [`worldcup/README.md`](worldcup/README.md).
+
+## 🚀 Meta Ads Bulk Uploader
+
+A backend-free tool to bulk-publish Facebook + Instagram ads directly through
+the Meta Marketing API lives in [`meta-ads-uploader/`](meta-ads-uploader/) —
+drag-and-drop creatives, connect your live Meta account, pick a campaign + ad
+set (or clone one), and launch dozens of ads at once. Setup guide:
+[`meta-ads-uploader/README.md`](meta-ads-uploader/README.md).
 
 ## 🚀 Run locally
 
