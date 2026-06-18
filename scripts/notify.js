@@ -124,24 +124,23 @@ async function main() {
     (await db.collection("players").get()).docs.map((d) => [d.id, d.data()])
   );
 
-  // Only fetch predictions for matches today's features can touch — live ones,
-  // recent finishes, and upcoming unlocked fixtures — to keep Firestore reads
-  // well inside the free quota even with frequent cron runs.
-  const relevantIds = matches
-    .filter((m) =>
-      m.state === "in" ||
-      (m.completed && now - m.kickoff.getTime() < 24 * 3_600_000) ||
-      (m.state === "pre" && lockMs(m) > now && m.kickoff.getTime() - now < 48 * 3_600_000)
-    )
-    .map((m) => m.id);
-  const predictions = [];
-  for (let i = 0; i < relevantIds.length; i += 30) {
-    const snap = await db
-      .collection("predictions")
-      .where("matchId", "in", relevantIds.slice(i, i + 30))
-      .get();
-    predictions.push(...snap.docs.map((d) => d.data()));
-  }
+  // Read the previous heartbeat time so we can fetch only bets placed SINCE
+  // then (instead of the whole collection every run — that blew the free quota).
+  const prevBeat = await db.collection("health").doc("notify").get();
+  const lastRun = prevBeat.exists
+    ? (prevBeat.data().at?.toMillis?.() ?? now - 10 * 60_000)
+    : now - 10 * 60_000;
+
+  // Lazily fetch a single match's predictions, only when an event needs them,
+  // cached per run. Keeps Firestore reads tiny vs reading every prediction.
+  const predCache = {};
+  const matchPreds = async (m) => {
+    if (!predCache[m.id]) {
+      const snap = await db.collection("predictions").where("matchId", "==", m.id).get();
+      predCache[m.id] = snap.docs.map((d) => d.data());
+    }
+    return predCache[m.id];
+  };
 
   // claim() returns true exactly once per key across all runs
   const claim = async (key) => {
@@ -156,7 +155,7 @@ async function main() {
       .filter((p) => p.matchId === m.id && players[p.playerId])
       .filter((p) => isOverridden(m) || (p.updatedAt?.toMillis?.() ?? 0) <= lockMs(m))
       .map((p) => ({ ...p, name: players[p.playerId].name, emoji: players[p.playerId].emoji || "" }));
-  const validPreds = (m) => validPredsFrom(predictions, m);
+  const validPreds = async (m) => validPredsFrom(await matchPreds(m), m);
 
   const sendList = []; // { title, body }
   let anyFullTime = false;
@@ -178,7 +177,7 @@ async function main() {
     // 🥅 kickoff: reveal everyone's picks (only for recent kickoffs, no backfill)
     if (m.state !== "pre" && now - m.kickoff.getTime() < 3 * 3_600_000) {
       if (await claim(`ko_${m.id}`)) {
-        const picks = validPreds(m)
+        const picks = (await validPreds(m))
           .map((p) => `${p.emoji} ${p.name}: ${p.home}–${p.away}`)
           .join(" · ");
         sendList.push({
@@ -200,7 +199,7 @@ async function main() {
         if (old.h !== cur.h || old.a !== cur.a) {
           await liveRef.set(cur);
           const goal = cur.h + cur.a > old.h + old.a;
-          const exact = validPreds(m)
+          const exact = (await validPreds(m))
             .filter((p) => p.home === cur.h && p.away === cur.a)
             .map((p) => `${p.emoji} ${p.name}`);
           sendList.push({
@@ -218,7 +217,7 @@ async function main() {
     if (m.completed && m.home.score != null) {
       if (await claim(`ft_${m.id}`)) {
         anyFullTime = true;
-        const finished = validPreds(m);
+        const finished = await validPreds(m);
         const lines = finished
           .map((p) => ({ ...p, pts: scorePrediction(p, m.home.score, m.away.score) }))
           .sort((a, b) => b.pts - a.pts)
@@ -301,9 +300,12 @@ async function main() {
     await standRef.set({ ranks, prevRanks, at: admin.firestore.FieldValue.serverTimestamp() });
   }
 
-  // ✍️ bet placed/updated on upcoming matches (score stays secret until lock)
+  // ✍️ bet placed/updated — only read bets changed SINCE the last run (cheap)
   const matchById = Object.fromEntries(matches.map((m) => [m.id, m]));
-  for (const p of predictions) {
+  const newBets = (await db.collection("predictions")
+    .where("updatedAt", ">", admin.firestore.Timestamp.fromMillis(lastRun))
+    .get()).docs.map((d) => d.data());
+  for (const p of newBets) {
     const m = matchById[p.matchId];
     const t = p.updatedAt?.toMillis?.();
     if (!m || !t || !players[p.playerId]) continue;
