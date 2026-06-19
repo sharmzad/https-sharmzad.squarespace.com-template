@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Medusee Excursions — Sharm El Sheikh | Reservations &amp; Contact</title>
-<meta name="description" content="Medusee Excursions — sea trips, snorkeling, desert safari and Bedouin nights in Sharm El Sheikh. Reserve on WhatsApp +20 109 880 0394." />
+<title>Medusee Excursions — Water Sports in Sharm El Sheikh | Reservations</title>
+<meta name="description" content="Medusee Excursions — water sports, parasailing, snorkeling and sea trips in Sharm El Sheikh. Reserve on WhatsApp +20 109 880 0394." />
 <meta name="theme-color" content="#06477e" />
 <meta property="og:title" content="Medusee Excursions — Sharm El Sheikh" />
-<meta property="og:description" content="Sea trips, snorkeling, desert safari & Bedouin nights. Reserve on WhatsApp." />
+<meta property="og:description" content="Water sports, parasailing, snorkeling & sea trips. Reserve on WhatsApp." />
 <meta property="og:type" content="website" />
 <style>html,body{margin:0;padding:0;background:#042a52;}</style>
 </head>
@@ -22,9 +22,12 @@
 <div class="medusee-lp">
   <div class="medusee-card">
 
-    <!-- Logo / jellyfish mark -->
-    <div class="medusee-logo" aria-hidden="true">
-      <svg viewBox="0 0 64 64" width="58" height="58" fill="none">
+    <!-- Logo: replace LOGO_URL_HERE with your uploaded logo URL (WordPress → Media → copy file URL).
+         Until then, the jellyfish mark shows automatically. -->
+    <div class="medusee-logo">
+      <img class="medusee-logo-img" src="LOGO_URL_HERE" alt="Medusee Excursions logo"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+      <svg class="medusee-logo-fallback" viewBox="0 0 64 64" width="58" height="58" fill="none" aria-hidden="true">
         <path d="M12 30a20 20 0 0 1 40 0c0 4-3 6-6 6s-5-2.5-5-5.5S43 25 40 25s-4 3-4 6.5S35 37 32 37s-4-2-4-5.5S27 25 24 25s-3 2.5-3 5.5S19 36 16 36s-4-2-4-6Z" fill="#fff" fill-opacity=".95"/>
         <g stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-opacity=".9">
           <path d="M19 37c-1 6 2 9 0 15M27 38c-1 7 1 10 0 16M37 38c1 7-1 10 0 16M45 37c1 6-2 9 0 15"/>
@@ -33,7 +36,7 @@
     </div>
 
     <h1 class="medusee-title">Medusee Excursions</h1>
-    <p class="medusee-tag">Sea trips · Snorkeling · Desert Safari · Bedouin Nights</p>
+    <p class="medusee-tag">Water Sports · Parasailing · Snorkeling · Sea Trips · Banana Boat</p>
     <p class="medusee-loc">
       <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
       Sharm El Sheikh, Egypt
@@ -69,6 +72,19 @@
         <span class="medusee-arrow" aria-hidden="true">›</span>
       </a>
 
+      <!-- Find us on the map (exact Google Maps location) -->
+      <a class="medusee-btn"
+         href="https://maps.app.goo.gl/NpXAXWCQks6cybZV9" target="_blank" rel="noopener">
+        <span class="medusee-ic">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-7.2-7-12a7 7 0 0 1 14 0c0 4.8-7 12-7 12Z"/><circle cx="12" cy="9" r="2.6"/></svg>
+        </span>
+        <span class="medusee-txt">
+          <strong>Find Us on the Map</strong>
+          <small>Get directions in Google Maps</small>
+        </span>
+        <span class="medusee-arrow" aria-hidden="true">›</span>
+      </a>
+
       <!-- Email -->
       <a class="medusee-btn"
          href="mailto:beheryahmed75@gmail.com?subject=Excursion%20Enquiry">
@@ -87,6 +103,13 @@
     <!-- Promo badge -->
     <div class="medusee-promo">
       <span>🎁 Use code <b>22TOURS10</b> for 10% off</span>
+    </div>
+
+    <!-- ===================== MAP PREVIEW ===================== -->
+    <div class="medusee-map">
+      <iframe title="Medusee Excursions location" loading="lazy" allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=Meduse%20Water%20Sport%20Club%2C%20Sharm%20El%20Sheikh&output=embed"></iframe>
     </div>
 
     <!-- ===================== SOCIAL ICONS ===================== -->
@@ -125,11 +148,12 @@
 }
 @keyframes medusee-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .medusee-logo{
-  width:96px;height:96px;margin:0 auto 14px;border-radius:50%;
+  width:104px;height:104px;margin:0 auto 14px;border-radius:50%;overflow:hidden;
   display:flex;align-items:center;justify-content:center;
   background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);
   backdrop-filter:blur(6px);box-shadow:0 8px 30px rgba(0,0,0,.25);
 }
+.medusee-logo-img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;}
 .medusee-title{font-size:27px;line-height:1.15;margin:0 0 6px;font-weight:800;letter-spacing:.3px;}
 .medusee-tag{margin:0 0 8px;font-size:14px;opacity:.92;font-weight:500;}
 .medusee-loc{margin:0 0 22px;font-size:13px;opacity:.85;display:inline-flex;align-items:center;gap:5px;}
@@ -162,6 +186,8 @@
   border-radius:999px;padding:8px 16px;display:inline-block;
 }
 .medusee-promo b{letter-spacing:1px;}
+.medusee-map{margin:16px 0 4px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.28);box-shadow:0 6px 18px rgba(0,0,0,.18);}
+.medusee-map iframe{width:100%;height:190px;border:0;display:block;}
 .medusee-social{display:flex;justify-content:center;gap:16px;margin:22px 0 18px;}
 .medusee-social a{
   width:48px;height:48px;border-radius:50%;color:#fff;
