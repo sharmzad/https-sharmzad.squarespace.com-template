@@ -22,7 +22,7 @@ Designed in the same clean, airy "link-hub" style as the sharmsites.com referenc
 restyled in a Red Sea aqua/teal palette:
 - **Logo** + name "Medusee Excursions" / "Meduse Water Sport Club" / "Your adventure — our sea"
 - **Trust pills**: Sharm El Sheikh · 20 Years Experience
-- **Feature cards**: Hotel Transfer · 10% Online Discount (code 22TOURS10)
+- **Feature cards**: Hotel Transfer · 10% Online Discount
 - **GET IN TOUCH**: WhatsApp `+20 109 880 0394`, Website, Email — white cards with chevrons
 - **WHAT WE OFFER**: Parasailing · Water Sports · Banana Boat · Sofa Boat · Glass Boat · Sea Trips
 - **FOLLOW US**: Instagram, a second Instagram (icon only, no label), Facebook
