@@ -51,13 +51,7 @@ window.RULES = {
 // shows the fireworks + winners' names on open for one hour after the match.
 // This is an optional MANUAL override for a custom announcement (null = off).
 // `until` replays it on every open until that time; set null to switch off.
-window.ANNOUNCEMENT = {
-  id: "update-2026-06-18-bonuses",
-  version: "2.2",
-  emoji: "🏅",
-  body: "NEW bonus points for Round 2! 🏅 ONLY-WINNER: be the sole player to score on a match → +2 (lone winner = 4, lone exact = 9). 🐺 UNDERDOG: correctly back the lower-ranked team to win → +2. Stack them for a huge haul! ⚽",
-  until: "2026-06-20T22:00:00Z",
-};
+window.ANNOUNCEMENT = null;
 
 // -----------------------------------------------------------------------------
 // Sponsor (set to null to hide all sponsor branding everywhere).
