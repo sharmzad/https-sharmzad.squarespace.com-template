@@ -24,9 +24,9 @@ restyled in a Red Sea aqua/teal palette:
 - **Trust pills**: Sharm El Sheikh · 20 Years Experience
 - **Feature cards**: Free Hotel Pickup · 10% Online Discount (code 22TOURS10)
 - **GET IN TOUCH**: WhatsApp `+20 109 880 0394`, Website, Email — white cards with chevrons
-- **WHAT WE OFFER**: Parasailing · Snorkeling · Banana Boat · Sofa Boat · Glass Boat · Sea Trips
+- **WHAT WE OFFER**: Parasailing · Water Sports · Banana Boat · Sofa Boat · Glass Boat · Sea Trips
 - **FOLLOW US**: Instagram, a second Instagram (icon only, no label), Facebook
-- **FIND US**: Google Maps location card + embedded map preview
+- **FIND US**: "Open in Google Maps" location card (taps through to your exact pin)
 - **Thank-you footer** with 5 stars
 - Location: Sharm El Sheikh, Egypt
 
@@ -38,10 +38,10 @@ The page ships with a placeholder. To show the real logo:
 Until you do, a drawn jellyfish (méduse) mark shows automatically as a fallback.
 
 ## Map
-The map button and embedded preview point to your Google Maps location
-(`https://maps.app.goo.gl/NpXAXWCQks6cybZV9`). The embed below it searches Google
-Maps for "Meduse Water Sport Club, Sharm El Sheikh" — no API key needed. To pin a
-different spot, edit the `src` of the `<iframe class="medusee-map">`.
+The **FIND US** card opens your exact Google Maps location
+(`https://maps.app.goo.gl/NpXAXWCQks6cybZV9`) in one tap. To change it, edit that
+`href`. (A live embedded map was removed — the keyless Google embed rendered as a
+blank box, and the tap-through card is more reliable.)
 
 ## Editing later
 Open the HTML and change the values marked in the links:
