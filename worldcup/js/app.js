@@ -443,6 +443,12 @@ function openDashboard() {
     return m <= 0 ? "just now" : m < 60 ? `${m}m ago` : `${Math.round(m / 60)}h ago`;
   })();
 
+  // 🔔 notification coverage from the notifier heartbeat
+  const onCount = health?.playersOn;
+  const offCount = health?.playersOff;
+  const offNames = health?.playersOffNames || [];
+  const totalReg = health?.playersTotal ?? players.length;
+
   const card = (icon, label, value, sub) => `
     <div class="dash-cell">
       <div class="dash-val">${icon} ${value}</div>
@@ -456,8 +462,15 @@ function openDashboard() {
     card("🎯", "Predictions", total, `${predsToday.length} today`) +
     card("📈", "Avg / player", avg) +
     card("🔥", "Most active", top ? `${top.emoji}` : "—", top ? `${esc(top.name)} · ${topN} picks` : "") +
-    card("🔔", "Notif devices", devices, `notifier ${notifAgo}`) +
-    (next ? card("⏭️", "Next match bets", nextBets, `${esc(next.home.abbr)}–${esc(next.away.abbr)}`) : "");
+    card("🔔", "Getting alerts", onCount != null ? `${onCount}/${totalReg}` : "—", `${devices} devices · ${notifAgo}`) +
+    card("🔕", "No alerts", offCount != null ? offCount : "—", offNames.length ? "see list below" : "everyone's covered 🎉") +
+    (next ? card("⏭️", "Next match bets", nextBets, `${esc(next.home.abbr)}–${esc(next.away.abbr)}`) : "") +
+    (offNames.length
+      ? `<div class="dash-cell dash-wide">
+           <div class="dash-label">🔕 Not receiving notifications (${offNames.length})</div>
+           <div class="dash-sub">${offNames.map((n) => esc(n)).join(", ")}</div>
+         </div>`
+      : "");
 
   $("#dashModal").classList.remove("hidden");
 }

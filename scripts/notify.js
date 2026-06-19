@@ -142,7 +142,6 @@ async function main() {
       { merge: true }
     );
 
-  // No devices yet? Do nothing, so no event gets burned.
   const tokenDocs = (await db.collection("tokens").get()).docs;
   const tokens = tokenDocs.map((d) => d.id);
   const playerTokens = {}; // playerId -> [tokens] (for targeted reminders)
@@ -150,9 +149,34 @@ async function main() {
     const pid = d.data().playerId;
     if (pid) (playerTokens[pid] = playerTokens[pid] || []).push(d.id);
   }
+
+  // Players (loaded up front so we can report notification coverage every run).
+  const players = Object.fromEntries(
+    (await db.collection("players").get()).docs.map((d) => [d.id, d.data()])
+  );
+
+  // 🔔 Notification coverage: who CAN receive (has ≥1 registered device) vs who
+  // CAN'T. Written into the heartbeat so the admin dashboard shows it live.
+  const covered = new Set(Object.keys(playerTokens).filter((pid) => players[pid]));
+  const offNames = Object.entries(players)
+    .filter(([id]) => !covered.has(id))
+    .map(([, p]) => p.name);
+  const coverage = {
+    playersTotal: Object.keys(players).length,
+    playersOn: covered.size,
+    playersOff: offNames.length,
+    playersOffNames: offNames,
+  };
+  console.log(
+    `Notification coverage: ${coverage.playersOn}/${coverage.playersTotal} players ON, ` +
+    `${coverage.playersOff} OFF${offNames.length ? ` (${offNames.join(", ")})` : ""}; ` +
+    `${tokens.length} devices registered`
+  );
+
+  // No devices yet? Do nothing, so no event gets burned.
   if (!tokens.length) {
     console.log("No registered devices yet.");
-    await heartbeat({ devices: 0, messages: 0 });
+    await heartbeat({ devices: 0, messages: 0, ...coverage });
     return;
   }
 
@@ -160,10 +184,6 @@ async function main() {
   if (!res.ok) throw new Error(`ESPN responded ${res.status}`);
   const matches = ((await res.json()).events || []).map(normalizeEvent);
   const now = Date.now();
-
-  const players = Object.fromEntries(
-    (await db.collection("players").get()).docs.map((d) => [d.id, d.data()])
-  );
 
   // Read the previous heartbeat time so we can fetch only bets placed SINCE
   // then (instead of the whole collection every run — that blew the free quota).
@@ -391,7 +411,7 @@ async function main() {
 
   if (!sendList.length) {
     console.log("Nothing to send this run.");
-    await heartbeat({ devices: tokens.length, messages: 0 });
+    await heartbeat({ devices: tokens.length, messages: 0, ...coverage });
     return;
   }
 
@@ -422,7 +442,7 @@ async function main() {
     );
   }
 
-  await heartbeat({ devices: tokens.length, messages: sendList.length, failures });
+  await heartbeat({ devices: tokens.length, messages: sendList.length, failures, ...coverage });
 }
 
 // Log errors but exit 0 so a transient failure (e.g. a quota blip or ESPN
