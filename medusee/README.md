@@ -18,15 +18,16 @@ takes guests to WhatsApp reservations, the website, email and the social profile
 > theme offers one.
 
 ## What's on the page
-- **Logo** at the top (see "Add your logo" below) — falls back to a jellyfish mark.
-- **WhatsApp Reservation** (main button) → `+20 109 880 0394` (pre-filled message)
-- **Website** → https://meduseexcursions.com
-- **Find Us on the Map** → exact Google Maps location, plus an embedded map preview
-- **Email** → beheryahmed75@gmail.com
-- **Instagram** (two profiles, second shown as an icon only)
-- **Facebook** → https://www.facebook.com/medusesport/
-- Tagline leads with **Water Sports** (parasailing, snorkeling, sea trips, banana boat)
-- Promo badge: code **22TOURS10** for 10% off
+Designed in the same clean, airy "link-hub" style as the sharmsites.com reference,
+restyled in a Red Sea aqua/teal palette:
+- **Logo** + name "Medusee Excursions" / "Meduse Water Sport Club" / "Your adventure — our sea"
+- **Trust pills**: Sharm El Sheikh · 20 Years Experience
+- **Feature cards**: Free Hotel Pickup · 10% Online Discount (code 22TOURS10)
+- **GET IN TOUCH**: WhatsApp `+20 109 880 0394`, Website, Email — white cards with chevrons
+- **WHAT WE OFFER**: Parasailing · Snorkeling · Banana Boat · Sofa Boat · Glass Boat · Sea Trips
+- **FOLLOW US**: Instagram, a second Instagram (icon only, no label), Facebook
+- **FIND US**: Google Maps location card + embedded map preview
+- **Thank-you footer** with 5 stars
 - Location: Sharm El Sheikh, Egypt
 
 ## Add your logo

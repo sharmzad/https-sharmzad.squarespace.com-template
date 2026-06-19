@@ -2,185 +2,225 @@
 <!--  MEDUSEE EXCURSIONS — QR Landing / Link Hub                    -->
 <!--  Paste this whole block into a WordPress "Custom HTML" block.  -->
 <!--  All CSS is scoped under .medusee-lp so it won't touch your    -->
-<!--  theme. Edit links/text where marked CHANGE ME.               -->
+<!--  theme. Replace LOGO_URL_HERE with your uploaded logo URL.     -->
 <!-- ============================================================= -->
 
 <div class="medusee-lp">
-  <div class="medusee-card">
+  <div class="m-card">
 
-    <!-- Logo: replace LOGO_URL_HERE with your uploaded logo URL (WordPress → Media → copy file URL).
-         Until then, the jellyfish mark shows automatically. -->
-    <div class="medusee-logo">
-      <img class="medusee-logo-img" src="LOGO_URL_HERE" alt="Medusee Excursions logo"
+    <!-- ===== LOGO (replace LOGO_URL_HERE: WordPress → Media → copy File URL) ===== -->
+    <div class="m-logo">
+      <img class="m-logo__img" src="LOGO_URL_HERE" alt="Medusee Excursions logo"
            onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
-      <svg class="medusee-logo-fallback" viewBox="0 0 64 64" width="58" height="58" fill="none" aria-hidden="true">
-        <path d="M12 30a20 20 0 0 1 40 0c0 4-3 6-6 6s-5-2.5-5-5.5S43 25 40 25s-4 3-4 6.5S35 37 32 37s-4-2-4-5.5S27 25 24 25s-3 2.5-3 5.5S19 36 16 36s-4-2-4-6Z" fill="#fff" fill-opacity=".95"/>
-        <g stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-opacity=".9">
+      <svg class="m-logo__fb" viewBox="0 0 64 64" width="74" height="74" fill="none" aria-hidden="true" style="display:none">
+        <path d="M12 30a20 20 0 0 1 40 0c0 4-3 6-6 6s-5-2.5-5-5.5S43 25 40 25s-4 3-4 6.5S35 37 32 37s-4-2-4-5.5S27 25 24 25s-3 2.5-3 5.5S19 36 16 36s-4-2-4-6Z" fill="#0e8ab0"/>
+        <g stroke="#0e8ab0" stroke-width="2.4" stroke-linecap="round">
           <path d="M19 37c-1 6 2 9 0 15M27 38c-1 7 1 10 0 16M37 38c1 7-1 10 0 16M45 37c1 6-2 9 0 15"/>
         </g>
       </svg>
     </div>
 
-    <h1 class="medusee-title">Medusee Excursions</h1>
-    <p class="medusee-tag">Water Sports · Parasailing · Snorkeling · Sea Trips · Banana Boat</p>
-    <p class="medusee-loc">
-      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-      Sharm El Sheikh, Egypt
-    </p>
+    <h1 class="m-title">Medusee Excursions</h1>
+    <p class="m-subtitle">MEDUSE WATER SPORT CLUB</p>
+    <p class="m-tagline">Your adventure — our sea</p>
 
-    <!-- ===================== MAIN LINKS ===================== -->
-    <div class="medusee-links">
+    <!-- ===== LOCATION / TRUST PILLS ===== -->
+    <div class="m-pills">
+      <span class="m-pill">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
+        Sharm El Sheikh
+      </span>
+      <span class="m-pill">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="m12 2 2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
+        20 Years Experience
+      </span>
+    </div>
 
-      <!-- WhatsApp reservation (primary) -->
-      <a class="medusee-btn medusee-btn--wa"
+    <!-- ===== FEATURE CARDS ===== -->
+    <div class="m-feats">
+      <div class="m-feat">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13h13V6H3zM16 9h3l2 3v1h-5z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg>
+        <strong>Free Hotel Pickup</strong>
+        <small>To the beach &amp; back</small>
+      </div>
+      <div class="m-feat">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13 21l-9-9V4h8z"/><circle cx="8" cy="8" r="1.4" fill="currentColor"/></svg>
+        <strong>10% Online Discount</strong>
+        <small>Use code 22TOURS10</small>
+      </div>
+    </div>
+
+    <!-- ===== GET IN TOUCH ===== -->
+    <p class="m-head">GET IN TOUCH</p>
+    <div class="m-list">
+
+      <a class="m-row m-row--wa"
          href="https://wa.me/201098800394?text=Hello%20Medusee%20Excursions%2C%20I%27d%20like%20to%20make%20a%20reservation."
          target="_blank" rel="noopener">
-        <span class="medusee-ic">
-          <svg viewBox="0 0 32 32" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M16 3C9 3 3.5 8.5 3.5 15.5c0 2.4.7 4.7 1.9 6.7L3 29l7-1.8a12.4 12.4 0 0 0 6 1.5C23 28.7 28.5 23.2 28.5 16.2S23 3 16 3Zm0 22.8c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-3.9 1 1-3.8-.3-.4a10 10 0 0 1-1.6-5.4C5 9.9 9.9 5 16 5s11 4.9 11 11-4.9 9.8-11 9.8Zm5.6-7.4c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-.9 1.2-.3.2-.6.1a8.2 8.2 0 0 1-2.4-1.5 9 9 0 0 1-1.7-2.1c-.2-.3 0-.5.1-.6l.5-.5.3-.5a.6.6 0 0 0 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4 3.4 3.4 0 0 0-1 2.5 5.8 5.8 0 0 0 1.3 3.1c.2.2 2.6 4 6.3 5.6 2.5 1 3 .9 3.6.8a3 3 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.4-.3-.7-.5Z"/></svg>
+        <span class="m-row__ic m-row__ic--wa">
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M16 3C9 3 3.5 8.5 3.5 15.5c0 2.4.7 4.7 1.9 6.7L3 29l7-1.8a12.4 12.4 0 0 0 6 1.5C23 28.7 28.5 23.2 28.5 16.2S23 3 16 3Zm0 22.8c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-3.9 1 1-3.8-.3-.4a10 10 0 0 1-1.6-5.4C5 9.9 9.9 5 16 5s11 4.9 11 11-4.9 9.8-11 9.8Zm5.6-7.4c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-.9 1.2-.3.2-.6.1a8.2 8.2 0 0 1-2.4-1.5 9 9 0 0 1-1.7-2.1c-.2-.3 0-.5.1-.6l.5-.5.3-.5a.6.6 0 0 0 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4 3.4 3.4 0 0 0-1 2.5 5.8 5.8 0 0 0 1.3 3.1c.2.2 2.6 4 6.3 5.6 2.5 1 3 .9 3.6.8a3 3 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.4-.3-.7-.5Z"/></svg>
         </span>
-        <span class="medusee-txt">
-          <strong>WhatsApp Reservation</strong>
-          <small>+20 109 880 0394 · Book in seconds</small>
+        <span class="m-row__txt">
+          <strong>Message us on WhatsApp</strong>
+          <small>+20 109 880 0394 · Reservations</small>
         </span>
-        <span class="medusee-arrow" aria-hidden="true">›</span>
+        <span class="m-row__arr" aria-hidden="true">›</span>
       </a>
 
-      <!-- Website -->
-      <a class="medusee-btn"
-         href="https://meduseexcursions.com" target="_blank" rel="noopener">
-        <span class="medusee-ic">
+      <a class="m-row" href="https://meduseexcursions.com" target="_blank" rel="noopener">
+        <span class="m-row__ic">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>
         </span>
-        <span class="medusee-txt">
+        <span class="m-row__txt">
           <strong>Visit our Website</strong>
-          <small>Browse all tours &amp; book online</small>
+          <small>meduseexcursions.com · Book online</small>
         </span>
-        <span class="medusee-arrow" aria-hidden="true">›</span>
+        <span class="m-row__arr" aria-hidden="true">›</span>
       </a>
 
-      <!-- Find us on the map (exact Google Maps location) -->
-      <a class="medusee-btn"
-         href="https://maps.app.goo.gl/NpXAXWCQks6cybZV9" target="_blank" rel="noopener">
-        <span class="medusee-ic">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-7.2-7-12a7 7 0 0 1 14 0c0 4.8-7 12-7 12Z"/><circle cx="12" cy="9" r="2.6"/></svg>
-        </span>
-        <span class="medusee-txt">
-          <strong>Find Us on the Map</strong>
-          <small>Get directions in Google Maps</small>
-        </span>
-        <span class="medusee-arrow" aria-hidden="true">›</span>
-      </a>
-
-      <!-- Email -->
-      <a class="medusee-btn"
-         href="mailto:beheryahmed75@gmail.com?subject=Excursion%20Enquiry">
-        <span class="medusee-ic">
+      <a class="m-row" href="mailto:beheryahmed75@gmail.com?subject=Excursion%20Enquiry">
+        <span class="m-row__ic">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
         </span>
-        <span class="medusee-txt">
-          <strong>Email Us</strong>
+        <span class="m-row__txt">
+          <strong>Email us</strong>
           <small>beheryahmed75@gmail.com</small>
         </span>
-        <span class="medusee-arrow" aria-hidden="true">›</span>
+        <span class="m-row__arr" aria-hidden="true">›</span>
       </a>
 
     </div>
 
-    <!-- Promo badge -->
-    <div class="medusee-promo">
-      <span>🎁 Use code <b>22TOURS10</b> for 10% off</span>
+    <!-- ===== WHAT WE OFFER ===== -->
+    <p class="m-head">WHAT WE OFFER</p>
+    <div class="m-grid">
+      <span class="m-chip"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 6"/></svg>Parasailing</span>
+      <span class="m-chip"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 6"/></svg>Snorkeling</span>
+      <span class="m-chip"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 6"/></svg>Banana Boat</span>
+      <span class="m-chip"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 6"/></svg>Sofa Boat</span>
+      <span class="m-chip"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 6"/></svg>Glass Boat</span>
+      <span class="m-chip"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 6"/></svg>Sea Trips</span>
     </div>
 
-    <!-- ===================== MAP PREVIEW ===================== -->
-    <div class="medusee-map">
+    <!-- ===== FOLLOW US ===== -->
+    <p class="m-head">FOLLOW US</p>
+    <div class="m-social">
+      <a class="m-soc" href="https://www.instagram.com/sharmmeduse_excursions/" target="_blank" rel="noopener" aria-label="Instagram">
+        <span class="m-soc__ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.56.22.96.48 1.38.9.42.42.68.82.9 1.38.17.4.36 1 .42 2.2.07 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 1.8-.42 2.2a3.7 3.7 0 0 1-.9 1.38c-.42.42-.82.68-1.38.9-.4.17-1 .36-2.2.42-1.3.07-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-1.8-.25-2.2-.42a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.17-.4-.36-1-.42-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-1.8.42-2.2.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.4-.17 1-.36 2.2-.42C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-1.1.05-1.7.24-2.1.4-.5.2-.9.44-1.3.84-.4.4-.64.8-.84 1.3-.16.4-.35 1-.4 2.1C2.6 9.9 2.6 10.3 2.6 12s0 2.1.07 3.3c.05 1.1.24 1.7.4 2.1.2.5.44.9.84 1.3.4.4.8.64 1.3.84.4.16 1 .35 2.1.4 1.2.07 1.6.07 4.7.07s3.5 0 4.7-.07c1.1-.05 1.7-.24 2.1-.4.5-.2.9-.44 1.3-.84.4-.4.64-.8.84-1.3.16-.4.35-1 .4-2.1.07-1.2.07-1.6.07-3.3s0-2.1-.07-3.3c-.05-1.1-.24-1.7-.4-2.1a3.5 3.5 0 0 0-.84-1.3 3.5 3.5 0 0 0-1.3-.84c-.4-.16-1-.35-2.1-.4C15.5 4 15.1 4 12 4Zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 8.07a3.17 3.17 0 1 0 0-6.34 3.17 3.17 0 0 0 0 6.34Zm6.24-8.27a1.14 1.14 0 1 1-2.28 0 1.14 1.14 0 0 1 2.28 0Z"/></svg></span>
+        <em>Instagram</em>
+      </a>
+      <a class="m-soc" href="https://www.instagram.com/22tours.sharm" target="_blank" rel="noopener" aria-label="Instagram">
+        <span class="m-soc__ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.56.22.96.48 1.38.9.42.42.68.82.9 1.38.17.4.36 1 .42 2.2.07 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 1.8-.42 2.2a3.7 3.7 0 0 1-.9 1.38c-.42.42-.82.68-1.38.9-.4.17-1 .36-2.2.42-1.3.07-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-1.8-.25-2.2-.42a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.17-.4-.36-1-.42-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-1.8.42-2.2.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.4-.17 1-.36 2.2-.42C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-1.1.05-1.7.24-2.1.4-.5.2-.9.44-1.3.84-.4.4-.64.8-.84 1.3-.16.4-.35 1-.4 2.1C2.6 9.9 2.6 10.3 2.6 12s0 2.1.07 3.3c.05 1.1.24 1.7.4 2.1.2.5.44.9.84 1.3.4.4.8.64 1.3.84.4.16 1 .35 2.1.4 1.2.07 1.6.07 4.7.07s3.5 0 4.7-.07c1.1-.05 1.7-.24 2.1-.4.5-.2.9-.44 1.3-.84.4-.4.64-.8.84-1.3.16-.4.35-1 .4-2.1.07-1.2.07-1.6.07-3.3s0-2.1-.07-3.3c-.05-1.1-.24-1.7-.4-2.1a3.5 3.5 0 0 0-.84-1.3 3.5 3.5 0 0 0-1.3-.84c-.4-.16-1-.35-2.1-.4C15.5 4 15.1 4 12 4Zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 8.07a3.17 3.17 0 1 0 0-6.34 3.17 3.17 0 0 0 0 6.34Zm6.24-8.27a1.14 1.14 0 1 1-2.28 0 1.14 1.14 0 0 1 2.28 0Z"/></svg></span>
+        <em>&nbsp;</em>
+      </a>
+      <a class="m-soc" href="https://www.facebook.com/medusesport/" target="_blank" rel="noopener" aria-label="Facebook">
+        <span class="m-soc__ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12Z"/></svg></span>
+        <em>Facebook</em>
+      </a>
+    </div>
+
+    <!-- ===== FIND US ===== -->
+    <p class="m-head">FIND US</p>
+    <div class="m-list">
+      <a class="m-row" href="https://maps.app.goo.gl/NpXAXWCQks6cybZV9" target="_blank" rel="noopener">
+        <span class="m-row__ic">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-7.2-7-12a7 7 0 0 1 14 0c0 4.8-7 12-7 12Z"/><circle cx="12" cy="9" r="2.6"/></svg>
+        </span>
+        <span class="m-row__txt">
+          <strong>Medusee Excursions</strong>
+          <small>Sharm El Sheikh · <span class="m-link">Open in Google Maps</span></small>
+        </span>
+        <span class="m-row__arr" aria-hidden="true">›</span>
+      </a>
+    </div>
+    <div class="m-map">
       <iframe title="Medusee Excursions location" loading="lazy" allowfullscreen
               referrerpolicy="no-referrer-when-downgrade"
               src="https://www.google.com/maps?q=Meduse%20Water%20Sport%20Club%2C%20Sharm%20El%20Sheikh&output=embed"></iframe>
     </div>
 
-    <!-- ===================== SOCIAL ICONS ===================== -->
-    <div class="medusee-social" aria-label="Social media">
-      <!-- Instagram #1 -->
-      <a href="https://www.instagram.com/sharmmeduse_excursions/" target="_blank" rel="noopener" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.56.22.96.48 1.38.9.42.42.68.82.9 1.38.17.4.36 1 .42 2.2.07 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 1.8-.42 2.2a3.7 3.7 0 0 1-.9 1.38c-.42.42-.82.68-1.38.9-.4.17-1 .36-2.2.42-1.3.07-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-1.8-.25-2.2-.42a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.17-.4-.36-1-.42-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-1.8.42-2.2.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.4-.17 1-.36 2.2-.42C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-1.1.05-1.7.24-2.1.4-.5.2-.9.44-1.3.84-.4.4-.64.8-.84 1.3-.16.4-.35 1-.4 2.1C2.6 9.9 2.6 10.3 2.6 12s0 2.1.07 3.3c.05 1.1.24 1.7.4 2.1.2.5.44.9.84 1.3.4.4.8.64 1.3.84.4.16 1 .35 2.1.4 1.2.07 1.6.07 4.7.07s3.5 0 4.7-.07c1.1-.05 1.7-.24 2.1-.4.5-.2.9-.44 1.3-.84.4-.4.64-.8.84-1.3.16-.4.35-1 .4-2.1.07-1.2.07-1.6.07-3.3s0-2.1-.07-3.3c-.05-1.1-.24-1.7-.4-2.1a3.5 3.5 0 0 0-.84-1.3 3.5 3.5 0 0 0-1.3-.84c-.4-.16-1-.35-2.1-.4C15.5 4 15.1 4 12 4Zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 8.07a3.17 3.17 0 1 0 0-6.34 3.17 3.17 0 0 0 0 6.34Zm6.24-8.27a1.14 1.14 0 1 1-2.28 0 1.14 1.14 0 0 1 2.28 0Z"/></svg>
-      </a>
-      <!-- Instagram #2 (no label, just the icon) -->
-      <a href="https://www.instagram.com/22tours.sharm" target="_blank" rel="noopener" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.56.22.96.48 1.38.9.42.42.68.82.9 1.38.17.4.36 1 .42 2.2.07 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 1.8-.42 2.2a3.7 3.7 0 0 1-.9 1.38c-.42.42-.82.68-1.38.9-.4.17-1 .36-2.2.42-1.3.07-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-1.8-.25-2.2-.42a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.17-.4-.36-1-.42-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-1.8.42-2.2.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.4-.17 1-.36 2.2-.42C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-1.1.05-1.7.24-2.1.4-.5.2-.9.44-1.3.84-.4.4-.64.8-.84 1.3-.16.4-.35 1-.4 2.1C2.6 9.9 2.6 10.3 2.6 12s0 2.1.07 3.3c.05 1.1.24 1.7.4 2.1.2.5.44.9.84 1.3.4.4.8.64 1.3.84.4.16 1 .35 2.1.4 1.2.07 1.6.07 4.7.07s3.5 0 4.7-.07c1.1-.05 1.7-.24 2.1-.4.5-.2.9-.44 1.3-.84.4-.4.64-.8.84-1.3.16-.4.35-1 .4-2.1.07-1.2.07-1.6.07-3.3s0-2.1-.07-3.3c-.05-1.1-.24-1.7-.4-2.1a3.5 3.5 0 0 0-.84-1.3 3.5 3.5 0 0 0-1.3-.84c-.4-.16-1-.35-2.1-.4C15.5 4 15.1 4 12 4Zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 8.07a3.17 3.17 0 1 0 0-6.34 3.17 3.17 0 0 0 0 6.34Zm6.24-8.27a1.14 1.14 0 1 1-2.28 0 1.14 1.14 0 0 1 2.28 0Z"/></svg>
-      </a>
-      <!-- Facebook -->
-      <a href="https://www.facebook.com/medusesport/" target="_blank" rel="noopener" aria-label="Facebook">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12Z"/></svg>
-      </a>
+    <!-- ===== THANK YOU ===== -->
+    <div class="m-thanks">
+      <div class="m-stars" aria-hidden="true">★★★★★</div>
+      <p class="m-thanks__t">Thank you for visiting us!</p>
+      <p class="m-thanks__s">“See you on the water 🌊”</p>
     </div>
 
-    <p class="medusee-foot">© Medusee Excursions · Sharm El Sheikh</p>
+    <p class="m-foot">© Medusee Excursions · Made with ♥ in Sharm El Sheikh</p>
   </div>
 </div>
 
 <style>
-/* All styles scoped under .medusee-lp so they never affect the rest of the WordPress theme */
+/* All styles scoped under .medusee-lp — they won't affect the rest of your theme */
 .medusee-lp{
-  --wa:#25d366; --deep:#062a4a; --aqua:#13a0c4; --ink:#0b2236;
+  --aqua:#0e8ab0; --deep:#0a5f8a; --wa:#25d366; --ink:#15384a; --muted:#6f8a99;
+  --line:#e4eef2; --chipbg:#eaf6fa;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  min-height:100vh; box-sizing:border-box; padding:34px 16px 44px;
-  display:flex; align-items:flex-start; justify-content:center;
-  background:radial-gradient(120% 90% at 50% 0%,#1ec6c0 0%,#0d8bb8 38%,#06477e 72%,#042a52 100%);
+  min-height:100vh; box-sizing:border-box; padding:30px 14px 40px;
+  display:flex; justify-content:center; align-items:flex-start;
+  background:linear-gradient(180deg,#e6f6fa 0%,#f1fbfd 34%,#ffffff 100%);
+  color:var(--ink);
 }
 .medusee-lp *,.medusee-lp *::before,.medusee-lp *::after{box-sizing:border-box;}
-.medusee-card{
-  width:100%; max-width:460px; text-align:center; color:#fff;
-  animation:medusee-in .6s ease both;
-}
-@keyframes medusee-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.medusee-logo{
-  width:104px;height:104px;margin:0 auto 14px;border-radius:50%;overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);
-  backdrop-filter:blur(6px);box-shadow:0 8px 30px rgba(0,0,0,.25);
-}
-.medusee-logo-img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;}
-.medusee-title{font-size:27px;line-height:1.15;margin:0 0 6px;font-weight:800;letter-spacing:.3px;}
-.medusee-tag{margin:0 0 8px;font-size:14px;opacity:.92;font-weight:500;}
-.medusee-loc{margin:0 0 22px;font-size:13px;opacity:.85;display:inline-flex;align-items:center;gap:5px;}
-.medusee-links{display:flex;flex-direction:column;gap:13px;}
-.medusee-btn{
-  display:flex;align-items:center;gap:14px;text-decoration:none;text-align:left;
-  background:rgba(255,255,255,.96);color:var(--ink);
-  padding:14px 16px;border-radius:16px;
-  box-shadow:0 6px 18px rgba(0,0,0,.18);
-  transition:transform .15s ease,box-shadow .15s ease;
-}
-.medusee-btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.26);}
-.medusee-btn:active{transform:translateY(0);}
-.medusee-ic{
-  flex:0 0 46px;width:46px;height:46px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,#13a0c4,#0a5f97);color:#fff;
-}
-.medusee-txt{display:flex;flex-direction:column;flex:1;min-width:0;}
-.medusee-txt strong{font-size:16px;font-weight:700;line-height:1.2;}
-.medusee-txt small{font-size:12.5px;color:#5a6b7a;margin-top:2px;}
-.medusee-arrow{font-size:26px;color:#9fb0bf;font-weight:400;line-height:1;}
-.medusee-btn--wa{background:var(--wa);color:#fff;}
-.medusee-btn--wa .medusee-ic{background:rgba(255,255,255,.22);}
-.medusee-btn--wa .medusee-txt small{color:rgba(255,255,255,.9);}
-.medusee-btn--wa .medusee-arrow{color:rgba(255,255,255,.85);}
-.medusee-promo{
-  margin:18px auto 4px;font-size:13px;
-  background:rgba(255,255,255,.14);border:1px dashed rgba(255,255,255,.5);
-  border-radius:999px;padding:8px 16px;display:inline-block;
-}
-.medusee-promo b{letter-spacing:1px;}
-.medusee-map{margin:16px 0 4px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.28);box-shadow:0 6px 18px rgba(0,0,0,.18);}
-.medusee-map iframe{width:100%;height:190px;border:0;display:block;}
-.medusee-social{display:flex;justify-content:center;gap:16px;margin:22px 0 18px;}
-.medusee-social a{
-  width:48px;height:48px;border-radius:50%;color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);
-  transition:transform .15s ease,background .15s ease;
-}
-.medusee-social a:hover{transform:translateY(-3px);background:rgba(255,255,255,.26);}
-.medusee-foot{font-size:12px;opacity:.7;margin:6px 0 0;}
+.m-card{width:100%;max-width:460px;text-align:center;animation:m-in .55s ease both;}
+@keyframes m-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.m-logo{width:96px;height:96px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;}
+.m-logo__img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
+.m-title{font-size:25px;font-weight:800;margin:0;letter-spacing:.2px;}
+.m-subtitle{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--aqua);margin:4px 0 0;}
+.m-tagline{font-size:14px;font-style:italic;color:var(--muted);margin:8px 0 16px;}
+
+.m-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:18px;}
+.m-pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--deep);
+  border:1px solid #bfe2ec;background:#f3fafc;border-radius:999px;padding:6px 13px;}
+
+.m-feats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+.m-feat{background:linear-gradient(135deg,var(--aqua),var(--deep));color:#fff;border-radius:18px;
+  padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:4px;
+  box-shadow:0 8px 20px rgba(14,138,176,.28);}
+.m-feat strong{font-size:14px;font-weight:700;margin-top:4px;}
+.m-feat small{font-size:11.5px;opacity:.9;line-height:1.3;}
+
+.m-head{font-size:11.5px;font-weight:700;letter-spacing:2.5px;color:#9ab1bd;margin:22px 0 12px;}
+
+.m-list{display:flex;flex-direction:column;gap:11px;}
+.m-row{display:flex;align-items:center;gap:13px;text-decoration:none;text-align:left;
+  background:#fff;border:1px solid var(--line);border-radius:16px;padding:13px 15px;color:var(--ink);
+  box-shadow:0 4px 14px rgba(20,70,95,.06);transition:transform .15s ease,box-shadow .15s ease;}
+.m-row:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(20,70,95,.12);}
+.m-row__ic{flex:0 0 44px;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--aqua),var(--deep));color:#fff;}
+.m-row__txt{flex:1;min-width:0;display:flex;flex-direction:column;}
+.m-row__txt strong{font-size:15px;font-weight:700;line-height:1.25;}
+.m-row__txt small{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.m-link{color:var(--aqua);font-weight:600;}
+.m-row__arr{font-size:24px;color:#c2d2da;line-height:1;}
+.m-row--wa .m-row__ic--wa{background:var(--wa);}
+
+.m-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.m-chip{display:flex;align-items:center;gap:9px;background:var(--chipbg);border:1px solid #d8eef4;
+  border-radius:13px;padding:12px 13px;font-size:13.5px;font-weight:600;color:var(--ink);text-align:left;}
+.m-chip svg{flex:0 0 auto;color:var(--aqua);}
+
+.m-social{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;}
+.m-soc{display:flex;flex-direction:column;align-items:center;gap:7px;text-decoration:none;
+  background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 8px;color:var(--ink);
+  box-shadow:0 4px 14px rgba(20,70,95,.06);transition:transform .15s ease,box-shadow .15s ease;}
+.m-soc:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(20,70,95,.12);}
+.m-soc__ic{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:#fff;background:linear-gradient(135deg,#f9ce34,#ee2a7b 45%,#6228d7);}
+.m-soc:last-child .m-soc__ic{background:#1877f2;}
+.m-soc em{font-style:normal;font-size:12px;font-weight:600;color:var(--muted);min-height:15px;}
+
+.m-map{margin:14px 0 2px;border-radius:18px;overflow:hidden;border:1px solid var(--line);
+  box-shadow:0 4px 14px rgba(20,70,95,.08);}
+.m-map iframe{width:100%;height:200px;border:0;display:block;}
+
+.m-thanks{margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px 18px;
+  box-shadow:0 4px 14px rgba(20,70,95,.06);}
+.m-stars{color:#f6b50a;font-size:20px;letter-spacing:3px;}
+.m-thanks__t{font-size:16px;font-weight:700;margin:10px 0 6px;}
+.m-thanks__s{font-size:14px;color:var(--aqua);font-weight:600;margin:0;}
+.m-foot{font-size:12px;color:#9ab1bd;margin:16px 0 0;}
 </style>
