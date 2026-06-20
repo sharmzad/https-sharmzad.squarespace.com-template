@@ -1,0 +1,18 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Zaki — Sobhy Kaber dining advisor">
+  <defs>
+    <linearGradient id="zkg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ba4940"/>
+      <stop offset="1" stop-color="#c66746"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="32" fill="url(#zkg)"/>
+  <circle cx="32" cy="32" r="30" fill="none" stroke="#e5aa56" stroke-width="1.6" opacity=".9"/>
+  <!-- chef toque -->
+  <path d="M20 38v-5.5c-3.3-.9-5.5-3.6-5.5-7 0-4 3.2-7.2 7.2-7.2.6 0 1.2.1 1.8.2C25 15.6 28.2 14 32 14s7 1.6 8.5 4.5c.6-.1 1.2-.2 1.8-.2 4 0 7.2 3.2 7.2 7.2 0 3.4-2.2 6.1-5.5 7V38H20z" fill="#fdf6ec"/>
+  <rect x="20" y="40" width="24" height="6" rx="2" fill="#fdf6ec"/>
+  <line x1="27" y1="33" x2="27" y2="38" stroke="#e3cdb2" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="32" y1="33" x2="32" y2="38" stroke="#e3cdb2" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="37" y1="33" x2="37" y2="38" stroke="#e3cdb2" stroke-width="1.6" stroke-linecap="round"/>
+  <!-- gold spark -->
+  <path d="M48 10l1.5 3.5L53 15l-3.5 1.5L48 20l-1.5-3.5L43 15l3.5-1.5z" fill="#e5aa56"/>
+</svg>
