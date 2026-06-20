@@ -4,7 +4,7 @@
  * Live scores : ESPN public scoreboard API (free, no key, CORS enabled)
  * Shared data : Firebase Firestore (free Spark tier) — players + predictions
  * Scoring     : correct winner (1X2) 2 pts + exact score bonus 5 pts (max 7)
- * Lock        : predictions close 60 minutes before kickoff
+ * Lock        : predictions close 5 minutes before kickoff
  *               (launch day June 12 only: open until 5 min AFTER kickoff)
  */
 
@@ -12,7 +12,7 @@
 // Config
 // ---------------------------------------------------------------------------
 const POINTS = { EXACT: 5, WINNER: 2 };
-const LOCK_MINUTES = 60;
+const LOCK_MINUTES = 5;
 // Launch-day grace: the gang joined mid-matchday, so matches on this local
 // date stay open until ~end of the first half (45 min + stoppage).
 const GRACE_DAY = "2026-06-12";
@@ -1483,7 +1483,7 @@ function inviteMessage() {
     `World Cup prediction battle for the gang 😁⚽\n` +
     `Each match: pick the *winner* + the *exact score*\n` +
     `✅ Winner = ${POINTS.WINNER} pts · 🎯 Exact score = +${POINTS.EXACT} pts bonus\n` +
-    `🔒 Bets close 1 hour before kickoff (today only: open till end of 1st half ⚡)\n\n` +
+    `🔒 Bets close 5 minutes before kickoff ⚡\n\n` +
     `Join here 👇 (group code: *${window.GROUP_CODE}*)\n${window.APP_LINK || location.href.split("#")[0]}`
   );
 }
