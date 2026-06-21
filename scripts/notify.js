@@ -21,7 +21,7 @@ const ESPN_URL =
 
 // Mirror of the game rules in worldcup/js/app.js
 const POINTS = { EXACT: 5, WINNER: 2 };
-const LOCK_MINUTES = 5;
+const LOCK_MINUTES = 15;
 const GRACE_DAY = "2026-06-12"; // Egypt local date, lock = KO + 50 min
 const GRACE_AFTER_MIN = 50;
 const OPEN_OVERRIDES = [["KOR", "CZE"]];
