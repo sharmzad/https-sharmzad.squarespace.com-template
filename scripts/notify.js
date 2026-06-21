@@ -3,12 +3,11 @@
  *
  * Run by .github/workflows/notify.yml on a cron. Sends FCM web-push to every
  * registered device:
- *   ⏰ "Betting closes soon"        — lock within ~75 min
+ *   ⏰ "Betting closes soon"        — lock within ~30 min
  *   🥅 Kickoff + everyone's picks   — when a match goes live
  *   ⚽ Goal alerts                  — live score changed since last run
  *   🏁 Full-time result + points    — with each player's score
  *   👑 New leaderboard leader       — after results land
- *   ✍️ Bet placed/updated           — before lock, score kept secret
  *
  * Firestore `notifications/{key}` docs hold dedupe markers and live state.
  * Requires env FIREBASE_SERVICE_ACCOUNT = full service-account JSON.
@@ -184,13 +183,6 @@ async function main() {
   if (!res.ok) throw new Error(`ESPN responded ${res.status}`);
   const matches = ((await res.json()).events || []).map(normalizeEvent);
   const now = Date.now();
-
-  // Read the previous heartbeat time so we can fetch only bets placed SINCE
-  // then (instead of the whole collection every run — that blew the free quota).
-  const prevBeat = await db.collection("health").doc("notify").get();
-  const lastRun = prevBeat.exists
-    ? (prevBeat.data().at?.toMillis?.() ?? now - 10 * 60_000)
-    : now - 10 * 60_000;
 
   // Lazily fetch a single match's predictions, only when an event needs them,
   // cached per run. Keeps Firestore reads tiny vs reading every prediction.
@@ -388,25 +380,6 @@ async function main() {
     const prevStand = await standRef.get();
     const prevRanks = prevStand.exists ? (prevStand.data().ranks || ranks) : ranks;
     await standRef.set({ ranks, prevRanks, at: admin.firestore.FieldValue.serverTimestamp() });
-  }
-
-  // ✍️ bet placed/updated — only read bets changed SINCE the last run (cheap)
-  const matchById = Object.fromEntries(matches.map((m) => [m.id, m]));
-  const newBets = (await db.collection("predictions")
-    .where("updatedAt", ">", admin.firestore.Timestamp.fromMillis(lastRun))
-    .get()).docs.map((d) => d.data());
-  for (const p of newBets) {
-    const m = matchById[p.matchId];
-    const t = p.updatedAt?.toMillis?.();
-    if (!m || !t || !players[p.playerId]) continue;
-    if (lockMs(m) <= now) continue; // match locked — kickoff alert covers reveals
-    if (await claim(`pred_${p.matchId}_${p.playerId}_${t}`)) {
-      const who = players[p.playerId];
-      sendList.push({
-        title: `✍️ ${who.emoji || ""} ${who.name} placed a bet!`,
-        body: `${m.home.name} 🆚 ${m.away.name} — the pick stays secret until lock 🤫`,
-      });
-    }
   }
 
   if (!sendList.length) {
