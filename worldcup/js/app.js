@@ -710,8 +710,12 @@ const predWinner = (pred) => {
 
 function scorePrediction(pred, hs, as) {
   let pts = 0;
-  if (predWinner(pred) === resultOf(hs, as)) pts += POINTS.WINNER;
-  if (pred.home === hs && pred.away === as) pts += POINTS.EXACT;
+  const exact = pred.home === hs && pred.away === as;
+  // An exact score inherently nails the result, so it always earns the winner
+  // points too — even if the player's explicit 1X2 pick disagreed (e.g. scored
+  // 0–0 but also tapped a team). Exact score = the full 7.
+  if (exact || predWinner(pred) === resultOf(hs, as)) pts += POINTS.WINNER;
+  if (exact) pts += POINTS.EXACT;
   return pts;
 }
 
@@ -741,8 +745,9 @@ function buildStandings(live = false) {
       r.pts += pts;
       if (final) {
         r.played++;
-        if (pred.home === m.home.score && pred.away === m.away.score) r.exact++;
-        if (predWinner(pred) === resultOf(m.home.score, m.away.score)) r.outcomes++;
+        const isExact = pred.home === m.home.score && pred.away === m.away.score;
+        if (isExact) r.exact++;
+        if (isExact || predWinner(pred) === resultOf(m.home.score, m.away.score)) r.outcomes++;
       } else {
         r.livePts += pts; // provisional, from an in-progress match
       }

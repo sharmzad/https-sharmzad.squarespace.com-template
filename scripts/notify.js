@@ -94,8 +94,12 @@ const predWinner = (pred) => {
 
 function scorePrediction(pred, hs, as) {
   let pts = 0;
-  if (predWinner(pred) === resultOf(hs, as)) pts += POINTS.WINNER;
-  if (pred.home === hs && pred.away === as) pts += POINTS.EXACT;
+  const exact = pred.home === hs && pred.away === as;
+  // An exact score inherently nails the result, so it always earns the winner
+  // points too — even if the player's explicit 1X2 pick disagreed (e.g. scored
+  // 0–0 but also tapped a team). Exact score = the full 7.
+  if (exact || predWinner(pred) === resultOf(hs, as)) pts += POINTS.WINNER;
+  if (exact) pts += POINTS.EXACT;
   return pts;
 }
 
@@ -364,8 +368,9 @@ async function main() {
         const pts = scorePrediction(pr, m.home.score, m.away.score);
         s.pts += pts;
         if (pts > 0) scorers.push(pr.playerId);
-        if (pr.home === m.home.score && pr.away === m.away.score) s.exact++;
-        if (predWinner(pr) === resultOf(m.home.score, m.away.score)) s.outcomes++;
+        const isExact = pr.home === m.home.score && pr.away === m.away.score;
+        if (isExact) s.exact++;
+        if (isExact || predWinner(pr) === resultOf(m.home.score, m.away.score)) s.outcomes++;
         if (upset && predWinner(pr) === upset) s.pts += UNDERDOG_BONUS; // 🐺 underdog
       }
       // 🏅 only-winner bonus (sole scorer, Round 2 onward)
