@@ -87,10 +87,9 @@ const isOverridden = (m) =>
   );
 
 const resultOf = (hs, as) => (hs > as ? "home" : hs < as ? "away" : "draw");
-const predWinner = (pred) => {
-  const dir = resultOf(pred.home, pred.away);
-  return dir !== "draw" ? dir : (pred.winner || "draw");
-};
+// Outcome is always read from the predicted score: a level score is a draw
+// (never a team win), a decisive score backs that team. Keep in sync with app.js.
+const predWinner = (pred) => resultOf(pred.home, pred.away);
 
 function scorePrediction(pred, hs, as) {
   let pts = 0;

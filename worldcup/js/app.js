@@ -700,13 +700,11 @@ function isOpen(m) {
 // ---------------------------------------------------------------------------
 const resultOf = (hs, as) => (hs > as ? "home" : hs < as ? "away" : "draw");
 
-// The winner is taken from the score when the score is decisive (a 0–2 can't be
-// a "draw" — that's a mis-tap). For a drawn score, the explicit pick stands
-// (lets you back a team to win while leaving the exact guess at a draw).
-const predWinner = (pred) => {
-  const dir = resultOf(pred.home, pred.away);
-  return dir !== "draw" ? dir : (pred.winner || "draw");
-};
+// The outcome is ALWAYS read from the predicted score: a level score is a draw
+// (never a team win), a decisive score backs that team. The winner buttons are
+// just a shortcut kept in sync with the score, so the two can't contradict —
+// scoring 1–1 but tapping a team no longer counts as backing that team.
+const predWinner = (pred) => resultOf(pred.home, pred.away);
 
 function scorePrediction(pred, hs, as) {
   let pts = 0;
@@ -905,7 +903,20 @@ function renderMatches() {
   view.querySelectorAll("[data-winner]").forEach((b) =>
     b.addEventListener("click", (e) => {
       const [matchId, val] = e.currentTarget.dataset.winner.split("|");
-      draft[matchId].winner = val;
+      const d = draft[matchId];
+      // Keep the score consistent with the chosen outcome so they can't
+      // contradict: Draw → level the score; a team → make that team lead.
+      if (val === "draw") {
+        const lvl = Math.min(d.home, d.away);
+        d.home = lvl; d.away = lvl;
+      } else if (val === "home" && d.home <= d.away) {
+        d.home = d.away + 1;
+      } else if (val === "away" && d.away <= d.home) {
+        d.away = d.home + 1;
+      }
+      d.winner = val;
+      $(`#st-${matchId}-home`).textContent = d.home;
+      $(`#st-${matchId}-away`).textContent = d.away;
       e.currentTarget.closest(".winner-row").querySelectorAll(".wbtn")
         .forEach((x) => x.classList.toggle("sel", x === e.currentTarget));
     })
@@ -1109,7 +1120,7 @@ function matchCard(m) {
     const d = draft[m.id] || {
       home: mine?.home ?? 0,
       away: mine?.away ?? 0,
-      winner: mine ? predWinner(mine) : null,
+      winner: resultOf(mine?.home ?? 0, mine?.away ?? 0),
     };
     draft[m.id] = d;
     const wbtn = (val, label) =>
@@ -1228,6 +1239,11 @@ function onStep(e) {
   const d = draft[matchId];
   d[side] = Math.max(0, Math.min(15, d[side] + Number(delta)));
   $(`#st-${matchId}-${side}`).textContent = d[side];
+  // keep the winner highlight in sync with the score (level = draw)
+  d.winner = resultOf(d.home, d.away);
+  const row = e.currentTarget.closest(".match")?.querySelector(".winner-row");
+  if (row) row.querySelectorAll(".wbtn").forEach((x) =>
+    x.classList.toggle("sel", x.dataset.winner.split("|")[1] === d.winner));
 }
 
 async function onSave(e) {
@@ -1236,9 +1252,8 @@ async function onSave(e) {
   if (!m || !me || !db) return;
   if (!isOpen(m)) { toast("🔒 Too late — predictions are locked!"); render(); return; }
   const d = draft[matchId];
-  // decisive score → winner follows the score; drawn score → keep the pick
-  const dir = resultOf(d.home, d.away);
-  const winner = dir !== "draw" ? dir : (d.winner || "draw");
+  // outcome follows the score (level = draw, decisive = that team)
+  const winner = resultOf(d.home, d.away);
   try {
     await fs.setDoc(fs.doc(db, "predictions", `${matchId}_${me.id}`), {
       matchId,
