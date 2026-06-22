@@ -235,6 +235,7 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
 .badge.open   { background: #103a26; color: var(--green); }
 .badge.locked { background: #3a2f10; color: var(--gold); }
 .badge.live   { background: var(--live); color: #fff; animation: pulse 1.4s infinite; }
+.badge.delayed{ background: #6b4a12; color: #ffce6b; animation: pulse 1.8s infinite; }
 .badge.ft     { background: #28323b; color: #aebecb; }
 @keyframes pulse { 50% { opacity: .55; } }
 

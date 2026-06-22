@@ -663,11 +663,16 @@ function normalizeEvent(ev) {
     completed: !!status.type?.completed,
     period: status.period ?? 0,                    // 1 = first half, 2 = second half
     detail: status.type?.shortDetail || "",
+    statusName: status.type?.name || "",           // e.g. STATUS_DELAYED / STATUS_POSTPONED
     group: comp.notes?.[0]?.headline || ev.season?.slug || "",
     home: side("home"),
     away: side("away"),
   };
 }
+
+// True when ESPN flags the match as delayed / postponed / suspended.
+const isDelayed = (m) =>
+  !m.completed && /delay|postpon|suspend/i.test(`${m.statusName} ${m.detail}`);
 
 // Admin overrides: matches listed here stay open for betting until half time
 // (kickoff + GRACE_AFTER_MIN), ignoring the normal pre-kickoff lock.
@@ -1111,7 +1116,9 @@ function matchDetailHtml(m) {
 
 function matchCard(m) {
   const open = isOpen(m);
-  const badge = m.state === "in"
+  const badge = isDelayed(m)
+    ? `<span class="badge delayed">⏸ DELAYED</span>`
+    : m.state === "in"
     ? `<span class="badge live">● LIVE</span>`
     : m.completed
       ? `<span class="badge ft">FT</span>`
@@ -1119,10 +1126,10 @@ function matchCard(m) {
         ? `<span class="badge open">OPEN</span>`
         : `<span class="badge locked">🔒 LOCKED</span>`;
 
-  const center = m.state === "pre"
+  const center = (m.state === "pre" && !isDelayed(m))
     ? `<div class="ko-time">${fmtTime(m.kickoff)}</div><div class="clock">kickoff</div>`
     : `<div class="score ${m.state === "in" ? "live-score" : ""}">${m.home.score ?? "-"} : ${m.away.score ?? "-"}</div>
-       <div class="clock">${esc(m.detail)}</div>`;
+       <div class="clock">${isDelayed(m) ? "⏸ Delayed" : esc(m.detail)}</div>`;
 
   const flag = (t) => t.logo
     ? `<img src="${esc(t.logo)}" alt="" loading="lazy" onerror="this.outerHTML='<div class=flag-fallback>⚽</div>'">`

@@ -125,10 +125,15 @@ function normalizeEvent(ev) {
     state: status.type?.state || "pre", // pre | in | post
     completed: !!status.type?.completed,
     detail: status.type?.shortDetail || "",
+    statusName: status.type?.name || "", // e.g. STATUS_DELAYED / STATUS_POSTPONED
     home: side("home"),
     away: side("away"),
   };
 }
+
+// True when ESPN flags the match as delayed / postponed / suspended.
+const isDelayed = (m) =>
+  !m.completed && /delay|postpon|suspend/i.test(`${m.statusName} ${m.detail}`);
 
 function fmtCairo(d) {
   return d.toLocaleTimeString("en-GB", {
@@ -225,6 +230,16 @@ async function main() {
   for (const m of matches) {
     const vs = `${m.home.name} 🆚 ${m.away.name}`;
     const lock = lockMs(m);
+
+    // ⏸ match delayed / postponed — alert everyone once
+    if (isDelayed(m)) {
+      if (await claim(`delay_${m.id}`)) {
+        sendList.push({
+          title: `⏸ Match delayed: ${vs}`,
+          body: `${vs} has been delayed${m.detail ? ` (${m.detail})` : ""}. Hang tight — we'll let you know when it's back on ⚽`,
+        });
+      }
+    }
 
     // ⏰ betting reminder — sent ONLY to players who haven't bet on this match yet
     if (!m.completed && m.state === "pre" && lock > now && lock - now <= REMIND_WINDOW_MIN * 60_000) {
