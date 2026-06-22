@@ -564,7 +564,18 @@ async function initFirebase() {
     const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
     fs = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
     fbApp = initializeApp(window.FIREBASE_CONFIG);
-    db = fs.getFirestore(fbApp);
+    // Persistent local cache (IndexedDB): on reopen, the snapshot listeners
+    // resume from cached state and only fetch docs CHANGED since the last sync,
+    // instead of re-reading the whole collection on every launch. This is the
+    // main Firestore read saver that keeps us under the free-tier daily quota.
+    try {
+      db = fs.initializeFirestore(fbApp, {
+        localCache: fs.persistentLocalCache({ tabManager: fs.persistentMultipleTabManager() }),
+      });
+    } catch (e) {
+      console.warn("Persistent cache unavailable, using default:", e?.message || e);
+      db = fs.getFirestore(fbApp);
+    }
 
     // Google Analytics — activates once Analytics is enabled (measurementId set)
     if (window.FIREBASE_CONFIG.measurementId) {
