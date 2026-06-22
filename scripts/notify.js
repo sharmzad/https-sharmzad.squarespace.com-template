@@ -4,6 +4,7 @@
  * Run by .github/workflows/notify.yml on a cron. Sends FCM web-push to every
  * registered device:
  *   ⏰ "Betting closes soon"        — lock within ~30 min
+ *   ⏸ Delayed / ▶️ resumed          — when a match is delayed, then back on
  *   🥅 Kickoff + everyone's picks   — when a match goes live
  *   ⚽ Goal alerts                  — live score changed since last run
  *   🏁 Full-time result + points    — with each player's score
@@ -237,6 +238,17 @@ async function main() {
         sendList.push({
           title: `⏸ Match delayed: ${vs}`,
           body: `${vs} has been delayed${m.detail ? ` (${m.detail})` : ""}. Hang tight — we'll let you know when it's back on ⚽`,
+        });
+      }
+    }
+
+    // ▶️ match resumed after a delay — alert once, only if it was delayed before
+    if (m.state === "in" && !isDelayed(m) && !m.completed) {
+      const wasDelayed = (await markers.doc(`delay_${m.id}`).get()).exists;
+      if (wasDelayed && await claim(`resume_${m.id}`)) {
+        sendList.push({
+          title: `▶️ Back underway: ${vs}`,
+          body: `${vs} has resumed after the delay${m.detail ? ` (${m.detail})` : ""} — game on! ⚽`,
         });
       }
     }
