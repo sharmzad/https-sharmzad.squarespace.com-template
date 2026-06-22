@@ -77,6 +77,12 @@ function lockMs(m) {
   return m.kickoff.getTime() - LOCK_MINUTES * 60_000;
 }
 
+// Validity deadline frozen on the bet when it was saved (the app stores lockAt).
+// Legacy bets without it are grandfathered to kickoff, so later changes to the
+// lock window can't retroactively mark an on-time old bet "late". Mirrors app.js.
+const deadlineMs = (p, m) =>
+  typeof p.lockAt === "number" ? p.lockAt : m.kickoff.getTime();
+
 const isOverridden = (m) =>
   OPEN_OVERRIDES.some((pair) =>
     pair.every((t) =>
@@ -209,7 +215,7 @@ async function main() {
   const validPredsFrom = (list, m) =>
     list
       .filter((p) => p.matchId === m.id && players[p.playerId])
-      .filter((p) => isOverridden(m) || (p.updatedAt?.toMillis?.() ?? 0) <= lockMs(m))
+      .filter((p) => isOverridden(m) || (p.updatedAt?.toMillis?.() ?? 0) <= deadlineMs(p, m))
       .map((p) => ({ ...p, name: players[p.playerId].name, emoji: players[p.playerId].emoji || "" }));
   const validPreds = async (m) => validPredsFrom(await matchPreds(m), m);
 
@@ -362,7 +368,7 @@ async function main() {
       const scorers = [];
       for (const pr of allPreds) {
         if (pr.matchId !== m.id || !players[pr.playerId]) continue;
-        if (!(isOverridden(m) || (pr.updatedAt?.toMillis?.() ?? 0) <= lockMs(m))) continue;
+        if (!(isOverridden(m) || (pr.updatedAt?.toMillis?.() ?? 0) <= deadlineMs(pr, m))) continue;
         const s = stat[pr.playerId];
         const pts = scorePrediction(pr, m.home.score, m.away.score);
         s.pts += pts;

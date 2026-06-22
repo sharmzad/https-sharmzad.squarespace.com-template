@@ -728,10 +728,13 @@ function scorePrediction(pred, hs, as) {
   return pts;
 }
 
-// A prediction only counts if it was saved before the lock (server timestamp).
-// Overridden matches accept every saved prediction (the UI gates saving).
+// A prediction only counts if it was saved before that match's lock. The lock
+// deadline is frozen ON the prediction (lockAt) when it is saved, so later
+// changes to the lock window can't retroactively turn an on-time old bet into a
+// "late" one. Legacy bets saved before lockAt existed are grandfathered: valid
+// as long as they were placed before kickoff. Overridden matches accept all.
 const isValidPrediction = (pred, m) =>
-  isOverridden(m) || pred.updatedAtMs <= lockTime(m).getTime();
+  isOverridden(m) || pred.updatedAtMs <= (pred.lockAt ?? m.kickoff.getTime());
 
 // Admin-granted grace points (see BONUS_POINTS in firebase-config.js)
 function bonusFor(name) {
@@ -1273,6 +1276,7 @@ async function onSave(e) {
       home: d.home,
       away: d.away,
       kickoff: m.kickoff.toISOString(),
+      lockAt: lockTime(m).getTime(),   // freeze the deadline at save time
       updatedAt: fs.serverTimestamp(),
     });
     trackEvent("prediction_saved", { match: `${m.home.abbr}-${m.away.abbr}` });
