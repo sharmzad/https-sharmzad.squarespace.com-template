@@ -1489,15 +1489,14 @@ function renderTable() {
     const mv = prevRank == null ? "same" : (prevRank - rank > 0 ? "up" : prevRank - rank < 0 ? "down" : "same");
     const dots = formDots(r.id).map((f) => `<span class="st-dot ${f}"></span>`).join("");
     const meCls = me && r.id === me.id ? " me" : "";
-    // second-line breakdown: base + each bonus type (with icon) + live portion
-    const shownBonus = r.bd ? BONUS_ICONS.reduce((s, [k]) => s + r.bd[k], 0) : 0;
+    // second-line breakdown: each bonus type earned (with icon) + live portion
     const bonusChips = (r.bd ? BONUS_ICONS : [])
       .filter(([k]) => r.bd[k] > 0)
       .map(([k, ic]) => `<span class="st-chip bonus">${ic} ${r.bd[k]}</span>`)
       .join("");
     const liveChip = isLive && r.livePts ? `<span class="st-chip live">🔴 +${r.livePts}<small>live</small></span>` : "";
-    const breakdown = (shownBonus || liveChip)
-      ? `<div class="st-breakdown"><span class="st-chip base"><b>${r.pts - shownBonus}</b><small>base</small></span>${bonusChips}${liveChip}</div>`
+    const breakdown = (bonusChips || liveChip)
+      ? `<div class="st-breakdown">${bonusChips}${liveChip}</div>`
       : "";
     return `
       <div class="st-row${meCls}${r.livePts ? " gaining" : ""}">
