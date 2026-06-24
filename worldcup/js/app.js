@@ -1497,8 +1497,8 @@ function renderTable() {
           <div class="st-sub">Played ${r.played} · 🎯 ${r.exact} exact <span class="st-form">${dots}</span></div>
         </div>
         <div class="st-pts">
-          <div class="st-total"><b>${r.pts}</b>${livePts}<span>pts</span></div>
-          ${r.bonus ? `<div class="st-bd">${r.pts - r.bonus}<span class="st-bonus"> + ${r.bonus} 🎁</span></div>` : ""}
+          <div class="st-total"><b>${r.pts}</b><span class="st-unit">pts</span>${livePts}</div>
+          ${r.bonus ? `<div class="st-chips"><span class="st-chip">${r.pts - r.bonus}<small>base</small></span><span class="st-chip bonus">+${r.bonus}<small>bonus</small></span></div>` : ""}
         </div>
       </div>`;
   }).join("");

@@ -424,12 +424,22 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
 .st-dot { width: 7px; height: 7px; border-radius: 50%; background: #33503e; }
 .st-dot.ex { background: var(--gold); box-shadow: 0 0 5px var(--gold); }
 .st-dot.win { background: var(--green); }
-.st-pts { flex: none; text-align: right; }
-.st-pts b { font-size: 20px; font-weight: 800; color: var(--gold); line-height: 1; }
-.st-pts .st-total span { display: block; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
-.st-pts .st-total .st-live { display: inline; }
-.st-bd { font-size: 11px; font-weight: 700; color: var(--text); margin-top: 4px; white-space: nowrap; }
-.st-bonus { color: var(--green); }
+.st-pts { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.st-total { display: flex; align-items: baseline; gap: 4px; }
+.st-total b { font-size: 23px; font-weight: 800; color: var(--gold); line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -.5px; }
+.st-unit { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; }
+.st-live { font-size: 11px; font-weight: 800; color: var(--green); margin-left: 1px; }
+.st-chips { display: flex; gap: 5px; }
+.st-chip {
+  display: inline-flex; align-items: baseline; gap: 3px;
+  font-size: 12px; font-weight: 800; color: var(--text);
+  background: var(--card2); border: 1px solid var(--line);
+  padding: 2px 8px; border-radius: 999px; line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+.st-chip small { font-size: 8px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+.st-chip.bonus { color: var(--green); background: rgba(53,208,127,.13); border-color: rgba(53,208,127,.34); }
+.st-chip.bonus small { color: var(--green); opacity: .85; }
 
 /* ---------- Share tab ---------- */
 .share-card {
