@@ -1498,6 +1498,22 @@ function buildGroupStandings() {
   return out;
 }
 
+// The 12 third-placed teams ranked head-to-head (pts, GD, GF). The top 8 fill
+// the remaining Round-of-32 places alongside every group's top two.
+function thirdPlaceRace(groups) {
+  const thirds = [];
+  for (const key of Object.keys(groups)) {
+    const rows = groups[key];
+    if (rows.length >= 3) thirds.push({ g: key.replace("Group ", ""), ...rows[2] });
+  }
+  thirds.sort((a, b) =>
+    b.pts - a.pts ||
+    (b.gf - b.ga) - (a.gf - a.ga) ||
+    b.gf - a.gf ||
+    a.name.localeCompare(b.name));
+  return thirds; // first 8 are "in"
+}
+
 function renderShare() {
   const groups = buildGroupStandings();
   const keys = Object.keys(groups);
@@ -1517,6 +1533,37 @@ function renderShare() {
     view.innerHTML = html;
     wireGroupButtons();
     return;
+  }
+
+  // 🎟️ Road to the Last 32 — live qualification projection
+  const thirds = thirdPlaceRace(groups);
+  if (thirds.length) {
+    html += `
+      <div class="grp qual">
+        <div class="grp-head">🎟️ Road to the Last 32</div>
+        <div class="qual-note">Every group's <b>top 2</b> qualify, plus the <b>8 best 3rd-placed</b> teams. Live projection — shifts with results.</div>
+        <div class="grp-row grp-h">
+          <span class="grp-pos">#</span>
+          <span class="grp-team">Best 3rd-placed</span>
+          <span>Grp</span>
+          <span>MP</span>
+          <span class="grp-pts">PTS</span>
+        </div>`;
+    thirds.forEach((t, i) => {
+      const flag = t.logo
+        ? `<img src="${esc(t.logo)}" alt="" loading="lazy" onerror="this.outerHTML='<span class=grp-fb>⚽</span>'">`
+        : `<span class="grp-fb">⚽</span>`;
+      const inCut = i < 8;
+      html += `
+        <div class="grp-row ${inCut ? "adv" : "qout"}">
+          <span class="grp-pos">${i + 1}</span>
+          <span class="grp-team">${flag}<b>${esc(t.name)}</b> <span class="qual-tag ${inCut ? "in" : "out"}">${inCut ? "IN" : "OUT"}</span></span>
+          <span>${esc(t.g)}</span>
+          <span>${t.mp}</span>
+          <span class="grp-pts">${t.pts}</span>
+        </div>`;
+    });
+    html += `</div>`;
   }
 
   for (const key of keys) {
