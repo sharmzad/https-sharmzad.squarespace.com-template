@@ -442,8 +442,9 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
 }
 .st-chip small { font-size: 8px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
 .st-chip.bonus { color: var(--green); background: rgba(53,208,127,.13); border-color: rgba(53,208,127,.34); }
-.st-chip.live { color: var(--gold); background: rgba(244,197,66,.13); border-color: rgba(244,197,66,.34); }
+.st-chip.live { color: var(--gold); background: rgba(244,197,66,.13); border-color: rgba(244,197,66,.34); margin-left: auto; }
 .st-chip.live small { color: var(--gold); opacity: .85; }
+.st-chip.bonus b { font-weight: 800; }
 
 /* ---------- Share tab ---------- */
 .share-card {

@@ -843,7 +843,7 @@ function buildStandings(live = false, phase = "overall") {
   const rows = players.map((p) => {
     const grace = wantGroup ? bonusFor(p.name) : 0;
     return { ...p, pts: grace, bonus: grace, exact: 0, outcomes: 0, played: 0, livePts: 0,
-      bd: { grace, onlyWinner: 0, underdog: 0, perfectPair: 0, goalRush: 0 } };
+      bd: { onlyWinner: 0, underdog: 0, perfectPair: 0, goalRush: 0 } };   // bd = times earned
   });
   const byId = Object.fromEntries(rows.map((r) => [r.id, r]));
   for (const m of matches) {
@@ -867,7 +867,7 @@ function buildStandings(live = false, phase = "overall") {
         // ⚽ Goal Rush — group Round 3+ only
         if (!ko && R.goalRush && round3On(m) && !isExact &&
             (pred.home + pred.away) === (m.home.score + m.away.score)) {
-          r.pts += R.goalRush; r.bonus += R.goalRush; r.bd.goalRush += R.goalRush;
+          r.pts += R.goalRush; r.bonus += R.goalRush; r.bd.goalRush += 1;
         }
       } else {
         r.livePts += pts; // provisional, from an in-progress match
@@ -876,9 +876,9 @@ function buildStandings(live = false, phase = "overall") {
   }
   // Group-stage bonuses count toward the group/overall race only.
   if (wantGroup) {
-    for (const [id, b] of Object.entries(onlyWinnerBonuses())) if (byId[id]) { byId[id].pts += b; byId[id].bonus += b; byId[id].bd.onlyWinner += b; }
-    for (const [id, b] of Object.entries(underdogBonuses())) if (byId[id]) { byId[id].pts += b; byId[id].bonus += b; byId[id].bd.underdog += b; }
-    for (const [id, b] of Object.entries(perfectPairBonuses())) if (byId[id]) { byId[id].pts += b; byId[id].bonus += b; byId[id].bd.perfectPair += b; }
+    for (const [id, v] of Object.entries(onlyWinnerBonuses())) if (byId[id]) { byId[id].pts += v.pts; byId[id].bonus += v.pts; byId[id].bd.onlyWinner += v.n; }
+    for (const [id, v] of Object.entries(underdogBonuses())) if (byId[id]) { byId[id].pts += v.pts; byId[id].bonus += v.pts; byId[id].bd.underdog += v.n; }
+    for (const [id, v] of Object.entries(perfectPairBonuses())) if (byId[id]) { byId[id].pts += v.pts; byId[id].bonus += v.pts; byId[id].bd.perfectPair += v.n; }
   }
   return rows.sort(
     (a, b) => b.pts - a.pts || b.exact - a.exact || b.outcomes - a.outcomes || a.name.localeCompare(b.name)
@@ -898,11 +898,12 @@ function upsetWinSide(m) {
   return null;
 }
 
-// { playerId: bonusPoints } — +RULES.underdogBonus to players who correctly
-// backed the lower-ranked winner, counted from RULES.bonusFrom.
+// { playerId: {pts, n} } — +RULES.underdogBonus each time a player correctly
+// backed the lower-ranked winner, counted from RULES.bonusFrom. n = times earned.
 function underdogBonuses() {
   const R = window.RULES || {};
   const out = {};
+  const add = (id, pts) => { out[id] = out[id] || { pts: 0, n: 0 }; out[id].pts += pts; out[id].n += 1; };
   if (!R.underdogBonus) return out;
   const fromMs = R.bonusFrom ? Date.parse(R.bonusFrom) : 0;
   for (const m of matches) {
@@ -913,17 +914,18 @@ function underdogBonuses() {
     for (const p of players) {
       const pred = predictions[`${m.id}_${p.id}`];
       if (!pred || !isValidPrediction(pred, m)) continue;
-      if (predWinner(pred) === side) out[p.id] = (out[p.id] || 0) + R.underdogBonus;
+      if (predWinner(pred) === side) add(p.id, R.underdogBonus);
     }
   }
   return out;
 }
 
-// { playerId: bonusPoints } — +RULES.onlyWinnerBonus to the lone scorer of each
-// completed match (everyone else got 0), counted only from RULES.bonusFrom.
+// { playerId: {pts, n} } — +RULES.onlyWinnerBonus each time a player is the lone
+// scorer of a completed match (counted from RULES.bonusFrom). n = times earned.
 function onlyWinnerBonuses() {
   const R = window.RULES || {};
   const out = {};
+  const add = (id, pts) => { out[id] = out[id] || { pts: 0, n: 0 }; out[id].pts += pts; out[id].n += 1; };
   if (!R.onlyWinnerBonus) return out;
   const fromMs = R.bonusFrom ? Date.parse(R.bonusFrom) : 0;
   for (const m of matches) {
@@ -936,18 +938,18 @@ function onlyWinnerBonuses() {
       if (!pred || !isValidPrediction(pred, m)) continue;
       if (scorePrediction(pred, m.home.score, m.away.score) > 0) scorers.push(p.id);
     }
-    if (scorers.length === 1) out[scorers[0]] = (out[scorers[0]] || 0) + R.onlyWinnerBonus;
+    if (scorers.length === 1) add(scorers[0], R.onlyWinnerBonus);
   }
   return out;
 }
 
-// { playerId: bonusPoints } — Round 3 "Perfect Pair": the two matches of a group
+// { playerId: {pts, n} } — Round 3 "Perfect Pair": the two matches of a group
 // kick off simultaneously. Get BOTH outcomes right → +perfectPairOutcome (once);
-// both exact → +perfectPairExact. Pairs are the two completed Round-3 matches in
-// the same group that share a kickoff time.
+// both exact → +perfectPairExact. n = pairs nailed.
 function perfectPairBonuses() {
   const R = window.RULES || {};
   const out = {};
+  const add = (id, pts) => { out[id] = out[id] || { pts: 0, n: 0 }; out[id].pts += pts; out[id].n += 1; };
   if (!R.perfectPairOutcome && !R.perfectPairExact) return out;
   const pairs = {};
   for (const m of matches) {
@@ -972,7 +974,7 @@ function perfectPairBonuses() {
         if (!exact) allExact = false;
       }
       if (!allOutcome) continue;
-      out[p.id] = (out[p.id] || 0) + (allExact ? R.perfectPairExact : R.perfectPairOutcome);
+      add(p.id, allExact ? R.perfectPairExact : R.perfectPairOutcome);
     }
   }
   return out;
@@ -1492,7 +1494,7 @@ function renderTable() {
     // second-line breakdown: each bonus type earned (with icon) + live portion
     const bonusChips = (r.bd ? BONUS_ICONS : [])
       .filter(([k]) => r.bd[k] > 0)
-      .map(([k, ic]) => `<span class="st-chip bonus">${ic} ${r.bd[k]}</span>`)
+      .map(([k, ic]) => `<span class="st-chip bonus">${ic} <b>×${r.bd[k]}</b></span>`)
       .join("");
     const liveChip = isLive && r.livePts ? `<span class="st-chip live">🔴 +${r.livePts}<small>live</small></span>` : "";
     const breakdown = (bonusChips || liveChip)
