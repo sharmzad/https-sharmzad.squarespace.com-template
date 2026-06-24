@@ -769,6 +769,28 @@ const koStarted = () =>
 // team if we have one, else ESPN's value (real team, or a "2A"/"3RD …" label).
 const koTeam = (m, side) => koSlots[`${m.id}|${side}`] || m[side];
 
+// A later knockout round is only "reached" once the previous round is fully
+// played — until then its matchups are unknown, so we never show concrete teams
+// (not even ESPN's pre-projected ones). R32 is always shown (projected from groups).
+const KO_ORDER = ["R32", "R16", "QF", "SF", "F"];
+const koFeederLabel = (round) =>
+  ({ R16: "R32 winner", QF: "R16 winner", SF: "QF winner", F: "SF winner", "3P": "SF loser" }[round] || "TBD");
+function koPrevComplete(round) {
+  const prev = (round === "F" || round === "3P") ? "SF" : KO_ORDER[KO_ORDER.indexOf(round) - 1];
+  if (!prev) return true; // R32
+  const ms = matches.filter((m) => isKnockout(m) && koRound(m) === prev);
+  return ms.length > 0 && ms.every((m) => m.completed);
+}
+const koReached = (m) => koRound(m) === "R32" || koPrevComplete(koRound(m));
+const isPlaceholderName = (n) => /\d|^[12]\s*[a-l]$|3rd|third|winner|loser|runner/i.test(n || "");
+// Team to render, suppressing teams for rounds that haven't been reached yet.
+function koDisplayTeam(m, side) {
+  const t = koTeam(m, side);
+  if (!isKnockout(m) || koReached(m)) return t;
+  const name = isPlaceholderName(t.name) ? t.name : koFeederLabel(koRound(m));
+  return { name, abbr: name.slice(0, 3).toUpperCase(), logo: "" };
+}
+
 // Which knockout round a match belongs to (label from ESPN, else by date).
 function koRound(m) {
   const g = (m.group || "").toLowerCase();
@@ -1233,7 +1255,7 @@ function matchDetailHtml(m) {
 
 function matchCard(m) {
   const open = isOpen(m);
-  const H = koTeam(m, "home"), A = koTeam(m, "away");  // live-resolved for knockout slots
+  const H = koDisplayTeam(m, "home"), A = koDisplayTeam(m, "away");  // resolved/suppressed for knockout
   // knockout teams shown are a live projection until the slot is confirmed
   const projected = isKnockout(m) && (koSlots[`${m.id}|home`] || koSlots[`${m.id}|away`]);
   const badge = isDelayed(m)
@@ -1625,9 +1647,10 @@ function koSlotMap() {
     abbr: reg[t.name]?.abbr || t.name.slice(0, 3).toUpperCase(),
     logo: t.logo || reg[t.name]?.logo || "",
   });
-  // 1) winner / runner-up slots — directly from the live table
+  // 1) winner / runner-up slots — directly from the live table (Round of 32 only;
+  //    later rounds depend on knockout results, not group standings)
   for (const m of matches) {
-    if (!isKnockout(m)) continue;
+    if (!isKnockout(m) || koRound(m) !== "R32") continue;
     for (const side of ["home", "away"]) {
       const wm = (m[side].name || "").match(/^([12])\s*([A-L])$/i);
       if (!wm) continue;
@@ -1636,11 +1659,11 @@ function koSlotMap() {
       if (t) map[`${m.id}|${side}`] = team(t);
     }
   }
-  // 2) third-placed slots — assign the qualifying thirds to candidate slots
+  // 2) third-placed slots — assign the qualifying thirds to candidate slots (R32 only)
   const thirds = thirdPlaceRace(standings).slice(0, 8);
   const slots = [];
   for (const m of matches) {
-    if (!isKnockout(m)) continue;
+    if (!isKnockout(m) || koRound(m) !== "R32") continue;
     for (const side of ["home", "away"]) {
       const lbl = m[side].name || "";
       if (/3rd|third/i.test(lbl)) {
@@ -1660,7 +1683,7 @@ function koSlotMap() {
 
 // One knockout match row (home — score/time — away), winner highlighted.
 function koMatchRow(m) {
-  const H = koTeam(m, "home"), A = koTeam(m, "away");  // live-resolved slots
+  const H = koDisplayTeam(m, "home"), A = koDisplayTeam(m, "away");  // resolved/suppressed slots
   const flag = (t) => t.logo
     ? `<img src="${esc(t.logo)}" alt="" loading="lazy" onerror="this.outerHTML='<span class=sched-fb>⚽</span>'">`
     : `<span class="sched-fb">⚽</span>`;
