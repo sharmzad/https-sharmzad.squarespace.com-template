@@ -254,6 +254,7 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
 .ko-score { font-size: 15px; font-weight: 800; }
 .ko-score.live { color: var(--live); }
 .ko-time { font-size: 12.5px; font-weight: 700; color: var(--muted); }
+.proj-tag { color: var(--gold); font-weight: 700; font-style: italic; }
 
 /* ---------- Match card ---------- */
 .match {

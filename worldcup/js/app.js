@@ -1234,6 +1234,8 @@ function matchDetailHtml(m) {
 function matchCard(m) {
   const open = isOpen(m);
   const H = koTeam(m, "home"), A = koTeam(m, "away");  // live-resolved for knockout slots
+  // knockout teams shown are a live projection until the slot is confirmed
+  const projected = isKnockout(m) && (koSlots[`${m.id}|home`] || koSlots[`${m.id}|away`]);
   const badge = isDelayed(m)
     ? `<span class="badge delayed">⏸ DELAYED</span>`
     : m.state === "in"
@@ -1303,7 +1305,7 @@ function matchCard(m) {
 
   return `
     <div class="match">
-      <div class="match-top"><span>${esc(m.group || "World Cup 2026")}</span>${badge}</div>
+      <div class="match-top"><span>${esc(m.group || "World Cup 2026")}${projected ? ' · <span class="proj-tag">📊 as it stands</span>' : ""}</span>${badge}</div>
       <div class="teams">
         ${teamHtml(H)}
         <div class="center">${center}</div>
@@ -1683,10 +1685,11 @@ function koBracketHtml() {
   if (!ks.length) return "";
   const byRound = {};
   for (const m of ks) (byRound[koRound(m)] = byRound[koRound(m)] || []).push(m);
+  const anyProjected = ks.some((m) => koSlots[`${m.id}|home`] || koSlots[`${m.id}|away`]);
   let html = `
     <div class="sched-bar ko-bar">
       <div class="sched-title">🏆 Road to WC26 Final</div>
-      <div class="sched-sub">Knockout bracket · live from results · points escalate each round (R32 ×1 → Final ×5)</div>
+      <div class="sched-sub">Knockout bracket${anyProjected ? ' · <b class="proj-tag">📊 teams shown “as it stands”</b> — shift with results' : " · live from results"} · points escalate each round (R32 ×1 → Final ×5)</div>
     </div>`;
   for (const r of ["R32", "R16", "QF", "SF", "3P", "F"]) {
     const ms = byRound[r];
