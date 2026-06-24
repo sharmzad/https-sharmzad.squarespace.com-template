@@ -741,6 +741,12 @@ function scorePrediction(pred, hs, as) {
 const isValidPrediction = (pred, m) =>
   isOverridden(m) || pred.updatedAtMs <= (pred.lockAt ?? m.kickoff.getTime());
 
+// Round 3 (final group round) gate — its bonuses count only from RULES.round3From.
+const round3On = (m) => {
+  const f = (window.RULES || {}).round3From;
+  return f ? m.kickoff.getTime() >= Date.parse(f) : false;
+};
+
 // Admin-granted grace points (see BONUS_POINTS in firebase-config.js)
 function bonusFor(name) {
   const b = window.BONUS_POINTS || {};
@@ -765,6 +771,12 @@ function buildStandings(live = false) {
         const isExact = pred.home === m.home.score && pred.away === m.away.score;
         if (isExact) r.exact++;
         if (isExact || predWinner(pred) === resultOf(m.home.score, m.away.score)) r.outcomes++;
+        // ⚽ Goal Rush (Round 3+): nailed the total goals but not the exact score
+        const R = window.RULES || {};
+        if (R.goalRush && round3On(m) && !isExact &&
+            (pred.home + pred.away) === (m.home.score + m.away.score)) {
+          r.pts += R.goalRush;
+        }
       } else {
         r.livePts += pts; // provisional, from an in-progress match
       }
@@ -776,6 +788,9 @@ function buildStandings(live = false) {
   // "Underdog" bonus: correctly backed the lower-ranked team to win
   const udb = underdogBonuses();
   for (const [id, b] of Object.entries(udb)) if (byId[id]) byId[id].pts += b;
+  // "Perfect Pair" bonus: both of a group's simultaneous Round-3 matches right
+  const ppb = perfectPairBonuses();
+  for (const [id, b] of Object.entries(ppb)) if (byId[id]) byId[id].pts += b;
 
   return rows.sort(
     (a, b) => b.pts - a.pts || b.exact - a.exact || b.outcomes - a.outcomes || a.name.localeCompare(b.name)
@@ -832,6 +847,42 @@ function onlyWinnerBonuses() {
       if (scorePrediction(pred, m.home.score, m.away.score) > 0) scorers.push(p.id);
     }
     if (scorers.length === 1) out[scorers[0]] = (out[scorers[0]] || 0) + R.onlyWinnerBonus;
+  }
+  return out;
+}
+
+// { playerId: bonusPoints } — Round 3 "Perfect Pair": the two matches of a group
+// kick off simultaneously. Get BOTH outcomes right → +perfectPairOutcome (once);
+// both exact → +perfectPairExact. Pairs are the two completed Round-3 matches in
+// the same group that share a kickoff time.
+function perfectPairBonuses() {
+  const R = window.RULES || {};
+  const out = {};
+  if (!R.perfectPairOutcome && !R.perfectPairExact) return out;
+  const pairs = {};
+  for (const m of matches) {
+    if (!m.completed || m.home.score == null || !round3On(m)) continue;
+    const g = groupOf(m.home.name);
+    if (!g || groupOf(m.away.name) !== g) continue;     // both teams same group
+    const key = `${g}@${m.kickoff.getTime()}`;          // a group's simultaneous slot
+    (pairs[key] = pairs[key] || []).push(m);
+  }
+  for (const key of Object.keys(pairs)) {
+    const pair = pairs[key];
+    if (pair.length !== 2) continue;                     // need both matches done
+    for (const p of players) {
+      let allOutcome = true, allExact = true;
+      for (const m of pair) {
+        const pred = predictions[`${m.id}_${p.id}`];
+        if (!pred || !isValidPrediction(pred, m)) { allOutcome = false; break; }
+        const exact = pred.home === m.home.score && pred.away === m.away.score;
+        const outcome = exact || predWinner(pred) === resultOf(m.home.score, m.away.score);
+        if (!outcome) allOutcome = false;
+        if (!exact) allExact = false;
+      }
+      if (!allOutcome) continue;
+      out[p.id] = (out[p.id] || 0) + (allExact ? R.perfectPairExact : R.perfectPairOutcome);
+    }
   }
   return out;
 }
@@ -1231,6 +1282,13 @@ function revealBlock(m) {
         if (soleId === p.id) { bonus += R.onlyWinnerBonus; badges += "🏅"; }
         if (upset && predWinner(pred) === upset) { bonus += R.underdogBonus; badges += "🐺"; }
       }
+      // ⚽ Goal Rush (Round 3+): nailed total goals but not the exact score
+      if (base != null && R.goalRush && round3On(m)) {
+        const isExact = pred.home === m.home.score && pred.away === m.away.score;
+        if (!isExact && (pred.home + pred.away) === (m.home.score + m.away.score)) {
+          bonus += R.goalRush; badges += "⚽";
+        }
+      }
       const pts = base == null ? null : base + bonus;
       return { p, pred, late, base, pts, badges };
     })
@@ -1584,6 +1642,24 @@ function renderRules() {
         <li>Correctly back the <b>lower-ranked team to win</b> (an upset) and get <b>+${window.RULES.underdogBonus} bonus</b>! 🐺</li>
         <li>Ranking is the FIFA # shown on each team — back the bigger number to win.</li>
         <li>Bonuses <b>stack</b>: a lone correct underdog call can be worth a LOT. 💰</li>
+      </ul>
+    </div>` : ""}
+    ${window.RULES?.perfectPairOutcome ? `
+    <div class="rules-card">
+      <h3>🤝 Perfect Pair <span style="font-size:11px;color:var(--green)">NEW · Round 3</span></h3>
+      <ul>
+        <li>In the final group round, each group's <b>two matches kick off at the same time</b>.</li>
+        <li>Get <b>both outcomes right</b> in that pair → <b>+${window.RULES.perfectPairOutcome} bonus</b> (once for the pair).</li>
+        <li>Nail <b>both exact scores</b> → <b>+${window.RULES.perfectPairExact} bonus</b> instead! 🎯🎯</li>
+        <li>This is <b>on top of</b> your normal points for each match.</li>
+      </ul>
+    </div>` : ""}
+    ${window.RULES?.goalRush ? `
+    <div class="rules-card">
+      <h3>⚽ Goal Rush <span style="font-size:11px;color:var(--green)">NEW · Round 3</span></h3>
+      <ul>
+        <li>Missed the exact score but <b>called the total goals</b> right (home + away)? Take <b>+${window.RULES.goalRush}</b>. 🙌</li>
+        <li>A small reward for being close — every match counts.</li>
       </ul>
     </div>` : ""}
     <div class="rules-card">

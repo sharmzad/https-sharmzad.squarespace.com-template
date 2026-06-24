@@ -7,7 +7,8 @@
  *   ⏸ Delayed / ▶️ resumed          — when a match is delayed, then back on
  *   🥅 Kickoff + everyone's picks   — when a match goes live
  *   ⚽ Goal alerts                  — live score changed since last run
- *   🏁 Full-time result + points    — with each player's score
+ *   🏁 Full-time result + points    — with each player's score (+ Round 3 bonuses)
+ *   🤝 Perfect Pair                 — both of a group's simultaneous matches right
  *   👑 New leaderboard leader       — after results land
  *
  * Firestore `notifications/{key}` docs hold dedupe markers and live state.
@@ -34,6 +35,11 @@ const bonusFor = (name) =>
 const ONLY_WINNER_BONUS = 2;
 const UNDERDOG_BONUS = 2;
 const BONUS_FROM_MS = Date.parse("2026-06-18T00:00:00Z"); // Round 2 onward
+// Round 3 (final group round) challenges
+const PERFECT_PAIR_OUTCOME = 3;
+const PERFECT_PAIR_EXACT = 6;
+const GOAL_RUSH = 1;
+const ROUND3_FROM_MS = Date.parse("2026-06-24T00:00:00Z"); // ← keep in sync with RULES.round3From
 
 // FIFA ranks — keep in sync with FIFA_RANKS in worldcup/js/app.js
 const FIFA_RANKS = [
@@ -55,6 +61,28 @@ const fifaRank = (name) => {
   for (const [k, r] of FIFA_RANKS) if (n.includes(k)) return r;
   return null;
 };
+// WC2026 groups (keep in sync with WC_GROUPS in worldcup/js/app.js) — used to
+// pair a group's two simultaneous Round-3 matches for the Perfect Pair bonus.
+const WC_GROUPS = {
+  A: ["mexico", "south africa", "korea", "czech"],
+  B: ["canada", "bosnia", "qatar", "switzerland"],
+  C: ["brazil", "morocco", "haiti", "scotland"],
+  D: ["united states", "usa", "paraguay", "australia", "türkiye", "turkey"],
+  E: ["germany", "curaç", "curac", "ivory", "côte", "cote", "ecuador"],
+  F: ["netherlands", "japan", "sweden", "tunisia"],
+  G: ["belgium", "egypt", "iran", "new zealand"],
+  H: ["spain", "cabo verde", "cape verde", "saudi", "uruguay"],
+  I: ["france", "senegal", "iraq", "norway"],
+  J: ["argentina", "algeria", "austria", "jordan"],
+  K: ["portugal", "dr congo", "congo", "uzbek", "colombia"],
+  L: ["england", "croatia", "ghana", "panama"],
+};
+const groupOf = (name) => {
+  const n = (name || "").toLowerCase();
+  for (const [g, keys] of Object.entries(WC_GROUPS))
+    if (keys.some((k) => n.includes(k))) return g;
+  return null;
+};
 // the lower-ranked side if it WON a decisive match, else null
 const upsetWinSide = (m) => {
   if (m.home.score == null) return null;
@@ -66,6 +94,39 @@ const upsetWinSide = (m) => {
   if (res === "away" && ra > rh) return "away";
   return null;
 };
+
+// Round 3 "Perfect Pair": both of a group's two simultaneous matches right.
+// Mirrors perfectPairBonuses() in worldcup/js/app.js. Returns { playerId: bonus }.
+function perfectPairBonuses(matches, allPreds, players) {
+  const out = {};
+  const pairs = {};
+  for (const m of matches) {
+    if (!m.completed || m.home.score == null || m.kickoff.getTime() < ROUND3_FROM_MS) continue;
+    const g = groupOf(m.home.name);
+    if (!g || groupOf(m.away.name) !== g) continue;
+    const key = `${g}@${m.kickoff.getTime()}`;
+    (pairs[key] = pairs[key] || []).push(m);
+  }
+  for (const key of Object.keys(pairs)) {
+    const pair = pairs[key];
+    if (pair.length !== 2) continue;
+    for (const pid of Object.keys(players)) {
+      let allOutcome = true, allExact = true;
+      for (const m of pair) {
+        const pr = allPreds.find((p) => p.matchId === m.id && p.playerId === pid);
+        const valid = pr && (isOverridden(m) || (pr.updatedAt?.toMillis?.() ?? 0) <= deadlineMs(pr, m));
+        if (!valid) { allOutcome = false; break; }
+        const exact = pr.home === m.home.score && pr.away === m.away.score;
+        const outcome = exact || predWinner(pr) === resultOf(m.home.score, m.away.score);
+        if (!outcome) allOutcome = false;
+        if (!exact) allExact = false;
+      }
+      if (!allOutcome) continue;
+      out[pid] = (out[pid] || 0) + (allExact ? PERFECT_PAIR_EXACT : PERFECT_PAIR_OUTCOME);
+    }
+  }
+  return out;
+}
 
 function dayKeyCairo(d) {
   return d.toLocaleDateString("en-CA", { timeZone: "Africa/Cairo" });
@@ -332,6 +393,14 @@ async function main() {
             if (dogs.length) bonusLine += ` · 🐺 underdog +${UNDERDOG_BONUS}: ${dogs.join(", ")}`;
           }
         }
+        // ⚽ goal rush callout (Round 3+): right total goals, wrong exact score
+        if (m.kickoff.getTime() >= ROUND3_FROM_MS) {
+          const rushers = finished.filter((p) =>
+            !(p.home === m.home.score && p.away === m.away.score) &&
+            (p.home + p.away) === (m.home.score + m.away.score)
+          ).map((p) => `${p.emoji} ${p.name}`);
+          if (rushers.length) bonusLine += ` · ⚽ goal rush +${GOAL_RUSH}: ${rushers.join(", ")}`;
+        }
         sendList.push({
           title: `🏁 FT: ${m.home.name} ${m.home.score}–${m.away.score} ${m.away.name}`,
           body: lines.length ? `Points: ${lines.join(" · ")}${bonusLine}` : "Nobody predicted this one 🙈",
@@ -404,9 +473,54 @@ async function main() {
         if (isExact) s.exact++;
         if (isExact || predWinner(pr) === resultOf(m.home.score, m.away.score)) s.outcomes++;
         if (upset && predWinner(pr) === upset) s.pts += UNDERDOG_BONUS; // 🐺 underdog
+        // ⚽ goal rush (Round 3+): nailed total goals but not the exact score
+        if (m.kickoff.getTime() >= ROUND3_FROM_MS && !isExact &&
+            (pr.home + pr.away) === (m.home.score + m.away.score)) {
+          s.pts += GOAL_RUSH;
+        }
       }
       // 🏅 only-winner bonus (sole scorer, Round 2 onward)
       if (bonusEligible && scorers.length === 1) stat[scorers[0]].pts += ONLY_WINNER_BONUS;
+    }
+    // 🤝 perfect pair (Round 3+): both of a group's simultaneous matches right
+    const ppb = perfectPairBonuses(matches, allPreds, players);
+    for (const [id, b] of Object.entries(ppb)) if (stat[id]) stat[id].pts += b;
+
+    // 🤝 Perfect Pair callout — announce once per group pair as it completes
+    const r3pairs = {};
+    for (const m of matches) {
+      if (!m.completed || m.home.score == null || m.kickoff.getTime() < ROUND3_FROM_MS) continue;
+      const g = groupOf(m.home.name);
+      if (!g || groupOf(m.away.name) !== g) continue;
+      const key = `${g}@${m.kickoff.getTime()}`;
+      (r3pairs[key] = r3pairs[key] || []).push(m);
+    }
+    for (const key of Object.keys(r3pairs)) {
+      const pair = r3pairs[key];
+      if (pair.length !== 2) continue;
+      if (!(await claim(`pairdone_${key}`))) continue;   // once per pair
+      const winners = [];
+      for (const [pid, p] of Object.entries(players)) {
+        let allOutcome = true, allExact = true;
+        for (const m of pair) {
+          const pr = allPreds.find((x) => x.matchId === m.id && x.playerId === pid);
+          const valid = pr && (isOverridden(m) || (pr.updatedAt?.toMillis?.() ?? 0) <= deadlineMs(pr, m));
+          if (!valid) { allOutcome = false; break; }
+          const exact = pr.home === m.home.score && pr.away === m.away.score;
+          if (!(exact || predWinner(pr) === resultOf(m.home.score, m.away.score))) allOutcome = false;
+          if (!exact) allExact = false;
+        }
+        if (allOutcome) {
+          winners.push(`${p.emoji || ""} ${p.name} (+${allExact ? PERFECT_PAIR_EXACT : PERFECT_PAIR_OUTCOME})`);
+        }
+      }
+      const g = key.split("@")[0];
+      if (winners.length) {
+        sendList.push({
+          title: `🤝 Perfect Pair — Group ${g}!`,
+          body: `Both Group ${g} matches nailed: ${winners.join(" · ")} 🔥`,
+        });
+      }
     }
     const order = Object.keys(stat).sort((a, b) =>
       stat[b].pts - stat[a].pts || stat[b].exact - stat[a].exact ||

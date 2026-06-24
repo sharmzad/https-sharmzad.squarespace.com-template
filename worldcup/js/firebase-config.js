@@ -36,14 +36,20 @@ window.VAPID_KEY = "BJeCjL3Ge6h9UzWfSzM0hFIgO5EBvwdyY2ADVkBjwqXfdyQfBA4304ljAFb1
 window.APP_LINK = "https://tinyurl.com/El3eshaWC26";
 
 // Current app version (shown at the bottom of the Rules tab). Bump on updates.
-window.APP_VERSION = "2.2";
+window.APP_VERSION = "2.3";
 
-// Scoring rules / bonuses. `bonusFrom` (fixed UTC moment) is when new bonuses
-// start counting, so earlier rounds aren't changed retroactively.
+// Scoring rules / bonuses. `bonusFrom` / `round3From` (fixed UTC moments) are
+// when new bonuses start counting, so earlier rounds aren't changed retroactively.
 window.RULES = {
   onlyWinnerBonus: 2,                    // +2 to the SOLE player who scored on a match
   underdogBonus: 2,                      // +2 for correctly backing the lower-ranked team to win
   bonusFrom: "2026-06-18T00:00:00Z",     // Round 2 onward
+
+  // Round 3 (final group round) challenges — both group matches kick off together.
+  perfectPairOutcome: 3,                 // +3 (once) for both outcomes in a group's simultaneous pair
+  perfectPairExact: 6,                   // +6 (once) if BOTH are exact scores
+  goalRush: 1,                           // +1 for nailing total goals when the exact score is missed
+  round3From: "2026-06-24T00:00:00Z",    // when Round 3 bonuses start counting (← adjust if needed)
 };
 
 // Exact-score celebrations are now AUTOMATIC: the notifier flags every
@@ -51,7 +57,13 @@ window.RULES = {
 // shows the fireworks + winners' names on open for one hour after the match.
 // This is an optional MANUAL override for a custom announcement (null = off).
 // `until` replays it on every open until that time; set null to switch off.
-window.ANNOUNCEMENT = null;
+window.ANNOUNCEMENT = {
+  id: "update-2026-06-24-round3",
+  version: "2.3",
+  emoji: "🤝",
+  body: "ROUND 3 CHALLENGES! 🤝 PERFECT PAIR: nail BOTH of a group's simultaneous matches → +3 (or +6 if both are exact!). ⚽ GOAL RUSH: miss the exact score but call the total goals → +1. These stack on top of your normal points! 🏆",
+  until: "2026-06-27T22:00:00Z",
+};
 
 // -----------------------------------------------------------------------------
 // Sponsor (set to null to hide all sponsor branding everywhere).
