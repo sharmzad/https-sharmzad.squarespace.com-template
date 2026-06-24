@@ -39,6 +39,7 @@ let db = null, fs = null;  // Firestore handle + module
 let fbApp = null;          // Firebase app (needed for messaging)
 let activeTab = "matches";
 let matchFilter = "today";
+let standingsPhase = null;  // Table phase: null=auto, "group" | "knockout" | "overall"
 let draft = {};            // unsaved stepper values { matchId: {home, away} }
 let health = null;         // notifier heartbeat doc (admin-only indicator)
 let standingsSnap = null;  // { ranks, prevRanks } from the notifier, for movement arrows
@@ -656,6 +657,7 @@ function normalizeEvent(ev) {
       score: c.score != null ? Number(c.score) : null,
     };
   };
+  const winC = (comp.competitors || []).find((c) => c.winner === true);
   return {
     id: ev.id,
     kickoff: new Date(ev.date),
@@ -665,6 +667,7 @@ function normalizeEvent(ev) {
     detail: status.type?.shortDetail || "",
     statusName: status.type?.name || "",           // e.g. STATUS_DELAYED / STATUS_POSTPONED
     group: comp.notes?.[0]?.headline || ev.season?.slug || "",
+    advanced: winC ? (winC.homeAway === "home" ? "home" : "away") : null, // who went through (knockout)
     home: side("home"),
     away: side("away"),
   };
@@ -747,16 +750,72 @@ const round3On = (m) => {
   return f ? m.kickoff.getTime() >= Date.parse(f) : false;
 };
 
+// ---------------------------------------------------------------------------
+// Knockout stage ("Road to WC26 Final")
+// ---------------------------------------------------------------------------
+const KO = () => window.KNOCKOUT || {};
+const knockoutFromMs = () => (KO().from ? Date.parse(KO().from) : Infinity);
+// A match is knockout if it kicks off on/after the cutoff, or ESPN labels it one.
+const isKnockout = (m) =>
+  m.kickoff.getTime() >= knockoutFromMs() ||
+  /round of 32|round of 16|quarter|semi[- ]?final|\bfinal\b|third place|3rd place|knockout/i.test(m.group || "");
+const hasKnockout = () => matches.some(isKnockout);
+
+// Which knockout round a match belongs to (label from ESPN, else by date).
+function koRound(m) {
+  const g = (m.group || "").toLowerCase();
+  if (/round of 32/.test(g)) return "R32";
+  if (/round of 16/.test(g)) return "R16";
+  if (/quarter/.test(g)) return "QF";
+  if (/semi/.test(g)) return "SF";
+  if (/third place|3rd place/.test(g)) return "3P";
+  if (/final/.test(g)) return "F";
+  const t = m.kickoff.getTime();
+  if (t < Date.parse("2026-07-04")) return "R32";
+  if (t < Date.parse("2026-07-08")) return "R16";
+  if (t < Date.parse("2026-07-13")) return "QF";
+  if (t < Date.parse("2026-07-17")) return "SF";
+  if (t < Date.parse("2026-07-19")) return "3P";
+  return "F";
+}
+const KO_ROUND_NAME = { R32: "Round of 32", R16: "Round of 16", QF: "Quarter-finals", SF: "Semi-finals", "3P": "Third place", F: "Final" };
+const roundMult = (m) => (KO().mult && KO().mult[koRound(m)]) || 1;
+
+// Knockout score: who ADVANCES (ESPN 'advanced' covers penalties/ET) + exact
+// 90-minute score, times the round multiplier (escalating).
+function scoreKnockout(pred, m) {
+  const k = KO();
+  let base = 0;
+  const adv = m.advanced ||
+    (m.completed && m.home.score != null && resultOf(m.home.score, m.away.score) !== "draw"
+      ? resultOf(m.home.score, m.away.score) : null);
+  if (adv && predWinner(pred) === adv) base += (k.advancePts ?? 3);
+  if (pred.home === m.home.score && pred.away === m.away.score) base += (k.exactPts ?? 4);
+  return base * roundMult(m);
+}
+
+// Points for a single match, by phase (knockout vs group).
+const matchPoints = (pred, m) =>
+  isKnockout(m) ? scoreKnockout(pred, m) : scorePrediction(pred, m.home.score, m.away.score);
+
 // Admin-granted grace points (see BONUS_POINTS in firebase-config.js)
 function bonusFor(name) {
   const b = window.BONUS_POINTS || {};
   return b[name] !== undefined ? b[name] : (b["*"] || 0);
 }
 
-function buildStandings(live = false) {
-  const rows = players.map((p) => ({ ...p, pts: bonusFor(p.name), exact: 0, outcomes: 0, played: 0, livePts: 0 }));
+// phase: "group" | "knockout" | "overall". Group-stage bonuses and grace points
+// count toward group/overall only; the knockout race starts fresh from zero.
+function buildStandings(live = false, phase = "overall") {
+  const wantGroup = phase !== "knockout";
+  const wantKO = phase !== "group";
+  const R = window.RULES || {};
+  const rows = players.map((p) => ({ ...p, pts: wantGroup ? bonusFor(p.name) : 0, exact: 0, outcomes: 0, played: 0, livePts: 0 }));
   const byId = Object.fromEntries(rows.map((r) => [r.id, r]));
   for (const m of matches) {
+    const ko = isKnockout(m);
+    if (ko && !wantKO) continue;
+    if (!ko && !wantGroup) continue;
     const final = m.completed && m.home.score != null;
     const inPlay = live && m.state === "in" && m.home.score != null;
     if (!final && !inPlay) continue;
@@ -764,16 +823,15 @@ function buildStandings(live = false) {
       const pred = predictions[`${m.id}_${p.id}`];
       if (!pred || !isValidPrediction(pred, m)) continue;
       const r = byId[p.id];
-      const pts = scorePrediction(pred, m.home.score, m.away.score);
+      const pts = matchPoints(pred, m);
       r.pts += pts;
       if (final) {
         r.played++;
         const isExact = pred.home === m.home.score && pred.away === m.away.score;
         if (isExact) r.exact++;
         if (isExact || predWinner(pred) === resultOf(m.home.score, m.away.score)) r.outcomes++;
-        // ⚽ Goal Rush (Round 3+): nailed the total goals but not the exact score
-        const R = window.RULES || {};
-        if (R.goalRush && round3On(m) && !isExact &&
+        // ⚽ Goal Rush — group Round 3+ only
+        if (!ko && R.goalRush && round3On(m) && !isExact &&
             (pred.home + pred.away) === (m.home.score + m.away.score)) {
           r.pts += R.goalRush;
         }
@@ -782,16 +840,12 @@ function buildStandings(live = false) {
       }
     }
   }
-  // "Only winner" bonus: sole scorer on a completed match (from RULES.bonusFrom)
-  const owb = onlyWinnerBonuses();
-  for (const [id, b] of Object.entries(owb)) if (byId[id]) byId[id].pts += b;
-  // "Underdog" bonus: correctly backed the lower-ranked team to win
-  const udb = underdogBonuses();
-  for (const [id, b] of Object.entries(udb)) if (byId[id]) byId[id].pts += b;
-  // "Perfect Pair" bonus: both of a group's simultaneous Round-3 matches right
-  const ppb = perfectPairBonuses();
-  for (const [id, b] of Object.entries(ppb)) if (byId[id]) byId[id].pts += b;
-
+  // Group-stage bonuses count toward the group/overall race only.
+  if (wantGroup) {
+    for (const [id, b] of Object.entries(onlyWinnerBonuses())) if (byId[id]) byId[id].pts += b;
+    for (const [id, b] of Object.entries(underdogBonuses())) if (byId[id]) byId[id].pts += b;
+    for (const [id, b] of Object.entries(perfectPairBonuses())) if (byId[id]) byId[id].pts += b;
+  }
   return rows.sort(
     (a, b) => b.pts - a.pts || b.exact - a.exact || b.outcomes - a.outcomes || a.name.localeCompare(b.name)
   );
@@ -818,6 +872,7 @@ function underdogBonuses() {
   if (!R.underdogBonus) return out;
   const fromMs = R.bonusFrom ? Date.parse(R.bonusFrom) : 0;
   for (const m of matches) {
+    if (isKnockout(m)) continue;
     if (!m.completed || m.home.score == null || m.kickoff.getTime() < fromMs) continue;
     const side = upsetWinSide(m);
     if (!side) continue;
@@ -838,6 +893,7 @@ function onlyWinnerBonuses() {
   if (!R.onlyWinnerBonus) return out;
   const fromMs = R.bonusFrom ? Date.parse(R.bonusFrom) : 0;
   for (const m of matches) {
+    if (isKnockout(m)) continue;
     if (!m.completed || m.home.score == null) continue;
     if (m.kickoff.getTime() < fromMs) continue;
     const scorers = [];
@@ -861,6 +917,7 @@ function perfectPairBonuses() {
   if (!R.perfectPairOutcome && !R.perfectPairExact) return out;
   const pairs = {};
   for (const m of matches) {
+    if (isKnockout(m)) continue;
     if (!m.completed || m.home.score == null || !round3On(m)) continue;
     const g = groupOf(m.home.name);
     if (!g || groupOf(m.away.name) !== g) continue;     // both teams same group
@@ -1360,9 +1417,12 @@ function renderTable() {
     view.innerHTML = `<div class="empty">🏅 The standings appear once the admin connects the database.<br>See the setup guide in the README.</div>`;
     return;
   }
-  const liveMatches = matches.filter((m) => m.state === "in" && m.home.score != null);
+  const ko = hasKnockout();
+  const phase = ko ? (standingsPhase || "knockout") : "overall";
+  const liveMatches = matches.filter((m) => m.state === "in" && m.home.score != null &&
+    (phase === "overall" || (phase === "knockout") === isKnockout(m)));
   const isLive = liveMatches.length > 0;
-  const rows = buildStandings(isLive);
+  const rows = buildStandings(isLive, phase);
   if (!rows.length) {
     view.innerHTML = `<div class="empty">No players yet — be the first to join! 🎉</div>`;
     return;
@@ -1372,9 +1432,9 @@ function renderTable() {
   let prevRanks;
   if (isLive) {
     prevRanks = {};
-    buildStandings(false).forEach((r, i) => (prevRanks[r.id] = i + 1));
+    buildStandings(false, phase).forEach((r, i) => (prevRanks[r.id] = i + 1));
   } else {
-    prevRanks = standingsSnap?.prevRanks || null;
+    prevRanks = phase === "overall" ? (standingsSnap?.prevRanks || null) : null;
   }
   const glyph = { up: "▲", down: "▼", same: "–" };
 
@@ -1406,11 +1466,26 @@ function renderTable() {
         .join(" · ")} · final at full time</div>`
     : "";
 
+  const title = phase === "knockout" ? "🏆 Road to WC26 Final"
+    : phase === "group" ? "🌍 Group stage" : "🏅 Standings";
+  const phasePills = ko
+    ? `<div class="pills phase-pills">${["knockout", "group", "overall"]
+        .map((p) => `<button class="pill ${p === phase ? "active" : ""}" data-phase="${p}">${
+          p === "knockout" ? "🏆 Knockout" : p === "group" ? "🌍 Group" : "Σ Overall"}</button>`)
+        .join("")}</div>`
+    : "";
+
   view.innerHTML = `
-    <div class="section-title">🏅 Standings${isLive ? ' <span class="st-livetag">LIVE</span>' : ""}</div>
+    <div class="section-title">${title}${isLive ? ' <span class="st-livetag">LIVE</span>' : ""}</div>
+    ${phasePills}
     ${liveBanner}
     ${html}
-    <p class="lock-note" style="margin-top:10px">Tiebreakers: most exact scores 🎯, then correct results · ▲▼ ${isLive ? "live movement from in-play results" : "since the last match"}.</p>`;
+    <p class="lock-note" style="margin-top:10px">${
+      phase === "knockout" ? "Knockout scoring: correct advancer + exact 90-min score, ×round (R32 →×1, Final →×5). " : ""
+    }Tiebreakers: most exact scores 🎯, then correct results · ▲▼ ${isLive ? "live movement from in-play results" : "since the last match"}.</p>`;
+
+  view.querySelectorAll("[data-phase]").forEach((b) =>
+    b.addEventListener("click", () => { standingsPhase = b.dataset.phase; renderTable(); }));
 }
 
 // Last 3 completed matches as form dots: "ex" (exact +7), "win" (any points), "" (none)
@@ -1466,6 +1541,7 @@ function buildGroupStandings() {
 
   // seed teams (names + flags) from every fixture they appear in
   for (const m of matches) {
+    if (isKnockout(m)) continue;                    // group tables only
     for (const t of [m.home, m.away]) {
       const g = groupOf(t.name);
       if (g) ensure(g, t);
@@ -1473,6 +1549,7 @@ function buildGroupStandings() {
   }
   // tally completed group-stage results
   for (const m of matches) {
+    if (isKnockout(m)) continue;                    // a knockout result must not count in a group
     if (!m.completed || m.home.score == null || m.away.score == null) continue;
     const g = groupOf(m.home.name);
     if (!g || groupOf(m.away.name) !== g) continue; // both teams in the same group
@@ -1514,11 +1591,53 @@ function thirdPlaceRace(groups) {
   return thirds; // first 8 are "in"
 }
 
+// One knockout match row (home — score/time — away), winner highlighted.
+function koMatchRow(m) {
+  const flag = (t) => t.logo
+    ? `<img src="${esc(t.logo)}" alt="" loading="lazy" onerror="this.outerHTML='<span class=sched-fb>⚽</span>'">`
+    : `<span class="sched-fb">⚽</span>`;
+  let mid;
+  if (m.state === "in") mid = `<span class="ko-score live">${m.home.score ?? "-"}–${m.away.score ?? "-"}</span>`;
+  else if (m.completed) mid = `<span class="ko-score">${m.home.score ?? "-"}–${m.away.score ?? "-"}</span>`;
+  else mid = `<span class="ko-time">${fmtTime(m.kickoff)}</span>`;
+  const hw = m.advanced === "home" ? " ko-win" : "";
+  const aw = m.advanced === "away" ? " ko-win" : "";
+  return `
+    <div class="ko-match">
+      <div class="ko-team h${hw}"><b>${esc(m.home.name)}</b>${flag(m.home)}</div>
+      <div class="ko-mid">${mid}</div>
+      <div class="ko-team a${aw}">${flag(m.away)}<b>${esc(m.away.name)}</b></div>
+    </div>`;
+}
+
+// "Road to WC26 Final" bracket — knockout fixtures grouped by round (empty until
+// ESPN lists them). Each round shows its escalating points multiplier.
+function koBracketHtml() {
+  const ks = matches.filter(isKnockout).sort((a, b) => a.kickoff - b.kickoff);
+  if (!ks.length) return "";
+  const byRound = {};
+  for (const m of ks) (byRound[koRound(m)] = byRound[koRound(m)] || []).push(m);
+  let html = `
+    <div class="sched-bar ko-bar">
+      <div class="sched-title">🏆 Road to WC26 Final</div>
+      <div class="sched-sub">Knockout bracket · live from results · points escalate each round (R32 ×1 → Final ×5)</div>
+    </div>`;
+  for (const r of ["R32", "R16", "QF", "SF", "3P", "F"]) {
+    const ms = byRound[r];
+    if (!ms || !ms.length) continue;
+    const mult = (KO().mult && KO().mult[r]) || 1;
+    html += `<div class="ko-round"><div class="ko-round-head">${KO_ROUND_NAME[r]} <span class="ko-mult">×${mult}</span></div>`;
+    for (const m of ms) html += koMatchRow(m);
+    html += `</div>`;
+  }
+  return html;
+}
+
 function renderShare() {
   const groups = buildGroupStandings();
   const keys = Object.keys(groups);
 
-  let html = `
+  let html = koBracketHtml() + `
     <div class="sched-bar">
       <div class="sched-title">🌍 World Cup 2026 — Group standings</div>
       <div class="sched-sub">Live tournament tables · updates from results · top 2 advance 🟢</div>
@@ -1707,6 +1826,16 @@ function renderRules() {
       <ul>
         <li>Missed the exact score but <b>called the total goals</b> right (home + away)? Take <b>+${window.RULES.goalRush}</b>. 🙌</li>
         <li>A small reward for being close — every match counts.</li>
+      </ul>
+    </div>` : ""}
+    ${window.KNOCKOUT ? `
+    <div class="rules-card">
+      <h3>🏆 Road to WC26 Final <span style="font-size:11px;color:var(--gold)">KNOCKOUT</span></h3>
+      <ul>
+        <li>The knockout stage runs on a <b>fresh leaderboard from zero</b> — group points stay in their own table (toggle Group / Knockout / Overall on the Table tab).</li>
+        <li><b>Who advances:</b> correctly pick the team that <b>goes through</b> (penalties & extra time count) → <b>+${window.KNOCKOUT.advancePts}</b>.</li>
+        <li><b>Exact 90-minute score</b> → <b>+${window.KNOCKOUT.exactPts}</b> more.</li>
+        <li><b>Stakes escalate every round:</b> points are multiplied — Round of 32 ×1, Round of 16 ×2, Quarters ×3, Semis ×4, <b>Final ×5</b>. Late rounds are where titles are won! 🔥</li>
       </ul>
     </div>` : ""}
     <div class="rules-card">

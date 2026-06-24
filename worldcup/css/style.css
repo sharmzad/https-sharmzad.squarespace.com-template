@@ -228,6 +228,33 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
 .qual-tag.in  { background: #103a26; color: var(--green); }
 .qual-tag.out { background: #3a1414; color: #e08a8a; }
 
+/* Road to WC26 Final — knockout bracket */
+.phase-pills { margin: 2px 0 12px; }
+.ko-bar { border: 1px solid var(--gold); }
+.ko-round { margin-bottom: 14px; }
+.ko-round-head {
+  font-size: 13px; font-weight: 800; color: var(--gold);
+  text-transform: uppercase; letter-spacing: .03em; margin: 6px 4px 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.ko-mult { font-size: 11px; font-weight: 700; color: var(--green); background: #0e2a1c; padding: 1px 7px; border-radius: 999px; }
+.ko-match {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px;
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 12px; padding: 9px 10px; margin-bottom: 6px;
+}
+.ko-team { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.ko-team b { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ko-team.h { justify-content: flex-end; text-align: right; }
+.ko-team.a { justify-content: flex-start; text-align: left; }
+.ko-team img { width: 22px; height: 16px; object-fit: cover; border-radius: 3px; flex: 0 0 auto; }
+.ko-team.ko-win b { color: var(--gold); }
+.ko-team.ko-win::after { content: "✓"; color: var(--green); font-weight: 800; font-size: 12px; }
+.ko-mid { min-width: 56px; text-align: center; }
+.ko-score { font-size: 15px; font-weight: 800; }
+.ko-score.live { color: var(--live); }
+.ko-time { font-size: 12.5px; font-weight: 700; color: var(--muted); }
+
 /* ---------- Match card ---------- */
 .match {
   background: var(--card); border: 1px solid var(--line);

@@ -52,6 +52,18 @@ window.RULES = {
   round3From: "2026-06-24T19:00:00Z",    // Round 3 kicks off 22:00 Cairo (EEST, UTC+3)
 };
 
+// Knockout stage — "Road to WC26 Final". Lights up automatically once ESPN lists
+// matches on/after `from`. Scoring per match: correctly pick who ADVANCES
+// (penalties/extra time included) + the exact 90-minute score, then multiplied by
+// the round (escalating, so later rounds are worth more). Knockout runs on its
+// own fresh-from-zero leaderboard (the Table tab gets a Group/Knockout/Overall toggle).
+window.KNOCKOUT = {
+  from: "2026-06-28T00:00:00Z",                          // Round of 32 begins
+  advancePts: 3,                                         // correct "who goes through" pick
+  exactPts: 4,                                           // exact 90-minute score
+  mult: { R32: 1, R16: 2, QF: 3, SF: 4, "3P": 4, F: 5 }, // escalating per round
+};
+
 // Exact-score celebrations are now AUTOMATIC: the notifier flags every
 // exact-score win at full time (health/celebration in Firestore) and the app
 // shows the fireworks + winners' names on open for one hour after the match.
