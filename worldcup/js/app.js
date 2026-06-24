@@ -760,6 +760,10 @@ const isKnockout = (m) =>
   m.kickoff.getTime() >= knockoutFromMs() ||
   /round of 32|round of 16|quarter|semi[- ]?final|\bfinal\b|third place|3rd place|knockout/i.test(m.group || "");
 const hasKnockout = () => matches.some(isKnockout);
+// Knockout has actually STARTED (not just scheduled): past the cutoff, or a
+// knockout match is live/finished. Drives the default Table view.
+const koStarted = () =>
+  Date.now() >= knockoutFromMs() || matches.some((m) => isKnockout(m) && m.state !== "pre");
 
 // Which knockout round a match belongs to (label from ESPN, else by date).
 function koRound(m) {
@@ -1418,7 +1422,9 @@ function renderTable() {
     return;
   }
   const ko = hasKnockout();
-  const phase = ko ? (standingsPhase || "knockout") : "overall";
+  // Default to Group during the group stage, switch to Knockout once it starts.
+  const defaultPhase = ko ? (koStarted() ? "knockout" : "group") : "overall";
+  const phase = ko ? (standingsPhase || defaultPhase) : "overall";
   const liveMatches = matches.filter((m) => m.state === "in" && m.home.score != null &&
     (phase === "overall" || (phase === "knockout") === isKnockout(m)));
   const isLive = liveMatches.length > 0;
@@ -1469,7 +1475,7 @@ function renderTable() {
   const title = phase === "knockout" ? "🏆 Road to WC26 Final"
     : phase === "group" ? "🌍 Group stage" : "🏅 Standings";
   const phasePills = ko
-    ? `<div class="pills phase-pills">${["knockout", "group", "overall"]
+    ? `<div class="pills phase-pills">${["group", "knockout", "overall"]
         .map((p) => `<button class="pill ${p === phase ? "active" : ""}" data-phase="${p}">${
           p === "knockout" ? "🏆 Knockout" : p === "group" ? "🌍 Group" : "Σ Overall"}</button>`)
         .join("")}</div>`
