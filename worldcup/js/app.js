@@ -840,7 +840,10 @@ function buildStandings(live = false, phase = "overall") {
   const wantGroup = phase !== "knockout";
   const wantKO = phase !== "group";
   const R = window.RULES || {};
-  const rows = players.map((p) => ({ ...p, pts: wantGroup ? bonusFor(p.name) : 0, exact: 0, outcomes: 0, played: 0, livePts: 0 }));
+  const rows = players.map((p) => {
+    const grace = wantGroup ? bonusFor(p.name) : 0;
+    return { ...p, pts: grace, bonus: grace, exact: 0, outcomes: 0, played: 0, livePts: 0 };
+  });
   const byId = Object.fromEntries(rows.map((r) => [r.id, r]));
   for (const m of matches) {
     const ko = isKnockout(m);
@@ -853,7 +856,7 @@ function buildStandings(live = false, phase = "overall") {
       const pred = predictions[`${m.id}_${p.id}`];
       if (!pred || !isValidPrediction(pred, m)) continue;
       const r = byId[p.id];
-      const pts = matchPoints(pred, m);
+      const pts = matchPoints(pred, m);   // basic: winner/exact (or knockout score)
       r.pts += pts;
       if (final) {
         r.played++;
@@ -863,7 +866,7 @@ function buildStandings(live = false, phase = "overall") {
         // ⚽ Goal Rush — group Round 3+ only
         if (!ko && R.goalRush && round3On(m) && !isExact &&
             (pred.home + pred.away) === (m.home.score + m.away.score)) {
-          r.pts += R.goalRush;
+          r.pts += R.goalRush; r.bonus += R.goalRush;
         }
       } else {
         r.livePts += pts; // provisional, from an in-progress match
@@ -872,9 +875,9 @@ function buildStandings(live = false, phase = "overall") {
   }
   // Group-stage bonuses count toward the group/overall race only.
   if (wantGroup) {
-    for (const [id, b] of Object.entries(onlyWinnerBonuses())) if (byId[id]) byId[id].pts += b;
-    for (const [id, b] of Object.entries(underdogBonuses())) if (byId[id]) byId[id].pts += b;
-    for (const [id, b] of Object.entries(perfectPairBonuses())) if (byId[id]) byId[id].pts += b;
+    for (const [id, b] of Object.entries(onlyWinnerBonuses())) if (byId[id]) { byId[id].pts += b; byId[id].bonus += b; }
+    for (const [id, b] of Object.entries(underdogBonuses())) if (byId[id]) { byId[id].pts += b; byId[id].bonus += b; }
+    for (const [id, b] of Object.entries(perfectPairBonuses())) if (byId[id]) { byId[id].pts += b; byId[id].bonus += b; }
   }
   return rows.sort(
     (a, b) => b.pts - a.pts || b.exact - a.exact || b.outcomes - a.outcomes || a.name.localeCompare(b.name)
@@ -1493,7 +1496,10 @@ function renderTable() {
           <div class="st-name">${esc(r.name)}${meCls ? '<span class="st-you">YOU</span>' : ""}</div>
           <div class="st-sub">Played ${r.played} · 🎯 ${r.exact} exact <span class="st-form">${dots}</span></div>
         </div>
-        <div class="st-pts"><b>${r.pts}</b>${livePts}<span>pts</span></div>
+        <div class="st-pts">
+          <div class="st-total"><b>${r.pts}</b>${livePts}<span>pts</span></div>
+          ${r.bonus ? `<div class="st-bd">${r.pts - r.bonus}<span class="st-bonus"> + ${r.bonus} 🎁</span></div>` : ""}
+        </div>
       </div>`;
   }).join("");
 

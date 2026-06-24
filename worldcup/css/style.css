@@ -426,7 +426,10 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
 .st-dot.win { background: var(--green); }
 .st-pts { flex: none; text-align: right; }
 .st-pts b { font-size: 20px; font-weight: 800; color: var(--gold); line-height: 1; }
-.st-pts span { display: block; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+.st-pts .st-total span { display: block; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+.st-pts .st-total .st-live { display: inline; }
+.st-bd { font-size: 11px; font-weight: 700; color: var(--text); margin-top: 4px; white-space: nowrap; }
+.st-bonus { color: var(--green); }
 
 /* ---------- Share tab ---------- */
 .share-card {
