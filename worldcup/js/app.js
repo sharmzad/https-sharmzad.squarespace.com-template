@@ -842,7 +842,8 @@ function buildStandings(live = false, phase = "overall") {
   const R = window.RULES || {};
   const rows = players.map((p) => {
     const grace = wantGroup ? bonusFor(p.name) : 0;
-    return { ...p, pts: grace, bonus: grace, exact: 0, outcomes: 0, played: 0, livePts: 0 };
+    return { ...p, pts: grace, bonus: grace, exact: 0, outcomes: 0, played: 0, livePts: 0,
+      bd: { grace, onlyWinner: 0, underdog: 0, perfectPair: 0, goalRush: 0 } };
   });
   const byId = Object.fromEntries(rows.map((r) => [r.id, r]));
   for (const m of matches) {
@@ -866,7 +867,7 @@ function buildStandings(live = false, phase = "overall") {
         // ⚽ Goal Rush — group Round 3+ only
         if (!ko && R.goalRush && round3On(m) && !isExact &&
             (pred.home + pred.away) === (m.home.score + m.away.score)) {
-          r.pts += R.goalRush; r.bonus += R.goalRush;
+          r.pts += R.goalRush; r.bonus += R.goalRush; r.bd.goalRush += R.goalRush;
         }
       } else {
         r.livePts += pts; // provisional, from an in-progress match
@@ -875,9 +876,9 @@ function buildStandings(live = false, phase = "overall") {
   }
   // Group-stage bonuses count toward the group/overall race only.
   if (wantGroup) {
-    for (const [id, b] of Object.entries(onlyWinnerBonuses())) if (byId[id]) { byId[id].pts += b; byId[id].bonus += b; }
-    for (const [id, b] of Object.entries(underdogBonuses())) if (byId[id]) { byId[id].pts += b; byId[id].bonus += b; }
-    for (const [id, b] of Object.entries(perfectPairBonuses())) if (byId[id]) { byId[id].pts += b; byId[id].bonus += b; }
+    for (const [id, b] of Object.entries(onlyWinnerBonuses())) if (byId[id]) { byId[id].pts += b; byId[id].bonus += b; byId[id].bd.onlyWinner += b; }
+    for (const [id, b] of Object.entries(underdogBonuses())) if (byId[id]) { byId[id].pts += b; byId[id].bonus += b; byId[id].bd.underdog += b; }
+    for (const [id, b] of Object.entries(perfectPairBonuses())) if (byId[id]) { byId[id].pts += b; byId[id].bonus += b; byId[id].bd.perfectPair += b; }
   }
   return rows.sort(
     (a, b) => b.pts - a.pts || b.exact - a.exact || b.outcomes - a.outcomes || a.name.localeCompare(b.name)
@@ -1477,6 +1478,7 @@ function renderTable() {
     prevRanks = phase === "overall" ? (standingsSnap?.prevRanks || null) : null;
   }
   const glyph = { up: "▲", down: "▼", same: "–" };
+  const BONUS_ICONS = [["onlyWinner", "🏅"], ["underdog", "🐺"], ["perfectPair", "🤝"], ["goalRush", "⚽"], ["grace", "🎁"]];
 
   const html = rows.map((r, i) => {
     const rank = i + 1;
@@ -1486,7 +1488,15 @@ function renderTable() {
     const mv = prevRank == null ? "same" : (prevRank - rank > 0 ? "up" : prevRank - rank < 0 ? "down" : "same");
     const dots = formDots(r.id).map((f) => `<span class="st-dot ${f}"></span>`).join("");
     const meCls = me && r.id === me.id ? " me" : "";
-    const livePts = isLive && r.livePts ? `<span class="st-live">+${r.livePts}</span>` : "";
+    // second-line breakdown: base + each bonus type (with icon) + live portion
+    const bonusChips = (r.bd ? BONUS_ICONS : [])
+      .filter(([k]) => r.bd[k] > 0)
+      .map(([k, ic]) => `<span class="st-chip bonus">${ic} ${r.bd[k]}</span>`)
+      .join("");
+    const liveChip = isLive && r.livePts ? `<span class="st-chip live">🔴 +${r.livePts}<small>live</small></span>` : "";
+    const breakdown = (r.bonus || liveChip)
+      ? `<div class="st-breakdown"><span class="st-chip base"><b>${r.pts - r.bonus}</b><small>base</small></span>${bonusChips}${liveChip}</div>`
+      : "";
     return `
       <div class="st-row${meCls}${r.livePts ? " gaining" : ""}">
         <div class="st-rank${rcls}">${medal}</div>
@@ -1496,10 +1506,8 @@ function renderTable() {
           <div class="st-name">${esc(r.name)}${meCls ? '<span class="st-you">YOU</span>' : ""}</div>
           <div class="st-sub">Played ${r.played} · 🎯 ${r.exact} exact <span class="st-form">${dots}</span></div>
         </div>
-        <div class="st-pts">
-          <div class="st-total"><b>${r.pts}</b><span class="st-unit">pts</span>${livePts}</div>
-          ${r.bonus ? `<div class="st-chips"><span class="st-chip">${r.pts - r.bonus}<small>base</small></span><span class="st-chip bonus">+${r.bonus}<small>bonus</small></span></div>` : ""}
-        </div>
+        <div class="st-pts"><div class="st-total"><b>${r.pts}</b><span class="st-unit">pts</span></div></div>
+        ${breakdown}
       </div>`;
   }).join("");
 
