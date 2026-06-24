@@ -40,6 +40,7 @@ let fbApp = null;          // Firebase app (needed for messaging)
 let activeTab = "matches";
 let matchFilter = "today";
 let standingsPhase = null;  // Table phase: null=auto, "group" | "knockout" | "overall"
+let koSlots = {};          // live-resolved knockout slot teams: `${matchId}|${side}` -> {name,abbr,logo}
 let draft = {};            // unsaved stepper values { matchId: {home, away} }
 let health = null;         // notifier heartbeat doc (admin-only indicator)
 let standingsSnap = null;  // { ranks, prevRanks } from the notifier, for movement arrows
@@ -764,6 +765,9 @@ const hasKnockout = () => matches.some(isKnockout);
 // knockout match is live/finished. Drives the default Table view.
 const koStarted = () =>
   Date.now() >= knockoutFromMs() || matches.some((m) => isKnockout(m) && m.state !== "pre");
+// Display team for a (possibly placeholder) knockout slot — the live-resolved
+// team if we have one, else ESPN's value (real team, or a "2A"/"3RD …" label).
+const koTeam = (m, side) => koSlots[`${m.id}|${side}`] || m[side];
 
 // Which knockout round a match belongs to (label from ESPN, else by date).
 function koRound(m) {
@@ -954,6 +958,7 @@ function perfectPairBonuses() {
 function render() {
   renderAdminHealth();
   fillAnnouncement();   // reveal exact-score player names once data is loaded
+  koSlots = hasKnockout() ? koSlotMap() : {};   // live-resolve bracket placeholders
   if (activeTab === "matches") renderMatches();
   else if (activeTab === "table") renderTable();
   else if (activeTab === "share") renderShare();
@@ -1228,6 +1233,7 @@ function matchDetailHtml(m) {
 
 function matchCard(m) {
   const open = isOpen(m);
+  const H = koTeam(m, "home"), A = koTeam(m, "away");  // live-resolved for knockout slots
   const badge = isDelayed(m)
     ? `<span class="badge delayed">⏸ DELAYED</span>`
     : m.state === "in"
@@ -1260,9 +1266,9 @@ function matchCard(m) {
       `<button class="wbtn ${d.winner === val ? "sel" : ""}" data-winner="${m.id}|${val}">${label}</button>`;
     body = `
       <div class="winner-row">
-        ${wbtn("home", `🏆 ${esc(m.home.abbr)}`)}
+        ${wbtn("home", `🏆 ${esc(H.abbr)}`)}
         ${wbtn("draw", "🤝 Draw")}
-        ${wbtn("away", `🏆 ${esc(m.away.abbr)}`)}
+        ${wbtn("away", `🏆 ${esc(A.abbr)}`)}
       </div>
       <div class="predict">
         ${stepper(m.id, "home", d.home)}
@@ -1291,16 +1297,17 @@ function matchCard(m) {
   const detail = (canDetail && expanded) ? matchDetailHtml(m) : "";
 
   // pre-match win prediction (hint before betting) — upcoming matches only
-  const probP = m.state === "pre" ? matchWinProb(m) : null;
-  const prob = probP ? winProbHtml(m, probP) : "";
+  const mr = { ...m, home: H, away: A };   // resolved teams for rank-based win prob
+  const probP = m.state === "pre" ? matchWinProb(mr) : null;
+  const prob = probP ? winProbHtml(mr, probP) : "";
 
   return `
     <div class="match">
       <div class="match-top"><span>${esc(m.group || "World Cup 2026")}</span>${badge}</div>
       <div class="teams">
-        ${teamHtml(m.home)}
+        ${teamHtml(H)}
         <div class="center">${center}</div>
-        ${teamHtml(m.away)}
+        ${teamHtml(A)}
       </div>
       ${prob}
       ${body}
@@ -1597,8 +1604,61 @@ function thirdPlaceRace(groups) {
   return thirds; // first 8 are "in"
 }
 
+// Live-resolve knockout slot placeholders to real teams from the current group
+// standings. "1A"/"2B" → that group's leader/runner-up (deterministic). "3RD
+// A/B/C/D/F" → a qualifying third-placed team whose group is in the candidate
+// set, assigned most-constrained-first so each third is used once. Returns
+// `${matchId}|${side}` -> {name, abbr, logo}. Provisional — shifts with results.
+function koSlotMap() {
+  const map = {};
+  const standings = buildGroupStandings();
+  // team abbreviations/flags registry from the group-stage fixtures
+  const reg = {};
+  for (const m of matches) {
+    if (isKnockout(m)) continue;
+    for (const t of [m.home, m.away]) if (t.name) reg[t.name] = { abbr: t.abbr, logo: t.logo };
+  }
+  const team = (t) => ({
+    name: t.name,
+    abbr: reg[t.name]?.abbr || t.name.slice(0, 3).toUpperCase(),
+    logo: t.logo || reg[t.name]?.logo || "",
+  });
+  // 1) winner / runner-up slots — directly from the live table
+  for (const m of matches) {
+    if (!isKnockout(m)) continue;
+    for (const side of ["home", "away"]) {
+      const wm = (m[side].name || "").match(/^([12])\s*([A-L])$/i);
+      if (!wm) continue;
+      const rows = standings["Group " + wm[2].toUpperCase()];
+      const t = rows && rows[Number(wm[1]) - 1];
+      if (t) map[`${m.id}|${side}`] = team(t);
+    }
+  }
+  // 2) third-placed slots — assign the qualifying thirds to candidate slots
+  const thirds = thirdPlaceRace(standings).slice(0, 8);
+  const slots = [];
+  for (const m of matches) {
+    if (!isKnockout(m)) continue;
+    for (const side of ["home", "away"]) {
+      const lbl = m[side].name || "";
+      if (/3rd|third/i.test(lbl)) {
+        const cand = (lbl.match(/[A-L]/gi) || []).map((c) => c.toUpperCase());
+        slots.push({ key: `${m.id}|${side}`, cand });
+      }
+    }
+  }
+  slots.sort((a, b) => a.cand.length - b.cand.length); // most-constrained first
+  const used = new Set();
+  for (const slot of slots) {
+    const pick = thirds.find((t) => !used.has(t.name) && (!slot.cand.length || slot.cand.includes(t.g)));
+    if (pick) { used.add(pick.name); map[slot.key] = team(pick); }
+  }
+  return map;
+}
+
 // One knockout match row (home — score/time — away), winner highlighted.
 function koMatchRow(m) {
+  const H = koTeam(m, "home"), A = koTeam(m, "away");  // live-resolved slots
   const flag = (t) => t.logo
     ? `<img src="${esc(t.logo)}" alt="" loading="lazy" onerror="this.outerHTML='<span class=sched-fb>⚽</span>'">`
     : `<span class="sched-fb">⚽</span>`;
@@ -1610,9 +1670,9 @@ function koMatchRow(m) {
   const aw = m.advanced === "away" ? " ko-win" : "";
   return `
     <div class="ko-match">
-      <div class="ko-team h${hw}"><b>${esc(m.home.name)}</b>${flag(m.home)}</div>
+      <div class="ko-team h${hw}"><b>${esc(H.name)}</b>${flag(H)}</div>
       <div class="ko-mid">${mid}</div>
-      <div class="ko-team a${aw}">${flag(m.away)}<b>${esc(m.away.name)}</b></div>
+      <div class="ko-team a${aw}">${flag(A)}<b>${esc(A.name)}</b></div>
     </div>`;
 }
 
