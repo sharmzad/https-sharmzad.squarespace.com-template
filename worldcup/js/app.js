@@ -1719,7 +1719,12 @@ function koBracketHtml() {
     if (!ms || !ms.length) continue;
     const mult = (KO().mult && KO().mult[r]) || 1;
     html += `<div class="ko-round"><div class="ko-round-head">${KO_ROUND_NAME[r]} <span class="ko-mult">×${mult}</span></div>`;
-    for (const m of ms) html += koMatchRow(m);
+    let lastDay = "";
+    for (const m of ms) {
+      const day = m.kickoff.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" });
+      if (day !== lastDay) { html += `<div class="ko-day">📅 ${day}</div>`; lastDay = day; }
+      html += koMatchRow(m);
+    }
     html += `</div>`;
   }
   return html;
