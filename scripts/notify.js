@@ -29,7 +29,7 @@ const GRACE_AFTER_MIN = 50;
 const OPEN_OVERRIDES = [["KOR", "CZE"]];
 const REMIND_WINDOW_MIN = 30; // notify when lock is at most this far away
 // Keep in sync with BONUS_POINTS / RULES in worldcup/js/firebase-config.js
-const BONUS_POINTS = { "*": 0 };
+const BONUS_POINTS = { "*": 2, "Alaa": 0 };
 const bonusFor = (name) =>
   BONUS_POINTS[name] !== undefined ? BONUS_POINTS[name] : (BONUS_POINTS["*"] || 0);
 const ONLY_WINNER_BONUS = 2;

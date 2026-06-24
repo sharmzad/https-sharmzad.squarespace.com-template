@@ -1478,7 +1478,8 @@ function renderTable() {
     prevRanks = phase === "overall" ? (standingsSnap?.prevRanks || null) : null;
   }
   const glyph = { up: "▲", down: "▼", same: "–" };
-  const BONUS_ICONS = [["onlyWinner", "🏅"], ["underdog", "🐺"], ["perfectPair", "🤝"], ["goalRush", "⚽"], ["grace", "🎁"]];
+  // grace is intentionally omitted — it counts toward the total but folds into "base"
+  const BONUS_ICONS = [["onlyWinner", "🏅"], ["underdog", "🐺"], ["perfectPair", "🤝"], ["goalRush", "⚽"]];
 
   const html = rows.map((r, i) => {
     const rank = i + 1;
@@ -1489,13 +1490,14 @@ function renderTable() {
     const dots = formDots(r.id).map((f) => `<span class="st-dot ${f}"></span>`).join("");
     const meCls = me && r.id === me.id ? " me" : "";
     // second-line breakdown: base + each bonus type (with icon) + live portion
+    const shownBonus = r.bd ? BONUS_ICONS.reduce((s, [k]) => s + r.bd[k], 0) : 0;
     const bonusChips = (r.bd ? BONUS_ICONS : [])
       .filter(([k]) => r.bd[k] > 0)
       .map(([k, ic]) => `<span class="st-chip bonus">${ic} ${r.bd[k]}</span>`)
       .join("");
     const liveChip = isLive && r.livePts ? `<span class="st-chip live">🔴 +${r.livePts}<small>live</small></span>` : "";
-    const breakdown = (r.bonus || liveChip)
-      ? `<div class="st-breakdown"><span class="st-chip base"><b>${r.pts - r.bonus}</b><small>base</small></span>${bonusChips}${liveChip}</div>`
+    const breakdown = (shownBonus || liveChip)
+      ? `<div class="st-breakdown"><span class="st-chip base"><b>${r.pts - shownBonus}</b><small>base</small></span>${bonusChips}${liveChip}</div>`
       : "";
     return `
       <div class="st-row${meCls}${r.livePts ? " gaining" : ""}">

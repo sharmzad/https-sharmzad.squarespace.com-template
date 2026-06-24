@@ -26,8 +26,9 @@ window.MAX_PLAYERS = 40;
 
 // Manual point adjustments, added to the leaderboard totals.
 // "*" applies to every player without an explicit entry.
-// (Grace points removed — everyone is on equal footing now.)
-window.BONUS_POINTS = { "*": 0 };
+// Grace: +2 to everyone who couldn't bet on the first match (Alaa earned his).
+// Counts toward totals (folded into "base") but not shown as its own chip.
+window.BONUS_POINTS = { "*": 2, "Alaa": 0 };
 
 // Web push notifications (Firebase Cloud Messaging).
 window.VAPID_KEY = "BJeCjL3Ge6h9UzWfSzM0hFIgO5EBvwdyY2ADVkBjwqXfdyQfBA4304ljAFb1hDx-pYcEFjXtoR6B3HIELHgG11o";
