@@ -49,7 +49,7 @@ window.RULES = {
   perfectPairOutcome: 3,                 // +3 (once) for both outcomes in a group's simultaneous pair
   perfectPairExact: 6,                   // +6 (once) if BOTH are exact scores
   goalRush: 1,                           // +1 for nailing total goals when the exact score is missed
-  round3From: "2026-06-24T00:00:00Z",    // when Round 3 bonuses start counting (← adjust if needed)
+  round3From: "2026-06-24T19:00:00Z",    // Round 3 kicks off 22:00 Cairo (EEST, UTC+3)
 };
 
 // Exact-score celebrations are now AUTOMATIC: the notifier flags every

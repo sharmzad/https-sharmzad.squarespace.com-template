@@ -39,7 +39,7 @@ const BONUS_FROM_MS = Date.parse("2026-06-18T00:00:00Z"); // Round 2 onward
 const PERFECT_PAIR_OUTCOME = 3;
 const PERFECT_PAIR_EXACT = 6;
 const GOAL_RUSH = 1;
-const ROUND3_FROM_MS = Date.parse("2026-06-24T00:00:00Z"); // ← keep in sync with RULES.round3From
+const ROUND3_FROM_MS = Date.parse("2026-06-24T19:00:00Z"); // 22:00 Cairo — keep in sync with RULES.round3From
 
 // FIFA ranks — keep in sync with FIFA_RANKS in worldcup/js/app.js
 const FIFA_RANKS = [
