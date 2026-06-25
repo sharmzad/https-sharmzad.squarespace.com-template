@@ -432,10 +432,10 @@ async function main() {
             if (dogs.length) bonusLine += ` · 🐺 underdog +${UNDERDOG_BONUS}: ${dogs.join(", ")}`;
           }
         }
-        // ⚽ goal rush callout (group Round 3+): right total goals, wrong exact score
+        // ⚽ goal rush callout (group Round 3+): 0-point pick that nailed total goals
         if (m.kickoff.getTime() >= ROUND3_FROM_MS && !isKnockout(m)) {
           const rushers = finished.filter((p) =>
-            !(p.home === m.home.score && p.away === m.away.score) &&
+            matchPoints(p, m) === 0 &&
             (p.home + p.away) === (m.home.score + m.away.score)
           ).map((p) => `${p.emoji} ${p.name}`);
           if (rushers.length) bonusLine += ` · ⚽ goal rush +${GOAL_RUSH}: ${rushers.join(", ")}`;
@@ -513,8 +513,9 @@ async function main() {
         if (isExact) s.exact++;
         if (isExact || predWinner(pr) === resultOf(m.home.score, m.away.score)) s.outcomes++;
         if (upset && predWinner(pr) === upset) s.pts += UNDERDOG_BONUS; // 🐺 underdog
-        // ⚽ goal rush (group Round 3+): nailed total goals but not the exact score
-        if (!ko && m.kickoff.getTime() >= ROUND3_FROM_MS && !isExact &&
+        // ⚽ goal rush (group Round 3+): consolation for a 0-point pick that
+        // still nailed the total goals
+        if (!ko && m.kickoff.getTime() >= ROUND3_FROM_MS && pts === 0 &&
             (pr.home + pr.away) === (m.home.score + m.away.score)) {
           s.pts += GOAL_RUSH;
         }

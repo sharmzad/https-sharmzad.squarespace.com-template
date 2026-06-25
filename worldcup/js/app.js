@@ -864,8 +864,9 @@ function buildStandings(live = false, phase = "overall") {
         const isExact = pred.home === m.home.score && pred.away === m.away.score;
         if (isExact) r.exact++;
         if (isExact || predWinner(pred) === resultOf(m.home.score, m.away.score)) r.outcomes++;
-        // ⚽ Goal Rush — group Round 3+ only
-        if (!ko && R.goalRush && round3On(m) && !isExact &&
+        // ⚽ Goal Rush — group Round 3+: consolation for a 0-point pick that
+        // still nailed the total goals (home + away)
+        if (!ko && R.goalRush && round3On(m) && pts === 0 &&
             (pred.home + pred.away) === (m.home.score + m.away.score)) {
           r.pts += R.goalRush; r.bonus += R.goalRush; r.bd.goalRush += 1;
         }
@@ -1938,8 +1939,8 @@ function renderRules() {
     <div class="rules-card">
       <h3>⚽ Goal Rush <span style="font-size:11px;color:var(--green)">NEW · Round 3</span></h3>
       <ul>
-        <li>Missed the exact score but <b>called the total goals</b> right (home + away)? Take <b>+${window.RULES.goalRush}</b>. 🙌</li>
-        <li>A small reward for being close — every match counts.</li>
+        <li>Got <b>0 points</b> on a match but <b>called the total goals</b> right (home + away)? Take <b>+${window.RULES.goalRush}</b>. 🙌</li>
+        <li>A consolation for the unlucky — if you already scored on the match, it doesn't apply.</li>
       </ul>
     </div>` : ""}
     ${window.KNOCKOUT ? `
