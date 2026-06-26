@@ -1381,12 +1381,11 @@ function revealBlock(m) {
         if (soleId === p.id) { bonus += R.onlyWinnerBonus; badges += "🏅"; }
         if (upset && predWinner(pred) === upset) { bonus += R.underdogBonus; badges += "🐺"; }
       }
-      // ⚽ Goal Rush (Round 3+): nailed total goals but not the exact score
-      if (base != null && R.goalRush && round3On(m)) {
-        const isExact = pred.home === m.home.score && pred.away === m.away.score;
-        if (!isExact && (pred.home + pred.away) === (m.home.score + m.away.score)) {
-          bonus += R.goalRush; badges += "⚽";
-        }
+      // ⚽ Goal Rush (Round 3+): consolation for a 0-point pick that still nailed
+      // the total goals (no reward if the player already scored on the match)
+      if (base === 0 && R.goalRush && round3On(m) &&
+          (pred.home + pred.away) === (m.home.score + m.away.score)) {
+        bonus += R.goalRush; badges += "⚽";
       }
       const pts = base == null ? null : base + bonus;
       return { p, pred, late, base, pts, badges };
