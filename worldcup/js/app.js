@@ -683,6 +683,7 @@ const isDelayed = (m) =>
 // Match by team abbreviation or name (both must hit).
 const OPEN_OVERRIDES = [
   ["KOR", "CZE"], // South Korea vs Czechia — opened on the gang's request
+  ["canada", "south africa"], // Canada vs South Africa — opened on request
 ];
 
 const isOverridden = (m) =>
