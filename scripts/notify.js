@@ -42,8 +42,8 @@ const GOAL_RUSH = 1;
 const ROUND3_FROM_MS = Date.parse("2026-06-24T19:00:00Z"); // 22:00 Cairo — keep in sync with RULES.round3From
 // Knockout stage (keep in sync with KNOCKOUT in worldcup/js/firebase-config.js)
 const KNOCKOUT_FROM_MS = Date.parse("2026-06-28T00:00:00Z");
-const KO_ADVANCE_PTS = 3;
-const KO_EXACT_PTS = 4;
+const KO_ADVANCE_PTS = 2;
+const KO_EXACT_PTS = 3;
 const KO_MULT = { R32: 1, R16: 2, QF: 3, SF: 4, "3P": 4, F: 5 };
 const isKnockout = (m) =>
   m.kickoff.getTime() >= KNOCKOUT_FROM_MS ||
@@ -421,11 +421,14 @@ async function main() {
           .map((p) => ({ ...p, pts: matchPoints(p, m) }))
           .sort((a, b) => b.pts - a.pts)
           .map((r) => `${r.emoji} ${r.name} +${r.pts}`);
-        // 🏅 only-winner / 🐺 underdog bonus callouts (group stage, Round 2 onward)
+        // 🏅 only-winner callout — both phases (sole scorer), Round 2 onward
         let bonusLine = "";
-        if (m.kickoff.getTime() >= BONUS_FROM_MS && !isKnockout(m)) {
-          const scorers = finished.filter((p) => scorePrediction(p, m.home.score, m.away.score) > 0);
+        if (m.kickoff.getTime() >= BONUS_FROM_MS) {
+          const scorers = finished.filter((p) => matchPoints(p, m) > 0);
           if (scorers.length === 1) bonusLine += ` · 🏅 ${scorers[0].emoji} ${scorers[0].name} ONLY winner +${ONLY_WINNER_BONUS}!`;
+        }
+        // 🐺 underdog bonus callout (group stage only, Round 2 onward)
+        if (m.kickoff.getTime() >= BONUS_FROM_MS && !isKnockout(m)) {
           const upset = upsetWinSide(m);
           if (upset) {
             const dogs = finished.filter((p) => predWinner(p) === upset).map((p) => `${p.emoji} ${p.name}`);
@@ -447,14 +450,15 @@ async function main() {
 
         // 🎯 exact-score celebration: flagged for 1 hour after full time,
         // shown with fireworks (+ names) to everyone who opens the app.
-        const exact = finished
-          .filter((p) => p.home === m.home.score && p.away === m.away.score)
-          .map((p) => `${p.emoji} ${p.name}`);
+        const exactPreds = finished
+          .filter((p) => p.home === m.home.score && p.away === m.away.score);
+        const exact = exactPreds.map((p) => `${p.emoji} ${p.name}`);
         if (exact.length) {
+          const exactPts = matchPoints(exactPreds[0], m); // group = 7; knockout = (2+3)×round
           await db.collection("health").doc("celebration").set({
             id: `exact_${m.id}`,
             title: "🎯 EXACT SCORE!",
-            body: `${exact.join(" & ")} nailed ${m.home.name} ${m.home.score}–${m.away.score} ${m.away.name} for +7! 🎆 Who's next?`,
+            body: `${exact.join(" & ")} nailed ${m.home.name} ${m.home.score}–${m.away.score} ${m.away.name} for +${exactPts}! 🎆 Who's next?`,
             until: admin.firestore.Timestamp.fromMillis(Date.now() + 60 * 60 * 1000),
             at: admin.firestore.FieldValue.serverTimestamp(),
           });
@@ -520,8 +524,8 @@ async function main() {
           s.pts += GOAL_RUSH;
         }
       }
-      // 🏅 only-winner bonus (sole scorer, group Round 2 onward)
-      if (bonusEligible && scorers.length === 1) stat[scorers[0]].pts += ONLY_WINNER_BONUS;
+      // 🏅 only-winner bonus (sole scorer) — group Round 2 onward AND knockout
+      if ((bonusEligible || ko) && scorers.length === 1) stat[scorers[0]].pts += ONLY_WINNER_BONUS;
     }
     // 🤝 perfect pair (Round 3+): both of a group's simultaneous matches right
     const ppb = perfectPairBonuses(matches, allPreds, players);

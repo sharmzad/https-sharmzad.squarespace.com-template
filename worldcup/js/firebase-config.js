@@ -60,10 +60,13 @@ window.RULES = {
 // own fresh-from-zero leaderboard (the Table tab gets a Group/Knockout/Overall toggle).
 window.KNOCKOUT = {
   from: "2026-06-28T00:00:00Z",                          // Round of 32 begins
-  advancePts: 3,                                         // correct "who goes through" pick
-  exactPts: 4,                                           // exact 90-minute score
+  advancePts: 2,                                         // correct "who goes through" pick
+  exactPts: 3,                                           // exact 90-minute score (on top)
   mult: { R32: 1, R16: 2, QF: 3, SF: 4, "3P": 4, F: 5 }, // escalating per round
 };
+// Knockout also keeps the 🏅 Only-Winner card: +RULES.onlyWinnerBonus to the
+// SOLE player who scored on a knockout match. Underdog / Perfect Pair / Goal
+// Rush stay group-stage only.
 
 // Exact-score celebrations are now AUTOMATIC: the notifier flags every
 // exact-score win at full time (health/celebration in Firestore) and the app
