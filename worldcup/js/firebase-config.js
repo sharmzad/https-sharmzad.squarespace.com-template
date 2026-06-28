@@ -64,9 +64,11 @@ window.KNOCKOUT = {
   exactPts: 3,                                           // exact 90-minute score (on top)
   mult: { R32: 1, R16: 2, QF: 3, SF: 4, "3P": 4, F: 5 }, // escalating per round
 };
-// Knockout also keeps the 🏅 Only-Winner card: +RULES.onlyWinnerBonus to the
-// SOLE player who scored on a knockout match. Underdog / Perfect Pair / Goal
-// Rush stay group-stage only.
+// ALL bonus cards carry into the knockout stage (through the final), each on the
+// knockout's own fresh leaderboard: 🏅 Only-Winner (sole correct advancer),
+// 🐺 Underdog (back the lower-ranked team to advance), 🤝 Perfect Pair (nail both
+// ties kicking off simultaneously) and ⚽ Goal Rush (0 points but right total
+// goals). Bonuses are flat — only the advancer + exact points get the round mult.
 
 // Exact-score celebrations are now AUTOMATIC: the notifier flags every
 // exact-score win at full time (health/celebration in Firestore) and the app

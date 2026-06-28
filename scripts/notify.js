@@ -64,11 +64,16 @@ function koRound(m) {
   if (t < Date.parse("2026-07-19")) return "3P";
   return "F";
 }
-function scoreKnockout(pred, m) {
-  let base = 0;
-  const adv = m.advanced ||
+// Who advanced from a knockout tie (ESPN flag covers ET/penalties), else the
+// decisive 90-minute result. Returns "home" | "away" | null.
+function koAdvancer(m) {
+  return m.advanced ||
     (m.completed && m.home.score != null && resultOf(m.home.score, m.away.score) !== "draw"
       ? resultOf(m.home.score, m.away.score) : null);
+}
+function scoreKnockout(pred, m) {
+  let base = 0;
+  const adv = koAdvancer(m);
   if (adv && predWinner(pred) === adv) base += KO_ADVANCE_PTS;
   if (pred.home === m.home.score && pred.away === m.away.score) base += KO_EXACT_PTS;
   return base * (KO_MULT[koRound(m)] || 1);
@@ -129,19 +134,36 @@ const upsetWinSide = (m) => {
   if (res === "away" && ra > rh) return "away";
   return null;
 };
+// Knockout underdog: lower-ranked side, only if it ADVANCED (ET/pens included).
+const koUpsetSide = (m) => {
+  const adv = koAdvancer(m);
+  if (!adv) return null;
+  const rh = fifaRank(m.home.name), ra = fifaRank(m.away.name);
+  if (rh == null || ra == null) return null;
+  if (adv === "home" && rh > ra) return "home";
+  if (adv === "away" && ra > rh) return "away";
+  return null;
+};
 
-// Round 3 "Perfect Pair": both of a group's two simultaneous matches right.
-// Mirrors perfectPairBonuses() in worldcup/js/app.js. Returns { playerId: bonus }.
-function perfectPairBonuses(matches, allPreds, players) {
+// "Perfect Pair": both of two simultaneous matches right. Group stage pairs a
+// group's two Round-3 matches; knockout (ko=true) pairs any two ties kicking off
+// together, through the final. Mirrors perfectPairBonuses() in worldcup/js/app.js.
+function perfectPairBonuses(matches, allPreds, players, ko = false) {
   const out = {};
   const pairs = {};
   for (const m of matches) {
-    if (isKnockout(m)) continue;
-    if (!m.completed || m.home.score == null || m.kickoff.getTime() < ROUND3_FROM_MS) continue;
-    const g = groupOf(m.home.name);
-    if (!g || groupOf(m.away.name) !== g) continue;
-    const key = `${g}@${m.kickoff.getTime()}`;
-    (pairs[key] = pairs[key] || []).push(m);
+    if (isKnockout(m) !== ko) continue;
+    if (!m.completed || m.home.score == null) continue;
+    if (ko) {
+      const key = `ko@${m.kickoff.getTime()}`;
+      (pairs[key] = pairs[key] || []).push(m);
+    } else {
+      if (m.kickoff.getTime() < ROUND3_FROM_MS) continue;
+      const g = groupOf(m.home.name);
+      if (!g || groupOf(m.away.name) !== g) continue;
+      const key = `${g}@${m.kickoff.getTime()}`;
+      (pairs[key] = pairs[key] || []).push(m);
+    }
   }
   for (const key of Object.keys(pairs)) {
     const pair = pairs[key];
@@ -153,7 +175,9 @@ function perfectPairBonuses(matches, allPreds, players) {
         const valid = pr && (isOverridden(m) || (pr.updatedAt?.toMillis?.() ?? 0) <= deadlineMs(pr, m));
         if (!valid) { allOutcome = false; break; }
         const exact = pr.home === m.home.score && pr.away === m.away.score;
-        const outcome = exact || predWinner(pr) === resultOf(m.home.score, m.away.score);
+        const outcome = ko
+          ? predWinner(pr) === koAdvancer(m)
+          : exact || predWinner(pr) === resultOf(m.home.score, m.away.score);
         if (!outcome) allOutcome = false;
         if (!exact) allExact = false;
       }
@@ -427,16 +451,16 @@ async function main() {
           const scorers = finished.filter((p) => matchPoints(p, m) > 0);
           if (scorers.length === 1) bonusLine += ` · 🏅 ${scorers[0].emoji} ${scorers[0].name} ONLY winner +${ONLY_WINNER_BONUS}!`;
         }
-        // 🐺 underdog bonus callout (group stage only, Round 2 onward)
-        if (m.kickoff.getTime() >= BONUS_FROM_MS && !isKnockout(m)) {
-          const upset = upsetWinSide(m);
+        // 🐺 underdog bonus callout — both phases (knockout uses the advancer)
+        if (m.kickoff.getTime() >= BONUS_FROM_MS) {
+          const upset = isKnockout(m) ? koUpsetSide(m) : upsetWinSide(m);
           if (upset) {
             const dogs = finished.filter((p) => predWinner(p) === upset).map((p) => `${p.emoji} ${p.name}`);
             if (dogs.length) bonusLine += ` · 🐺 underdog +${UNDERDOG_BONUS}: ${dogs.join(", ")}`;
           }
         }
-        // ⚽ goal rush callout (group Round 3+): 0-point pick that nailed total goals
-        if (m.kickoff.getTime() >= ROUND3_FROM_MS && !isKnockout(m)) {
+        // ⚽ goal rush callout (Round 3 onward & knockout): 0-point pick, right total goals
+        if (m.kickoff.getTime() >= ROUND3_FROM_MS) {
           const rushers = finished.filter((p) =>
             matchPoints(p, m) === 0 &&
             (p.home + p.away) === (m.home.score + m.away.score)
@@ -503,8 +527,8 @@ async function main() {
     for (const m of matches) {
       if (!m.completed || m.home.score == null) continue;
       const ko = isKnockout(m);
-      const bonusEligible = !ko && m.kickoff.getTime() >= BONUS_FROM_MS;
-      const upset = bonusEligible ? upsetWinSide(m) : null;
+      const bonusEligible = ko || m.kickoff.getTime() >= BONUS_FROM_MS; // both phases
+      const upset = bonusEligible ? (ko ? koUpsetSide(m) : upsetWinSide(m)) : null;
       const scorers = [];
       for (const pr of allPreds) {
         if (pr.matchId !== m.id || !players[pr.playerId]) continue;
@@ -517,19 +541,21 @@ async function main() {
         if (isExact) s.exact++;
         if (isExact || predWinner(pr) === resultOf(m.home.score, m.away.score)) s.outcomes++;
         if (upset && predWinner(pr) === upset) s.pts += UNDERDOG_BONUS; // 🐺 underdog
-        // ⚽ goal rush (group Round 3+): consolation for a 0-point pick that
-        // still nailed the total goals
-        if (!ko && m.kickoff.getTime() >= ROUND3_FROM_MS && pts === 0 &&
+        // ⚽ goal rush (Round 3 onward & knockout): consolation for a 0-point
+        // pick that still nailed the total goals
+        if (m.kickoff.getTime() >= ROUND3_FROM_MS && pts === 0 &&
             (pr.home + pr.away) === (m.home.score + m.away.score)) {
           s.pts += GOAL_RUSH;
         }
       }
       // 🏅 only-winner bonus (sole scorer) — group Round 2 onward AND knockout
-      if ((bonusEligible || ko) && scorers.length === 1) stat[scorers[0]].pts += ONLY_WINNER_BONUS;
+      if (bonusEligible && scorers.length === 1) stat[scorers[0]].pts += ONLY_WINNER_BONUS;
     }
-    // 🤝 perfect pair (Round 3+): both of a group's simultaneous matches right
-    const ppb = perfectPairBonuses(matches, allPreds, players);
-    for (const [id, b] of Object.entries(ppb)) if (stat[id]) stat[id].pts += b;
+    // 🤝 perfect pair — group (Round 3) and knockout (simultaneous ties)
+    for (const ko of [false, true]) {
+      const ppb = perfectPairBonuses(matches, allPreds, players, ko);
+      for (const [id, b] of Object.entries(ppb)) if (stat[id]) stat[id].pts += b;
+    }
 
     // 🤝 Perfect Pair callout — announce once per group pair as it completes
     const r3pairs = {};
