@@ -826,7 +826,7 @@ function scoreKnockout(pred, m) {
   const k = KO();
   let base = 0;
   const adv = koAdvancer(m);
-  if (adv && predWinner(pred) === adv) base += (k.advancePts ?? 2);
+  if (adv && predWinner(pred) === adv) base += (k.advancePts ?? 3);
   if (pred.home === m.home.score && pred.away === m.away.score) base += (k.exactPts ?? 3);
   return base * roundMult(m);
 }
@@ -1573,7 +1573,7 @@ function renderTable() {
     ${liveBanner}
     ${html}
     <p class="lock-note" style="margin-top:10px">${
-      phase === "knockout" ? "Knockout scoring: correct advancer +2, exact 90-min score +3, ×round (R32 →×1, Final →×5). All bonus cards count too — 🏅 Only Winner · 🐺 Underdog · 🤝 Perfect Pair · ⚽ Goal Rush. " : ""
+      phase === "knockout" ? "Knockout scoring: correct advancer +3, exact 90-min score +3 (6 total), ×round (R32 →×1, Final →×5). All bonus cards count too — 🏅 Only Winner · 🐺 Underdog · 🤝 Perfect Pair · ⚽ Goal Rush. " : ""
     }Tiebreakers: most exact scores 🎯, then correct results · ▲▼ ${isLive ? "live movement from in-play results" : "since the last match"}.</p>`;
 
   view.querySelectorAll("[data-phase]").forEach((b) =>

@@ -42,7 +42,7 @@ const GOAL_RUSH = 1;
 const ROUND3_FROM_MS = Date.parse("2026-06-24T19:00:00Z"); // 22:00 Cairo — keep in sync with RULES.round3From
 // Knockout stage (keep in sync with KNOCKOUT in worldcup/js/firebase-config.js)
 const KNOCKOUT_FROM_MS = Date.parse("2026-06-28T00:00:00Z");
-const KO_ADVANCE_PTS = 2;
+const KO_ADVANCE_PTS = 3;
 const KO_EXACT_PTS = 3;
 const KO_MULT = { R32: 1, R16: 2, QF: 3, SF: 4, "3P": 4, F: 5 };
 const isKnockout = (m) =>
@@ -478,7 +478,7 @@ async function main() {
           .filter((p) => p.home === m.home.score && p.away === m.away.score);
         const exact = exactPreds.map((p) => `${p.emoji} ${p.name}`);
         if (exact.length) {
-          const exactPts = matchPoints(exactPreds[0], m); // group = 7; knockout = (2+3)×round
+          const exactPts = matchPoints(exactPreds[0], m); // group = 7; knockout = (3+3)×round
           await db.collection("health").doc("celebration").set({
             id: `exact_${m.id}`,
             title: "🎯 EXACT SCORE!",
