@@ -792,3 +792,51 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
 /* avatar in the top player chip */
 .chip-img { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 2px; }
 .player-chip { display: inline-flex; align-items: center; gap: 5px; }
+
+/* =====================  Knockout how-to walkthrough  ===================== */
+.tut {
+  position: fixed; inset: 0; z-index: 140; display: flex; align-items: center;
+  justify-content: center; padding: 22px;
+  background: radial-gradient(120% 90% at 50% 20%, rgba(124,92,255,.18), rgba(6,15,9,.92) 60%);
+  backdrop-filter: blur(4px); opacity: 0; transition: opacity .3s ease;
+}
+.tut.show { opacity: 1; }
+.tut-card {
+  position: relative; width: 100%; max-width: 360px; text-align: center;
+  background: linear-gradient(180deg, #18223f, #141d18); color: var(--text);
+  border: 1px solid var(--purple); border-radius: 22px; padding: 26px 22px 20px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.6), 0 0 30px rgba(124,92,255,.25);
+  animation: tutPop .35s cubic-bezier(.2,.9,.3,1.3) both;
+}
+@keyframes tutPop { from { transform: scale(.9) translateY(10px); opacity: 0; } to { transform: none; opacity: 1; } }
+.tut-skip {
+  position: absolute; top: 12px; right: 14px; background: none; border: none;
+  color: var(--muted); font-size: 13px; font-weight: 700; cursor: pointer; padding: 4px;
+}
+.tut-emoji { font-size: 44px; line-height: 1; margin: 4px 0 8px; }
+.tut-title { font-size: 21px; font-weight: 800; margin: 4px 0 8px; }
+.tut-body { font-size: 14.5px; line-height: 1.55; color: #d7e6dc; margin: 0 4px; }
+.tut-body b { color: #fff; }
+.tut-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 6px 0 12px; }
+.tut-cell {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  background: var(--card2); border: 1.5px solid var(--line); border-radius: 11px;
+  padding: 8px 2px; font-size: 20px;
+}
+.tut-cell small { font-size: 9.5px; color: var(--muted); font-weight: 700; }
+.tut-cell.on { border-color: var(--purple); background: #241c45; box-shadow: 0 0 0 1px var(--purple), 0 0 12px rgba(124,92,255,.4); }
+.tut-cell.on small { color: #b6a3ff; }
+.tut-score { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 8px 0 12px; }
+.tut-score b { font-size: 26px; font-weight: 800; min-width: 22px; }
+.tut-score i { color: var(--muted); font-style: normal; }
+.tut-step {
+  width: 30px; height: 30px; border-radius: 9px; display: inline-flex; align-items: center;
+  justify-content: center; background: var(--card2); border: 1px solid var(--line);
+  color: var(--gold); font-weight: 800; font-size: 18px;
+}
+.tut-dots { display: flex; justify-content: center; gap: 6px; margin: 16px 0 14px; }
+.tut-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--line); transition: all .2s; }
+.tut-dot.on { background: var(--purple); width: 18px; border-radius: 4px; }
+.tut-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.tut-actions .tut-next { flex: 1; }
+.tut-actions .tut-back { flex: 0 0 auto; }

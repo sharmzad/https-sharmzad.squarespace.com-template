@@ -70,6 +70,7 @@ async function init() {
   if (db) refreshPushToken();           // keep this device's push token fresh
   await loadMatches();
   render();
+  maybeShowTutorial();   // first-open knockout how-to (self-defers past the intro)
   setInterval(async () => { await loadMatches(); render(); }, POLL_MS);
 }
 
@@ -122,6 +123,79 @@ function maybeShowWhatsNew() {
   };
   $("#wnClose").onclick = close;
   setTimeout(close, 12000); // auto-dismiss
+}
+
+// ---------------------------------------------------------------------------
+// First-open knockout how-to walkthrough (fun, skippable, 24h window)
+// ---------------------------------------------------------------------------
+function tutorialPending() {
+  const t = window.TUTORIAL;
+  if (!t || !t.id) return false;
+  if (t.until && Date.now() >= new Date(t.until).getTime()) return false;  // window closed
+  return !localStorage.getItem(`tutorial_${t.id}`);
+}
+
+const TUTORIAL_STEPS = [
+  { emoji: "🏆⚔️", title: "Knockout Time!",
+    body: "Group stage is over — it's now <b>WIN OR GO HOME</b>. Knockout bets work a little differently. 30 seconds and you'll be a pro 👇" },
+  { emoji: "1️⃣", title: "Pick WHO wins &amp; HOW",
+    visual: `<div class="tut-grid">
+        <span class="tut-cell on">🇧🇷<small>in 90'</small></span><span class="tut-cell">🇧🇷<small>Extra Time</small></span><span class="tut-cell">🇧🇷<small>Penalties</small></span>
+        <span class="tut-cell">🇯🇵<small>in 90'</small></span><span class="tut-cell">🇯🇵<small>Extra Time</small></span><span class="tut-cell">🇯🇵<small>Penalties</small></span>
+      </div>`,
+    body: "Tap <b>one card</b>: your team <b>AND</b> how they go through — in <b>90'</b> ⏱, <b>Extra Time</b> ⌛ or <b>Penalties</b> 🥅. Calling the drama = more points!" },
+  { emoji: "2️⃣", title: "Set the 90-min score",
+    visual: `<div class="tut-score"><span class="tut-step">−</span><b>2</b><span class="tut-step">+</span><i>—</i><span class="tut-step">−</span><b>1</b><span class="tut-step">+</span></div>`,
+    body: "Use <b>−</b> / <b>+</b> to predict the <b>exact score after 90 minutes</b>. (Extra time &amp; pens don't change this number!) 🎯 Then smash <b>Save</b>." },
+  { emoji: "💰", title: "Stack the points",
+    body: "✅ Right team <b>+3</b> · ⏱ Right how <b>+3</b> · 🎯 Exact score <b>+3</b> = up to <b>9</b>! And every round <b>multiplies</b> — the Final is <b>×5</b>. 🔥" },
+  { emoji: "🚀", title: "You're ready!",
+    body: "Go make your knockout picks before kickoff and climb the table. Edit any time until it locks. <b>Yalla!</b> ⚽" },
+];
+
+function maybeShowTutorial(retries = 0) {
+  if (!tutorialPending()) return;
+  // wait for the sponsor intro / celebration overlay to clear first
+  const blocked = ["#sponsorIntro", "#announce"].some((sel) => {
+    const el = $(sel); return el && !el.classList.contains("hidden");
+  });
+  if (blocked && retries < 40) { setTimeout(() => maybeShowTutorial(retries + 1), 800); return; }
+  if (document.querySelector(".tut")) return;   // already open
+
+  let i = 0;
+  const overlay = document.createElement("div");
+  overlay.className = "tut";
+  document.body.appendChild(overlay);
+  requestAnimationFrame(() => overlay.classList.add("show"));
+
+  const finish = () => {
+    localStorage.setItem(`tutorial_${window.TUTORIAL.id}`, "1");
+    overlay.classList.remove("show");
+    setTimeout(() => overlay.remove(), 300);
+  };
+  const draw = () => {
+    const s = TUTORIAL_STEPS[i];
+    const last = i === TUTORIAL_STEPS.length - 1;
+    const dots = TUTORIAL_STEPS.map((_, k) => `<span class="tut-dot ${k === i ? "on" : ""}"></span>`).join("");
+    overlay.innerHTML = `
+      <div class="tut-card">
+        <button class="tut-skip">Skip ›</button>
+        <div class="tut-emoji">${s.emoji}</div>
+        ${s.visual || ""}
+        <h2 class="tut-title">${s.title}</h2>
+        <p class="tut-body">${s.body}</p>
+        <div class="tut-dots">${dots}</div>
+        <div class="tut-actions">
+          ${i > 0 ? `<button class="btn ghost tut-back">‹ Back</button>` : `<span></span>`}
+          <button class="btn primary tut-next">${last ? "Let's go ⚽" : "Next ›"}</button>
+        </div>
+      </div>`;
+    overlay.querySelector(".tut-skip").onclick = finish;
+    overlay.querySelector(".tut-next").onclick = () => { if (last) finish(); else { i++; draw(); } };
+    const back = overlay.querySelector(".tut-back");
+    if (back) back.onclick = () => { i--; draw(); };
+  };
+  draw();
 }
 
 function showAnnouncement() {

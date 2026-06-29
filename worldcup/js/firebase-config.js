@@ -79,6 +79,14 @@ window.KNOCKOUT = {
 // the per-game celebration body, so keep it null.
 window.ANNOUNCEMENT = null;
 
+// First-open "how to bet the knockouts" walkthrough. Shows once per device on
+// open (with a Skip option) until `until`, then never again. Bump `id` to replay
+// for everyone; set to null to switch off.
+window.TUTORIAL = {
+  id: "knockout-howto-2026-06-29",
+  until: "2026-06-30T23:30:00Z",   // ~24h window
+};
+
 // -----------------------------------------------------------------------------
 // Sponsor (set to null to hide all sponsor branding everywhere).
 //   name    : shown in the strip, splash, WhatsApp footer
