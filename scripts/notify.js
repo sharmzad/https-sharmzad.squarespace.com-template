@@ -405,15 +405,12 @@ async function main() {
     const gpm = matches.find((m) =>
       /germany/i.test(`${m.home.name} ${m.away.name} ${m.home.abbr} ${m.away.abbr}`) &&
       /paraguay/i.test(`${m.home.name} ${m.away.name} ${m.home.abbr} ${m.away.abbr}`));
-    console.log(`Alaa fix v2 — player:${alaa ? alaa[0] : "NONE"} match:${gpm ? `${gpm.id} ${gpm.home.name}/${gpm.away.name}` : "NONE"}`);
     if (alaa && gpm && (await claim(FIX))) {
       const [aid] = alaa;
       const gerHome = /germany/i.test(gpm.home.name);
       const side = gerHome ? "home" : "away";          // Germany's side in this fixture
       const k = gpm.kickoff.getTime();
-      const ref = db.collection("predictions").doc(`${gpm.id}_${aid}`);
-      const before = (await ref.get()).data();
-      await ref.set({
+      await db.collection("predictions").doc(`${gpm.id}_${aid}`).set({
         matchId: gpm.id,
         playerId: aid,
         home: gerHome ? 3 : 1,
@@ -425,7 +422,7 @@ async function main() {
         lockAt: k - 15 * 60_000,
         updatedAt: admin.firestore.Timestamp.fromMillis(k - 20 * 60_000), // on-time
       }, { merge: true });
-      console.log(`Applied ${FIX}: before=${JSON.stringify(before ? { home: before.home, away: before.away, koWinner: before.koWinner, koMethod: before.koMethod } : null)} -> Germany 3-1 in 90'`);
+      console.log(`Applied ${FIX}: Alaa ${aid} -> Germany 3-1 in 90'`);
     }
   }
 
