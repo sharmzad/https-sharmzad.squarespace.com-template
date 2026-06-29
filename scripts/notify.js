@@ -364,6 +364,37 @@ async function main() {
     } catch { return false; }
   };
 
+  // 🔧 One-off admin correction (runs exactly once via claim): Walid was mid-bet
+  // on Brazil vs Japan, choosing Brazil 2–1 in 90', when the app updated and his
+  // save was lost. Stamp his pick as an on-time "Brazil 2–1, in 90'".
+  {
+    const FIX = "fix-walid-bra-jpn-2026-06-29";
+    const walid = Object.entries(players).find(([, p]) => /walid/i.test(p.name || ""));
+    const bjp = matches.find((m) =>
+      isKnockout(m) &&
+      /brazil/i.test(`${m.home.name} ${m.away.name}`) &&
+      /japan/i.test(`${m.home.name} ${m.away.name}`));
+    if (walid && bjp && (await claim(FIX))) {
+      const [wid] = walid;
+      const braHome = /brazil/i.test(bjp.home.name);
+      const side = braHome ? "home" : "away";       // Brazil's side in this fixture
+      const k = bjp.kickoff.getTime();
+      await db.collection("predictions").doc(`${bjp.id}_${wid}`).set({
+        matchId: bjp.id,
+        playerId: wid,
+        home: braHome ? 2 : 1,
+        away: braHome ? 1 : 2,
+        winner: side,
+        koWinner: side,
+        koMethod: "reg",                            // "in 90'"
+        kickoff: bjp.kickoff.toISOString(),
+        lockAt: k - 15 * 60_000,                    // standard knockout lock
+        updatedAt: admin.firestore.Timestamp.fromMillis(k - 20 * 60_000), // on-time
+      }, { merge: true });
+      console.log(`Applied ${FIX}: Walid ${wid} -> Brazil 2-1 in 90' on ${bjp.id}`);
+    }
+  }
+
   const validPredsFrom = (list, m) =>
     list
       .filter((p) => p.matchId === m.id && players[p.playerId])
