@@ -26,7 +26,7 @@ const POINTS = { EXACT: 5, WINNER: 2 };
 const LOCK_MINUTES = 15;
 const GRACE_DAY = "2026-06-12"; // Egypt local date, lock = KO + 50 min
 const GRACE_AFTER_MIN = 50;
-const OPEN_OVERRIDES = [["KOR", "CZE"]];
+const OPEN_OVERRIDES = [["KOR", "CZE"], ["canada", "south africa"], ["brazil", "japan"]];
 const REMIND_WINDOW_MIN = 30; // notify when lock is at most this far away
 // Keep in sync with BONUS_POINTS / RULES in worldcup/js/firebase-config.js
 const BONUS_POINTS = { "*": 2, "Alaa": 0 };
@@ -43,6 +43,7 @@ const ROUND3_FROM_MS = Date.parse("2026-06-24T19:00:00Z"); // 22:00 Cairo — ke
 // Knockout stage (keep in sync with KNOCKOUT in worldcup/js/firebase-config.js)
 const KNOCKOUT_FROM_MS = Date.parse("2026-06-28T00:00:00Z");
 const KO_ADVANCE_PTS = 3;
+const KO_METHOD_PTS = 3;
 const KO_EXACT_PTS = 3;
 const KO_MULT = { R32: 1, R16: 2, QF: 3, SF: 4, "3P": 4, F: 5 };
 const isKnockout = (m) =>
@@ -71,10 +72,24 @@ function koAdvancer(m) {
     (m.completed && m.home.score != null && resultOf(m.home.score, m.away.score) !== "draw"
       ? resultOf(m.home.score, m.away.score) : null);
 }
+// How a finished knockout tie was decided: "reg" | "et" | "pen" | null.
+function koMatchMethod(m) {
+  if (!isKnockout(m) || !m.completed || m.home.score == null) return null;
+  const txt = `${m.statusName} ${m.detail}`.toLowerCase();
+  if (m.home.shootout != null || m.away.shootout != null || /pen|shootout/.test(txt)) return "pen";
+  if (/aet|a\.e\.t|extra/.test(txt) || (m.period && m.period > 2)) return "et";
+  return "reg";
+}
+// A player's knockout advancer pick: explicit who+how choice, else from score.
+const koWinnerPick = (pred) =>
+  pred.koWinner || (pred.home > pred.away ? "home" : pred.home < pred.away ? "away" : null);
+
 function scoreKnockout(pred, m) {
   let base = 0;
   const adv = koAdvancer(m);
-  if (adv && predWinner(pred) === adv) base += KO_ADVANCE_PTS;
+  if (adv && koWinnerPick(pred) === adv) base += KO_ADVANCE_PTS;
+  const method = koMatchMethod(m);
+  if (method && pred.koMethod && pred.koMethod === method) base += KO_METHOD_PTS;
   if (pred.home === m.home.score && pred.away === m.away.score) base += KO_EXACT_PTS;
   return base * (KO_MULT[koRound(m)] || 1);
 }
@@ -176,7 +191,7 @@ function perfectPairBonuses(matches, allPreds, players, ko = false) {
         if (!valid) { allOutcome = false; break; }
         const exact = pr.home === m.home.score && pr.away === m.away.score;
         const outcome = ko
-          ? predWinner(pr) === koAdvancer(m)
+          ? koWinnerPick(pr) === koAdvancer(m)
           : exact || predWinner(pr) === resultOf(m.home.score, m.away.score);
         if (!outcome) allOutcome = false;
         if (!exact) allExact = false;
@@ -239,6 +254,7 @@ function normalizeEvent(ev) {
       name: c.team?.shortDisplayName || c.team?.displayName || "TBD",
       abbr: c.team?.abbreviation || "TBD",
       score: c.score != null ? Number(c.score) : null,
+      shootout: c.shootoutScore != null ? Number(c.shootoutScore) : null,
     };
   };
   const winC = (comp.competitors || []).find((c) => c.winner === true);
@@ -247,6 +263,7 @@ function normalizeEvent(ev) {
     kickoff: new Date(ev.date),
     state: status.type?.state || "pre", // pre | in | post
     completed: !!status.type?.completed,
+    period: status.period ?? 0,
     detail: status.type?.shortDetail || "",
     statusName: status.type?.name || "", // e.g. STATUS_DELAYED / STATUS_POSTPONED
     group: comp.notes?.[0]?.headline || ev.season?.slug || "",
@@ -453,9 +470,11 @@ async function main() {
         }
         // 🐺 underdog bonus callout — both phases (knockout uses the advancer)
         if (m.kickoff.getTime() >= BONUS_FROM_MS) {
-          const upset = isKnockout(m) ? koUpsetSide(m) : upsetWinSide(m);
+          const ko = isKnockout(m);
+          const upset = ko ? koUpsetSide(m) : upsetWinSide(m);
           if (upset) {
-            const dogs = finished.filter((p) => predWinner(p) === upset).map((p) => `${p.emoji} ${p.name}`);
+            const dogs = finished.filter((p) => (ko ? koWinnerPick(p) : predWinner(p)) === upset)
+              .map((p) => `${p.emoji} ${p.name}`);
             if (dogs.length) bonusLine += ` · 🐺 underdog +${UNDERDOG_BONUS}: ${dogs.join(", ")}`;
           }
         }
@@ -540,7 +559,7 @@ async function main() {
         const isExact = pr.home === m.home.score && pr.away === m.away.score;
         if (isExact) s.exact++;
         if (isExact || predWinner(pr) === resultOf(m.home.score, m.away.score)) s.outcomes++;
-        if (upset && predWinner(pr) === upset) s.pts += UNDERDOG_BONUS; // 🐺 underdog
+        if (upset && (ko ? koWinnerPick(pr) : predWinner(pr)) === upset) s.pts += UNDERDOG_BONUS; // 🐺 underdog
         // ⚽ goal rush (Round 3 onward & knockout): consolation for a 0-point
         // pick that still nailed the total goals
         if (m.kickoff.getTime() >= ROUND3_FROM_MS && pts === 0 &&

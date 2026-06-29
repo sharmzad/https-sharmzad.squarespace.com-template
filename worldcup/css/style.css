@@ -9,6 +9,7 @@
   --muted: #9db8a6;
   --gold: #f4c542;
   --green: #35d07f;
+  --purple: #7c5cff;
   --red: #ff6b6b;
   --live: #ff4757;
   --radius: 14px;
@@ -617,7 +618,14 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
   align-items: center; gap: 2px;
 }
 .tab span { font-size: 10.5px; font-weight: 600; }
-.tab.active { color: var(--gold); }
+.tab { position: relative; transition: color .15s ease; }
+.tab.active { color: #b6a3ff; }
+.tab.active::before {
+  content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 26px; height: 3px; border-radius: 0 0 3px 3px; background: var(--purple);
+  box-shadow: 0 0 10px var(--purple);
+}
+.tab.active span { font-weight: 800; }
 
 .empty { text-align: center; color: var(--muted); padding: 40px 20px; font-size: 14px; line-height: 1.6; }
 .hidden { display: none !important; }
@@ -674,3 +682,103 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
   animation: neonOn 1.2s ease .7s both,
              neonGlow 1.9s ease-in-out 1.9s infinite alternate;
 }
+
+/* =====================  Knockout "who + how" predict grid  ===================== */
+.kopredict { margin-top: 10px; }
+.ko-sec-h {
+  font-size: 12px; font-weight: 800; letter-spacing: .3px; text-transform: uppercase;
+  color: var(--purple); margin: 12px 2px 8px; display: flex; align-items: center; gap: 7px;
+}
+.ko-sec-h b {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 6px; background: var(--purple); color: #fff;
+  font-size: 11px;
+}
+.ko-sec-h small { color: var(--muted); font-weight: 600; text-transform: none; letter-spacing: 0; }
+.kogrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.kocell {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 9px 4px; border-radius: 12px; cursor: pointer;
+  background: var(--card2); border: 1.5px solid var(--line); color: var(--text);
+  transition: border-color .12s ease, background .12s ease, transform .08s ease;
+}
+.kocell:active { transform: scale(.97); }
+.kocell-flag img { width: 26px; height: 18px; object-fit: cover; border-radius: 3px; }
+.kocell-flag { font-size: 18px; line-height: 1; }
+.kocell-team { font-weight: 800; font-size: 13px; }
+.kocell-how { font-size: 10.5px; color: var(--muted); font-weight: 600; }
+.kocell.sel {
+  border-color: var(--purple); background: #241c45;
+  box-shadow: 0 0 0 1px var(--purple), 0 0 14px rgba(124,92,255,.35);
+}
+.kocell.sel .kocell-how { color: #b6a3ff; }
+.ko-hint { font-size: 11.5px; color: var(--muted); margin: 9px 2px 2px; }
+
+/* =====================  Profile tab  ===================== */
+.pf-head { display: flex; align-items: center; gap: 14px; padding: 6px 2px 4px; }
+.pf-avatar { position: relative; width: 76px; height: 76px; flex: none; }
+.pf-avatar .avatar-img,
+.pf-avatar .avatar-emoji {
+  width: 76px; height: 76px; border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 40px; background: var(--card2);
+  border: 2px solid var(--purple); object-fit: cover; overflow: hidden;
+}
+.pf-cam {
+  position: absolute; right: -2px; bottom: -2px; width: 26px; height: 26px;
+  border-radius: 50%; background: var(--purple); color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; font-size: 13px;
+  border: 2px solid var(--bg);
+}
+.pf-id { min-width: 0; }
+.pf-name { font-size: 22px; font-weight: 800; }
+.pf-rank { font-size: 13px; color: var(--muted); margin-top: 3px; }
+.pf-rank.r1 { color: var(--gold); } .pf-rank.r2 { color: #cdd6dd; } .pf-rank.r3 { color: #e08b4b; }
+.pf-rank b { color: var(--text); }
+.pf-splits { display: flex; gap: 8px; margin: 12px 0 4px; }
+.pf-splits > div {
+  flex: 1; background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 9px 4px; text-align: center;
+}
+.pf-splits span { display: block; font-size: 11px; color: var(--muted); }
+.pf-splits b { font-size: 19px; color: var(--gold); }
+.pf-section-h { font-size: 14px; font-weight: 800; color: var(--gold); margin: 18px 2px 9px; }
+.pf-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.pf-stat {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 10px 4px; text-align: center;
+}
+.pf-stat-ic { font-size: 19px; }
+.pf-stat-val { font-size: 18px; font-weight: 800; color: var(--text); margin-top: 2px; }
+.pf-stat-lbl { font-size: 10px; color: var(--muted); margin-top: 1px; line-height: 1.2; }
+.pf-hist-list { display: flex; flex-direction: column; gap: 7px; }
+.pf-hist {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 8px 11px; border-left: 3px solid var(--line);
+}
+.pf-hist.ex { border-left-color: var(--gold); }
+.pf-hist.win { border-left-color: var(--green); }
+.pf-hist.miss { border-left-color: var(--red); }
+.pf-hist-d { font-size: 11px; color: var(--muted); width: 44px; flex: none; }
+.pf-hist-m { flex: 1; min-width: 0; font-weight: 700; font-size: 13px; }
+.pf-hist-m > span { color: var(--muted); font-weight: 600; }
+.pf-hist-pick { font-size: 11.5px; color: var(--muted); font-weight: 600; margin-top: 2px; }
+.pf-hist-pts { font-weight: 800; font-size: 15px; color: var(--muted); }
+.pf-hist-pts.pos { color: var(--green); }
+.pf-rules { margin: 18px 0 6px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--card); }
+.pf-rules > summary {
+  list-style: none; cursor: pointer; padding: 13px 14px; font-weight: 800; color: var(--gold);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.pf-rules > summary::-webkit-details-marker { display: none; }
+.pf-rules > summary::after { content: "▾"; color: var(--muted); }
+.pf-rules[open] > summary::after { content: "▴"; }
+.pf-rules-body { padding: 0 4px 6px; }
+.pf-rules-body .rules-card { margin-top: 8px; }
+.pf-rules-body .app-version { margin-bottom: 6px; }
+.pf-actions { display: flex; gap: 10px; margin: 16px 0 8px; }
+.pf-actions .btn { flex: 1; }
+
+/* avatar in the top player chip */
+.chip-img { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 2px; }
+.player-chip { display: inline-flex; align-items: center; gap: 5px; }

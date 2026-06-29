@@ -60,8 +60,9 @@ window.RULES = {
 // own fresh-from-zero leaderboard (the Table tab gets a Group/Knockout/Overall toggle).
 window.KNOCKOUT = {
   from: "2026-06-28T00:00:00Z",                          // Round of 32 begins
-  advancePts: 3,                                         // correct "who goes through" pick
-  exactPts: 3,                                           // exact 90-minute score (on top → 6 total)
+  advancePts: 3,                                         // correct team to advance ("who")
+  methodPts: 3,                                          // correct way decided ("how": 90'/ET/Pen)
+  exactPts: 3,                                           // exact 90-minute score
   mult: { R32: 1, R16: 2, QF: 3, SF: 4, "3P": 4, F: 5 }, // escalating per round
 };
 // ALL bonus cards carry into the knockout stage (through the final), each on the

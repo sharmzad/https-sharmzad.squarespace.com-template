@@ -338,9 +338,10 @@ function sponsorFooter() {
 // Persist login in localStorage + a long-lived cookie (iOS clears storage
 // more eagerly than cookies, e.g. when the app is re-added to Home Screen).
 function saveLogin() {
-  const v = JSON.stringify(me);
-  localStorage.setItem("gangcup_me", v);
-  document.cookie = `gangcup_me=${encodeURIComponent(v)};max-age=31536000;path=/;SameSite=Lax`;
+  localStorage.setItem("gangcup_me", JSON.stringify(me));
+  // Cookie is the iOS fallback — keep it slim (no photo data-URL; cookies cap ~4KB).
+  const slim = JSON.stringify({ id: me.id, name: me.name, emoji: me.emoji });
+  document.cookie = `gangcup_me=${encodeURIComponent(slim)};max-age=31536000;path=/;SameSite=Lax`;
   renderChip();
 }
 
@@ -548,7 +549,10 @@ async function enableNotifications() {
 }
 
 function renderChip() {
-  $("#playerChip").textContent = me ? `${me.emoji} ${me.name}` : "👤 Join";
+  const chip = $("#playerChip");
+  if (!me) { chip.textContent = "👤 Join"; return; }
+  const photo = playerPhoto(me);
+  chip.innerHTML = `${photo ? `<img class="chip-img" src="${esc(photo)}" alt="">` : me.emoji} ${esc(me.name)}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -656,6 +660,7 @@ function normalizeEvent(ev) {
       abbr: c.team?.abbreviation || "TBD",
       logo: c.team?.logo || "",
       score: c.score != null ? Number(c.score) : null,
+      shootout: c.shootoutScore != null ? Number(c.shootoutScore) : null, // penalty shootout
     };
   };
   const winC = (comp.competitors || []).find((c) => c.winner === true);
@@ -684,6 +689,7 @@ const isDelayed = (m) =>
 const OPEN_OVERRIDES = [
   ["KOR", "CZE"], // South Korea vs Czechia — opened on the gang's request
   ["canada", "south africa"], // Canada vs South Africa — opened on request
+  ["brazil", "japan"], // Brazil vs Japan — opened on request (R32)
 ];
 
 const isOverridden = (m) =>
@@ -822,12 +828,33 @@ function koAdvancer(m) {
       ? resultOf(m.home.score, m.away.score) : null);
 }
 
+// How a finished knockout tie was decided: "reg" (90'), "et" (extra time) or
+// "pen" (penalty shootout) — derived from ESPN status + shootout scores. Returns
+// null if not a finished knockout match (or the data is too vague to tell).
+// NOTE: the exact status strings need a sanity-check against a live ET/pens tie.
+function koMatchMethod(m) {
+  if (!isKnockout(m) || !m.completed || m.home.score == null) return null;
+  const txt = `${m.statusName} ${m.detail}`.toLowerCase();
+  if (m.home.shootout != null || m.away.shootout != null || /pen|shootout/.test(txt)) return "pen";
+  if (/aet|a\.e\.t|extra/.test(txt) || (m.period && m.period > 2)) return "et";
+  return "reg";
+}
+
+// A player's knockout advancer pick: the explicit who+how grid choice if present,
+// else derived from the 90-min score (picks saved before the grid existed).
+const koWinnerPick = (pred) =>
+  pred.koWinner || (pred.home > pred.away ? "home" : pred.home < pred.away ? "away" : null);
+
+// Knockout points: right team to advance + right method + exact 90-min score,
+// each ×round multiplier. The three buckets are independent (per game rules).
 function scoreKnockout(pred, m) {
   const k = KO();
   let base = 0;
   const adv = koAdvancer(m);
-  if (adv && predWinner(pred) === adv) base += (k.advancePts ?? 3);
-  if (pred.home === m.home.score && pred.away === m.away.score) base += (k.exactPts ?? 3);
+  if (adv && koWinnerPick(pred) === adv) base += (k.advancePts ?? 3);          // 🏆 who
+  const method = koMatchMethod(m);
+  if (method && pred.koMethod && pred.koMethod === method) base += (k.methodPts ?? 3); // ⏱ how
+  if (pred.home === m.home.score && pred.away === m.away.score) base += (k.exactPts ?? 3); // 🎯 exact
   return base * roundMult(m);
 }
 
@@ -941,7 +968,8 @@ function underdogBonuses(ko = false) {
     for (const p of players) {
       const pred = predictions[`${m.id}_${p.id}`];
       if (!pred || !isValidPrediction(pred, m)) continue;
-      if (predWinner(pred) === side) add(p.id, R.underdogBonus);
+      const pick = ko ? koWinnerPick(pred) : predWinner(pred);
+      if (pick === side) add(p.id, R.underdogBonus);
     }
   }
   return out;
@@ -1005,7 +1033,7 @@ function perfectPairBonuses(ko = false) {
         if (!pred || !isValidPrediction(pred, m)) { allOutcome = false; break; }
         const exact = pred.home === m.home.score && pred.away === m.away.score;
         const outcome = ko
-          ? predWinner(pred) === koAdvancer(m)           // knockout: correct advancer
+          ? koWinnerPick(pred) === koAdvancer(m)          // knockout: correct advancer
           : exact || predWinner(pred) === resultOf(m.home.score, m.away.score);
         if (!outcome) allOutcome = false;
         if (!exact) allExact = false;
@@ -1027,7 +1055,8 @@ function render() {
   if (activeTab === "matches") renderMatches();
   else if (activeTab === "table") renderTable();
   else if (activeTab === "share") renderShare();
-  else renderRules();
+  else if (activeTab === "profile") renderProfile();
+  else renderMatches();
 }
 
 // Admin-only (Alaa) pill showing the notifier heartbeat. Hidden for everyone else.
@@ -1101,6 +1130,15 @@ function renderMatches() {
   );
   view.querySelectorAll("[data-step]").forEach((b) => b.addEventListener("click", onStep));
   view.querySelectorAll("[data-save]").forEach((b) => b.addEventListener("click", onSave));
+  view.querySelectorAll("[data-kocell]").forEach((b) =>
+    b.addEventListener("click", (e) => {
+      const [matchId, side, method] = e.currentTarget.dataset.kocell.split("|");
+      const d = draft[matchId];
+      d.koWinner = side; d.koMethod = method;
+      e.currentTarget.closest(".kogrid").querySelectorAll(".kocell")
+        .forEach((x) => x.classList.toggle("sel", x === e.currentTarget));
+    })
+  );
   view.querySelectorAll("[data-winner]").forEach((b) =>
     b.addEventListener("click", (e) => {
       const [matchId, val] = e.currentTarget.dataset.winner.split("|");
@@ -1327,25 +1365,32 @@ function matchCard(m) {
       home: mine?.home ?? 0,
       away: mine?.away ?? 0,
       winner: resultOf(mine?.home ?? 0, mine?.away ?? 0),
+      koWinner: mine?.koWinner ?? null,
+      koMethod: mine?.koMethod ?? null,
     };
     draft[m.id] = d;
-    const wbtn = (val, label) =>
-      `<button class="wbtn ${d.winner === val ? "sel" : ""}" data-winner="${m.id}|${val}">${label}</button>`;
-    body = `
-      <div class="winner-row">
-        ${wbtn("home", `🏆 ${esc(H.abbr)}`)}
-        ${wbtn("draw", "🤝 Draw")}
-        ${wbtn("away", `🏆 ${esc(A.abbr)}`)}
-      </div>
-      <div class="predict">
-        ${stepper(m.id, "home", d.home)}
-        <span class="vs">—</span>
-        ${stepper(m.id, "away", d.away)}
-        <button class="save-btn" data-save="${m.id}">${mine ? "Update" : "Save"} 🎯</button>
-      </div>
-      <div class="lock-note">${mine ? `✅ Your bet: <b>${pickLabel(mine, m)}</b> · ` : ""}${
+    const lockNote = `<div class="lock-note">${mine ? `✅ Your bet: <b>${pickLabel(mine, m)}</b> · ` : ""}${
         isOverridden(m) ? "🔓 Re-opened by admin — closes when the 2nd half starts!" : `🔒 Locks at ${fmtTime(lockTime(m))}`
       }</div>`;
+    if (isKnockout(m)) {
+      body = koPredictBody(m, mine, H, A, d) + lockNote;
+    } else {
+      const wbtn = (val, label) =>
+        `<button class="wbtn ${d.winner === val ? "sel" : ""}" data-winner="${m.id}|${val}">${label}</button>`;
+      body = `
+        <div class="winner-row">
+          ${wbtn("home", `🏆 ${esc(H.abbr)}`)}
+          ${wbtn("draw", "🤝 Draw")}
+          ${wbtn("away", `🏆 ${esc(A.abbr)}`)}
+        </div>
+        <div class="predict">
+          ${stepper(m.id, "home", d.home)}
+          <span class="vs">—</span>
+          ${stepper(m.id, "away", d.away)}
+          <button class="save-btn" data-save="${m.id}">${mine ? "Update" : "Save"} 🎯</button>
+        </div>
+        ${lockNote}`;
+    }
   } else if (open && db && !me) {
     body = `<div class="lock-note">👤 <a href="#" onclick="document.getElementById('playerChip').click();return false" style="color:var(--gold)">Join the game</a> to predict · 🔒 locks at ${fmtTime(lockTime(m))}</div>`;
   } else if (!open && db) {
@@ -1392,6 +1437,36 @@ function stepper(matchId, side, val) {
     </div>`;
 }
 
+// Knockout "who + how" predict body: a team × method grid (90' / Extra Time /
+// Penalties) plus the 90-minute exact-score steppers.
+const KO_METHODS = [["reg", "in 90'"], ["et", "Extra&nbsp;Time"], ["pen", "Penalties"]];
+function koPredictBody(m, mine, H, A, d) {
+  const cellFlag = (t) => t.logo
+    ? `<img src="${esc(t.logo)}" alt="" loading="lazy" onerror="this.outerHTML='⚽'">`
+    : "⚽";
+  const cellsFor = (side, t) => KO_METHODS.map(([mk, lbl]) => {
+    const sel = d.koWinner === side && d.koMethod === mk;
+    return `<button class="kocell ${sel ? "sel" : ""}" data-kocell="${m.id}|${side}|${mk}">
+        <span class="kocell-flag">${cellFlag(t)}</span>
+        <span class="kocell-team">${esc(t.abbr)}</span>
+        <span class="kocell-how">${lbl}</span>
+      </button>`;
+  }).join("");
+  return `
+    <div class="kopredict">
+      <div class="ko-sec-h"><b>1</b> Who will win &amp; how?</div>
+      <div class="kogrid">${cellsFor("home", H)}${cellsFor("away", A)}</div>
+      <div class="ko-sec-h"><b>2</b> Exact score <small>· 90 minutes only</small></div>
+      <div class="predict">
+        ${stepper(m.id, "home", d.home)}
+        <span class="vs">—</span>
+        ${stepper(m.id, "away", d.away)}
+        <button class="save-btn" data-save="${m.id}">${mine ? "Update" : "Save"} 🎯</button>
+      </div>
+      <div class="ko-hint">If it goes to extra time or penalties, the exact score won't count.</div>
+    </div>`;
+}
+
 function revealBlock(m) {
   const done = m.completed && m.home.score != null;
   const R = window.RULES || {};
@@ -1417,7 +1492,8 @@ function revealBlock(m) {
       let bonus = 0, badges = "";
       if (base != null && bonusOn) {
         if (soleId === p.id) { bonus += R.onlyWinnerBonus; badges += "🏅"; }
-        if (upset && predWinner(pred) === upset) { bonus += R.underdogBonus; badges += "🐺"; }
+        const advPick = ko ? koWinnerPick(pred) : predWinner(pred);
+        if (upset && advPick === upset) { bonus += R.underdogBonus; badges += "🐺"; }
       }
       // ⚽ Goal Rush (Round 3 onward & knockout): consolation for a 0-point pick
       // that still nailed the total goals (no reward if the player already scored)
@@ -1467,21 +1543,25 @@ async function onSave(e) {
   if (!m || !me || !db) return;
   if (!isOpen(m)) { toast("🔒 Too late — predictions are locked!"); render(); return; }
   const d = draft[matchId];
+  const ko = isKnockout(m);
+  if (ko && (!d.koWinner || !d.koMethod)) { toast("👆 Tap who wins & how first!"); return; }
   // outcome follows the score (level = draw, decisive = that team)
   const winner = resultOf(d.home, d.away);
+  const doc = {
+    matchId,
+    playerId: me.id,
+    winner,
+    home: d.home,
+    away: d.away,
+    kickoff: m.kickoff.toISOString(),
+    lockAt: lockTime(m).getTime(),   // freeze the deadline at save time
+    updatedAt: fs.serverTimestamp(),
+  };
+  if (ko) { doc.koWinner = d.koWinner; doc.koMethod = d.koMethod; }
   try {
-    await fs.setDoc(fs.doc(db, "predictions", `${matchId}_${me.id}`), {
-      matchId,
-      playerId: me.id,
-      winner,
-      home: d.home,
-      away: d.away,
-      kickoff: m.kickoff.toISOString(),
-      lockAt: lockTime(m).getTime(),   // freeze the deadline at save time
-      updatedAt: fs.serverTimestamp(),
-    });
+    await fs.setDoc(fs.doc(db, "predictions", `${matchId}_${me.id}`), doc);
     trackEvent("prediction_saved", { match: `${m.home.abbr}-${m.away.abbr}` });
-    toast(`🎯 Saved: ${pickLabel({ winner, home: d.home, away: d.away }, m)}`);
+    toast(`🎯 Saved: ${pickLabel(doc, m)}`);
   } catch (err) {
     console.error(err);
     toast("⚠️ Save failed — check your connection.");
@@ -1923,8 +2003,8 @@ async function copyText(text) {
 // ---------------------------------------------------------------------------
 // Rules tab
 // ---------------------------------------------------------------------------
-function renderRules() {
-  view.innerHTML = `
+function rulesHtml() {
+  return `
     <div class="rules-card">
       <h3>🎯 How to play</h3>
       <ul>
@@ -1932,7 +2012,7 @@ function renderRules() {
         <li>🔒 Predictions <b>lock ${LOCK_MINUTES} minutes before kickoff</b> — no late bets!</li>
         <li>⚡ <b>Launch day (June 12) only:</b> bets stay open until the <b>end of the 1st half</b> (${GRACE_AFTER_MIN} min after kickoff).</li>
         <li>Everyone's picks stay hidden until lock time, then they're revealed. 👀</li>
-        <li>Knockout games: predict the score <b>after extra time</b> (penalty shootouts don't count).</li>
+        <li>Knockout games use the new style: pick <b>who advances AND how</b> (90' / Extra Time / Penalties) <i>and</i> the exact 90-minute score.</li>
       </ul>
     </div>
     <div class="rules-card">
@@ -1985,9 +2065,10 @@ function renderRules() {
       <h3>🏆 Road to WC26 Final <span style="font-size:11px;color:var(--gold)">KNOCKOUT</span></h3>
       <ul>
         <li>The knockout stage runs on a <b>fresh leaderboard from zero</b> — group points stay in their own table (toggle Group / Knockout / Overall on the Table tab).</li>
-        <li><b>Who advances:</b> correctly pick the team that <b>goes through</b> (penalties & extra time count) → <b>+${window.KNOCKOUT.advancePts}</b>.</li>
-        <li><b>Exact 90-minute score</b> → <b>+${window.KNOCKOUT.exactPts}</b> more.</li>
-        <li><b>Stakes escalate every round:</b> the advancer + exact points are multiplied — Round of 32 ×1, Round of 16 ×2, Quarters ×3, Semis ×4, <b>Final ×5</b>. Late rounds are where titles are won! 🔥</li>
+        <li>🏆 <b>Who advances:</b> pick the right team to go through (penalties & extra time count) → <b>+${window.KNOCKOUT.advancePts}</b>.</li>
+        <li>⏱ <b>How it's decided:</b> nail the method — in 90', Extra Time or Penalties → <b>+${window.KNOCKOUT.methodPts ?? 3}</b>.</li>
+        <li>🎯 <b>Exact 90-minute score</b> → <b>+${window.KNOCKOUT.exactPts}</b>. A perfect call = <b>+${(window.KNOCKOUT.advancePts) + (window.KNOCKOUT.methodPts ?? 3) + (window.KNOCKOUT.exactPts)}</b>!</li>
+        <li><b>Stakes escalate every round:</b> these are multiplied — Round of 32 ×1, Round of 16 ×2, Quarters ×3, Semis ×4, <b>Final ×5</b>. Late rounds are where titles are won! 🔥</li>
         <li><b>All the bonus cards still count — right through the final:</b>
           🏅 <b>Only Winner</b> +${window.RULES?.onlyWinnerBonus ?? 2} (sole correct advancer) ·
           🐺 <b>Underdog</b> +${window.RULES?.underdogBonus ?? 2} (back the lower-ranked team to go through) ·
@@ -2022,6 +2103,169 @@ function renderRules() {
       ${window.SPONSOR.link ? `<div class="share-actions" style="justify-content:center;margin-top:12px"><a class="btn wa" href="${esc(window.SPONSOR.link)}" target="_blank" rel="noopener">${esc(window.SPONSOR.cta || "Visit")}</a></div>` : ""}
     </div>` : ""}
     <p class="app-version">El 3eshّa WC 26 · v${esc(window.APP_VERSION || "1.0")}</p>`;
+}
+
+// ---------------------------------------------------------------------------
+// Profile tab — the player's home: avatar (with photo upload), rank, points,
+// every achievement since the group stage, full prediction history, account
+// actions, and a collapsible Rules section.
+// ---------------------------------------------------------------------------
+
+// Current photo for a player (live from the players collection, else the cached
+// login). Returns a data-URL string or null.
+function playerPhoto(p) {
+  const row = p && players.find((x) => x.id === p.id);
+  return row?.photo || p?.photo || null;
+}
+
+// Avatar markup: uploaded photo if there is one, else the chosen emoji.
+function avatarHtml(p, cls = "") {
+  const photo = playerPhoto(p);
+  const emoji = (players.find((x) => x.id === p.id) || p).emoji || "👤";
+  return photo
+    ? `<img class="avatar-img ${cls}" src="${esc(photo)}" alt="">`
+    : `<span class="avatar-emoji ${cls}">${emoji}</span>`;
+}
+
+function renderProfile() {
+  if (!me) {
+    view.innerHTML = `<div class="empty">👤 Join the game to unlock your profile —
+      your rank, points, achievements and full history live here.<br><br>
+      <button class="btn primary" onclick="document.getElementById('playerChip').click()">Join now ⚽</button></div>`;
+    return;
+  }
+  if (!db) { view.innerHTML = `<div class="empty">Profile appears once the database is connected.</div>`; return; }
+
+  const overall = buildStandings(false, "overall");
+  const rankIdx = overall.findIndex((r) => r.id === me.id);
+  const mine = rankIdx >= 0 ? overall[rankIdx] : null;
+  const ko = hasKnockout();
+  const grpRow = ko ? buildStandings(false, "group").find((r) => r.id === me.id) : null;
+  const koRow = ko ? buildStandings(false, "knockout").find((r) => r.id === me.id) : null;
+
+  // history (most-recent first) + current scoring streak
+  const done = matches.filter((m) => m.completed && m.home.score != null)
+    .sort((a, b) => b.kickoff - a.kickoff);
+  const history = [];
+  let streak = 0, streakLive = true;
+  for (const m of done) {
+    const pred = predictions[`${m.id}_${me.id}`];
+    if (!pred || !isValidPrediction(pred, m)) continue;
+    const pts = matchPoints(pred, m);
+    history.push({ m, pred, pts });
+    if (streakLive) { if (pts > 0) streak++; else streakLive = false; }
+  }
+
+  const bd = mine?.bd || { onlyWinner: 0, underdog: 0, perfectPair: 0, goalRush: 0 };
+  const rankTxt = rankIdx >= 0 ? `#${rankIdx + 1}` : "—";
+  const rankCls = rankIdx === 0 ? "r1" : rankIdx === 1 ? "r2" : rankIdx === 2 ? "r3" : "";
+
+  const stat = (ic, label, val) =>
+    `<div class="pf-stat"><div class="pf-stat-ic">${ic}</div><div class="pf-stat-val">${val}</div><div class="pf-stat-lbl">${label}</div></div>`;
+
+  const splits = ko ? `
+    <div class="pf-splits">
+      <div><span>🌍 Group</span><b>${grpRow?.pts ?? 0}</b></div>
+      <div><span>🏆 Knockout</span><b>${koRow?.pts ?? 0}</b></div>
+      <div><span>Σ Overall</span><b>${mine?.pts ?? 0}</b></div>
+    </div>` : "";
+
+  const histRow = ({ m, pred, pts }) => {
+    const exact = pred.home === m.home.score && pred.away === m.away.score;
+    const tag = pts > 0 ? (exact ? "ex" : "win") : "miss";
+    const ic = pts > 0 ? (exact ? "🎯" : "✅") : "❌";
+    return `<div class="pf-hist ${tag}">
+        <div class="pf-hist-d">${m.kickoff.toLocaleDateString([], { day: "numeric", month: "short" })}</div>
+        <div class="pf-hist-m">${esc(m.home.abbr)} <span>${m.home.score}–${m.away.score}</span> ${esc(m.away.abbr)}
+          <div class="pf-hist-pick">${ic} ${pickLabel(pred, m)}</div></div>
+        <div class="pf-hist-pts ${pts > 0 ? "pos" : ""}">${pts > 0 ? `+${pts}` : "0"}</div>
+      </div>`;
+  };
+
+  view.innerHTML = `
+    <div class="pf-head">
+      <div class="pf-avatar">
+        ${avatarHtml(me)}
+        <label class="pf-cam" title="Upload a photo">📷<input type="file" id="pfPhoto" accept="image/*" hidden></label>
+      </div>
+      <div class="pf-id">
+        <div class="pf-name">${esc(me.name)}</div>
+        <div class="pf-rank ${rankCls}">${rankTxt} of ${overall.length} · <b>${mine?.pts ?? 0} pts</b></div>
+      </div>
+    </div>
+    ${splits}
+    <div class="pf-section-h">🏅 Achievements</div>
+    <div class="pf-stats">
+      ${stat("🎯", "Exact scores", mine?.exact ?? 0)}
+      ${stat("✅", "Correct results", mine?.outcomes ?? 0)}
+      ${stat("🔥", "Streak", streak)}
+      ${stat("🏅", "Only Winner", bd.onlyWinner)}
+      ${stat("🐺", "Underdog", bd.underdog)}
+      ${stat("🤝", "Perfect Pair", bd.perfectPair)}
+      ${stat("⚽", "Goal Rush", bd.goalRush)}
+      ${stat("📋", "Played", mine?.played ?? 0)}
+    </div>
+    <div class="pf-section-h">📜 Your history</div>
+    <div class="pf-hist-list">
+      ${history.length ? history.map(histRow).join("") : `<div class="lock-note">No finished predictions yet — your results will show up here.</div>`}
+    </div>
+    <details class="pf-rules">
+      <summary>📖 Game rules &amp; scoring</summary>
+      <div class="pf-rules-body">${rulesHtml()}</div>
+    </details>
+    <div class="pf-actions">
+      <button id="pfNotif" class="btn ghost">🔔 Notifications</button>
+      <button id="pfLogout" class="btn ghost">↩️ Log out</button>
+    </div>`;
+
+  const photoInput = $("#pfPhoto");
+  if (photoInput) photoInput.addEventListener("change", (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (f) uploadProfilePhoto(f);
+  });
+  $("#pfNotif")?.addEventListener("click", enableNotifications);
+  $("#pfLogout")?.addEventListener("click", () => {
+    if (confirm(`Log out ${me.name} on this device?`)) { clearLogin(); activeTab = "matches"; render(); }
+  });
+}
+
+// Downscale an image file to a small square-ish JPEG data-URL (kept well under
+// Firestore's 1 MB document limit, so we avoid needing Firebase Storage).
+function compressImage(file, max = 256) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const scale = Math.min(1, max / Math.max(img.width, img.height));
+      const w = Math.max(1, Math.round(img.width * scale));
+      const h = Math.max(1, Math.round(img.height * scale));
+      const c = document.createElement("canvas");
+      c.width = w; c.height = h;
+      c.getContext("2d").drawImage(img, 0, 0, w, h);
+      resolve(c.toDataURL("image/jpeg", 0.82));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("image load failed")); };
+    img.src = url;
+  });
+}
+
+async function uploadProfilePhoto(file) {
+  if (!file || !me || !db) return;
+  if (!/^image\//.test(file.type)) { toast("📷 Please pick an image file."); return; }
+  try {
+    toast("📸 Updating photo…");
+    const dataUrl = await compressImage(file, 256);
+    if (dataUrl.length > 750_000) { toast("📷 That image is too large — try another."); return; }
+    await fs.setDoc(fs.doc(db, "players", me.id), { photo: dataUrl }, { merge: true });
+    me.photo = dataUrl; saveLogin();
+    renderChip();
+    toast("✅ Profile photo updated!");
+    render();
+  } catch (err) {
+    console.error(err);
+    toast("⚠️ Couldn't update the photo — try again.");
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -2106,6 +2350,11 @@ function fmtTime(d) {
 
 // "🏆 ARG · 2–1" / "🤝 Draw · 1–1" — a player's full bet for a match
 function pickLabel(pred, m) {
+  if (isKnockout(m) && pred.koWinner) {
+    const ab = pred.koWinner === "home" ? m.home.abbr : m.away.abbr;
+    const how = { reg: "in 90'", et: "in ET", pen: "on pens" }[pred.koMethod] || "";
+    return `🏆 ${esc(ab)} ${how} · ${pred.home}–${pred.away}`;
+  }
   const w = predWinner(pred);
   const who = w === "draw" ? "🤝 Draw" : `🏆 ${esc(w === "home" ? m.home.abbr : m.away.abbr)}`;
   return `${who} · ${pred.home}–${pred.away}`;
