@@ -403,9 +403,11 @@ async function main() {
     const FIX = "fix-alaa-ger-par-2026-06-29";
     const alaa = Object.entries(players).find(([, p]) => (p.name || "").trim().toLowerCase() === "alaa");
     const gpm = matches.find((m) =>
-      isKnockout(m) &&
-      /germany/i.test(`${m.home.name} ${m.away.name}`) &&
-      /paraguay/i.test(`${m.home.name} ${m.away.name}`));
+      /germany/i.test(`${m.home.name} ${m.away.name} ${m.home.abbr} ${m.away.abbr}`) &&
+      /paraguay/i.test(`${m.home.name} ${m.away.name} ${m.home.abbr} ${m.away.abbr}`));
+    if (!alaa || !gpm) {
+      console.log(`Alaa fix lookup — player:${!!alaa} match:${!!gpm}. Players: ${Object.values(players).map((p) => p.name).join(", ")}. Matches: ${matches.map((m) => `${m.home.name}/${m.away.name}`).join(" | ")}`);
+    }
     if (alaa && gpm && (await claim(FIX))) {
       const [aid] = alaa;
       const gerHome = /germany/i.test(gpm.home.name);
