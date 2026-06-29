@@ -706,9 +706,9 @@ const isOverridden = (m) => OPEN_OVERRIDES.some((pair) => teamsMatch(m, pair));
 // fixed moment, regardless of the live match state (a short late window the
 // admin grants on request). The pair is also in OPEN_OVERRIDES so any bet saved
 // during the window still counts as valid (isValidPrediction).
-const TIMED_OVERRIDES = [
-  { teams: ["brazil", "japan"], until: "2026-06-29T17:20:00Z" },
-];
+// Brazil vs Japan now relies on the half-time override below — open through the
+// whole first half — so no hard wall-clock cutoff is needed.
+const TIMED_OVERRIDES = [];
 const timedOverrideOpen = (m) =>
   TIMED_OVERRIDES.some((o) => Date.now() < Date.parse(o.until) && teamsMatch(m, o.teams));
 
