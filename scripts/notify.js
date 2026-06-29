@@ -395,6 +395,38 @@ async function main() {
     }
   }
 
+  // 🔧 One-off admin correction (runs once): Alaa entered his Germany vs Paraguay
+  // score backwards (1–3); he meant Germany 3–1, in 90'. Fix the exact score only;
+  // team/method already say Germany in 90'. (90-min was a draw, so this changes the
+  // record, not his points.)
+  {
+    const FIX = "fix-alaa-ger-par-2026-06-29";
+    const alaa = Object.entries(players).find(([, p]) => (p.name || "").trim().toLowerCase() === "alaa");
+    const gpm = matches.find((m) =>
+      isKnockout(m) &&
+      /germany/i.test(`${m.home.name} ${m.away.name}`) &&
+      /paraguay/i.test(`${m.home.name} ${m.away.name}`));
+    if (alaa && gpm && (await claim(FIX))) {
+      const [aid] = alaa;
+      const gerHome = /germany/i.test(gpm.home.name);
+      const side = gerHome ? "home" : "away";          // Germany's side in this fixture
+      const k = gpm.kickoff.getTime();
+      await db.collection("predictions").doc(`${gpm.id}_${aid}`).set({
+        matchId: gpm.id,
+        playerId: aid,
+        home: gerHome ? 3 : 1,
+        away: gerHome ? 1 : 3,
+        winner: side,
+        koWinner: side,
+        koMethod: "reg",                               // "in 90'"
+        kickoff: gpm.kickoff.toISOString(),
+        lockAt: k - 15 * 60_000,
+        updatedAt: admin.firestore.Timestamp.fromMillis(k - 20 * 60_000), // on-time
+      }, { merge: true });
+      console.log(`Applied ${FIX}: Alaa ${aid} -> Germany 3-1 in 90' on ${gpm.id}`);
+    }
+  }
+
   const validPredsFrom = (list, m) =>
     list
       .filter((p) => p.matchId === m.id && players[p.playerId])
