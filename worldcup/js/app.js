@@ -2198,14 +2198,25 @@ function renderProfile() {
       <div><span>Σ Overall</span><b>${mine?.pts ?? 0}</b></div>
     </div>` : "";
 
+  const HOW_TAG = { reg: "90'", et: "ET", pen: "PEN" };
   const histRow = ({ m, pred, pts }) => {
     const exact = pred.home === m.home.score && pred.away === m.away.score;
     const tag = pts > 0 ? (exact ? "ex" : "win") : "miss";
     const ic = pts > 0 ? (exact ? "🎯" : "✅") : "❌";
+    let pickHtml;
+    if (isKnockout(m)) {
+      const wp = koWinnerPick(pred);
+      const teamAb = wp ? esc(wp === "home" ? m.home.abbr : m.away.abbr) : "—";
+      const how = pred.koMethod && HOW_TAG[pred.koMethod]
+        ? ` <i class="pr-how ${pred.koMethod}">${HOW_TAG[pred.koMethod]}</i>` : "";
+      pickHtml = `🏆 ${teamAb}${how} · ${pred.home}–${pred.away}`;
+    } else {
+      pickHtml = pickLabel(pred, m);
+    }
     return `<div class="pf-hist ${tag}">
         <div class="pf-hist-d">${m.kickoff.toLocaleDateString([], { day: "numeric", month: "short" })}</div>
         <div class="pf-hist-m">${esc(m.home.abbr)} <span>${m.home.score}–${m.away.score}</span> ${esc(m.away.abbr)}
-          <div class="pf-hist-pick">${ic} ${pickLabel(pred, m)}</div></div>
+          <div class="pf-hist-pick">${ic} ${pickHtml}</div></div>
         <div class="pf-hist-pts ${pts > 0 ? "pos" : ""}">${pts > 0 ? `+${pts}` : "0"}</div>
       </div>`;
   };
