@@ -2204,7 +2204,8 @@ function renderProfile() {
     <div class="pf-head">
       <div class="pf-avatar">
         ${avatarHtml(me)}
-        <label class="pf-cam" title="Upload a photo">📷<input type="file" id="pfPhoto" accept="image/*" hidden></label>
+        <label class="pf-cam" for="pfPhoto" title="Upload a photo">📷</label>
+        <input type="file" id="pfPhoto" accept="image/*" class="pf-file">
       </div>
       <div class="pf-id">
         <div class="pf-name">${esc(me.name)}</div>
@@ -2270,19 +2271,32 @@ function compressImage(file, max = 256) {
 
 async function uploadProfilePhoto(file) {
   if (!file || !me || !db) return;
-  if (!/^image\//.test(file.type)) { toast("📷 Please pick an image file."); return; }
+  // iPhones may report HEIC as an empty type — allow it and let decoding decide.
+  if (file.type && !/^image\//.test(file.type)) { toast("📷 Please pick an image file."); return; }
+  let dataUrl;
   try {
     toast("📸 Updating photo…");
-    const dataUrl = await compressImage(file, 256);
-    if (dataUrl.length > 750_000) { toast("📷 That image is too large — try another."); return; }
+    dataUrl = await compressImage(file, 256);
+  } catch (err) {
+    console.error("image decode failed", err);
+    toast("📷 Couldn't read that photo — try a JPG/PNG, or a different image.");
+    return;
+  }
+  if (dataUrl.length > 750_000) { toast("📷 That image is too large — try another."); return; }
+  try {
     await fs.setDoc(fs.doc(db, "players", me.id), { photo: dataUrl }, { merge: true });
     me.photo = dataUrl; saveLogin();
     renderChip();
     toast("✅ Profile photo updated!");
     render();
   } catch (err) {
-    console.error(err);
-    toast("⚠️ Couldn't update the photo — try again.");
+    console.error("photo save failed", err);
+    const code = err?.code || err?.message || String(err);
+    if (/permission|insufficient|denied/i.test(code)) {
+      toast("🔒 Database blocked the save (rules). Tell the admin: allow update on players.");
+    } else {
+      toast("⚠️ Couldn't save photo: " + code);
+    }
   }
 }
 

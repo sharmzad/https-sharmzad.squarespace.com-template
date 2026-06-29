@@ -779,6 +779,9 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
 .pf-actions { display: flex; gap: 10px; margin: 16px 0 8px; }
 .pf-actions .btn { flex: 1; }
 
+/* visually-hidden file input (kept in the DOM so the picker opens reliably) */
+.pf-file { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; clip: rect(0 0 0 0); }
+
 /* avatar in the top player chip */
 .chip-img { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 2px; }
 .player-chip { display: inline-flex; align-items: center; gap: 5px; }
