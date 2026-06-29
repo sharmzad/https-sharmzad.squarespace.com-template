@@ -763,10 +763,17 @@ const round3On = (m) => {
 // ---------------------------------------------------------------------------
 const KO = () => window.KNOCKOUT || {};
 const knockoutFromMs = () => (KO().from ? Date.parse(KO().from) : Infinity);
-// A match is knockout if it kicks off on/after the cutoff, or ESPN labels it one.
-const isKnockout = (m) =>
-  m.kickoff.getTime() >= knockoutFromMs() ||
+const knockoutLabel = (m) =>
   /round of 32|round of 16|quarter|semi[- ]?final|\bfinal\b|third place|3rd place|knockout/i.test(m.group || "");
+const knownGroupMatch = (m) => {
+  const h = groupOf(m.home.name), a = groupOf(m.away.name);
+  return h && h === a;
+};
+// ESPN can list final group matches on the same day the knockout stage starts.
+// Keep same-group fixtures in the group race unless ESPN explicitly labels them
+// as a knockout round.
+const isKnockout = (m) =>
+  knockoutLabel(m) || (m.kickoff.getTime() >= knockoutFromMs() && !knownGroupMatch(m));
 const hasKnockout = () => matches.some(isKnockout);
 // Knockout has actually STARTED (not just scheduled): past the cutoff, or a
 // knockout match is live/finished. Drives the default Table view.

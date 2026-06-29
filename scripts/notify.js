@@ -46,9 +46,14 @@ const KO_ADVANCE_PTS = 3;
 const KO_METHOD_PTS = 3;
 const KO_EXACT_PTS = 3;
 const KO_MULT = { R32: 1, R16: 2, QF: 3, SF: 4, "3P": 4, F: 5 };
-const isKnockout = (m) =>
-  m.kickoff.getTime() >= KNOCKOUT_FROM_MS ||
+const knockoutLabel = (m) =>
   /round of 32|round of 16|quarter|semi[- ]?final|\bfinal\b|third place|3rd place|knockout/i.test(m.group || "");
+const knownGroupMatch = (m) => {
+  const h = groupOf(m.home.name), a = groupOf(m.away.name);
+  return h && h === a;
+};
+const isKnockout = (m) =>
+  knockoutLabel(m) || (m.kickoff.getTime() >= KNOCKOUT_FROM_MS && !knownGroupMatch(m));
 function koRound(m) {
   const g = (m.group || "").toLowerCase();
   if (/round of 32/.test(g)) return "R32";
