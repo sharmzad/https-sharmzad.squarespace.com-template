@@ -374,6 +374,17 @@ async function main() {
   const sendList = []; // { title, body }
   let anyFullTime = false;
 
+  // 📣 One-off broadcast to every registered device — sent exactly once via
+  // claim(). Bump `id` to send a new one; set BROADCAST to null to disable.
+  const BROADCAST = {
+    id: "2026-06-29-whohow-update",
+    title: "🔄 Update is live — re-do your picks!",
+    body: "Sorry for the delay — the new version is finally live! Knockout picks now include HOW a tie is decided (90' / Extra Time / Penalties) + the exact score. You all bet on the OLD version, so please open the app and predict again to score the new points. Brazil 🆚 Japan is re-opened until half-time! ⚽",
+  };
+  if (BROADCAST && (await claim(`broadcast_${BROADCAST.id}`))) {
+    sendList.push({ title: BROADCAST.title, body: BROADCAST.body });
+  }
+
   for (const m of matches) {
     const vs = `${m.home.name} 🆚 ${m.away.name}`;
     const lock = lockMs(m);
