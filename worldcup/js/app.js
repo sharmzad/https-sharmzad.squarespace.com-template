@@ -690,6 +690,7 @@ const OPEN_OVERRIDES = [
   ["KOR", "CZE"], // South Korea vs Czechia — opened on the gang's request
   ["canada", "south africa"], // Canada vs South Africa — opened on request
   ["brazil", "japan"], // Brazil vs Japan — opened on request (R32)
+  ["germany", "paraguay"], // Germany vs Paraguay — opened on request (R32)
 ];
 
 const isOverridden = (m) =>

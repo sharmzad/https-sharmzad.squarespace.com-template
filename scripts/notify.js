@@ -26,7 +26,7 @@ const POINTS = { EXACT: 5, WINNER: 2 };
 const LOCK_MINUTES = 15;
 const GRACE_DAY = "2026-06-12"; // Egypt local date, lock = KO + 50 min
 const GRACE_AFTER_MIN = 50;
-const OPEN_OVERRIDES = [["KOR", "CZE"], ["canada", "south africa"], ["brazil", "japan"]];
+const OPEN_OVERRIDES = [["KOR", "CZE"], ["canada", "south africa"], ["brazil", "japan"], ["germany", "paraguay"]];
 const REMIND_WINDOW_MIN = 30; // notify when lock is at most this far away
 // Keep in sync with BONUS_POINTS / RULES in worldcup/js/firebase-config.js
 const BONUS_POINTS = { "*": 2, "Alaa": 0 };
