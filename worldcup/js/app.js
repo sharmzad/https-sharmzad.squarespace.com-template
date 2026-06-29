@@ -693,14 +693,24 @@ const OPEN_OVERRIDES = [
   ["germany", "paraguay"], // Germany vs Paraguay — opened on request (R32)
 ];
 
-const isOverridden = (m) =>
-  OPEN_OVERRIDES.some((pair) =>
-    pair.every((t) =>
-      [m.home.abbr, m.home.name, m.away.abbr, m.away.name].some(
-        (n) => n && n.toLowerCase().includes(t.toLowerCase())
-      )
+const teamsMatch = (m, pair) =>
+  pair.every((t) =>
+    [m.home.abbr, m.home.name, m.away.abbr, m.away.name].some(
+      (n) => n && n.toLowerCase().includes(t.toLowerCase())
     )
   );
+
+const isOverridden = (m) => OPEN_OVERRIDES.some((pair) => teamsMatch(m, pair));
+
+// Time-boxed admin re-opens: keep a specific match open for betting until a
+// fixed moment, regardless of the live match state (a short late window the
+// admin grants on request). The pair is also in OPEN_OVERRIDES so any bet saved
+// during the window still counts as valid (isValidPrediction).
+const TIMED_OVERRIDES = [
+  { teams: ["brazil", "japan"], until: "2026-06-29T17:20:00Z" },
+];
+const timedOverrideOpen = (m) =>
+  TIMED_OVERRIDES.some((o) => Date.now() < Date.parse(o.until) && teamsMatch(m, o.teams));
 
 const dayKey = (d) => d.toLocaleDateString("en-CA"); // YYYY-MM-DD, local time
 
@@ -719,6 +729,7 @@ const overrideStillOpen = (m) =>
 
 function isOpen(m) {
   if (m.completed) return false;
+  if (timedOverrideOpen(m)) return true;          // short admin re-open window
   if (isOverridden(m)) return overrideStillOpen(m);
   return Date.now() < lockTime(m).getTime();
 }
