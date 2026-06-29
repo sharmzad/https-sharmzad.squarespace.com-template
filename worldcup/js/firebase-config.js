@@ -71,18 +71,13 @@ window.KNOCKOUT = {
 // ties kicking off simultaneously) and ⚽ Goal Rush (0 points but right total
 // goals). Bonuses are flat — only the advancer + exact points get the round mult.
 
-// Exact-score celebrations are now AUTOMATIC: the notifier flags every
-// exact-score win at full time (health/celebration in Firestore) and the app
-// shows the fireworks + winners' names on open for one hour after the match.
-// This is an optional MANUAL override for a custom announcement (null = off).
-// `until` replays it on every open until that time; set null to switch off.
-window.ANNOUNCEMENT = {
-  id: "update-2026-06-24-round3",
-  version: "2.3",
-  emoji: "🤝",
-  body: "ROUND 3 CHALLENGES! 🤝 PERFECT PAIR: nail BOTH of a group's simultaneous matches → +3 (or +6 if both are exact!). ⚽ GOAL RUSH: miss the exact score but call the total goals → +1. These stack on top of your normal points! 🏆",
-  until: "2026-06-27T22:00:00Z",
-};
+// Exact-score celebrations are AUTOMATIC: the notifier flags every exact-score
+// win at full time (health/celebration in Firestore) and the app shows the
+// fireworks + winners' names on open for one hour after the match. That is the
+// ONLY announcement we want now — fired per game, then it expires on its own.
+// This optional MANUAL override is OFF (null); leaving it set would also clobber
+// the per-game celebration body, so keep it null.
+window.ANNOUNCEMENT = null;
 
 // -----------------------------------------------------------------------------
 // Sponsor (set to null to hide all sponsor branding everywhere).
