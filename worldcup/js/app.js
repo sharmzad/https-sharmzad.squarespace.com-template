@@ -1526,9 +1526,19 @@ function revealBlock(m) {
   if (!list.length) return `<div class="lock-note">No predictions for this match 🤷</div>`;
   if (done) list.sort((a, b) => (b.pts ?? -1) - (a.pts ?? -1));
 
+  const HOW_LBL = { reg: "90'", et: "ET", pen: "PEN" };
   const rows = list.map(({ p, pred, late, base, pts, badges }) => {
-    const w = predWinner(pred);
-    const team = w === "draw" ? "Draw" : esc(w === "home" ? m.home.abbr : m.away.abbr);
+    let team, how = "";
+    if (ko) {
+      const wp = koWinnerPick(pred);   // explicit advancer pick (falls back to score)
+      team = wp ? esc(wp === "home" ? m.home.abbr : m.away.abbr) : "—";
+      if (pred.koMethod && HOW_LBL[pred.koMethod]) {
+        how = ` <i class="pr-how ${pred.koMethod}">${HOW_LBL[pred.koMethod]}</i>`;
+      }
+    } else {
+      const w = predWinner(pred);
+      team = w === "draw" ? "Draw" : esc(w === "home" ? m.home.abbr : m.away.abbr);
+    }
     const ptsHtml = late
       ? `<span class="pr-pts late">late</span>`
       : (pts != null ? `<span class="pr-pts p${base}">+${pts}${badges ? ` <span class="pr-badge">${badges}</span>` : ""}</span>` : `<span class="pr-pts pending">—</span>`);
@@ -1536,7 +1546,7 @@ function revealBlock(m) {
       <div class="pr-row ${me && p.id === me.id ? "mine" : ""}">
         <div class="pr-av">${p.emoji}</div>
         <div class="pr-name">${esc(p.name)}</div>
-        <div class="pr-pick"><b>${pred.home}–${pred.away}</b><span class="pr-team">${team}</span></div>
+        <div class="pr-pick"><b>${pred.home}–${pred.away}</b><span class="pr-team">${team}${how}</span></div>
         ${ptsHtml}
       </div>`;
   }).join("");
