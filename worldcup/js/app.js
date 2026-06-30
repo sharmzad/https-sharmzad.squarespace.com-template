@@ -1780,7 +1780,7 @@ function renderTable() {
       <div class="st-row${meCls}${r.livePts ? " gaining" : ""}">
         <div class="st-rank${rcls}">${medal}</div>
         <div class="st-move ${mv}">${glyph[mv]}</div>
-        <div class="st-av">${r.emoji}</div>
+        <div class="st-av">${avatarHtml(r)}</div>
         <div class="st-meta">
           <div class="st-name">${esc(r.name)}${meCls ? '<span class="st-you">YOU</span>' : ""}</div>
           <div class="st-sub">Played ${r.played} · 🎯 ${r.exact} exact <span class="st-form">${dots}</span></div>
