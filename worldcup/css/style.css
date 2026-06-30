@@ -453,6 +453,20 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
 .st-chip.live { color: var(--gold); background: rgba(244,197,66,.13); border-color: rgba(244,197,66,.34); margin-left: auto; }
 .st-chip.live small { color: var(--gold); opacity: .85; }
 .st-chip.bonus b { font-weight: 800; }
+/* power bar — full-width: how close this player is to the leader's points */
+.st-power { flex-basis: 100%; display: flex; align-items: center; gap: 9px; margin-top: 9px; }
+.st-power-track {
+  flex: 1; height: 7px; border-radius: 999px; overflow: hidden;
+  background: rgba(255,255,255,.07);
+}
+.st-power-fill { display: block; height: 100%; border-radius: 999px; transition: width .6s cubic-bezier(.3,.9,.3,1); }
+.st-power.z-hot  .st-power-fill { background: linear-gradient(90deg, #1f9d63, #4cf0a0); box-shadow: 0 0 8px rgba(53,208,127,.5); }
+.st-power.z-mid  .st-power-fill { background: linear-gradient(90deg, #b5832a, #f4c542); }
+.st-power.z-cold .st-power-fill { background: linear-gradient(90deg, #9c3a43, #ff6b6b); }
+.st-power-pct { font-size: 11px; font-weight: 800; min-width: 36px; text-align: right; font-variant-numeric: tabular-nums; }
+.st-power.z-hot  .st-power-pct { color: var(--green); }
+.st-power.z-mid  .st-power-pct { color: var(--gold); }
+.st-power.z-cold .st-power-pct { color: #ff8b8b; }
 
 /* ---------- Share tab ---------- */
 .share-card {

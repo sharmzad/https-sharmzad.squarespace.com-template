@@ -1708,6 +1708,9 @@ function renderTable() {
   const glyph = { up: "▲", down: "▼", same: "–" };
   // grace is intentionally omitted — it counts toward the total but folds into "base"
   const BONUS_ICONS = [["onlyWinner", "🏅"], ["underdog", "🐺"], ["perfectPair", "🤝"], ["goalRush", "⚽"]];
+  // Power bar: each player's points as a % of the leader's (the max reached this
+  // round). Leader = 100%. Updates live as in-play points come in.
+  const maxPts = Math.max(1, ...rows.map((r) => r.pts));
 
   const html = rows.map((r, i) => {
     const rank = i + 1;
@@ -1726,6 +1729,13 @@ function renderTable() {
     const breakdown = (bonusChips || liveChip)
       ? `<div class="st-breakdown">${bonusChips}${liveChip}</div>`
       : "";
+    // power meter — % of the leader's points, 3 colour zones
+    const pct = Math.max(0, Math.min(100, Math.round((r.pts / maxPts) * 100)));
+    const zone = pct >= 75 ? "z-hot" : pct >= 45 ? "z-mid" : "z-cold";
+    const power = `<div class="st-power ${zone}" title="${pct}% of the leader's ${maxPts} pts">
+        <span class="st-power-track"><i class="st-power-fill" style="width:${pct}%"></i></span>
+        <b class="st-power-pct">${pct}%</b>
+      </div>`;
     return `
       <div class="st-row${meCls}${r.livePts ? " gaining" : ""}">
         <div class="st-rank${rcls}">${medal}</div>
@@ -1736,6 +1746,7 @@ function renderTable() {
           <div class="st-sub">Played ${r.played} · 🎯 ${r.exact} exact <span class="st-form">${dots}</span></div>
         </div>
         <div class="st-pts"><div class="st-total"><b>${r.pts}</b><span class="st-unit">pts</span></div></div>
+        ${power}
         ${breakdown}
       </div>`;
   }).join("");
@@ -1762,7 +1773,7 @@ function renderTable() {
     ${html}
     <p class="lock-note" style="margin-top:10px">${
       phase === "knockout" ? "Knockout scoring: correct advancer +3, exact 90-min score +3 (6 total), ×round (R32 →×1, Final →×5). All bonus cards count too — 🏅 Only Winner · 🐺 Underdog · 🤝 Perfect Pair · ⚽ Goal Rush. " : ""
-    }Tiebreakers: most exact scores 🎯, then correct results · ▲▼ ${isLive ? "live movement from in-play results" : "since the last match"}.</p>`;
+    }⚡ The power bar shows how close each player is to the leader's points (leader = 100%) — it moves live during matches. Tiebreakers: most exact scores 🎯, then correct results · ▲▼ ${isLive ? "live movement from in-play results" : "since the last match"}.</p>`;
 
   view.querySelectorAll("[data-phase]").forEach((b) =>
     b.addEventListener("click", () => { standingsPhase = b.dataset.phase; renderTable(); }));
