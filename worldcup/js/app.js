@@ -960,6 +960,37 @@ function scoreKnockout(pred, m) {
 const matchPoints = (pred, m) =>
   isKnockout(m) ? scoreKnockout(pred, m) : scorePrediction(pred, m.home.score, m.away.score);
 
+// Max points a single match can award right now — the full set, minus the
+// knockout method bonus until full time (it can't be known mid-match). Powers
+// the live "how close to maxing this game" bar.
+function maxMatchPoints(m) {
+  if (isKnockout(m)) {
+    const k = KO();
+    const methodPart = m.completed ? (k.methodPts ?? 3) : 0;
+    return ((k.advancePts ?? 3) + methodPart + (k.exactPts ?? 3)) * roundMult(m);
+  }
+  return POINTS.WINNER + POINTS.EXACT;
+}
+
+// What a player's pick is worth if the match froze at (hs, as). For knockout the
+// advancer is taken from whoever currently LEADS (provisional); the method only
+// counts once the match has actually finished.
+function liveMatchScore(pred, m, hs, as) {
+  if (isKnockout(m)) {
+    const k = KO();
+    let base = 0;
+    const leader = hs > as ? "home" : hs < as ? "away" : null;
+    if (leader && koWinnerPick(pred) === leader) base += (k.advancePts ?? 3);
+    if (m.completed) {
+      const meth = koMatchMethod(m);
+      if (meth && pred.koMethod === meth) base += (k.methodPts ?? 3);
+    }
+    if (pred.home === hs && pred.away === as) base += (k.exactPts ?? 3);
+    return base * roundMult(m);
+  }
+  return scorePrediction(pred, hs, as);
+}
+
 // Admin-granted grace points (see BONUS_POINTS in firebase-config.js)
 function bonusFor(name) {
   const b = window.BONUS_POINTS || {};
@@ -1708,9 +1739,6 @@ function renderTable() {
   const glyph = { up: "▲", down: "▼", same: "–" };
   // grace is intentionally omitted — it counts toward the total but folds into "base"
   const BONUS_ICONS = [["onlyWinner", "🏅"], ["underdog", "🐺"], ["perfectPair", "🤝"], ["goalRush", "⚽"]];
-  // Power bar: each player's points as a % of the leader's (the max reached this
-  // round). Leader = 100%. Updates live as in-play points come in.
-  const maxPts = Math.max(1, ...rows.map((r) => r.pts));
 
   const html = rows.map((r, i) => {
     const rank = i + 1;
@@ -1729,13 +1757,25 @@ function renderTable() {
     const breakdown = (bonusChips || liveChip)
       ? `<div class="st-breakdown">${bonusChips}${liveChip}</div>`
       : "";
-    // power meter — % of the leader's points, 3 colour zones
-    const pct = Math.max(0, Math.min(100, Math.round((r.pts / maxPts) * 100)));
-    const zone = pct >= 75 ? "z-hot" : pct >= 45 ? "z-mid" : "z-cold";
-    const power = `<div class="st-power ${zone}" title="${pct}% of the leader's ${maxPts} pts">
-        <span class="st-power-track"><i class="st-power-fill" style="width:${pct}%"></i></span>
-        <b class="st-power-pct">${pct}%</b>
-      </div>`;
+    // live power meter — how close THIS player's pick is to maxing out the
+    // points on the current live game(s). Only shown while a game is in play.
+    let power = "";
+    if (isLive) {
+      let earned = 0, maxp = 0;
+      for (const lm of liveMatches) {
+        maxp += maxMatchPoints(lm);
+        const pr = predictions[`${lm.id}_${r.id}`];
+        if (pr && isValidPrediction(pr, lm)) earned += liveMatchScore(pr, lm, lm.home.score, lm.away.score);
+      }
+      if (maxp > 0) {
+        const pct = Math.max(0, Math.min(100, Math.round((earned / maxp) * 100)));
+        const zone = pct >= 65 ? "z-hot" : pct >= 28 ? "z-mid" : "z-cold";
+        power = `<div class="st-power ${zone}" title="On track for ${earned}/${maxp} pts on the live game">
+            <span class="st-power-track"><i class="st-power-fill" style="width:${pct}%"></i></span>
+            <b class="st-power-pct">${pct}%</b>
+          </div>`;
+      }
+    }
     return `
       <div class="st-row${meCls}${r.livePts ? " gaining" : ""}">
         <div class="st-rank${rcls}">${medal}</div>
@@ -1773,7 +1813,7 @@ function renderTable() {
     ${html}
     <p class="lock-note" style="margin-top:10px">${
       phase === "knockout" ? "Knockout scoring: correct advancer +3, exact 90-min score +3 (6 total), ×round (R32 →×1, Final →×5). All bonus cards count too — 🏅 Only Winner · 🐺 Underdog · 🤝 Perfect Pair · ⚽ Goal Rush. " : ""
-    }⚡ The power bar shows how close each player is to the leader's points (leader = 100%) — it moves live during matches. Tiebreakers: most exact scores 🎯, then correct results · ▲▼ ${isLive ? "live movement from in-play results" : "since the last match"}.</p>`;
+    }${isLive ? "⚡ The power bar shows how close each player's pick is to maxing out the points on the live game right now (100% = nailing it). It moves with every goal. " : ""}Tiebreakers: most exact scores 🎯, then correct results · ▲▼ ${isLive ? "live movement from in-play results" : "since the last match"}.</p>`;
 
   view.querySelectorAll("[data-phase]").forEach((b) =>
     b.addEventListener("click", () => { standingsPhase = b.dataset.phase; renderTable(); }));
