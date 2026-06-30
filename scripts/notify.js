@@ -459,6 +459,35 @@ async function main() {
     }
   }
 
+  // 🔧 One-off admin correction (runs once): set Alaa's pick on the upcoming
+  // France knockout tie to France 3–1, in 90' (on request, match not started).
+  {
+    const FIX = "fix-alaa-france-2026-06-30";
+    const alaa2 = Object.entries(players).find(([, p]) => (p.name || "").trim().toLowerCase() === "alaa");
+    const frm = matches.find((m) =>
+      isKnockout(m) && !m.completed &&
+      /france/i.test(`${m.home.name} ${m.away.name} ${m.home.abbr} ${m.away.abbr}`));
+    if (alaa2 && frm && (await claim(FIX))) {
+      const [aid] = alaa2;
+      const frHome = /france/i.test(`${frm.home.name} ${frm.home.abbr}`);
+      const side = frHome ? "home" : "away";           // France's side in this fixture
+      const k = frm.kickoff.getTime();
+      await db.collection("predictions").doc(`${frm.id}_${aid}`).set({
+        matchId: frm.id,
+        playerId: aid,
+        home: frHome ? 3 : 1,
+        away: frHome ? 1 : 3,
+        winner: side,
+        koWinner: side,                                // France (matches the 3–1 score)
+        koMethod: "reg",                               // "in 90'"
+        kickoff: frm.kickoff.toISOString(),
+        lockAt: k - 15 * 60_000,
+        updatedAt: admin.firestore.Timestamp.fromMillis(Math.min(Date.now(), k - 16 * 60_000)), // on-time
+      }, { merge: true });
+      console.log(`Applied ${FIX}: Alaa ${aid} -> France 3-1 in 90' on ${frm.id} (${frm.home.name}/${frm.away.name})`);
+    }
+  }
+
   const validPredsFrom = (list, m) =>
     list
       .filter((p) => p.matchId === m.id && players[p.playerId])
