@@ -92,9 +92,11 @@ const koWinnerPick = (pred) =>
 function scoreKnockout(pred, m) {
   let base = 0;
   const adv = koAdvancer(m);
-  if (adv && koWinnerPick(pred) === adv) base += KO_ADVANCE_PTS;
+  const teamRight = !!adv && koWinnerPick(pred) === adv;
+  if (teamRight) base += KO_ADVANCE_PTS;
   const method = koMatchMethod(m);
-  if (method && pred.koMethod && pred.koMethod === method) base += KO_METHOD_PTS;
+  // method only counts if the team pick is also right
+  if (teamRight && method && pred.koMethod && pred.koMethod === method) base += KO_METHOD_PTS;
   if (pred.home === m.home.score && pred.away === m.away.score) base += KO_EXACT_PTS;
   return base * (KO_MULT[koRound(m)] || 1);
 }
@@ -423,6 +425,37 @@ async function main() {
         updatedAt: admin.firestore.Timestamp.fromMillis(k - 20 * 60_000), // on-time
       }, { merge: true });
       console.log(`Applied ${FIX}: Alaa ${aid} -> Germany 3-1 in 90'`);
+    }
+  }
+
+  // 🔧 One-off admin correction (runs once): Yasser's Ivory Coast vs Norway pick
+  // was contradictory — score 2–1 (Ivory Coast winning) but team set to Norway.
+  // His real pick was Ivory Coast 2–1 in 90'. Set the team to match the score.
+  // (Ivory Coast lost, so with the team-must-match-score rule he scores 0.)
+  {
+    const FIX = "fix-yasser-civ-nor-2026-06-30";
+    const yasser = Object.entries(players).find(([, p]) => (p.name || "").trim().toLowerCase() === "yasser");
+    const icn = matches.find((m) =>
+      /ivor|c[oô]te|civ/i.test(`${m.home.name} ${m.away.name} ${m.home.abbr} ${m.away.abbr}`) &&
+      /norway|nor\b/i.test(`${m.home.name} ${m.away.name} ${m.home.abbr} ${m.away.abbr}`));
+    if (yasser && icn && (await claim(FIX))) {
+      const [yid] = yasser;
+      const civHome = /ivor|c[oô]te|civ/i.test(`${icn.home.name} ${icn.home.abbr}`);
+      const side = civHome ? "home" : "away";          // Ivory Coast's side in this fixture
+      const k = icn.kickoff.getTime();
+      await db.collection("predictions").doc(`${icn.id}_${yid}`).set({
+        matchId: icn.id,
+        playerId: yid,
+        home: civHome ? 2 : 1,
+        away: civHome ? 1 : 2,
+        winner: side,
+        koWinner: side,                                // Ivory Coast (matches the 2–1 score)
+        koMethod: "reg",                               // "in 90'"
+        kickoff: icn.kickoff.toISOString(),
+        lockAt: k - 15 * 60_000,
+        updatedAt: admin.firestore.Timestamp.fromMillis(k - 20 * 60_000), // on-time
+      }, { merge: true });
+      console.log(`Applied ${FIX}: Yasser ${yid} -> Ivory Coast 2-1 in 90'`);
     }
   }
 

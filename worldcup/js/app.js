@@ -943,15 +943,17 @@ function koMatchMethod(m) {
 const koWinnerPick = (pred) =>
   pred.koWinner || (pred.home > pred.away ? "home" : pred.home < pred.away ? "away" : null);
 
-// Knockout points: right team to advance + right method + exact 90-min score,
-// each ×round multiplier. The three buckets are independent (per game rules).
+// Knockout points: right team to advance (+3), right method (+3, only if the
+// team is also right — you can't earn "how they win" when your team didn't win),
+// and exact 90-min score (+3), each ×round multiplier.
 function scoreKnockout(pred, m) {
   const k = KO();
   let base = 0;
   const adv = koAdvancer(m);
-  if (adv && koWinnerPick(pred) === adv) base += (k.advancePts ?? 3);          // 🏆 who
+  const teamRight = !!adv && koWinnerPick(pred) === adv;
+  if (teamRight) base += (k.advancePts ?? 3);                                  // 🏆 who advances
   const method = koMatchMethod(m);
-  if (method && pred.koMethod && pred.koMethod === method) base += (k.methodPts ?? 3); // ⏱ how
+  if (teamRight && method && pred.koMethod && pred.koMethod === method) base += (k.methodPts ?? 3); // ⏱ how
   if (pred.home === m.home.score && pred.away === m.away.score) base += (k.exactPts ?? 3); // 🎯 exact
   return base * roundMult(m);
 }
@@ -980,8 +982,9 @@ function liveMatchScore(pred, m, hs, as) {
     const k = KO();
     let base = 0;
     const leader = hs > as ? "home" : hs < as ? "away" : null;
-    if (leader && koWinnerPick(pred) === leader) base += (k.advancePts ?? 3);
-    if (m.completed) {
+    const teamRight = !!leader && koWinnerPick(pred) === leader;
+    if (teamRight) base += (k.advancePts ?? 3);
+    if (m.completed && teamRight) {
       const meth = koMatchMethod(m);
       if (meth && pred.koMethod === meth) base += (k.methodPts ?? 3);
     }
@@ -1264,6 +1267,11 @@ function renderMatches() {
       const [matchId, side, method] = e.currentTarget.dataset.kocell.split("|");
       const d = draft[matchId];
       d.koWinner = side; d.koMethod = method;
+      // Keep the 90-min score consistent with the pick: a 90' win means the
+      // chosen team must lead; Extra Time / Penalties means it's level at 90'.
+      koSyncScore(d);
+      $(`#st-${matchId}-home`).textContent = d.home;
+      $(`#st-${matchId}-away`).textContent = d.away;
       e.currentTarget.closest(".kogrid").querySelectorAll(".kocell")
         .forEach((x) => x.classList.toggle("sel", x === e.currentTarget));
     })
@@ -1664,12 +1672,43 @@ function revealBlock(m) {
   return `<div class="reveal">${rows}</div>`;
 }
 
+// Keep a knockout draft's 90-min score consistent with the who+how pick:
+// a 90' win → the chosen team must lead; Extra Time / Penalties → level at 90'.
+function koSyncScore(d) {
+  if (!d.koWinner || !d.koMethod) return;
+  if (d.koMethod === "reg") {
+    if (d.koWinner === "home" && d.home <= d.away) d.home = d.away + 1;
+    else if (d.koWinner === "away" && d.away <= d.home) d.away = d.home + 1;
+  } else {                                   // et / pen → drawn at 90'
+    const lvl = Math.min(d.home, d.away);
+    d.home = lvl; d.away = lvl;
+  }
+}
+// True when a knockout draft's score contradicts its who+how pick.
+function koInconsistent(d) {
+  if (!d.koWinner || !d.koMethod) return false;
+  if (d.koMethod === "reg") return d.koWinner === "home" ? d.home <= d.away : d.away <= d.home;
+  return d.home !== d.away;                  // ET/pen must be level at 90'
+}
+
 function onStep(e) {
   const [matchId, side, delta] = e.currentTarget.dataset.step.split("|");
   const d = draft[matchId];
+  const m = matches.find((x) => x.id === matchId);
   d[side] = Math.max(0, Math.min(15, d[side] + Number(delta)));
+  // Knockout, "win in 90'": the leading team IS the team you back to advance,
+  // so keep the grid pick in lockstep with the score.
+  if (m && isKnockout(m) && d.koMethod === "reg") {
+    const lead = resultOf(d.home, d.away);
+    if (lead !== "draw") {
+      d.koWinner = lead;
+      const grid = e.currentTarget.closest(".match")?.querySelector(".kogrid");
+      if (grid) grid.querySelectorAll(".kocell").forEach((x) =>
+        x.classList.toggle("sel", x.dataset.kocell.split("|")[1] === lead && x.dataset.kocell.split("|")[2] === "reg"));
+    }
+  }
   $(`#st-${matchId}-${side}`).textContent = d[side];
-  // keep the winner highlight in sync with the score (level = draw)
+  // keep the winner highlight in sync with the score (level = draw) — group stage
   d.winner = resultOf(d.home, d.away);
   const row = e.currentTarget.closest(".match")?.querySelector(".winner-row");
   if (row) row.querySelectorAll(".wbtn").forEach((x) =>
@@ -1684,6 +1723,13 @@ async function onSave(e) {
   const d = draft[matchId];
   const ko = isKnockout(m);
   if (ko && (!d.koWinner || !d.koMethod)) { toast("👆 Tap who wins & how first!"); return; }
+  if (ko && koInconsistent(d)) {
+    const team = koDisplayTeam(m, d.koWinner).abbr;
+    toast(d.koMethod === "reg"
+      ? `⚠️ You picked ${team} to win in 90' — the score must show ${team} ahead.`
+      : "⚠️ Extra Time / Penalties means it's level at 90' — make the score a draw.");
+    return;
+  }
   // outcome follows the score (level = draw, decisive = that team)
   const winner = resultOf(d.home, d.away);
   const doc = {
@@ -2225,7 +2271,8 @@ function rulesHtml() {
       <ul>
         <li>The knockout stage runs on a <b>fresh leaderboard from zero</b> — group points stay in their own table (toggle Group / Knockout / Overall on the Table tab).</li>
         <li>🏆 <b>Who advances:</b> pick the right team to go through (penalties & extra time count) → <b>+${window.KNOCKOUT.advancePts}</b>.</li>
-        <li>⏱ <b>How it's decided:</b> nail the method — in 90', Extra Time or Penalties → <b>+${window.KNOCKOUT.methodPts ?? 3}</b>.</li>
+        <li>⏱ <b>How it's decided:</b> nail the method — in 90', Extra Time or Penalties → <b>+${window.KNOCKOUT.methodPts ?? 3}</b> <i>(only if you also got the team right)</i>.</li>
+        <li>📐 Your <b>score must match your team pick</b>: back a team to win in 90' and your score has to show them ahead; pick Extra Time / Penalties and the 90-min score must be a draw.</li>
         <li>🎯 <b>Exact 90-minute score</b> → <b>+${window.KNOCKOUT.exactPts}</b>. A perfect call = <b>+${(window.KNOCKOUT.advancePts) + (window.KNOCKOUT.methodPts ?? 3) + (window.KNOCKOUT.exactPts)}</b>!</li>
         <li><b>Stakes escalate every round:</b> these are multiplied — Round of 32 ×1, Round of 16 ×2, Quarters ×3, Semis ×4, <b>Final ×5</b>. Late rounds are where titles are won! 🔥</li>
         <li><b>All the bonus cards still count — right through the final:</b>
