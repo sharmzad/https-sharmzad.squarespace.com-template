@@ -488,6 +488,28 @@ async function main() {
     }
   }
 
+  // 🔧 One-off admin correction (runs once): Amr, Zeina & Abo alaa backed France
+  // vs Sweden but their old-style picks had no method — add "in 90'" so they're
+  // scored like everyone else. Only merge team/method (not timing → stays valid).
+  {
+    const FIX = "fix-fra-swe-add-90-2026-06-30";
+    const fsm = matches.find((m) =>
+      isKnockout(m) &&
+      /france/i.test(`${m.home.name} ${m.away.name} ${m.home.abbr} ${m.away.abbr}`) &&
+      /sweden/i.test(`${m.home.name} ${m.away.name} ${m.home.abbr} ${m.away.abbr}`));
+    if (fsm && (await claim(FIX))) {
+      const side = /france/i.test(`${fsm.home.name} ${fsm.home.abbr}`) ? "home" : "away";
+      for (const t of ["amr", "zeina", "abo"]) {       // "abo" → Abo alaa, not Alaa
+        const entry = Object.entries(players).find(([, p]) => (p.name || "").toLowerCase().includes(t));
+        if (!entry) { console.log(`FRA-SWE 90 fix: no player matched "${t}"`); continue; }
+        const [pid, p] = entry;
+        await db.collection("predictions").doc(`${fsm.id}_${pid}`).set(
+          { koWinner: side, koMethod: "reg" }, { merge: true });
+        console.log(`Applied ${FIX}: ${p.name} ${pid} -> +in 90' on ${fsm.id}`);
+      }
+    }
+  }
+
   const validPredsFrom = (list, m) =>
     list
       .filter((p) => p.matchId === m.id && players[p.playerId])
