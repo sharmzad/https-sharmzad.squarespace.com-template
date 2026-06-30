@@ -132,7 +132,9 @@ function tutorialPending() {
   const t = window.TUTORIAL;
   if (!t || !t.id) return false;
   if (t.until && Date.now() >= new Date(t.until).getTime()) return false;  // window closed
-  return !localStorage.getItem(`tutorial_${t.id}`);
+  const max = t.repeat || 1;                                               // times to show per device
+  const seen = parseInt(localStorage.getItem(`tutorial_${t.id}`) || "0", 10) || 0;
+  return seen < max;
 }
 
 const TUTORIAL_STEPS = [
@@ -162,6 +164,11 @@ function maybeShowTutorial(retries = 0) {
   if (blocked && retries < 40) { setTimeout(() => maybeShowTutorial(retries + 1), 800); return; }
   if (document.querySelector(".tut")) return;   // already open
 
+  // Count this view immediately, so it still counts even if they skip / escape it.
+  const key = `tutorial_${window.TUTORIAL.id}`;
+  const seen = parseInt(localStorage.getItem(key) || "0", 10) || 0;
+  localStorage.setItem(key, String(seen + 1));
+
   let i = 0;
   const overlay = document.createElement("div");
   overlay.className = "tut";
@@ -169,7 +176,6 @@ function maybeShowTutorial(retries = 0) {
   requestAnimationFrame(() => overlay.classList.add("show"));
 
   const finish = () => {
-    localStorage.setItem(`tutorial_${window.TUTORIAL.id}`, "1");
     overlay.classList.remove("show");
     setTimeout(() => overlay.remove(), 300);
   };

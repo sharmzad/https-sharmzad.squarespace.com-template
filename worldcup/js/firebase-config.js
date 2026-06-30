@@ -79,12 +79,13 @@ window.KNOCKOUT = {
 // the per-game celebration body, so keep it null.
 window.ANNOUNCEMENT = null;
 
-// First-open "how to bet the knockouts" walkthrough. Shows once per device on
-// open (with a Skip option) until `until`, then never again. Bump `id` to replay
-// for everyone; set to null to switch off.
+// First-open "how to bet the knockouts" walkthrough. Shows up to `repeat` times
+// per device on open (a Skip still counts as one view) until `until`, then never
+// again. Bump `id` to restart the count for everyone; set to null to switch off.
 window.TUTORIAL = {
-  id: "knockout-howto-2026-06-29",
-  until: "2026-06-30T23:30:00Z",   // ~24h window
+  id: "knockout-howto-2026-06-29-x3",
+  until: "2026-07-01T23:30:00Z",   // ~48h window — room for 3 opens
+  repeat: 3,                       // show up to 3 times per device, even if skipped
 };
 
 // -----------------------------------------------------------------------------
