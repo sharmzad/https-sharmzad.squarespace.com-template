@@ -510,6 +510,51 @@ async function main() {
     }
   }
 
+  // 📜 One-off report: the KNOCKOUT leaderboard as it stood BEFORE Spain vs
+  // Austria kicked off (all knockout ties with an earlier kickoff, completed).
+  {
+    const REPORT = "report-ko-before-spain-austria-v1";
+    const sa = matches.find((m) =>
+      isKnockout(m) &&
+      /spain/i.test(`${m.home.name} ${m.away.name} ${m.home.abbr} ${m.away.abbr}`) &&
+      /austria/i.test(`${m.home.name} ${m.away.name} ${m.home.abbr} ${m.away.abbr}`));
+    if (!sa) {
+      console.log("KO-REPORT: Spain vs Austria match not found in the feed yet.");
+    } else if (await claim(REPORT)) {
+      const cutoff = sa.kickoff.getTime();
+      const allPreds = (await db.collection("predictions").get()).docs.map((d) => d.data());
+      const koMs = matches.filter((m) =>
+        isKnockout(m) && m.completed && m.home.score != null && m.kickoff.getTime() < cutoff);
+      const stat = {};
+      for (const [id, p] of Object.entries(players)) stat[id] = { pts: 0, exact: 0, outcomes: 0, played: 0, name: p.name };
+      for (const m of koMs) {
+        const upset = koUpsetSide(m);
+        const scorers = [];
+        for (const pr of allPreds) {
+          if (pr.matchId !== m.id || !players[pr.playerId]) continue;
+          if (!(isOverridden(m) || (pr.updatedAt?.toMillis?.() ?? 0) <= deadlineMs(pr, m))) continue;
+          const s = stat[pr.playerId];
+          const pts = matchPoints(pr, m);
+          s.pts += pts; s.played++;
+          if (pts > 0) scorers.push(pr.playerId);
+          const isExact = pr.home === m.home.score && pr.away === m.away.score;
+          if (isExact) s.exact++;
+          if (isExact || predWinner(pr) === resultOf(m.home.score, m.away.score)) s.outcomes++;
+          if (upset && koWinnerPick(pr) === upset) s.pts += UNDERDOG_BONUS;       // 🐺
+          if (pts === 0 && (pr.home + pr.away) === (m.home.score + m.away.score)) s.pts += GOAL_RUSH; // ⚽
+        }
+        if (scorers.length === 1) stat[scorers[0]].pts += ONLY_WINNER_BONUS;       // 🏅
+      }
+      const ppb = perfectPairBonuses(koMs, allPreds, players, true);               // 🤝
+      for (const [id, b] of Object.entries(ppb)) if (stat[id]) stat[id].pts += b;
+      const ranked = Object.values(stat).filter((s) => s.played > 0)
+        .sort((a, b) => b.pts - a.pts || b.exact - a.exact || b.outcomes - a.outcomes || a.name.localeCompare(b.name));
+      console.log(`KO-REPORT: knockout leaderboard BEFORE Spain vs Austria (cutoff ${sa.kickoff.toISOString()})`);
+      console.log(`KO-REPORT: counted ${koMs.length} completed ties: ${koMs.map((m) => `${m.home.abbr}-${m.away.abbr}`).join(", ")}`);
+      ranked.forEach((s, i) => console.log(`KO-REPORT: #${i + 1}  ${s.name} — ${s.pts} pts (played ${s.played}, exact ${s.exact})`));
+    }
+  }
+
   const validPredsFrom = (list, m) =>
     list
       .filter((p) => p.matchId === m.id && players[p.playerId])
