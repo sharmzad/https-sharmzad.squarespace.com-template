@@ -855,7 +855,7 @@ const round3On = (m) => {
 const KO = () => window.KNOCKOUT || {};
 const knockoutFromMs = () => (KO().from ? Date.parse(KO().from) : Infinity);
 const knockoutLabel = (m) =>
-  /round of 32|round of 16|quarter|semi[- ]?final|\bfinal\b|third place|3rd place|knockout/i.test(m.group || "");
+  /round[\s-]of[\s-]32|round[\s-]of[\s-]16|quarter|semi[\s-]?final|\bfinal\b|third[\s-]place|3rd[\s-]place|play[\s-]?offs?|knockout/i.test(m.group || "");
 const knownGroupMatch = (m) => {
   const h = groupOf(m.home.name), a = groupOf(m.away.name);
   return h && h === a;
@@ -899,14 +899,14 @@ function koDisplayTeam(m, side) {
 // Which knockout round a match belongs to (label from ESPN, else by date).
 function koRound(m) {
   const g = (m.group || "").toLowerCase();
-  if (/round of 32/.test(g)) return "R32";
-  if (/round of 16/.test(g)) return "R16";
+  if (/round[\s-]of[\s-]32/.test(g)) return "R32";
+  if (/round[\s-]of[\s-]16/.test(g)) return "R16";
   if (/quarter/.test(g)) return "QF";
   if (/semi/.test(g)) return "SF";
-  if (/third place|3rd place/.test(g)) return "3P";
-  if (/final/.test(g)) return "F";
+  if (/third[\s-]place|3rd[\s-]place/.test(g)) return "3P";
+  if (/\bfinal\b/.test(g)) return "F";
   const t = m.kickoff.getTime();
-  if (t < Date.parse("2026-07-04")) return "R32";
+  if (t < Date.parse("2026-07-05")) return "R32";   // R32 runs through Jul 4
   if (t < Date.parse("2026-07-08")) return "R16";
   if (t < Date.parse("2026-07-13")) return "QF";
   if (t < Date.parse("2026-07-17")) return "SF";

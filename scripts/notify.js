@@ -47,7 +47,7 @@ const KO_METHOD_PTS = 3;
 const KO_EXACT_PTS = 3;
 const KO_MULT = { R32: 1, R16: 2, QF: 3, SF: 4, "3P": 4, F: 5 };
 const knockoutLabel = (m) =>
-  /round of 32|round of 16|quarter|semi[- ]?final|\bfinal\b|third place|3rd place|knockout/i.test(m.group || "");
+  /round[\s-]of[\s-]32|round[\s-]of[\s-]16|quarter|semi[\s-]?final|\bfinal\b|third[\s-]place|3rd[\s-]place|play[\s-]?offs?|knockout/i.test(m.group || "");
 const knownGroupMatch = (m) => {
   const h = groupOf(m.home.name), a = groupOf(m.away.name);
   return h && h === a;
@@ -56,14 +56,14 @@ const isKnockout = (m) =>
   knockoutLabel(m) || (m.kickoff.getTime() >= KNOCKOUT_FROM_MS && !knownGroupMatch(m));
 function koRound(m) {
   const g = (m.group || "").toLowerCase();
-  if (/round of 32/.test(g)) return "R32";
-  if (/round of 16/.test(g)) return "R16";
+  if (/round[\s-]of[\s-]32/.test(g)) return "R32";
+  if (/round[\s-]of[\s-]16/.test(g)) return "R16";
   if (/quarter/.test(g)) return "QF";
   if (/semi/.test(g)) return "SF";
-  if (/third place|3rd place/.test(g)) return "3P";
-  if (/final/.test(g)) return "F";
+  if (/third[\s-]place|3rd[\s-]place/.test(g)) return "3P";
+  if (/\bfinal\b/.test(g)) return "F";
   const t = m.kickoff.getTime();
-  if (t < Date.parse("2026-07-04")) return "R32";
+  if (t < Date.parse("2026-07-05")) return "R32";
   if (t < Date.parse("2026-07-08")) return "R16";
   if (t < Date.parse("2026-07-13")) return "QF";
   if (t < Date.parse("2026-07-17")) return "SF";
@@ -507,51 +507,6 @@ async function main() {
           { koWinner: side, koMethod: "reg" }, { merge: true });
         console.log(`Applied ${FIX}: ${p.name} ${pid} -> +in 90' on ${fsm.id}`);
       }
-    }
-  }
-
-  // 📜 One-off report: the KNOCKOUT leaderboard as it stood BEFORE Spain vs
-  // Austria kicked off (all knockout ties with an earlier kickoff, completed).
-  {
-    const REPORT = "report-ko-before-spain-austria-v1";
-    const sa = matches.find((m) =>
-      isKnockout(m) &&
-      /spain/i.test(`${m.home.name} ${m.away.name} ${m.home.abbr} ${m.away.abbr}`) &&
-      /austria/i.test(`${m.home.name} ${m.away.name} ${m.home.abbr} ${m.away.abbr}`));
-    if (!sa) {
-      console.log("KO-REPORT: Spain vs Austria match not found in the feed yet.");
-    } else if (await claim(REPORT)) {
-      const cutoff = sa.kickoff.getTime();
-      const allPreds = (await db.collection("predictions").get()).docs.map((d) => d.data());
-      const koMs = matches.filter((m) =>
-        isKnockout(m) && m.completed && m.home.score != null && m.kickoff.getTime() < cutoff);
-      const stat = {};
-      for (const [id, p] of Object.entries(players)) stat[id] = { pts: 0, exact: 0, outcomes: 0, played: 0, name: p.name };
-      for (const m of koMs) {
-        const upset = koUpsetSide(m);
-        const scorers = [];
-        for (const pr of allPreds) {
-          if (pr.matchId !== m.id || !players[pr.playerId]) continue;
-          if (!(isOverridden(m) || (pr.updatedAt?.toMillis?.() ?? 0) <= deadlineMs(pr, m))) continue;
-          const s = stat[pr.playerId];
-          const pts = matchPoints(pr, m);
-          s.pts += pts; s.played++;
-          if (pts > 0) scorers.push(pr.playerId);
-          const isExact = pr.home === m.home.score && pr.away === m.away.score;
-          if (isExact) s.exact++;
-          if (isExact || predWinner(pr) === resultOf(m.home.score, m.away.score)) s.outcomes++;
-          if (upset && koWinnerPick(pr) === upset) s.pts += UNDERDOG_BONUS;       // 🐺
-          if (pts === 0 && (pr.home + pr.away) === (m.home.score + m.away.score)) s.pts += GOAL_RUSH; // ⚽
-        }
-        if (scorers.length === 1) stat[scorers[0]].pts += ONLY_WINNER_BONUS;       // 🏅
-      }
-      const ppb = perfectPairBonuses(koMs, allPreds, players, true);               // 🤝
-      for (const [id, b] of Object.entries(ppb)) if (stat[id]) stat[id].pts += b;
-      const ranked = Object.values(stat).filter((s) => s.played > 0)
-        .sort((a, b) => b.pts - a.pts || b.exact - a.exact || b.outcomes - a.outcomes || a.name.localeCompare(b.name));
-      console.log(`KO-REPORT: knockout leaderboard BEFORE Spain vs Austria (cutoff ${sa.kickoff.toISOString()})`);
-      console.log(`KO-REPORT: counted ${koMs.length} completed ties: ${koMs.map((m) => `${m.home.abbr}-${m.away.abbr}`).join(", ")}`);
-      ranked.forEach((s, i) => console.log(`KO-REPORT: #${i + 1}  ${s.name} — ${s.pts} pts (played ${s.played}, exact ${s.exact})`));
     }
   }
 
