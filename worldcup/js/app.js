@@ -887,12 +887,23 @@ function koPrevComplete(round) {
   return ms.length > 0 && ms.every((m) => m.completed);
 }
 const koReached = (m) => koRound(m) === "R32" || koPrevComplete(koRound(m));
-const isPlaceholderName = (n) => /\d|^[12]\s*[a-l]$|3rd|third|winner|loser|runner/i.test(n || "");
-// Team to render, suppressing teams for rounds that haven't been reached yet.
+// The round feeding this match has at least kicked off — enough to trust ESPN's
+// per-slot fills (it only names a concrete team once that slot is decided).
+const koPrevStarted = (m) => {
+  const round = koRound(m);
+  const prev = (round === "F" || round === "3P") ? "SF" : KO_ORDER[KO_ORDER.indexOf(round) - 1];
+  if (!prev) return true; // R32
+  return matches.some((x) => isKnockout(x) && koRound(x) === prev && x.state !== "pre");
+};
+const isPlaceholderName = (n) => /\d|^[12]\s*[a-l]$|3rd|third|winner|loser|runner|rd\d|w\d/i.test(n || "");
+// Team to render. Once the feeding round is underway, show each real team as soon
+// as ESPN fills its slot (partial bracket allocation as results land); otherwise
+// show a feeder label ("R32 winner") so we never display an unconfirmed team.
 function koDisplayTeam(m, side) {
   const t = koTeam(m, side);
   if (!isKnockout(m) || koReached(m)) return t;
-  const name = isPlaceholderName(t.name) ? t.name : koFeederLabel(koRound(m));
+  if (!isPlaceholderName(t.name) && koPrevStarted(m)) return t;   // slot decided → real team
+  const name = koFeederLabel(koRound(m));
   return { name, abbr: name.slice(0, 3).toUpperCase(), logo: "" };
 }
 
