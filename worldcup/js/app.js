@@ -781,19 +781,24 @@ const teamsMatch = (m, pair) =>
 
 const isOverridden = (m) => OPEN_OVERRIDES.some((pair) => teamsMatch(m, pair));
 
-// Time-boxed admin re-opens: keep a specific match open for betting until a
-// fixed moment, regardless of the live match state (a short late window the
-// admin grants on request). The pair is also in OPEN_OVERRIDES so any bet saved
-// during the window still counts as valid (isValidPrediction).
-// Brazil vs Japan now relies on the half-time override below — open through the
-// whole first half — so no hard wall-clock cutoff is needed.
-const TIMED_OVERRIDES = [];
-const timedOverrideOpen = (m) =>
-  TIMED_OVERRIDES.some((o) => Date.now() < Date.parse(o.until) && teamsMatch(m, o.teams));
+// Time-boxed admin re-opens: reopen a match for betting until a fixed moment,
+// then it locks again — regardless of the live match state. The lock time IS the
+// `until`, so a bet saved in the window freezes lockAt = until and stays valid
+// (isValidPrediction / the notifier's deadlineMs both read that frozen lockAt).
+const TIMED_OVERRIDES = [
+  { teams: ["colombia", "ghana"], until: "2026-07-04T01:54:00Z" }, // ~15-min reopen on request (04:54 AM Cairo)
+];
+const timedOverrideFor = (m) => TIMED_OVERRIDES.find((o) => teamsMatch(m, o.teams));
+const timedOverrideOpen = (m) => {
+  const o = timedOverrideFor(m);
+  return !!o && Date.now() < Date.parse(o.until);
+};
 
 const dayKey = (d) => d.toLocaleDateString("en-CA"); // YYYY-MM-DD, local time
 
 function lockTime(m) {
+  const o = timedOverrideFor(m);
+  if (o) return new Date(Date.parse(o.until));   // reopened → lock at the window's end
   if (dayKey(m.kickoff) === GRACE_DAY) {
     return new Date(m.kickoff.getTime() + GRACE_AFTER_MIN * 60_000);
   }
