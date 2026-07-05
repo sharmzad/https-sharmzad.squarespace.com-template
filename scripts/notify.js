@@ -526,9 +526,9 @@ async function main() {
   // 📣 One-off broadcast to every registered device — sent exactly once via
   // claim(). Bump `id` to send a new one; set BROADCAST to null to disable.
   const BROADCAST = {
-    id: "2026-06-29-whohow-update",
-    title: "🔄 Update is live — re-do your picks!",
-    body: "Sorry for the delay — the new version is finally live! Knockout picks now include HOW a tie is decided (90' / Extra Time / Penalties) + the exact score. You all bet on the OLD version, so please open the app and predict again to score the new points. Brazil 🆚 Japan is re-opened until half-time! ⚽",
+    id: "2026-07-04-et-exact",
+    title: "🆕 Extra-time exact scores now count!",
+    body: "New in the knockouts: your exact score follows your pick. Call ⏱ Extra Time and you now predict the final AFTER extra time (e.g. 2–1 AET); call 🥅 Penalties and you predict the end-of-ET draw. Nail it for +3 (×round). Open the app and set your ET picks! ⚽",
   };
   if (BROADCAST && (await claim(`broadcast_${BROADCAST.id}`))) {
     sendList.push({ title: BROADCAST.title, body: BROADCAST.body });
