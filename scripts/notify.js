@@ -97,7 +97,10 @@ function scoreKnockout(pred, m) {
   const method = koMatchMethod(m);
   // method only counts if the team pick is also right
   if (teamRight && method && pred.koMethod && pred.koMethod === method) base += KO_METHOD_PTS;
-  if (pred.home === m.home.score && pred.away === m.away.score) base += KO_EXACT_PTS;
+  // exact of the phase you predicted (90-min / after-ET / end-of-ET draw). ESPN
+  // reports that deciding score. Legacy picks with no method = 90'.
+  const predMethod = pred.koMethod || "reg";
+  if (method && predMethod === method && pred.home === m.home.score && pred.away === m.away.score) base += KO_EXACT_PTS;
   return base * (KO_MULT[koRound(m)] || 1);
 }
 const matchPoints = (pred, m) =>
