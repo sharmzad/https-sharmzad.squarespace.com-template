@@ -1,12 +1,15 @@
 name: Match notifications
 
 on:
-  schedule:
-    - cron: "*/5 * * * *" # backup only — GitHub delays these heavily; primary trigger is cron-job.org → workflow_dispatch
+  # Sole trigger is cron-job.org calling the workflow_dispatch API every ~5 min.
+  # (The old GitHub `schedule: */5` ran in parallel and collided with cron-job.org
+  # every cycle, so one run was cancelled each time → a flood of "cancelled"
+  # emails. Removed. Manual runs still work via the Actions tab / API.)
   workflow_dispatch: {}
 
 permissions: {}
 
+# Serialise runs so overlapping triggers never double-send live goal alerts.
 concurrency:
   group: notify
   cancel-in-progress: false
