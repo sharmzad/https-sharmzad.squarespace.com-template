@@ -1211,6 +1211,30 @@ function render() {
   else if (activeTab === "share") renderShare();
   else if (activeTab === "profile") renderProfile();
   else renderMatches();
+  trackScore();
+}
+
+// Report the logged-in player's live score to Google Analytics whenever it
+// changes (fires once per open, then on every points move). Register `player`
+// (custom dimension) and `points` (custom metric) in GA4 to chart them.
+let lastTrackedScore = null;
+function trackScore() {
+  if (!me || !db || !analyticsLog || !players.length) return;
+  const rows = buildStandings(false, "overall");
+  const idx = rows.findIndex((r) => r.id === me.id);
+  if (idx < 0) return;
+  const r = rows[idx];
+  if (lastTrackedScore === r.pts) return;   // only emit when it actually changes
+  lastTrackedScore = r.pts;
+  trackEvent("player_score", {
+    player: me.name,
+    points: r.pts,
+    rank: idx + 1,
+    exact: r.exact,
+    played: r.played,
+    phase: "overall",
+    players_total: rows.length,
+  });
 }
 
 // Admin-only (Alaa) pill showing the notifier heartbeat. Hidden for everyone else.
