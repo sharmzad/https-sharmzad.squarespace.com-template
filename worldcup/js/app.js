@@ -786,7 +786,7 @@ const isOverridden = (m) => OPEN_OVERRIDES.some((pair) => teamsMatch(m, pair));
 // `until`, so a bet saved in the window freezes lockAt = until and stays valid
 // (isValidPrediction / the notifier's deadlineMs both read that frozen lockAt).
 const TIMED_OVERRIDES = [
-  { teams: ["colombia", "ghana"], until: "2026-07-04T01:54:00Z" }, // ~15-min reopen on request (04:54 AM Cairo)
+  { teams: ["norway", "england"], until: "2026-07-11T21:17:00Z" }, // ~10-min reopen on request (00:17 AM Cairo)
 ];
 const timedOverrideFor = (m) => TIMED_OVERRIDES.find((o) => teamsMatch(m, o.teams));
 const timedOverrideOpen = (m) => {
