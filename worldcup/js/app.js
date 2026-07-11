@@ -1211,8 +1211,16 @@ function render() {
   else if (activeTab === "share") renderShare();
   else if (activeTab === "profile") renderProfile();
   else renderMatches();
-  trackScore();
+  // analytics: the admin's device reports EVERYONE's points (a full snapshot /
+  // backfill of accumulated points); everyone else reports just their own.
+  if (me && me.name === ADMIN_NAME) trackAllScores();
+  else trackScore();
 }
+
+const scoreEvent = (r, rank, total) => trackEvent("player_score", {
+  player: r.name, points: r.pts, rank, exact: r.exact, played: r.played,
+  phase: "overall", players_total: total,
+});
 
 // Report the logged-in player's live score to Google Analytics whenever it
 // changes (fires once per open, then on every points move). Register `player`
@@ -1223,18 +1231,21 @@ function trackScore() {
   const rows = buildStandings(false, "overall");
   const idx = rows.findIndex((r) => r.id === me.id);
   if (idx < 0) return;
-  const r = rows[idx];
-  if (lastTrackedScore === r.pts) return;   // only emit when it actually changes
-  lastTrackedScore = r.pts;
-  trackEvent("player_score", {
-    player: me.name,
-    points: r.pts,
-    rank: idx + 1,
-    exact: r.exact,
-    played: r.played,
-    phase: "overall",
-    players_total: rows.length,
-  });
+  if (lastTrackedScore === rows[idx].pts) return;   // only emit when it changes
+  lastTrackedScore = rows[idx].pts;
+  scoreEvent(rows[idx], idx + 1, rows.length);
+}
+
+// Admin-only: emit a player_score event for EVERY player (backfills accumulated
+// points now, then re-sends the full board whenever any total changes).
+let lastAllScoresKey = null;
+function trackAllScores() {
+  if (!db || !analyticsLog || !players.length) return;
+  const rows = buildStandings(false, "overall");
+  const key = rows.map((r) => `${r.id}:${r.pts}`).join(",");
+  if (key === lastAllScoresKey) return;             // no change → skip
+  lastAllScoresKey = key;
+  rows.forEach((r, i) => scoreEvent(r, i + 1, rows.length));
 }
 
 // Admin-only (Alaa) pill showing the notifier heartbeat. Hidden for everyone else.
