@@ -1278,7 +1278,8 @@ function renderMatches() {
   let list = matches;
   if (matchFilter === "today") list = matches.filter((m) => sameDay(m.kickoff));
   else if (matchFilter === "upcoming") list = matches.filter((m) => m.state === "pre");
-  else if (matchFilter === "finished") list = matches.filter((m) => m.completed);
+  // Finished: most-recent first (newest day + newest kickoff at the top).
+  else if (matchFilter === "finished") list = matches.filter((m) => m.completed).reverse();
 
   // Always pin live match(es) to the very top, no matter which filter is on,
   // and drop them from the list below so they aren't shown twice.
