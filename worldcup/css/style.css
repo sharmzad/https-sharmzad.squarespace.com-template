@@ -805,11 +805,9 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
   color: var(--gold); font-size: 15px; font-weight: 900; letter-spacing: .5px;
   box-shadow: 0 0 16px rgba(244,197,66,.5), inset 0 0 10px rgba(0,0,0,.6);
   display: flex; align-items: center; justify-content: center;
-  animation: fgPulse 1.4s ease-in-out infinite;
 }
-.fg-hub:disabled { animation: none; cursor: default; }
-.fg-wheelwrap.done .fg-hub { font-size: 26px; border-color: var(--gold);
-  box-shadow: 0 0 22px rgba(244,197,66,.7), inset 0 0 10px rgba(0,0,0,.6); }
+.fg-wheelwrap.ready .fg-hub { animation: fgPulse 1.4s ease-in-out infinite; }
+.fg-hub:disabled { animation: none; cursor: default; opacity: .85; }
 .fg-wheel-out { text-align: center; min-height: 40px; }
 .fg-wheel-out b { display: block; font-size: 18px; font-weight: 900; color: var(--gold);
   text-shadow: 0 0 12px rgba(244,197,66,.45); }

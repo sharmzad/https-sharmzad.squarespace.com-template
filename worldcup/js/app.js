@@ -1914,7 +1914,7 @@ function buildWheel(m) {
           ${slices}
           <circle cx="50" cy="50" r="9" fill="#140c26" stroke="#f4c542" stroke-width="1"/>
         </svg>
-        <button class="fg-hub" data-spin="${m.id}" ${spun ? "disabled" : ""}>${spun ? seg.emoji : "SPIN"}</button>
+        <button class="fg-hub" data-spin="${m.id}">SPIN</button>
       </div>
       <div class="fg-wheel-out">${spun ? wheelResultHtml(seg) : `<b>Give it a spin! 🎡</b><small>Watch it roll — it'll land on your surprise bonus.</small>`}</div>
     </div>`;
@@ -1931,15 +1931,22 @@ function spinWheel(wrap) {
   const { seg, rest } = wheelLanding(me.id, mid);
   if (!seg) return;
   wrap.classList.add("spinning");
-  wrap.classList.remove("ready");
+  wrap.classList.remove("ready", "done");
   if (hub) { hub.disabled = true; hub.textContent = "…"; }
+  // Reset to 0 (clearing any resting rotation from a previous spin), force a
+  // reflow so the reset lands, then animate the full spin in the next frame.
+  svg.style.transition = "none";
+  svg.style.transform = "rotate(0deg)";
+  void svg.getBoundingClientRect();
   const target = rest + 360 * 9;                 // 9 full turns, then settle
-  svg.style.transition = `transform ${SPIN_MS}ms cubic-bezier(0.08, 0.62, 0.05, 1)`;
-  requestAnimationFrame(() => { svg.style.transform = `rotate(${target}deg)`; });
+  requestAnimationFrame(() => {
+    svg.style.transition = `transform ${SPIN_MS}ms cubic-bezier(0.08, 0.62, 0.05, 1)`;
+    svg.style.transform = `rotate(${target}deg)`;
+  });
   const finish = () => {
     wrap.classList.remove("spinning");
     wrap.classList.add("done");
-    if (hub) { hub.textContent = seg.emoji; }
+    if (hub) { hub.disabled = false; hub.textContent = "SPIN"; }
     if (out) { out.innerHTML = wheelResultHtml(seg); out.classList.add("pop"); }
     fgMarkSpun(mid);
   };
