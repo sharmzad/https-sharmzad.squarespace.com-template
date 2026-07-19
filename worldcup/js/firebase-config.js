@@ -124,7 +124,7 @@ window.ANNOUNCEMENT = null;
 // again. Bump `id` to restart the count for everyone; set to null to switch off.
 window.TUTORIAL = {
   id: "final-gamble-2026-07-19-x3",
-  until: "2026-07-19T19:30:00Z",   // ~22:30 Cairo — up to Final kickoff
+  until: "2026-07-19T19:00:00Z",   // 22:00 Cairo — stops exactly at Final kickoff
   repeat: 3,                       // show up to 3 times per device, even if skipped
 };
 
