@@ -134,14 +134,14 @@ function wheelFor(playerId, matchId) {
 function resolveJoker(pred, m) {
   const jk = pred.finalJoker;
   if (!jk || m.home.score == null) return false;
-  const hs = m.home.score, as = m.away.score, total = hs + as, method = koMatchMethod(m);
+  const hs = m.home.score, as = m.away.score, total = hs + as, margin = Math.abs(hs - as);
   switch (jk) {
     case "over": return total >= 3;
     case "under": return total <= 2;
     case "btts_y": return hs > 0 && as > 0;
     case "btts_n": return !(hs > 0 && as > 0);
-    case "drama": return method === "et" || method === "pen";
-    case "settled": return method === "reg";
+    case "margin2": return margin >= 2;
+    case "close": return margin <= 1;
     default: return false;
   }
 }

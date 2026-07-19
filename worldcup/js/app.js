@@ -1016,15 +1016,14 @@ function wheelFor(playerId, matchId) {
 function resolveJoker(pred, m) {
   const jk = pred.finalJoker;
   if (!jk || m.home.score == null) return false;
-  const hs = m.home.score, as = m.away.score, total = hs + as;
-  const method = koMatchMethod(m);
+  const hs = m.home.score, as = m.away.score, total = hs + as, margin = Math.abs(hs - as);
   switch (jk) {
     case "over":    return total >= 3;
     case "under":   return total <= 2;
     case "btts_y":  return hs > 0 && as > 0;
     case "btts_n":  return !(hs > 0 && as > 0);
-    case "drama":   return method === "et" || method === "pen";
-    case "settled": return method === "reg";
+    case "margin2": return margin >= 2;
+    case "close":   return margin <= 1;
     default:        return false;
   }
 }
@@ -1464,8 +1463,13 @@ function renderMatches() {
         .forEach((x) => x.classList.toggle("sel", !wasSel && x === e.currentTarget));
     })
   );
-  // 🎡 Final Gamble — play the reel spin once per render (result is locked)
-  view.querySelectorAll("[data-wheel]").forEach((el) => spinWheel(el));
+  // 🎡 Final Gamble — the player taps SPIN to reveal their sealed luck bonus
+  view.querySelectorAll("[data-spin]").forEach((b) =>
+    b.addEventListener("click", (e) => {
+      const el = e.currentTarget.closest(".fg-wheel");
+      if (el) spinWheel(el);
+    })
+  );
   view.querySelectorAll("[data-winner]").forEach((b) =>
     b.addEventListener("click", (e) => {
       const [matchId, val] = e.currentTarget.dataset.winner.split("|");
@@ -1823,62 +1827,83 @@ function finalGambleBody(m, d) {
        <span class="fg-j-lbl">${esc(j.label)}</span>
      </button>`).join("");
   const seg = me ? wheelFor(me.id, m.id) : null;
-  const wheelCard = seg
-    ? `<div class="fg-wheel" id="fg-wheel-${m.id}" data-wheel="${m.id}">
+  let wheelCard;
+  if (!seg) {
+    wheelCard = `<div class="fg-wheel locked">🔒 Join the game to spin your wheel</div>`;
+  } else if (fgSpun(m.id)) {
+    wheelCard = `<div class="fg-wheel done" data-wheel="${m.id}">
          <div class="fg-reel"><span class="fg-reel-face">${seg.emoji}</span></div>
+         <div class="fg-wheel-out">${wheelResultHtml(seg)}</div>
+       </div>`;
+  } else {
+    wheelCard = `<div class="fg-wheel ready" data-wheel="${m.id}">
+         <div class="fg-reel"><span class="fg-reel-face">🎡</span></div>
          <div class="fg-wheel-out">
-           <b>${esc(seg.label)}</b>
-           <small>${wheelBlurb(seg)}</small>
+           <b>Tap to spin!</b>
+           <small>Your luck bonus for the Final</small>
          </div>
-       </div>`
-    : `<div class="fg-wheel locked">🔒 Join the game to get your spin</div>`;
+         <button class="fg-spin-btn" data-spin="${m.id}">SPIN 🎡</button>
+       </div>`;
+  }
   return `
     <div class="fg-wrap">
       <div class="fg-title">🎰 THE FINAL GAMBLE <span>make it count</span></div>
 
-      <div class="ko-sec-h"><b>3</b> 🎰 The Stake — multiply your base final points</div>
+      <div class="ko-sec-h"><b>3</b> 🎰 The Stake — multiply your base Final points</div>
       <div class="fg-stakes">${stakeBtns}</div>
+      <div class="ko-hint">Get your who + how + exact right, then bank it: ×1 keeps it safe, ×2/×3 multiply it — but if you miss everything you <b>pay</b> the ×2/×3 penalty. ×1 never loses.</div>
 
       <div class="ko-sec-h"><b>4</b> 🃏 The Joker — one side-bet for a flat +${fg.jokerPts}</div>
       <div class="fg-jokers">${jokerBtns}</div>
+      <div class="ko-hint">Pick the ONE you think lands. Right → <b>+${fg.jokerPts}</b>. (Tap again to unpick — the Joker is optional.)</div>
 
-      <div class="ko-sec-h"><b>5</b> 🎡 The Wheel — your luck, locked in</div>
+      <div class="ko-sec-h"><b>5</b> 🎡 The Wheel — spin for a luck bonus</div>
       ${wheelCard}
-      <div class="ko-hint">Everyone spins once. Your spin is tied to you — same on every device, no re-rolls. 💎 Jackpot adds big, 2️⃣ doubles your Joker, 🛡️ Insurance cancels a stake miss.</div>
+      <div class="ko-hint">Everyone gets <b>one</b> spin. The result is sealed to you — it lands the same no matter when you spin, so nobody can re-roll for a better one. It's added to your Final score automatically, even if you forget to spin.</div>
     </div>`;
 }
-const wheelBlurb = (seg) =>
-  seg.kind === "dblJoker" ? "Doubles your Joker reward 🔥"
-  : seg.kind === "insure" ? "Cancels your stake penalty if you miss 🛡️"
-  : seg.id === "jackpot" ? "Straight bonus points — huge! 💎"
-  : `Straight +${seg.add} bonus points`;
+// Plain-language result line for a landed wheel segment.
+function wheelResultHtml(seg) {
+  if (seg.kind === "dblJoker")
+    return `<b>2️⃣ Double Joker!</b><small>Your Joker reward counts <b>double</b> (+${(FG().jokerPts || 5) * 2} if it lands).</small>`;
+  if (seg.kind === "insure")
+    return `<b>🛡️ Insurance!</b><small>If your stake misses, the penalty is <b>cancelled</b> — you can't go negative.</small>`;
+  if (seg.id === "jackpot")
+    return `<b>💎 JACKPOT +${seg.add}!</b><small><b>+${seg.add} points</b> added straight to your Final score. 🤑</small>`;
+  return `<b>${seg.emoji} +${seg.add}</b><small><b>+${seg.add} bonus points</b> added straight to your Final score.</small>`;
+}
+// Per-device "already spun this match" flag (so the reveal sticks between opens).
+// The scoring outcome is deterministic regardless — this only gates the animation.
+const fgSpun = (mid) => { try { return !!localStorage.getItem(`fgspin_${mid}`); } catch { return false; } };
+const fgMarkSpun = (mid) => { try { localStorage.setItem(`fgspin_${mid}`, "1"); } catch {} };
 
-// Reel spin: rattle through the segment faces, then settle on the locked one.
-// Deterministic outcome (already in the DOM) — the animation is pure theatre and
-// plays at most once per match per session.
-const spunWheels = new Set();
+// Interactive spin: rattle the reel, then settle on this player's sealed segment.
 function spinWheel(el) {
   const mid = el.dataset.wheel;
   const face = el.querySelector(".fg-reel-face");
+  const btn = el.querySelector(".fg-spin-btn");
+  const out = el.querySelector(".fg-wheel-out");
   const fg = FG();
-  if (!face || !fg) return;
-  if (spunWheels.has(mid)) { el.classList.add("done"); return; }
-  spunWheels.add(mid);
+  if (!face || !fg || !me || el.classList.contains("spinning")) return;
+  const seg = wheelFor(me.id, mid);
+  if (!seg) return;
   const faces = fg.wheel.map((s) => s.emoji);
-  const landed = face.textContent;
-  let ticks = 0;
-  const total = 22;
+  if (btn) { btn.disabled = true; btn.textContent = "Spinning…"; }
   el.classList.add("spinning");
+  let ticks = 0;
   const iv = setInterval(() => {
     ticks++;
     face.textContent = faces[ticks % faces.length];
-    if (ticks >= total) {
+    if (ticks >= 24) {
       clearInterval(iv);
-      face.textContent = landed;
+      face.textContent = seg.emoji;
       el.classList.remove("spinning");
       el.classList.add("done");
+      if (btn) btn.remove();
+      if (out) out.innerHTML = wheelResultHtml(seg);
+      fgMarkSpun(mid);
     }
-  }, 65);
+  }, 60);
 }
 
 function revealBlock(m) {
@@ -2578,8 +2603,8 @@ function rulesHtml() {
       <ul>
         <li>The <b>Final</b> gets three extra layers on top of your normal who + how + exact pick (base ×5). This is where the title swings — big nerve, big luck. 🔥</li>
         <li>🎰 <b>The Stake:</b> bank your base final points at <b>×1 Safe</b>, <b>×2 Bold</b> or <b>×3 All-in</b>. Nail your core pick → it's multiplied. <b>Miss it (0 base) and you PAY:</b> ×2 = <b>−${window.FINAL_GAMBLE.penalty[2]}</b>, ×3 = <b>−${window.FINAL_GAMBLE.penalty[3]}</b>. ×1 never loses.</li>
-        <li>🃏 <b>The Joker:</b> pick ONE side-bet for a flat <b>+${window.FINAL_GAMBLE.jokerPts}</b> — Over/Under 2.5 goals, Both teams to score (or not), or Drama (goes to ET/pens) vs Settled in 90'.</li>
-        <li>🎡 <b>The Wheel:</b> everyone spins <b>once</b>, and your spin is <b>locked to you</b> (same on every device — no re-rolls, no cheating). Land on <b>+5 / +8 / +10 / 💎 Jackpot +15</b>, <b>2️⃣ Double</b> your Joker, or <b>🛡️ Insurance</b> that cancels a stake miss.</li>
+        <li>🃏 <b>The Joker:</b> pick ONE side-bet for a flat <b>+${window.FINAL_GAMBLE.jokerPts}</b> — Over/Under 2.5 goals, Both teams to score (or a clean sheet), or Won by 2+ goals vs a 1-goal game/draw. (It's optional — tap again to unpick.)</li>
+        <li>🎡 <b>The Wheel:</b> tap <b>SPIN</b> once for a luck bonus. Your spin is <b>sealed to you</b> — it lands the same on every device, so nobody can re-roll for a better one. Land on <b>+5 / +8 / +10 / 💎 Jackpot +15</b> (straight bonus points), <b>2️⃣ Double</b> your Joker, or <b>🛡️ Insurance</b> that cancels a stake miss. It counts even if you forget to spin.</li>
         <li>Everything reveals at full time with the result — check the Final's card and the 🎰 chip on the Knockout table.</li>
       </ul>
     </div>` : ""}

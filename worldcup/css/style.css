@@ -794,9 +794,21 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
 .fg-wheel.spinning .fg-reel { animation: fgSpin .5s linear infinite; }
 .fg-wheel.spinning .fg-reel-face { animation: fgBlur .13s linear infinite; }
 .fg-wheel.done .fg-reel { animation: fgPop .5s ease; }
+.fg-wheel-out { flex: 1; min-width: 0; }
 .fg-wheel-out b { display: block; font-size: 16px; font-weight: 900; color: var(--gold);
   text-shadow: 0 0 10px rgba(244,197,66,.4); }
-.fg-wheel-out small { display: block; font-size: 11px; color: #c9b6ff; margin-top: 2px; }
+.fg-wheel-out small { display: block; font-size: 11px; color: #c9b6ff; margin-top: 3px; line-height: 1.35; }
+.fg-wheel-out small b { display: inline; font-size: inherit; color: #fff; text-shadow: none; }
+.fg-spin-btn {
+  flex: none; padding: 11px 18px; border-radius: 12px; border: none; cursor: pointer;
+  font-size: 14px; font-weight: 900; letter-spacing: .5px; color: #2b2305;
+  background: linear-gradient(90deg, var(--gold), #ffdf7e);
+  box-shadow: 0 3px 14px rgba(244,197,66,.4); animation: fgPulse 1.5s ease-in-out infinite;
+}
+.fg-spin-btn:disabled { animation: none; opacity: .7; cursor: default; }
+.fg-wheel.ready .fg-reel { animation: fgIdle 2.4s ease-in-out infinite; }
+@keyframes fgPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+@keyframes fgIdle { 0%,100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } }
 @keyframes fgSpin { to { transform: rotate(360deg); } }
 @keyframes fgBlur { 0%,100% { transform: translateY(-1px); opacity: .85; } 50% { transform: translateY(1px); opacity: 1; } }
 @keyframes fgPop { 0% { transform: scale(.6); } 60% { transform: scale(1.18); } 100% { transform: scale(1); } }
