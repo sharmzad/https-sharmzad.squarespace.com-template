@@ -1092,7 +1092,92 @@ function gambleRevealStrip(pred, m, playerId) {
     const w = seg.add ? `+${seg.add}` : seg.kind === "dblJoker" ? "2× Joker" : seg.kind === "insure" ? "Insurance" : "";
     chips.push(`<span class="fgc luck">🎡 ${seg.emoji} ${w}</span>`);
   }
+  // 🎤 halftime show bonus
+  if (pred.halftimePick) {
+    const hit = resolveHalftimePick(pred.halftimePick, m);
+    chips.push(`<span class="fgc ${hit ? "win" : "miss"}">🎤 ${esc(halftimeStableLabel(m, pred.halftimePick))} ${hit ? `✓ +${HP()?.points || 6}` : "✗"}</span>`);
+  }
   return `<div class="pr-gamble">${chips.join("")}</div>`;
+}
+
+// ---------------------------------------------------------------------------
+// 🎤 HALFTIME SHOW BONUS — a live micro-bet, open only while the Final is at
+// half-time, built from the real first-half score. Pick how the Final is won.
+// Resolved from the final result; kept isolated like the gamble overlay.
+// ---------------------------------------------------------------------------
+const HP = () => window.HALFTIME_PROP || null;
+const isHalftime = (m) => /half\s*-?\s*time|halftime|STATUS_HALFTIME/i.test(`${m.statusName} ${m.detail}`);
+// The Final is paused at the (extended) half-time break.
+const halftimeOpen = (m) => !!(HP()?.enabled && isFinalMatch(m) && m.state === "in" && !m.completed && isHalftime(m));
+// Build the prop from the live first-half score: leader holds / comeback / drama.
+function halftimeOptions(m) {
+  const h = m.home.score ?? 0, a = m.away.score ?? 0;
+  const lead = h > a ? "home" : a > h ? "away" : "level";
+  const hLbl = lead === "home" ? `${m.home.abbr} see it out` : lead === "away" ? `${m.home.abbr} complete the comeback` : `${m.home.abbr} win it in 90'`;
+  const aLbl = lead === "away" ? `${m.away.abbr} see it out` : lead === "home" ? `${m.away.abbr} complete the comeback` : `${m.away.abbr} win it in 90'`;
+  return { h, a, lead, options: [
+    { id: "hwin", emoji: "🏆", label: hLbl },
+    { id: "awin", emoji: "🏆", label: aLbl },
+    { id: "drama", emoji: "😱", label: "Extra time / penalties" },
+  ] };
+}
+// Stable label (score-independent) for locked / reveal display — the dynamic
+// "see it out / comeback" wording is only used while the prop is open.
+const halftimeStableLabel = (m, id) =>
+  id === "drama" ? "Extra time / penalties"
+  : id === "hwin" ? `${m.home.abbr} win in 90'`
+  : id === "awin" ? `${m.away.abbr} win in 90'`
+  : id;
+// Did the halftime pick land? (from the final advancer + how it was decided)
+function resolveHalftimePick(pick, m) {
+  const adv = koAdvancer(m), method = koMatchMethod(m);
+  if (!method) return false;
+  if (pick === "drama") return method === "et" || method === "pen";
+  if (pick === "hwin") return adv === "home" && method === "reg";
+  if (pick === "awin") return adv === "away" && method === "reg";
+  return false;
+}
+function halftimeDelta(pred, m) {
+  const hp = HP();
+  if (!hp?.enabled || !isFinalMatch(m) || !m.completed || m.home.score == null) return 0;
+  if (!pred.halftimePick) return 0;
+  return resolveHalftimePick(pred.halftimePick, m) ? (hp.points || 6) : 0;
+}
+// The live half-time bonus card, shown on the Final's match card. Open only
+// during the break (built from the live 1st-half score); a small locked note
+// once the 2nd half is underway.
+function halftimeCardHtml(m) {
+  const hp = HP();
+  if (!hp?.enabled || !isFinalMatch(m) || !me) return "";
+  const mine = predictions[`${m.id}_${me.id}`];
+  if (halftimeOpen(m)) {
+    if (!mine) return `<div class="ht-card">
+        <div class="ht-title">🎤 Halftime Show Bonus</div>
+        <div class="ht-blurb">This one's for players who bet the Final — you'll catch the next! 🎶</div>
+      </div>`;
+    const p = halftimeOptions(m);
+    const picked = mine.halftimePick;
+    const btns = p.options.map((o) =>
+      `<button class="ht-opt ${picked === o.id ? "sel" : ""}" data-htpick="${m.id}|${o.id}">
+         <span class="ht-opt-e">${o.emoji}</span><span class="ht-opt-l">${esc(o.label)}</span>
+       </button>`).join("");
+    return `<div class="ht-card live">
+      <div class="ht-title">🎤 Halftime Show Bonus <span class="ht-pts">+${hp.points}</span></div>
+      <div class="ht-blurb">At the break: <b>${esc(m.home.abbr)} ${p.h}–${p.a} ${esc(m.away.abbr)}</b>. Shakira's on 🎶 — call the finish!</div>
+      <div class="ht-q">How will the Final be won?</div>
+      <div class="ht-opts">${btns}</div>
+      <div class="ht-hint">${picked
+        ? `✅ Locked: <b>${esc(halftimeStableLabel(m, picked))}</b> — tap another to change until the 2nd half.`
+        : `Pick one — locks when the 2nd half kicks off. Right = <b>+${hp.points}</b>!`}</div>
+    </div>`;
+  }
+  if (mine?.halftimePick && !m.completed) {
+    return `<div class="ht-card locked">
+      <div class="ht-title">🎤 Halftime Bonus locked</div>
+      <div class="ht-blurb">Your call: <b>${esc(halftimeStableLabel(m, mine.halftimePick))}</b> — points land at full time 🤞</div>
+    </div>`;
+  }
+  return "";
 }
 
 // Points for a single match, by phase (knockout vs group).
@@ -1147,6 +1232,7 @@ function buildStandings(live = false, phase = "overall") {
     const grace = wantGroup ? bonusFor(p.name) : 0;
     return { ...p, pts: grace, bonus: grace, exact: 0, outcomes: 0, played: 0, livePts: 0,
       gamble: 0,                                                          // 🎰 net final-gamble points
+      halftime: 0,                                                        // 🎤 halftime-bonus points
       bd: { onlyWinner: 0, underdog: 0, perfectPair: 0, goalRush: 0 } };   // bd = times earned
   });
   const byId = Object.fromEntries(rows.map((r) => [r.id, r]));
@@ -1178,6 +1264,8 @@ function buildStandings(live = false, phase = "overall") {
         if (isFinalMatch(m)) {
           const gd = finalGambleDelta(pred, m, p.id);
           r.pts += gd; r.gamble += gd;
+          const hd = halftimeDelta(pred, m);          // 🎤 halftime show bonus
+          r.pts += hd; r.halftime += hd;
         }
       } else {
         r.livePts += pts; // provisional, from an in-progress match
@@ -1484,6 +1572,10 @@ function renderMatches() {
       if (el) onSpin(el);
     })
   );
+  // 🎤 Halftime Show Bonus — live micro-bet pick
+  view.querySelectorAll("[data-htpick]").forEach((b) =>
+    b.addEventListener("click", onHalftimePick)
+  );
   view.querySelectorAll("[data-winner]").forEach((b) =>
     b.addEventListener("click", (e) => {
       const [matchId, val] = e.currentTarget.dataset.winner.split("|");
@@ -1770,6 +1862,7 @@ function matchCard(m) {
         ${teamHtml(A)}
       </div>
       ${prob}
+      ${isFinalMatch(m) ? halftimeCardHtml(m) : ""}
       ${body}
       ${detailToggle}
       ${detail}
@@ -2026,7 +2119,7 @@ function revealBlock(m) {
       // 🎰 The Final Gamble — fold the stake/joker/wheel swing into this row
       let gambleStrip = "";
       if (base != null && isFinalMatch(m)) {
-        bonus += finalGambleDelta(pred, m, p.id);
+        bonus += finalGambleDelta(pred, m, p.id) + halftimeDelta(pred, m);
         gambleStrip = gambleRevealStrip(pred, m, p.id);
       }
       const pts = base == null ? null : base + bonus;
@@ -2159,6 +2252,26 @@ async function savePrediction(m, opts = {}) {
   }
 }
 
+// 🎤 Halftime Show Bonus pick — merged onto the existing Final prediction WITHOUT
+// touching updatedAt, so the main bet's validity/lock is untouched.
+async function onHalftimePick(e) {
+  const [matchId, pick] = e.currentTarget.dataset.htpick.split("|");
+  const m = matches.find((x) => x.id === matchId);
+  if (!m || !me || !db) return;
+  if (!halftimeOpen(m)) { toast("⏱ The halftime bonus just closed!"); render(); return; }
+  const mine = predictions[`${matchId}_${me.id}`];
+  if (!mine) { toast("👤 You need a Final bet to play this."); return; }
+  try {
+    await fs.setDoc(fs.doc(db, "predictions", `${matchId}_${me.id}`),
+      { halftimePick: pick, halftimePickAt: fs.serverTimestamp() }, { merge: true });
+    trackEvent("halftime_pick", { pick });
+    toast(`🎤 Locked: ${halftimeStableLabel(m, pick)} — good luck!`);
+  } catch (err) {
+    console.error(err);
+    toast("⚠️ Couldn't save your pick — try again.");
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Leaderboard tab
 // ---------------------------------------------------------------------------
@@ -2207,8 +2320,9 @@ function renderTable() {
       .join("");
     const liveChip = isLive && r.livePts ? `<span class="st-chip live">🔴 +${r.livePts}<small>live</small></span>` : "";
     const gambleChip = r.gamble ? `<span class="st-chip gamble">🎰 ${r.gamble > 0 ? "+" : ""}${r.gamble}<small>final</small></span>` : "";
-    const breakdown = (bonusChips || liveChip || gambleChip)
-      ? `<div class="st-breakdown">${bonusChips}${gambleChip}${liveChip}</div>`
+    const htChip = r.halftime ? `<span class="st-chip gamble">🎤 +${r.halftime}<small>HT</small></span>` : "";
+    const breakdown = (bonusChips || liveChip || gambleChip || htChip)
+      ? `<div class="st-breakdown">${bonusChips}${gambleChip}${htChip}${liveChip}</div>`
       : "";
     // live power meter — how close THIS player's pick is to maxing out the
     // points on the current live game(s). Only shown while a game is in play.

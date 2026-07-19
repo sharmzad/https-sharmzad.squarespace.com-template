@@ -105,6 +105,16 @@ window.FINAL_GAMBLE = {
   ],
 };
 
+// 🎤 HALFTIME SHOW BONUS — a live micro-bet that appears ONLY while the Final is
+// at half-time (the extended 30-min concert break). The prop is built from the
+// real first-half score the app is showing live: pick how the Final will be won
+// (leader holds / comeback / extra time or pens). Locks when the 2nd half starts;
+// right call = `points`, resolved automatically from the final result.
+window.HALFTIME_PROP = {
+  enabled: true,
+  points: 6,
+};
+
 // ALL bonus cards carry into the knockout stage (through the final), each on the
 // knockout's own fresh leaderboard: 🏅 Only-Winner (sole correct advancer),
 // 🐺 Underdog (back the lower-ranked team to advance), 🤝 Perfect Pair (nail both

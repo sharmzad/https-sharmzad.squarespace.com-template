@@ -150,6 +150,23 @@ function finalGambleDelta(pred, m, playerId) {
   return delta;
 }
 
+// 🎤 HALFTIME SHOW BONUS (keep in sync with HALFTIME_PROP + halftime helpers in
+// worldcup/js/app.js). The pick is stored on the prediction as `halftimePick`.
+const HALFTIME_POINTS = 6;
+const isHalftime = (m) => /half\s*-?\s*time|halftime|STATUS_HALFTIME/i.test(`${m.statusName} ${m.detail}`);
+function resolveHalftimePick(pick, m) {
+  const adv = koAdvancer(m), method = koMatchMethod(m);
+  if (!method) return false;
+  if (pick === "drama") return method === "et" || method === "pen";
+  if (pick === "hwin") return adv === "home" && method === "reg";
+  if (pick === "awin") return adv === "away" && method === "reg";
+  return false;
+}
+function halftimeDelta(pred, m) {
+  if (!isFinalMatch(m) || !m.completed || m.home.score == null || !pred.halftimePick) return 0;
+  return resolveHalftimePick(pred.halftimePick, m) ? HALFTIME_POINTS : 0;
+}
+
 // FIFA ranks — keep in sync with FIFA_RANKS in worldcup/js/app.js
 const FIFA_RANKS = [
   ["mexico",15],["south africa",60],["korea",25],["czech",41],
@@ -631,6 +648,16 @@ async function main() {
       }
     }
 
+    // 🎤 Halftime Show Bonus goes live — announce once when the Final hits the break
+    if (isFinalMatch(m) && m.state === "in" && !m.completed && isHalftime(m)) {
+      if (await claim(`htbonus_${m.id}`)) {
+        sendList.push({
+          title: "🎤 Halftime Show Bonus is LIVE!",
+          body: `At the break: ${m.home.abbr} ${m.home.score ?? 0}–${m.away.score ?? 0} ${m.away.abbr}. Shakira's on 🎶 — open the app & call the finish for +${HALFTIME_POINTS} before the 2nd half!`,
+        });
+      }
+    }
+
     // ⏰ betting reminder — sent ONLY to players who haven't bet on this match yet
     if (!m.completed && m.state === "pre" && lock > now && lock - now <= REMIND_WINDOW_MIN * 60_000) {
       if (await claim(`remind_${m.id}`)) {
@@ -758,7 +785,7 @@ async function main() {
     for (const m of matches) {
       if (!m.completed || m.home.score == null) continue;
       for (const p of validPredsFrom(allPreds, m)) {
-        totals[p.name] = (totals[p.name] || 0) + matchPoints(p, m) + finalGambleDelta(p, m, p.playerId);
+        totals[p.name] = (totals[p.name] || 0) + matchPoints(p, m) + finalGambleDelta(p, m, p.playerId) + halftimeDelta(p, m);
       }
     }
     const ranked = Object.entries(totals).sort((a, b) => b[1] - a[1]);
@@ -791,7 +818,7 @@ async function main() {
         if (!(isOverridden(m) || (pr.updatedAt?.toMillis?.() ?? 0) <= deadlineMs(pr, m))) continue;
         const s = stat[pr.playerId];
         const pts = matchPoints(pr, m);
-        s.pts += pts + finalGambleDelta(pr, m, pr.playerId);
+        s.pts += pts + finalGambleDelta(pr, m, pr.playerId) + halftimeDelta(pr, m);
         if (pts > 0) scorers.push(pr.playerId);
         const isExact = pr.home === m.home.score && pr.away === m.away.score;
         if (isExact) s.exact++;
