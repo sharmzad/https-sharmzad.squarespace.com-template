@@ -127,7 +127,17 @@ window.HALFTIME_PROP = {
 // ONLY announcement we want now — fired per game, then it expires on its own.
 // This optional MANUAL override is OFF (null); leaving it set would also clobber
 // the per-game celebration body, so keep it null.
-window.ANNOUNCEMENT = null;
+// In-app "What's New" pop-up card (slides in after the intro, once per launch,
+// replaying until `until`). Reaches EVERYONE who opens the app — including players
+// with notifications off. Separate from the exact-score fireworks (those come
+// from the health/celebration doc), so this is safe to set.
+window.ANNOUNCEMENT = {
+  id: "final-updates-2026-07-19",
+  emoji: "🎰",
+  title: "🏆 The Final is LIVE to play!",
+  until: "2026-07-19T19:00:00Z",   // replays until 22:00 Cairo kickoff, then stops
+  body: "Spain 🆚 Argentina (22:00) has THE FINAL GAMBLE: 🎰 Stake your points ×1/×2/×3 · 🃏 pick a Joker (+5) · 🎡 SPIN the Luck Wheel (up to 💎 +15). Then a 🎤 Halftime Show Bonus drops during the concert break for +6! Make your pick, spin, and lock it in before kickoff. Yalla! ⚽",
+};
 
 // First-open "how to bet the knockouts" walkthrough. Shows up to `repeat` times
 // per device on open (a Skip still counts as one view) until `until`, then never

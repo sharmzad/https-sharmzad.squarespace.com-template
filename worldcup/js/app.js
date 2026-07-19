@@ -113,7 +113,7 @@ function maybeShowWhatsNew() {
   const a = window.ANNOUNCEMENT, el = $("#whatsnew");
   if (!a || !el) return;
   if (a.emoji) $("#wnIcon").textContent = a.emoji;
-  $("#wnTitle").textContent = `What's New${a.version ? ` · v${a.version}` : ""}`;
+  $("#wnTitle").textContent = a.title || `What's New${a.version ? ` · v${a.version}` : ""}`;
   $("#wnBody").textContent = a.body || "";
   el.classList.remove("hidden");
   requestAnimationFrame(() => el.classList.add("show"));
