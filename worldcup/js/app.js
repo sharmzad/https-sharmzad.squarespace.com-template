@@ -138,21 +138,31 @@ function tutorialPending() {
 }
 
 const TUTORIAL_STEPS = [
-  { emoji: "🏆⚔️", title: "Knockout Time!",
-    body: "Group stage is over — it's now <b>WIN OR GO HOME</b>. Knockout bets work a little differently. 30 seconds and you'll be a pro 👇" },
-  { emoji: "1️⃣", title: "Pick WHO wins &amp; HOW",
+  { emoji: "🎰🏆", title: "The Final Gamble!",
+    body: "Spain 🆚 Argentina isn't a normal game. On top of your pick, <b>three new layers of points &amp; luck</b> turn the Final into a shootout. 30 seconds and you're set 👇" },
+  { emoji: "1️⃣", title: "Pick who, how &amp; the score",
     visual: `<div class="tut-grid">
-        <span class="tut-cell on">🇧🇷<small>in 90'</small></span><span class="tut-cell">🇧🇷<small>Extra Time</small></span><span class="tut-cell">🇧🇷<small>Penalties</small></span>
-        <span class="tut-cell">🇯🇵<small>in 90'</small></span><span class="tut-cell">🇯🇵<small>Extra Time</small></span><span class="tut-cell">🇯🇵<small>Penalties</small></span>
+        <span class="tut-cell on">🏆<small>in 90'</small></span><span class="tut-cell">🏆<small>Extra Time</small></span><span class="tut-cell">🏆<small>Penalties</small></span>
+      </div>
+      <div class="tut-score"><span class="tut-step">−</span><b>2</b><span class="tut-step">+</span><i>—</i><span class="tut-step">−</span><b>1</b><span class="tut-step">+</span></div>`,
+    body: "Same as every knockout: tap <b>who wins &amp; how</b> (90' / ET / Pens) and set the <b>exact score</b>. On the Final this base is worth <b>×5</b>! 🔥" },
+  { emoji: "🎰", title: "Step 3 · Stake your points",
+    visual: `<div class="tut-grid">
+        <span class="tut-cell on">×1<small>Safe</small></span><span class="tut-cell">×2<small>Bold</small></span><span class="tut-cell">×3<small>All-in</small></span>
       </div>`,
-    body: "Tap <b>one card</b>: your team <b>AND</b> how they go through — in <b>90'</b> ⏱, <b>Extra Time</b> ⌛ or <b>Penalties</b> 🥅. Calling the drama = more points!" },
-  { emoji: "2️⃣", title: "Set the 90-min score",
-    visual: `<div class="tut-score"><span class="tut-step">−</span><b>2</b><span class="tut-step">+</span><i>—</i><span class="tut-step">−</span><b>1</b><span class="tut-step">+</span></div>`,
-    body: "Use <b>−</b> / <b>+</b> to predict the <b>exact score after 90 minutes</b>. (Extra time &amp; pens don't change this number!) 🎯 Then smash <b>Save</b>." },
-  { emoji: "💰", title: "Stack the points",
-    body: "✅ Right team <b>+3</b> · ⏱ Right how <b>+3</b> · 🎯 Exact score <b>+3</b> = up to <b>9</b>! And every round <b>multiplies</b> — the Final is <b>×5</b>. 🔥" },
-  { emoji: "🚀", title: "You're ready!",
-    body: "Go make your knockout picks before kickoff and climb the table. Edit any time until it locks. <b>Yalla!</b> ⚽" },
+    body: "Bank your base points: <b>×1 Safe</b> (never loses), <b>×2 Bold</b> or <b>×3 All-in</b>. Nail your pick → <b>multiplied</b>! Miss it → you <b>pay</b> (×2 −5, ×3 −10)." },
+  { emoji: "🃏", title: "Step 4 · Play a Joker (+5)",
+    visual: `<div class="tut-grid">
+        <span class="tut-cell on">🔢<small>Odd</small></span><span class="tut-cell">⚖️<small>Even</small></span><span class="tut-cell">⚔️<small>Both score</small></span>
+      </div>`,
+    body: "Pick <b>one</b> side-bet for a flat <b>+5</b> — Odd/Even total goals, Both teams score, or the winning margin. It's separate from your score, so you can even <b>hedge</b>. (Optional.)" },
+  { emoji: "🎡", title: "Step 5 · SPIN the Luck Wheel",
+    visual: `<div class="tut-grid">
+        <span class="tut-cell on">💎<small>+15</small></span><span class="tut-cell">2️⃣<small>Double</small></span><span class="tut-cell">🛡️<small>Insure</small></span>
+      </div>`,
+    body: "Tap <b>SPIN</b> once — it rolls a <b>random</b> bonus and locks in: up to <b>💎 +15</b>, <b>2️⃣ Double</b> your Joker, or <b>🛡️ Insurance</b>. ⚠️ <b>No spin = no bonus!</b>" },
+  { emoji: "🚀", title: "Lock it in before kickoff!",
+    body: "Make your Final pick → choose your <b>Stake</b> &amp; <b>Joker</b> → <b>SPIN</b> the wheel. Do it before the whistle or it locks. May the luck be with you! ⚽🍀" },
 ];
 
 function maybeShowTutorial(retries = 0) {

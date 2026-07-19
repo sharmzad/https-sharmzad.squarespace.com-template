@@ -123,8 +123,8 @@ window.ANNOUNCEMENT = null;
 // per device on open (a Skip still counts as one view) until `until`, then never
 // again. Bump `id` to restart the count for everyone; set to null to switch off.
 window.TUTORIAL = {
-  id: "knockout-howto-2026-06-29-x3",
-  until: "2026-07-01T23:30:00Z",   // ~48h window — room for 3 opens
+  id: "final-gamble-2026-07-19-x3",
+  until: "2026-07-19T19:30:00Z",   // ~22:30 Cairo — up to Final kickoff
   repeat: 3,                       // show up to 3 times per device, even if skipped
 };
 

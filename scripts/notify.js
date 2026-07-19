@@ -578,6 +578,34 @@ async function main() {
     sendList.push({ title: BROADCAST.title, body: BROADCAST.body });
   }
 
+  // 📣 Scheduled Final-Gamble broadcasts — each fires ONCE, on the first notifier
+  // run at/after its Cairo time (claim() dedups; the window guards against a late
+  // deploy firing all past slots at once). Times are UTC (Cairo = UTC+3).
+  const SCHED_WINDOW_MS = 58 * 60 * 1000;
+  const SCHEDULED_BROADCASTS = [
+    { id: "fg-2026-07-19-1600", at: "2026-07-19T13:00:00Z",
+      title: "🎰 THE FINAL GAMBLE is live!",
+      body: "Spain 🆚 Argentina just got wild. On top of your pick: 🎰 Stake your points, 🃏 play a Joker, and 🎡 SPIN a Luck Wheel. Open the app for a 30-second guide 👇" },
+    { id: "fg-2026-07-19-1700", at: "2026-07-19T14:00:00Z",
+      title: "🎯 3 new steps for the Final",
+      body: "1️⃣ Pick who wins, how & the score (base ×5). 2️⃣ Stake it ×1/×2/×3. 3️⃣ Pick a Joker (+5). 4️⃣ SPIN the wheel for up to 💎 +15. Open the app & set your bet!" },
+    { id: "fg-2026-07-19-1900", at: "2026-07-19T16:00:00Z",
+      title: "⏳ Don't miss the Final Gamble",
+      body: "Make your Spain–Argentina pick, choose your Stake & Joker, then 🎡 SPIN the wheel to lock your luck. ⚠️ No spin = no wheel bonus! Tap to play." },
+    { id: "fg-2026-07-19-2100", at: "2026-07-19T18:00:00Z",
+      title: "🚨 LAST CALL before kickoff!",
+      body: "Lock your Final bet NOW — pick, Stake, Joker, and 🎡 SPIN before it locks at kickoff. Biggest points of the tournament are on the line! 🎰⚽" },
+  ];
+  {
+    const nowMs = Date.now();
+    for (const b of SCHEDULED_BROADCASTS) {
+      const t = Date.parse(b.at);
+      if (nowMs >= t && nowMs < t + SCHED_WINDOW_MS && (await claim(`sched_${b.id}`))) {
+        sendList.push({ title: b.title, body: b.body });
+      }
+    }
+  }
+
   for (const m of matches) {
     const vs = `${m.home.name} 🆚 ${m.away.name}`;
     const lock = lockMs(m);
