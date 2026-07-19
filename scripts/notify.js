@@ -633,6 +633,27 @@ async function main() {
     }
   }
 
+  // 🎤 Halftime safety-net push — the live-detected halftime push (htbonus_*)
+  // fires the moment ESPN reports the break; this is a TIME-BASED backup at
+  // ~22:52 Cairo in case ESPN labels the extended concert break oddly. It only
+  // sends if that live push hasn't already gone out, so it never doubles up.
+  {
+    const HT_BACKUP_AT = Date.parse("2026-07-19T19:52:00Z");   // 22:52 Cairo
+    const nowB = Date.now();
+    if (nowB >= HT_BACKUP_AT && nowB < HT_BACKUP_AT + 25 * 60 * 1000) {
+      const fin = matches.find((m) => isFinalMatch(m));
+      if (fin && fin.state === "in" && !fin.completed) {
+        const liveFired = (await markers.doc(`htbonus_${fin.id}`).get()).exists;
+        if (!liveFired && (await claim("sched_ht_backup"))) {
+          sendList.push({
+            title: "🎤 Halftime Show Bonus is open!",
+            body: "The Final's at the break — open the app and call how it finishes for +6 before the 2nd half kicks off! 🎶",
+          });
+        }
+      }
+    }
+  }
+
   for (const m of matches) {
     const vs = `${m.home.name} 🆚 ${m.away.name}`;
     const lock = lockMs(m);
