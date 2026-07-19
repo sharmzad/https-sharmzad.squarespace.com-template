@@ -796,9 +796,9 @@ const isOverridden = (m) => OPEN_OVERRIDES.some((pair) => teamsMatch(m, pair));
 // `until`, so a bet saved in the window freezes lockAt = until and stays valid
 // (isValidPrediction / the notifier's deadlineMs both read that frozen lockAt).
 const TIMED_OVERRIDES = [
-  // 🏆 THE FINAL — keep bidding open right up to the 22:00 Cairo kickoff exactly
-  // (default lock is 15 min early; this holds it to the whistle). 19:00 UTC = 22:00 Cairo.
-  { teams: ["spain", "argentina"], until: "2026-07-19T19:00:00Z" },
+  // 🏆 THE FINAL — admin re-opened bidding for ~5 min mid-match (bets saved in the
+  // window freeze lockAt = until and stay valid). 19:19 UTC = 22:19 Cairo.
+  { teams: ["spain", "argentina"], until: "2026-07-19T19:19:00Z" },
 ];
 const timedOverrideFor = (m) => TIMED_OVERRIDES.find((o) => teamsMatch(m, o.teams));
 const timedOverrideOpen = (m) => {
