@@ -106,6 +106,58 @@ function scoreKnockout(pred, m) {
 const matchPoints = (pred, m) =>
   isKnockout(m) ? scoreKnockout(pred, m) : scorePrediction(pred, m.home.score, m.away.score);
 
+// 🎰 THE FINAL GAMBLE (keep in sync with FINAL_GAMBLE in firebase-config.js and
+// the finalGambleDelta/wheelFor/resolveJoker helpers in worldcup/js/app.js).
+const FINAL_GAMBLE = {
+  enabled: true,
+  stakes: [1, 2, 3],
+  penalty: { 2: 5, 3: 10 },
+  jokerPts: 5,
+  wheel: [
+    { id: "p5", add: 5, weight: 30 }, { id: "p8", add: 8, weight: 22 },
+    { id: "p10", add: 10, weight: 14 }, { id: "jackpot", add: 15, weight: 8 },
+    { id: "dbl", kind: "dblJoker", weight: 14 }, { id: "ins", kind: "insure", weight: 12 },
+  ],
+};
+const isFinalMatch = (m) => FINAL_GAMBLE.enabled && isKnockout(m) && koRound(m) === "F";
+function fgHash(s) {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+  return h >>> 0;
+}
+function wheelFor(playerId, matchId) {
+  const segs = FINAL_GAMBLE.wheel, total = segs.reduce((s, x) => s + (x.weight || 1), 0);
+  let r = fgHash(`${playerId}|${matchId}|wheel`) % total;
+  for (const seg of segs) { r -= (seg.weight || 1); if (r < 0) return seg; }
+  return segs[segs.length - 1];
+}
+function resolveJoker(pred, m) {
+  const jk = pred.finalJoker;
+  if (!jk || m.home.score == null) return false;
+  const hs = m.home.score, as = m.away.score, total = hs + as, method = koMatchMethod(m);
+  switch (jk) {
+    case "over": return total >= 3;
+    case "under": return total <= 2;
+    case "btts_y": return hs > 0 && as > 0;
+    case "btts_n": return !(hs > 0 && as > 0);
+    case "drama": return method === "et" || method === "pen";
+    case "settled": return method === "reg";
+    default: return false;
+  }
+}
+function finalGambleDelta(pred, m, playerId) {
+  if (!isFinalMatch(m) || !m.completed || m.home.score == null) return 0;
+  const core = scoreKnockout(pred, m);
+  const stake = FINAL_GAMBLE.stakes.includes(pred.finalStake) ? pred.finalStake : 1;
+  const seg = wheelFor(playerId || pred.playerId, m.id) || {};
+  let delta = 0;
+  if (core > 0) delta += core * (stake - 1);
+  else { const pen = FINAL_GAMBLE.penalty[stake] || 0; if (pen && seg.kind !== "insure") delta -= pen; }
+  if (resolveJoker(pred, m)) delta += FINAL_GAMBLE.jokerPts * (seg.kind === "dblJoker" ? 2 : 1);
+  if (seg.add) delta += seg.add;
+  return delta;
+}
+
 // FIFA ranks — keep in sync with FIFA_RANKS in worldcup/js/app.js
 const FIFA_RANKS = [
   ["mexico",15],["south africa",60],["korea",25],["czech",41],
@@ -686,7 +738,7 @@ async function main() {
     for (const m of matches) {
       if (!m.completed || m.home.score == null) continue;
       for (const p of validPredsFrom(allPreds, m)) {
-        totals[p.name] = (totals[p.name] || 0) + matchPoints(p, m);
+        totals[p.name] = (totals[p.name] || 0) + matchPoints(p, m) + finalGambleDelta(p, m, p.playerId);
       }
     }
     const ranked = Object.entries(totals).sort((a, b) => b[1] - a[1]);
@@ -719,7 +771,7 @@ async function main() {
         if (!(isOverridden(m) || (pr.updatedAt?.toMillis?.() ?? 0) <= deadlineMs(pr, m))) continue;
         const s = stat[pr.playerId];
         const pts = matchPoints(pr, m);
-        s.pts += pts;
+        s.pts += pts + finalGambleDelta(pr, m, pr.playerId);
         if (pts > 0) scorers.push(pr.playerId);
         const isExact = pr.home === m.home.score && pr.away === m.away.score;
         if (isExact) s.exact++;

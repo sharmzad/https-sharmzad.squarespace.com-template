@@ -980,6 +980,108 @@ function scoreKnockout(pred, m) {
   return base * roundMult(m);
 }
 
+// ---------------------------------------------------------------------------
+// 🎰 THE FINAL GAMBLE — final-only luck/nerve overlay on top of the core score.
+// Kept OUT of scoreKnockout/matchPoints on purpose: the core knockout points
+// still drive only-winner / underdog / goal-rush / the live power bar, and the
+// gamble is layered on top of the standings total (like a bonus) + shown at
+// reveal. See FINAL_GAMBLE in firebase-config.js.
+// ---------------------------------------------------------------------------
+const FG = () => window.FINAL_GAMBLE || null;
+const isFinalMatch = (m) => {
+  const fg = FG();
+  return !!(fg && fg.enabled && isKnockout(m) && koRound(m) === "F");
+};
+// Stable 32-bit string hash (FNV-1a). MUST match notify.js so a player's wheel
+// spin is identical on every device and on the server — no re-rolls, no cheating.
+function fgHash(s) {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  return h >>> 0;
+}
+// The wheel segment locked to this player for this match (weighted, deterministic).
+function wheelFor(playerId, matchId) {
+  const fg = FG();
+  const segs = (fg && fg.wheel) || [];
+  if (!segs.length) return null;
+  const total = segs.reduce((s, x) => s + (x.weight || 1), 0);
+  let r = fgHash(`${playerId}|${matchId}|wheel`) % total;
+  for (const seg of segs) { r -= (seg.weight || 1); if (r < 0) return seg; }
+  return segs[segs.length - 1];
+}
+// Did the player's chosen Joker prop hit? (final result + how it was decided)
+function resolveJoker(pred, m) {
+  const jk = pred.finalJoker;
+  if (!jk || m.home.score == null) return false;
+  const hs = m.home.score, as = m.away.score, total = hs + as;
+  const method = koMatchMethod(m);
+  switch (jk) {
+    case "over":    return total >= 3;
+    case "under":   return total <= 2;
+    case "btts_y":  return hs > 0 && as > 0;
+    case "btts_n":  return !(hs > 0 && as > 0);
+    case "drama":   return method === "et" || method === "pen";
+    case "settled": return method === "reg";
+    default:        return false;
+  }
+}
+// Net points the gamble adds/subtracts for this player on the final (0 otherwise).
+// core = the round-multiplied knockout score BEFORE the gamble.
+function finalGambleDelta(pred, m, playerId) {
+  const fg = FG();
+  if (!isFinalMatch(m) || !m.completed || m.home.score == null) return 0;
+  const pid = playerId || pred.playerId;
+  const core = scoreKnockout(pred, m);
+  const stake = fg.stakes.includes(pred.finalStake) ? pred.finalStake : 1;
+  const seg = wheelFor(pid, m.id) || {};
+  let delta = 0;
+  if (core > 0) {
+    delta += core * (stake - 1);                                   // 🎰 multiply the win
+  } else {
+    const pen = (fg.penalty && fg.penalty[stake]) || 0;            // 🎰 or pay the miss…
+    if (pen && seg.kind !== "insure") delta -= pen;               //    …unless insured
+  }
+  if (resolveJoker(pred, m)) {                                     // 🃏 flat prop, ×2 on Double
+    delta += (fg.jokerPts || 0) * (seg.kind === "dblJoker" ? 2 : 1);
+  }
+  if (seg.add) delta += seg.add;                                  // 🎡 pure luck add
+  return delta;
+}
+// Compact reveal chips for a player's final gamble (stake · joker · wheel).
+function gambleRevealStrip(pred, m, playerId) {
+  const fg = FG();
+  if (!fg || m.home.score == null) return "";
+  const core = scoreKnockout(pred, m);
+  const stake = fg.stakes.includes(pred.finalStake) ? pred.finalStake : 1;
+  const seg = wheelFor(playerId || pred.playerId, m.id) || {};
+  const chips = [];
+  // 🎰 stake
+  if (core > 0) {
+    chips.push(`<span class="fgc win">🎰 ×${stake} → +${core * stake}</span>`);
+  } else {
+    const pen = (fg.penalty && fg.penalty[stake]) || 0;
+    if (stake === 1) chips.push(`<span class="fgc safe">🎰 ×1 safe</span>`);
+    else if (seg.kind === "insure") chips.push(`<span class="fgc save">🎰 ×${stake} miss · 🛡️ saved</span>`);
+    else chips.push(`<span class="fgc loss">🎰 ×${stake} miss −${pen}</span>`);
+  }
+  // 🃏 joker
+  if (pred.finalJoker) {
+    const j = fg.jokers.find((x) => x.id === pred.finalJoker);
+    const hit = resolveJoker(pred, m);
+    const dbl = hit && seg.kind === "dblJoker";
+    chips.push(`<span class="fgc ${hit ? "win" : "miss"}">🃏 ${j ? esc(j.label) : "?"} ${hit ? `✓ +${fg.jokerPts * (dbl ? 2 : 1)}${dbl ? " (2×)" : ""}` : "✗"}</span>`);
+  }
+  // 🎡 wheel
+  if (seg.emoji) {
+    const w = seg.add ? `+${seg.add}` : seg.kind === "dblJoker" ? "2× Joker" : seg.kind === "insure" ? "Insurance" : "";
+    chips.push(`<span class="fgc luck">🎡 ${seg.emoji} ${w}</span>`);
+  }
+  return `<div class="pr-gamble">${chips.join("")}</div>`;
+}
+
 // Points for a single match, by phase (knockout vs group).
 const matchPoints = (pred, m) =>
   isKnockout(m) ? scoreKnockout(pred, m) : scorePrediction(pred, m.home.score, m.away.score);
@@ -1031,6 +1133,7 @@ function buildStandings(live = false, phase = "overall") {
   const rows = players.map((p) => {
     const grace = wantGroup ? bonusFor(p.name) : 0;
     return { ...p, pts: grace, bonus: grace, exact: 0, outcomes: 0, played: 0, livePts: 0,
+      gamble: 0,                                                          // 🎰 net final-gamble points
       bd: { onlyWinner: 0, underdog: 0, perfectPair: 0, goalRush: 0 } };   // bd = times earned
   });
   const byId = Object.fromEntries(rows.map((r) => [r.id, r]));
@@ -1057,6 +1160,11 @@ function buildStandings(live = false, phase = "overall") {
         if (R.goalRush && round3On(m) && pts === 0 &&
             (pred.home + pred.away) === (m.home.score + m.away.score)) {
           r.pts += R.goalRush; r.bonus += R.goalRush; r.bd.goalRush += 1;
+        }
+        // 🎰 The Final Gamble — stake multiplier / penalty + joker + wheel
+        if (isFinalMatch(m)) {
+          const gd = finalGambleDelta(pred, m, p.id);
+          r.pts += gd; r.gamble += gd;
         }
       } else {
         r.livePts += pts; // provisional, from an in-progress match
@@ -1336,6 +1444,28 @@ function renderMatches() {
         .forEach((x) => x.classList.toggle("sel", x === e.currentTarget));
     })
   );
+  // 🎰 Final Gamble — stake selector
+  view.querySelectorAll("[data-fstake]").forEach((b) =>
+    b.addEventListener("click", (e) => {
+      const [matchId, s] = e.currentTarget.dataset.fstake.split("|");
+      draft[matchId].finalStake = Number(s);
+      e.currentTarget.closest(".fg-stakes").querySelectorAll(".fg-stake")
+        .forEach((x) => x.classList.toggle("sel", x === e.currentTarget));
+    })
+  );
+  // 🃏 Final Gamble — joker prop (tap again to clear)
+  view.querySelectorAll("[data-fjoker]").forEach((b) =>
+    b.addEventListener("click", (e) => {
+      const [matchId, id] = e.currentTarget.dataset.fjoker.split("|");
+      const d = draft[matchId];
+      const wasSel = d.finalJoker === id;
+      d.finalJoker = wasSel ? null : id;
+      e.currentTarget.closest(".fg-jokers").querySelectorAll(".fg-joker")
+        .forEach((x) => x.classList.toggle("sel", !wasSel && x === e.currentTarget));
+    })
+  );
+  // 🎡 Final Gamble — play the reel spin once per render (result is locked)
+  view.querySelectorAll("[data-wheel]").forEach((el) => spinWheel(el));
   view.querySelectorAll("[data-winner]").forEach((b) =>
     b.addEventListener("click", (e) => {
       const [matchId, val] = e.currentTarget.dataset.winner.split("|");
@@ -1564,6 +1694,8 @@ function matchCard(m) {
       winner: resultOf(mine?.home ?? 0, mine?.away ?? 0),
       koWinner: mine?.koWinner ?? null,
       koMethod: mine?.koMethod ?? null,
+      finalStake: mine?.finalStake ?? 1,
+      finalJoker: mine?.finalJoker ?? null,
     };
     draft[m.id] = d;
     const lockNote = `<div class="lock-note">${mine ? `✅ Your bet: <b>${pickLabel(mine, m)}</b> · ` : ""}${
@@ -1655,19 +1787,98 @@ function koPredictBody(m, mine, H, A, d) {
         <span class="kocell-how">${lbl}</span>
       </button>`;
   }).join("");
-  return `
-    <div class="kopredict">
-      <div class="ko-sec-h"><b>1</b> Who will win &amp; how?</div>
-      <div class="kogrid">${cellsFor("home", H)}${cellsFor("away", A)}</div>
-      <div class="ko-sec-h"><b>2</b> Exact score <small id="ko-exact-when-${m.id}">· ${koExactWhen(d.koMethod)}</small></div>
+  const gamble = isFinalMatch(m) ? finalGambleBody(m, d) : "";
+  const saveRow = `
       <div class="predict">
         ${stepper(m.id, "home", d.home)}
         <span class="vs">—</span>
         ${stepper(m.id, "away", d.away)}
-        <button class="save-btn" data-save="${m.id}">${mine ? "Update" : "Save"} 🎯</button>
+        ${gamble ? "" : `<button class="save-btn" data-save="${m.id}">${mine ? "Update" : "Save"} 🎯</button>`}
       </div>
-      <div class="ko-hint" id="ko-exact-hint-${m.id}">${koExactHint(d.koMethod)}</div>
+      <div class="ko-hint" id="ko-exact-hint-${m.id}">${koExactHint(d.koMethod)}</div>`;
+  return `
+    <div class="kopredict${gamble ? " is-final" : ""}">
+      <div class="ko-sec-h"><b>1</b> Who will win &amp; how?</div>
+      <div class="kogrid">${cellsFor("home", H)}${cellsFor("away", A)}</div>
+      <div class="ko-sec-h"><b>2</b> Exact score <small id="ko-exact-when-${m.id}">· ${koExactWhen(d.koMethod)}</small></div>
+      ${saveRow}
+      ${gamble}
+      ${gamble ? `<button class="save-btn save-final" data-save="${m.id}">🎰 ${mine ? "Update my gamble" : "Lock in my gamble"}</button>` : ""}
     </div>`;
+}
+
+// 🎰 THE FINAL GAMBLE predict UI — Stake / Joker / Wheel, shown only on the Final.
+function finalGambleBody(m, d) {
+  const fg = FG();
+  if (!fg) return "";
+  const stakeLbl = { 1: "×1 Safe", 2: "×2 Bold", 3: "×3 All-in" };
+  const stakeSub = { 1: "never loses", 2: `miss −${fg.penalty[2]}`, 3: `miss −${fg.penalty[3]}` };
+  const stakeBtns = fg.stakes.map((s) =>
+    `<button class="fg-stake ${d.finalStake === s ? "sel" : ""}" data-fstake="${m.id}|${s}">
+       <b>${stakeLbl[s] || "×" + s}</b><small>${stakeSub[s] || ""}</small>
+     </button>`).join("");
+  const jokerBtns = fg.jokers.map((j) =>
+    `<button class="fg-joker ${d.finalJoker === j.id ? "sel" : ""}" data-fjoker="${m.id}|${j.id}" title="${esc(j.hint || "")}">
+       <span class="fg-j-emoji">${j.emoji}</span>
+       <span class="fg-j-lbl">${esc(j.label)}</span>
+     </button>`).join("");
+  const seg = me ? wheelFor(me.id, m.id) : null;
+  const wheelCard = seg
+    ? `<div class="fg-wheel" id="fg-wheel-${m.id}" data-wheel="${m.id}">
+         <div class="fg-reel"><span class="fg-reel-face">${seg.emoji}</span></div>
+         <div class="fg-wheel-out">
+           <b>${esc(seg.label)}</b>
+           <small>${wheelBlurb(seg)}</small>
+         </div>
+       </div>`
+    : `<div class="fg-wheel locked">🔒 Join the game to get your spin</div>`;
+  return `
+    <div class="fg-wrap">
+      <div class="fg-title">🎰 THE FINAL GAMBLE <span>make it count</span></div>
+
+      <div class="ko-sec-h"><b>3</b> 🎰 The Stake — multiply your base final points</div>
+      <div class="fg-stakes">${stakeBtns}</div>
+
+      <div class="ko-sec-h"><b>4</b> 🃏 The Joker — one side-bet for a flat +${fg.jokerPts}</div>
+      <div class="fg-jokers">${jokerBtns}</div>
+
+      <div class="ko-sec-h"><b>5</b> 🎡 The Wheel — your luck, locked in</div>
+      ${wheelCard}
+      <div class="ko-hint">Everyone spins once. Your spin is tied to you — same on every device, no re-rolls. 💎 Jackpot adds big, 2️⃣ doubles your Joker, 🛡️ Insurance cancels a stake miss.</div>
+    </div>`;
+}
+const wheelBlurb = (seg) =>
+  seg.kind === "dblJoker" ? "Doubles your Joker reward 🔥"
+  : seg.kind === "insure" ? "Cancels your stake penalty if you miss 🛡️"
+  : seg.id === "jackpot" ? "Straight bonus points — huge! 💎"
+  : `Straight +${seg.add} bonus points`;
+
+// Reel spin: rattle through the segment faces, then settle on the locked one.
+// Deterministic outcome (already in the DOM) — the animation is pure theatre and
+// plays at most once per match per session.
+const spunWheels = new Set();
+function spinWheel(el) {
+  const mid = el.dataset.wheel;
+  const face = el.querySelector(".fg-reel-face");
+  const fg = FG();
+  if (!face || !fg) return;
+  if (spunWheels.has(mid)) { el.classList.add("done"); return; }
+  spunWheels.add(mid);
+  const faces = fg.wheel.map((s) => s.emoji);
+  const landed = face.textContent;
+  let ticks = 0;
+  const total = 22;
+  el.classList.add("spinning");
+  const iv = setInterval(() => {
+    ticks++;
+    face.textContent = faces[ticks % faces.length];
+    if (ticks >= total) {
+      clearInterval(iv);
+      face.textContent = landed;
+      el.classList.remove("spinning");
+      el.classList.add("done");
+    }
+  }, 65);
 }
 
 function revealBlock(m) {
@@ -1704,15 +1915,21 @@ function revealBlock(m) {
           (pred.home + pred.away) === (m.home.score + m.away.score)) {
         bonus += R.goalRush; badges += "⚽";
       }
+      // 🎰 The Final Gamble — fold the stake/joker/wheel swing into this row
+      let gambleStrip = "";
+      if (base != null && isFinalMatch(m)) {
+        bonus += finalGambleDelta(pred, m, p.id);
+        gambleStrip = gambleRevealStrip(pred, m, p.id);
+      }
       const pts = base == null ? null : base + bonus;
-      return { p, pred, late, base, pts, badges };
+      return { p, pred, late, base, pts, badges, gambleStrip };
     })
     .filter(Boolean);
   if (!list.length) return `<div class="lock-note">No predictions for this match 🤷</div>`;
   if (done) list.sort((a, b) => (b.pts ?? -1) - (a.pts ?? -1));
 
   const HOW_LBL = { reg: "90'", et: "ET", pen: "PEN" };
-  const rows = list.map(({ p, pred, late, base, pts, badges }) => {
+  const rows = list.map(({ p, pred, late, base, pts, badges, gambleStrip }) => {
     let team, how = "";
     if (ko) {
       const wp = koWinnerPick(pred);   // explicit advancer pick (falls back to score)
@@ -1724,15 +1941,17 @@ function revealBlock(m) {
       const w = predWinner(pred);
       team = w === "draw" ? "Draw" : esc(w === "home" ? m.home.abbr : m.away.abbr);
     }
+    const ptsTxt = pts != null ? `${pts >= 0 ? "+" : ""}${pts}` : "";
     const ptsHtml = late
       ? `<span class="pr-pts late">late</span>`
-      : (pts != null ? `<span class="pr-pts p${base}">+${pts}${badges ? ` <span class="pr-badge">${badges}</span>` : ""}</span>` : `<span class="pr-pts pending">—</span>`);
+      : (pts != null ? `<span class="pr-pts p${base}${pts < 0 ? " neg" : ""}">${ptsTxt}${badges ? ` <span class="pr-badge">${badges}</span>` : ""}</span>` : `<span class="pr-pts pending">—</span>`);
     return `
-      <div class="pr-row ${me && p.id === me.id ? "mine" : ""}">
+      <div class="pr-row ${me && p.id === me.id ? "mine" : ""}${gambleStrip ? " has-gamble" : ""}">
         <div class="pr-av">${p.emoji}</div>
         <div class="pr-name">${esc(p.name)}</div>
         <div class="pr-pick"><b>${pred.home}–${pred.away}</b><span class="pr-team">${team}${how}</span></div>
         ${ptsHtml}
+        ${gambleStrip}
       </div>`;
   }).join("");
   return `<div class="reveal">${rows}</div>`;
@@ -1809,6 +2028,10 @@ async function onSave(e) {
     updatedAt: fs.serverTimestamp(),
   };
   if (ko) { doc.koWinner = d.koWinner; doc.koMethod = d.koMethod; }
+  if (ko && isFinalMatch(m)) {
+    doc.finalStake = FG().stakes.includes(d.finalStake) ? d.finalStake : 1;
+    doc.finalJoker = d.finalJoker || null;
+  }
   try {
     await fs.setDoc(fs.doc(db, "predictions", `${matchId}_${me.id}`), doc);
     trackEvent("prediction_saved", { match: `${m.home.abbr}-${m.away.abbr}` });
@@ -1866,8 +2089,9 @@ function renderTable() {
       .map(([k, ic]) => `<span class="st-chip bonus">${ic} <b>×${r.bd[k]}</b></span>`)
       .join("");
     const liveChip = isLive && r.livePts ? `<span class="st-chip live">🔴 +${r.livePts}<small>live</small></span>` : "";
-    const breakdown = (bonusChips || liveChip)
-      ? `<div class="st-breakdown">${bonusChips}${liveChip}</div>`
+    const gambleChip = r.gamble ? `<span class="st-chip gamble">🎰 ${r.gamble > 0 ? "+" : ""}${r.gamble}<small>final</small></span>` : "";
+    const breakdown = (bonusChips || liveChip || gambleChip)
+      ? `<div class="st-breakdown">${bonusChips}${gambleChip}${liveChip}</div>`
       : "";
     // live power meter — how close THIS player's pick is to maxing out the
     // points on the current live game(s). Only shown while a game is in play.
@@ -1924,7 +2148,7 @@ function renderTable() {
     ${liveBanner}
     ${html}
     <p class="lock-note" style="margin-top:10px">${
-      phase === "knockout" ? "Knockout scoring: correct advancer +3, exact 90-min score +3 (6 total), ×round (R32 →×1, Final →×5). All bonus cards count too — 🏅 Only Winner · 🐺 Underdog · 🤝 Perfect Pair · ⚽ Goal Rush. " : ""
+      phase === "knockout" ? `Knockout scoring: correct advancer +3, exact 90-min score +3 (6 total), ×round (R32 →×1, Final →×5). All bonus cards count too — 🏅 Only Winner · 🐺 Underdog · 🤝 Perfect Pair · ⚽ Goal Rush. ${window.FINAL_GAMBLE?.enabled ? "🎰 The Final adds The Gamble — Stake ×1/×2/×3, a 🃏 Joker, and a 🎡 luck Wheel (see Rules). " : ""}` : ""
     }${isLive ? "⚡ The power bar shows how close each player's pick is to maxing out the points on the live game right now (100% = nailing it). It moves with every goal. " : ""}Tiebreakers: most exact scores 🎯, then correct results · ▲▼ ${isLive ? "live movement from in-play results" : "since the last match"}.</p>`;
 
   view.querySelectorAll("[data-phase]").forEach((b) =>
@@ -2348,6 +2572,17 @@ function rulesHtml() {
           ⚽ <b>Goal Rush</b> +${window.RULES?.goalRush ?? 1} (0 points but right total goals). These are flat — not multiplied.</li>
       </ul>
     </div>` : ""}
+    ${(window.FINAL_GAMBLE?.enabled) ? `
+    <div class="rules-card">
+      <h3>🎰 The Final Gamble <span style="font-size:11px;color:var(--gold)">FINAL ONLY</span></h3>
+      <ul>
+        <li>The <b>Final</b> gets three extra layers on top of your normal who + how + exact pick (base ×5). This is where the title swings — big nerve, big luck. 🔥</li>
+        <li>🎰 <b>The Stake:</b> bank your base final points at <b>×1 Safe</b>, <b>×2 Bold</b> or <b>×3 All-in</b>. Nail your core pick → it's multiplied. <b>Miss it (0 base) and you PAY:</b> ×2 = <b>−${window.FINAL_GAMBLE.penalty[2]}</b>, ×3 = <b>−${window.FINAL_GAMBLE.penalty[3]}</b>. ×1 never loses.</li>
+        <li>🃏 <b>The Joker:</b> pick ONE side-bet for a flat <b>+${window.FINAL_GAMBLE.jokerPts}</b> — Over/Under 2.5 goals, Both teams to score (or not), or Drama (goes to ET/pens) vs Settled in 90'.</li>
+        <li>🎡 <b>The Wheel:</b> everyone spins <b>once</b>, and your spin is <b>locked to you</b> (same on every device — no re-rolls, no cheating). Land on <b>+5 / +8 / +10 / 💎 Jackpot +15</b>, <b>2️⃣ Double</b> your Joker, or <b>🛡️ Insurance</b> that cancels a stake miss.</li>
+        <li>Everything reveals at full time with the result — check the Final's card and the 🎰 chip on the Knockout table.</li>
+      </ul>
+    </div>` : ""}
     <div class="rules-card">
       <h3>📲 Install the app & turn on notifications</h3>
       <ul>
@@ -2650,7 +2885,14 @@ function pickLabel(pred, m) {
   if (isKnockout(m) && pred.koWinner) {
     const ab = pred.koWinner === "home" ? m.home.abbr : m.away.abbr;
     const how = { reg: "in 90'", et: "in ET", pen: "on pens" }[pred.koMethod] || "";
-    return `🏆 ${esc(ab)} ${how} · ${pred.home}–${pred.away}`;
+    let extra = "";
+    if (isFinalMatch(m)) {
+      const fg = FG();
+      const st = fg.stakes.includes(pred.finalStake) ? pred.finalStake : 1;
+      const j = pred.finalJoker && fg.jokers.find((x) => x.id === pred.finalJoker);
+      extra = ` · 🎰 ×${st}${j ? ` · 🃏 ${esc(j.label)}` : ""}`;
+    }
+    return `🏆 ${esc(ab)} ${how} · ${pred.home}–${pred.away}${extra}`;
   }
   const w = predWinner(pred);
   const who = w === "draw" ? "🤝 Draw" : `🏆 ${esc(w === "home" ? m.home.abbr : m.away.abbr)}`;

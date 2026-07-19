@@ -65,6 +65,46 @@ window.KNOCKOUT = {
   exactPts: 3,                                           // exact 90-minute score
   mult: { R32: 1, R16: 2, QF: 3, SF: 4, "3P": 4, F: 5 }, // escalating per round
 };
+// -----------------------------------------------------------------------------
+// 🎰 THE FINAL GAMBLE — only on the Final (Spain vs Argentina). On top of the
+// normal who + how + exact pick (base ×5), three luck-and-nerve layers turn the
+// last game into a shootout:
+//   🎰 The Stake — bank your base final points at ×1 safe / ×2 bold / ×3 all-in.
+//        Nail the core pick → it's multiplied. Miss it (0 base) → you PAY the
+//        penalty for that stake (×1 never loses). Insurance (wheel) cancels it.
+//   🃏 The Joker — pick ONE side-prop for a flat +jokerPts. The wheel's Double
+//        segment doubles it.
+//   🎡 The Wheel — everyone spins ONCE. The outcome is locked to the player
+//        (deterministic hash of playerId+matchId → identical on every device,
+//        no re-rolls, no cheating). `add` = flat bonus; kind:"dblJoker" doubles
+//        the Joker; kind:"insure" cancels the stake penalty.
+// Set enabled:false to switch the whole thing off. `mult` for the Final still
+// comes from KNOCKOUT.mult.F (×5) — the Stake multiplies THAT.
+// -----------------------------------------------------------------------------
+window.FINAL_GAMBLE = {
+  enabled: true,
+  stakes: [1, 2, 3],                       // ×1 safe · ×2 bold · ×3 all-in
+  penalty: { 2: 5, 3: 10 },                // points LOST on a 0-base miss (×1 never loses)
+  jokerPts: 5,                             // flat reward for a correct Joker prop
+  jokers: [                                // pick exactly one (3 either/or pairs)
+    { id: "over",    emoji: "🔥", label: "Over 2.5 goals",  hint: "3+ goals in the game" },
+    { id: "under",   emoji: "🧊", label: "Under 2.5 goals", hint: "2 goals or fewer" },
+    { id: "btts_y",  emoji: "⚔️", label: "Both teams score", hint: "Both find the net" },
+    { id: "btts_n",  emoji: "🛑", label: "A clean sheet",    hint: "At least one side blanks" },
+    { id: "drama",   emoji: "😱", label: "Drama — ET or pens", hint: "Not settled in 90'" },
+    { id: "settled", emoji: "✅", label: "Settled in 90'",   hint: "Done inside 90 minutes" },
+  ],
+  // Weighted luck wheel (weights need not sum to 100 — they're relative).
+  wheel: [
+    { id: "p5",      emoji: "➕",  label: "+5",           add: 5,  weight: 30 },
+    { id: "p8",      emoji: "🔥",  label: "+8",           add: 8,  weight: 22 },
+    { id: "p10",     emoji: "⭐",  label: "+10",          add: 10, weight: 14 },
+    { id: "jackpot", emoji: "💎",  label: "JACKPOT +15",  add: 15, weight: 8  },
+    { id: "dbl",     emoji: "2️⃣",  label: "Double Joker", kind: "dblJoker",  weight: 14 },
+    { id: "ins",     emoji: "🛡️",  label: "Insurance",    kind: "insure",    weight: 12 },
+  ],
+};
+
 // ALL bonus cards carry into the knockout stage (through the final), each on the
 // knockout's own fresh leaderboard: 🏅 Only-Winner (sole correct advancer),
 // 🐺 Underdog (back the lower-ranked team to advance), 🤝 Perfect Pair (nail both
