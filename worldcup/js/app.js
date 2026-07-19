@@ -1463,10 +1463,10 @@ function renderMatches() {
         .forEach((x) => x.classList.toggle("sel", !wasSel && x === e.currentTarget));
     })
   );
-  // 🎡 Final Gamble — the player taps SPIN to reveal their sealed luck bonus
+  // 🎡 Final Gamble — the player taps SPIN to roll the big wheel
   view.querySelectorAll("[data-spin]").forEach((b) =>
     b.addEventListener("click", (e) => {
-      const el = e.currentTarget.closest(".fg-wheel");
+      const el = e.currentTarget.closest(".fg-wheelwrap");
       if (el) spinWheel(el);
     })
   );
@@ -1826,25 +1826,7 @@ function finalGambleBody(m, d) {
        <span class="fg-j-emoji">${j.emoji}</span>
        <span class="fg-j-lbl">${esc(j.label)}</span>
      </button>`).join("");
-  const seg = me ? wheelFor(me.id, m.id) : null;
-  let wheelCard;
-  if (!seg) {
-    wheelCard = `<div class="fg-wheel locked">🔒 Join the game to spin your wheel</div>`;
-  } else if (fgSpun(m.id)) {
-    wheelCard = `<div class="fg-wheel done" data-wheel="${m.id}">
-         <div class="fg-reel"><span class="fg-reel-face">${seg.emoji}</span></div>
-         <div class="fg-wheel-out">${wheelResultHtml(seg)}</div>
-       </div>`;
-  } else {
-    wheelCard = `<div class="fg-wheel ready" data-wheel="${m.id}">
-         <div class="fg-reel"><span class="fg-reel-face">🎡</span></div>
-         <div class="fg-wheel-out">
-           <b>Tap to spin!</b>
-           <small>Your luck bonus for the Final</small>
-         </div>
-         <button class="fg-spin-btn" data-spin="${m.id}">SPIN 🎡</button>
-       </div>`;
-  }
+  const wheelCard = buildWheel(m);
   return `
     <div class="fg-wrap">
       <div class="fg-title">🎰 THE FINAL GAMBLE <span>make it count</span></div>
@@ -1877,33 +1859,94 @@ function wheelResultHtml(seg) {
 const fgSpun = (mid) => { try { return !!localStorage.getItem(`fgspin_${mid}`); } catch { return false; } };
 const fgMarkSpun = (mid) => { try { localStorage.setItem(`fgspin_${mid}`, "1"); } catch {} };
 
-// Interactive spin: rattle the reel, then settle on this player's sealed segment.
-function spinWheel(el) {
-  const mid = el.dataset.wheel;
-  const face = el.querySelector(".fg-reel-face");
-  const btn = el.querySelector(".fg-spin-btn");
-  const out = el.querySelector(".fg-wheel-out");
+const SPIN_MS = 10000;                         // wheel spin duration (~10s decel)
+const WHEEL_COLORS = ["#7c3aed", "#f4c542", "#2ea36b", "#e0632b", "#3aa0e0", "#c8489a"];
+const wheelValLbl = (seg) =>
+  seg.kind === "dblJoker" ? "2× JOKER" : seg.kind === "insure" ? "INSURE" : `+${seg.add}`;
+
+// Point on the wheel (viewBox 0..100), angle measured CLOCKWISE from the top.
+function wheelPt(angleDeg, r) {
+  const a = (angleDeg * Math.PI) / 180;
+  return [50 + r * Math.sin(a), 50 - r * Math.cos(a)];
+}
+// Where this player's wheel lands: the sealed segment, its index, and the wheel's
+// resting rotation (so the segment sits under the top pointer). Deterministic.
+function wheelLanding(playerId, matchId) {
+  const segs = (FG() && FG().wheel) || [];
+  const seg = wheelFor(playerId, matchId);
+  const idx = Math.max(0, segs.indexOf(seg));
+  const step = 360 / segs.length;
+  const jitter = (fgHash(`${playerId}|${matchId}|jit`) % 41) - 20;   // ±20° within the slice
+  const rest = ((-(idx * step + step / 2) + jitter) % 360 + 360) % 360;
+  return { seg, idx, step, rest };
+}
+// The big prize wheel: an SVG disc with every segment visible, a pointer, and a
+// SPIN hub. All outcomes are shown; it lands on the player's sealed one.
+function buildWheel(m) {
   const fg = FG();
-  if (!face || !fg || !me || el.classList.contains("spinning")) return;
-  const seg = wheelFor(me.id, mid);
+  if (!fg || !me) return `<div class="fg-wheel-empty">🔒 Join the game to spin your wheel</div>`;
+  const segs = fg.wheel;
+  const step = 360 / segs.length;
+  const slices = segs.map((seg, k) => {
+    const [x0, y0] = wheelPt(k * step, 48);
+    const [x1, y1] = wheelPt((k + 1) * step, 48);
+    const large = step > 180 ? 1 : 0;
+    const [ex, ey] = wheelPt(k * step + step / 2, 31);   // label anchor
+    const col = WHEEL_COLORS[k % WHEEL_COLORS.length];
+    return `
+      <path d="M50 50 L${x0.toFixed(2)} ${y0.toFixed(2)} A48 48 0 ${large} 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z"
+            fill="${col}" stroke="#0b0716" stroke-width="0.7"/>
+      <g transform="translate(${ex.toFixed(2)} ${ey.toFixed(2)})">
+        <text text-anchor="middle" y="-1" font-size="8">${seg.emoji}</text>
+        <text text-anchor="middle" y="6" font-size="3.6" font-weight="800" fill="#fff">${wheelValLbl(seg)}</text>
+      </g>`;
+  }).join("");
+  const { rest } = wheelLanding(me.id, m.id);
+  const spun = fgSpun(m.id);
+  const restStyle = spun ? ` style="transform:rotate(${rest}deg)"` : "";
+  const seg = wheelFor(me.id, m.id);
+  return `
+    <div class="fg-wheelbox">
+      <div class="fg-wheelwrap ${spun ? "done" : "ready"}" data-wheel="${m.id}">
+        <div class="fg-pointer"></div>
+        <svg class="fg-wheel-svg" viewBox="0 0 100 100"${restStyle} aria-hidden="true">
+          <circle cx="50" cy="50" r="49" fill="none" stroke="#f4c542" stroke-width="1.5"/>
+          ${slices}
+          <circle cx="50" cy="50" r="9" fill="#140c26" stroke="#f4c542" stroke-width="1"/>
+        </svg>
+        <button class="fg-hub" data-spin="${m.id}" ${spun ? "disabled" : ""}>${spun ? seg.emoji : "SPIN"}</button>
+      </div>
+      <div class="fg-wheel-out">${spun ? wheelResultHtml(seg) : `<b>Give it a spin! 🎡</b><small>Watch it roll — it'll land on your surprise bonus.</small>`}</div>
+    </div>`;
+}
+
+// Big-wheel spin: many turns + a long ease-out, settling on the sealed segment.
+function spinWheel(wrap) {
+  const mid = wrap.dataset.wheel;
+  const fg = FG();
+  const svg = wrap.querySelector(".fg-wheel-svg");
+  const hub = wrap.querySelector(".fg-hub");
+  const out = wrap.closest(".fg-wheelbox")?.querySelector(".fg-wheel-out");
+  if (!svg || !fg || !me || wrap.classList.contains("spinning")) return;
+  const { seg, rest } = wheelLanding(me.id, mid);
   if (!seg) return;
-  const faces = fg.wheel.map((s) => s.emoji);
-  if (btn) { btn.disabled = true; btn.textContent = "Spinning…"; }
-  el.classList.add("spinning");
-  let ticks = 0;
-  const iv = setInterval(() => {
-    ticks++;
-    face.textContent = faces[ticks % faces.length];
-    if (ticks >= 24) {
-      clearInterval(iv);
-      face.textContent = seg.emoji;
-      el.classList.remove("spinning");
-      el.classList.add("done");
-      if (btn) btn.remove();
-      if (out) out.innerHTML = wheelResultHtml(seg);
-      fgMarkSpun(mid);
-    }
-  }, 60);
+  wrap.classList.add("spinning");
+  wrap.classList.remove("ready");
+  if (hub) { hub.disabled = true; hub.textContent = "…"; }
+  const target = rest + 360 * 9;                 // 9 full turns, then settle
+  svg.style.transition = `transform ${SPIN_MS}ms cubic-bezier(0.08, 0.62, 0.05, 1)`;
+  requestAnimationFrame(() => { svg.style.transform = `rotate(${target}deg)`; });
+  const finish = () => {
+    wrap.classList.remove("spinning");
+    wrap.classList.add("done");
+    if (hub) { hub.textContent = seg.emoji; }
+    if (out) { out.innerHTML = wheelResultHtml(seg); out.classList.add("pop"); }
+    fgMarkSpun(mid);
+  };
+  let done = false;
+  const once = () => { if (done) return; done = true; finish(); };
+  svg.addEventListener("transitionend", once, { once: true });
+  setTimeout(once, SPIN_MS + 250);               // fallback if transitionend is missed
 }
 
 function revealBlock(m) {

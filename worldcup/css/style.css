@@ -778,40 +778,47 @@ main { padding: 14px; max-width: 640px; margin: 0 auto; }
 .fg-j-emoji { font-size: 18px; line-height: 1; }
 .fg-j-lbl { font-size: 12px; font-weight: 700; line-height: 1.15; }
 .fg-joker.sel { border-color: #7c5cff; background: #241c45; box-shadow: 0 0 12px rgba(124,92,255,.4); }
-/* wheel */
-.fg-wheel {
-  display: flex; align-items: center; gap: 12px; padding: 12px;
-  border-radius: 14px; background: #120c22; border: 1.5px solid #6d4bd0;
+/* ===== the big prize wheel ===== */
+.fg-wheel-empty { text-align: center; color: var(--muted); font-size: 12.5px; padding: 16px;
+  border-radius: 14px; background: #120c22; border: 1.5px solid #6d4bd0; }
+.fg-wheelbox { display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 14px 12px 6px; border-radius: 16px;
+  background: radial-gradient(circle at 50% 0%, #241041 0%, #120c22 70%); border: 1.5px solid #6d4bd0; }
+.fg-wheelwrap { position: relative; width: min(268px, 76vw); aspect-ratio: 1; }
+.fg-wheel-svg {
+  width: 100%; height: 100%; transform-origin: 50% 50%;
+  filter: drop-shadow(0 6px 20px rgba(0,0,0,.5)) drop-shadow(0 0 12px rgba(124,92,255,.35));
 }
-.fg-wheel.locked { justify-content: center; color: var(--muted); font-size: 12.5px; padding: 16px; }
-.fg-reel {
-  width: 58px; height: 58px; flex: none; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; overflow: hidden;
-  background: radial-gradient(circle at 50% 40%, #3a2668, #170f2e);
-  border: 2px solid var(--gold); box-shadow: inset 0 0 12px rgba(0,0,0,.6), 0 0 14px rgba(244,197,66,.3);
+.fg-wheelwrap.ready .fg-wheel-svg { animation: fgIdle 3s ease-in-out infinite; }
+.fg-wheelwrap.spinning .fg-wheel-svg { animation: none; }
+/* pointer at 12 o'clock, pointing down into the wheel */
+.fg-pointer {
+  position: absolute; top: -3px; left: 50%; transform: translateX(-50%); z-index: 3;
+  width: 0; height: 0; border-left: 11px solid transparent; border-right: 11px solid transparent;
+  border-top: 18px solid var(--gold); filter: drop-shadow(0 2px 3px rgba(0,0,0,.55));
 }
-.fg-reel-face { font-size: 30px; line-height: 1; }
-.fg-wheel.spinning .fg-reel { animation: fgSpin .5s linear infinite; }
-.fg-wheel.spinning .fg-reel-face { animation: fgBlur .13s linear infinite; }
-.fg-wheel.done .fg-reel { animation: fgPop .5s ease; }
-.fg-wheel-out { flex: 1; min-width: 0; }
-.fg-wheel-out b { display: block; font-size: 16px; font-weight: 900; color: var(--gold);
-  text-shadow: 0 0 10px rgba(244,197,66,.4); }
-.fg-wheel-out small { display: block; font-size: 11px; color: #c9b6ff; margin-top: 3px; line-height: 1.35; }
+/* center SPIN hub button */
+.fg-hub {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;
+  width: 34%; height: 34%; border-radius: 50%; cursor: pointer; border: 3px solid var(--gold);
+  background: radial-gradient(circle at 50% 35%, #3a2668, #140c26);
+  color: var(--gold); font-size: 15px; font-weight: 900; letter-spacing: .5px;
+  box-shadow: 0 0 16px rgba(244,197,66,.5), inset 0 0 10px rgba(0,0,0,.6);
+  display: flex; align-items: center; justify-content: center;
+  animation: fgPulse 1.4s ease-in-out infinite;
+}
+.fg-hub:disabled { animation: none; cursor: default; }
+.fg-wheelwrap.done .fg-hub { font-size: 26px; border-color: var(--gold);
+  box-shadow: 0 0 22px rgba(244,197,66,.7), inset 0 0 10px rgba(0,0,0,.6); }
+.fg-wheel-out { text-align: center; min-height: 40px; }
+.fg-wheel-out b { display: block; font-size: 18px; font-weight: 900; color: var(--gold);
+  text-shadow: 0 0 12px rgba(244,197,66,.45); }
+.fg-wheel-out small { display: block; font-size: 11.5px; color: #c9b6ff; margin-top: 3px; line-height: 1.4; }
 .fg-wheel-out small b { display: inline; font-size: inherit; color: #fff; text-shadow: none; }
-.fg-spin-btn {
-  flex: none; padding: 11px 18px; border-radius: 12px; border: none; cursor: pointer;
-  font-size: 14px; font-weight: 900; letter-spacing: .5px; color: #2b2305;
-  background: linear-gradient(90deg, var(--gold), #ffdf7e);
-  box-shadow: 0 3px 14px rgba(244,197,66,.4); animation: fgPulse 1.5s ease-in-out infinite;
-}
-.fg-spin-btn:disabled { animation: none; opacity: .7; cursor: default; }
-.fg-wheel.ready .fg-reel { animation: fgIdle 2.4s ease-in-out infinite; }
-@keyframes fgPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
-@keyframes fgIdle { 0%,100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } }
-@keyframes fgSpin { to { transform: rotate(360deg); } }
-@keyframes fgBlur { 0%,100% { transform: translateY(-1px); opacity: .85; } 50% { transform: translateY(1px); opacity: 1; } }
-@keyframes fgPop { 0% { transform: scale(.6); } 60% { transform: scale(1.18); } 100% { transform: scale(1); } }
+.fg-wheel-out.pop { animation: fgPop .55s ease; }
+@keyframes fgPulse { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-50%) scale(1.08); } }
+@keyframes fgIdle { 0%,100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+@keyframes fgPop { 0% { transform: scale(.7); opacity: .4; } 60% { transform: scale(1.12); } 100% { transform: scale(1); opacity: 1; } }
 .save-btn.save-final {
   display: block; width: 100%; margin: 14px 0 4px; padding: 13px; font-size: 15px;
   background: linear-gradient(90deg, var(--gold), #ffdf7e); color: #2b2305;
