@@ -399,16 +399,6 @@ async function main() {
     `${tokens.length} devices registered`
   );
 
-  // 🔎 Live readout of the Final's ESPN status (for tonight's halftime-bonus watch).
-  const finalM = matches.find((m) => isFinalMatch(m));
-  if (finalM) {
-    console.log(
-      `FINAL WATCH: ${finalM.home.abbr} ${finalM.home.score ?? "-"}-${finalM.away.score ?? "-"} ${finalM.away.abbr} | ` +
-      `state=${finalM.state} period=${finalM.period} completed=${finalM.completed} ` +
-      `detail="${finalM.detail}" status="${finalM.statusName}" isHalftime=${isHalftime(finalM)}`
-    );
-  }
-
   // No devices yet? Do nothing, so no event gets burned.
   if (!tokens.length) {
     console.log("No registered devices yet.");
@@ -420,6 +410,16 @@ async function main() {
   if (!res.ok) throw new Error(`ESPN responded ${res.status}`);
   const matches = ((await res.json()).events || []).map(normalizeEvent);
   const now = Date.now();
+
+  // 🔎 Live readout of the Final's ESPN status (for tonight's halftime-bonus watch).
+  const finalM = matches.find((m) => isFinalMatch(m));
+  if (finalM) {
+    console.log(
+      `FINAL WATCH: ${finalM.home.abbr} ${finalM.home.score ?? "-"}-${finalM.away.score ?? "-"} ${finalM.away.abbr} | ` +
+      `state=${finalM.state} period=${finalM.period} completed=${finalM.completed} ` +
+      `detail="${finalM.detail}" status="${finalM.statusName}" isHalftime=${isHalftime(finalM)}`
+    );
+  }
 
   // Lazily fetch a single match's predictions, only when an event needs them,
   // cached per run. Keeps Firestore reads tiny vs reading every prediction.
