@@ -87,12 +87,12 @@ window.FINAL_GAMBLE = {
   penalty: { 2: 5, 3: 10 },                // points LOST on a 0-base miss (×1 never loses)
   jokerPts: 5,                             // flat reward for a correct Joker prop
   jokers: [                                // pick exactly one (3 either/or markets)
-    { id: "over",    emoji: "🔥", label: "Over 2.5 goals",  hint: "3 or more goals in the game" },
-    { id: "under",   emoji: "🧊", label: "Under 2.5 goals", hint: "2 goals or fewer" },
-    { id: "btts_y",  emoji: "⚔️", label: "Both teams score", hint: "Both sides find the net" },
-    { id: "btts_n",  emoji: "🛑", label: "A clean sheet",    hint: "At least one side is kept out" },
-    { id: "margin2", emoji: "💥", label: "Won by 2+ goals",  hint: "The winner wins by 2 or more" },
-    { id: "close",   emoji: "😰", label: "1-goal game / draw", hint: "Decided by one goal, or level" },
+    { id: "odd",     emoji: "🔢", label: "Odd total goals",  hint: "Total goals is 1, 3, 5, 7…" },
+    { id: "even",    emoji: "⚖️", label: "Even total goals", hint: "Total goals is 0, 2, 4, 6…" },
+    { id: "btts_y",  emoji: "⚔️", label: "Both teams score", hint: "Both sides score at least once" },
+    { id: "btts_n",  emoji: "🧤", label: "A clean sheet",    hint: "At least one team is kept scoreless" },
+    { id: "margin2", emoji: "💥", label: "Won by 2+ goals",  hint: "The winner wins by two or more" },
+    { id: "close",   emoji: "😰", label: "1-goal game / draw", hint: "Decided by a single goal, or level" },
   ],
   // Weighted luck wheel (weights need not sum to 100 — they're relative).
   wheel: [

@@ -992,8 +992,8 @@ const isFinalMatch = (m) => {
   const fg = FG();
   return !!(fg && fg.enabled && isKnockout(m) && koRound(m) === "F");
 };
-// Stable 32-bit string hash (FNV-1a). MUST match notify.js so a player's wheel
-// spin is identical on every device and on the server — no re-rolls, no cheating.
+// Stable 32-bit string hash (FNV-1a) — used only for the cosmetic resting angle
+// of a spun wheel, so it looks natural and is stable across re-renders.
 function fgHash(s) {
   let h = 2166136261 >>> 0;
   for (let i = 0; i < s.length; i++) {
@@ -1002,13 +1002,16 @@ function fgHash(s) {
   }
   return h >>> 0;
 }
-// The wheel segment locked to this player for this match (weighted, deterministic).
-function wheelFor(playerId, matchId) {
-  const fg = FG();
-  const segs = (fg && fg.wheel) || [];
+// A wheel segment by its id (the value stored on the prediction when the player
+// spins). Returns null when the player hasn't spun (no wheel bonus then).
+const wheelSegById = (id) => (FG()?.wheel || []).find((s) => s.id === id) || null;
+// Weighted-random pick — the actual luck of a fresh spin. Locked into the
+// prediction doc the moment it's rolled, so it can't be re-rolled afterwards.
+function pickWheelRandom() {
+  const segs = FG()?.wheel || [];
   if (!segs.length) return null;
   const total = segs.reduce((s, x) => s + (x.weight || 1), 0);
-  let r = fgHash(`${playerId}|${matchId}|wheel`) % total;
+  let r = Math.random() * total;
   for (const seg of segs) { r -= (seg.weight || 1); if (r < 0) return seg; }
   return segs[segs.length - 1];
 }
@@ -1018,8 +1021,8 @@ function resolveJoker(pred, m) {
   if (!jk || m.home.score == null) return false;
   const hs = m.home.score, as = m.away.score, total = hs + as, margin = Math.abs(hs - as);
   switch (jk) {
-    case "over":    return total >= 3;
-    case "under":   return total <= 2;
+    case "odd":     return total % 2 === 1;
+    case "even":    return total % 2 === 0;
     case "btts_y":  return hs > 0 && as > 0;
     case "btts_n":  return !(hs > 0 && as > 0);
     case "margin2": return margin >= 2;
@@ -1032,10 +1035,9 @@ function resolveJoker(pred, m) {
 function finalGambleDelta(pred, m, playerId) {
   const fg = FG();
   if (!isFinalMatch(m) || !m.completed || m.home.score == null) return 0;
-  const pid = playerId || pred.playerId;
   const core = scoreKnockout(pred, m);
   const stake = fg.stakes.includes(pred.finalStake) ? pred.finalStake : 1;
-  const seg = wheelFor(pid, m.id) || {};
+  const seg = wheelSegById(pred.finalWheel) || {};   // {} when the player never spun
   let delta = 0;
   if (core > 0) {
     delta += core * (stake - 1);                                   // 🎰 multiply the win
@@ -1055,7 +1057,7 @@ function gambleRevealStrip(pred, m, playerId) {
   if (!fg || m.home.score == null) return "";
   const core = scoreKnockout(pred, m);
   const stake = fg.stakes.includes(pred.finalStake) ? pred.finalStake : 1;
-  const seg = wheelFor(playerId || pred.playerId, m.id) || {};
+  const seg = wheelSegById(pred.finalWheel) || {};
   const chips = [];
   // 🎰 stake
   if (core > 0) {
@@ -1467,7 +1469,7 @@ function renderMatches() {
   view.querySelectorAll("[data-spin]").forEach((b) =>
     b.addEventListener("click", (e) => {
       const el = e.currentTarget.closest(".fg-wheelwrap");
-      if (el) spinWheel(el);
+      if (el) onSpin(el);
     })
   );
   view.querySelectorAll("[data-winner]").forEach((b) =>
@@ -1700,6 +1702,7 @@ function matchCard(m) {
       koMethod: mine?.koMethod ?? null,
       finalStake: mine?.finalStake ?? 1,
       finalJoker: mine?.finalJoker ?? null,
+      finalWheel: mine?.finalWheel ?? null,
     };
     draft[m.id] = d;
     const lockNote = `<div class="lock-note">${mine ? `✅ Your bet: <b>${pickLabel(mine, m)}</b> · ` : ""}${
@@ -1841,7 +1844,7 @@ function finalGambleBody(m, d) {
 
       <div class="ko-sec-h"><b>5</b> 🎡 The Wheel — spin for a luck bonus</div>
       ${wheelCard}
-      <div class="ko-hint">Everyone gets <b>one</b> spin. The result is sealed to you — it lands the same no matter when you spin, so nobody can re-roll for a better one. It's added to your Final score automatically, even if you forget to spin.</div>
+      <div class="ko-hint">You get <b>one</b> spin — it rolls a <b>random</b> luck bonus and <b>locks</b> the moment it lands (saved with your bet, so no re-rolls). ⚠️ No spin = no wheel bonus, so don't forget! Pick who + how first, then spin.</div>
     </div>`;
 }
 // Plain-language result line for a landed wheel segment.
@@ -1854,11 +1857,6 @@ function wheelResultHtml(seg) {
     return `<b>💎 JACKPOT +${seg.add}!</b><small><b>+${seg.add} points</b> added straight to your Final score. 🤑</small>`;
   return `<b>${seg.emoji} +${seg.add}</b><small><b>+${seg.add} bonus points</b> added straight to your Final score.</small>`;
 }
-// Per-device "already spun this match" flag (so the reveal sticks between opens).
-// The scoring outcome is deterministic regardless — this only gates the animation.
-const fgSpun = (mid) => { try { return !!localStorage.getItem(`fgspin_${mid}`); } catch { return false; } };
-const fgMarkSpun = (mid) => { try { localStorage.setItem(`fgspin_${mid}`, "1"); } catch {} };
-
 const SPIN_MS = 10000;                         // wheel spin duration (~10s decel)
 const WHEEL_COLORS = ["#7c3aed", "#f4c542", "#2ea36b", "#e0632b", "#3aa0e0", "#c8489a"];
 const wheelValLbl = (seg) =>
@@ -1869,19 +1867,18 @@ function wheelPt(angleDeg, r) {
   const a = (angleDeg * Math.PI) / 180;
   return [50 + r * Math.sin(a), 50 - r * Math.cos(a)];
 }
-// Where this player's wheel lands: the sealed segment, its index, and the wheel's
-// resting rotation (so the segment sits under the top pointer). Deterministic.
-function wheelLanding(playerId, matchId) {
-  const segs = (FG() && FG().wheel) || [];
-  const seg = wheelFor(playerId, matchId);
+// Resting rotation that puts `seg` under the top pointer (+ a stable cosmetic
+// jitter so it doesn't sit dead-centre). Visual only — the outcome is `seg`.
+function wheelRestAngle(seg, matchId) {
+  const segs = FG()?.wheel || [];
   const idx = Math.max(0, segs.indexOf(seg));
   const step = 360 / segs.length;
-  const jitter = (fgHash(`${playerId}|${matchId}|jit`) % 41) - 20;   // ±20° within the slice
-  const rest = ((-(idx * step + step / 2) + jitter) % 360 + 360) % 360;
-  return { seg, idx, step, rest };
+  const jitter = (fgHash(`${me?.id || ""}|${matchId}|jit`) % 41) - 20;   // ±20° within the slice
+  return ((-(idx * step + step / 2) + jitter) % 360 + 360) % 360;
 }
 // The big prize wheel: an SVG disc with every segment visible, a pointer, and a
-// SPIN hub. All outcomes are shown; it lands on the player's sealed one.
+// SPIN hub. Once the player spins, their random result is locked on the
+// prediction (pred.finalWheel) — a re-spin just replays the same landing.
 function buildWheel(m) {
   const fg = FG();
   if (!fg || !me) return `<div class="fg-wheel-empty">🔒 Join the game to spin your wheel</div>`;
@@ -1901,10 +1898,11 @@ function buildWheel(m) {
         <text text-anchor="middle" y="6" font-size="3.6" font-weight="800" fill="#fff">${wheelValLbl(seg)}</text>
       </g>`;
   }).join("");
-  const { rest } = wheelLanding(me.id, m.id);
-  const spun = fgSpun(m.id);
-  const restStyle = spun ? ` style="transform:rotate(${rest}deg)"` : "";
-  const seg = wheelFor(me.id, m.id);
+  const mine = predictions[`${m.id}_${me.id}`];
+  const lockedId = (draft[m.id] && draft[m.id].finalWheel) || mine?.finalWheel || null;
+  const seg = lockedId ? wheelSegById(lockedId) : null;
+  const spun = !!seg;
+  const restStyle = spun ? ` style="transform:rotate(${wheelRestAngle(seg, m.id)}deg)"` : "";
   return `
     <div class="fg-wheelbox">
       <div class="fg-wheelwrap ${spun ? "done" : "ready"}" data-wheel="${m.id}">
@@ -1916,44 +1914,67 @@ function buildWheel(m) {
         </svg>
         <button class="fg-hub" data-spin="${m.id}">SPIN</button>
       </div>
-      <div class="fg-wheel-out">${spun ? wheelResultHtml(seg) : `<b>Give it a spin! 🎡</b><small>Watch it roll — it'll land on your surprise bonus.</small>`}</div>
+      <div class="fg-wheel-out">${spun ? wheelResultHtml(seg) : `<b>Give it a spin! 🎡</b><small>Roll it once — you'll lock in a random luck bonus.</small>`}</div>
     </div>`;
 }
 
-// Big-wheel spin: many turns + a long ease-out, settling on the sealed segment.
-function spinWheel(wrap) {
+// The spin. First spin = roll a weighted-random segment, SAVE it onto the
+// prediction (so it can't be re-rolled), then animate. After that it's locked
+// and a tap just replays the same landing.
+async function onSpin(wrap) {
   const mid = wrap.dataset.wheel;
-  const fg = FG();
+  const m = matches.find((x) => x.id === mid);
+  const svg = wrap.querySelector(".fg-wheel-svg");
+  const hub = wrap.querySelector(".fg-hub");
+  if (!m || !me || !svg || wrap.classList.contains("spinning")) return;
+  const d = draft[mid];
+  const mine = predictions[`${mid}_${me.id}`];
+  let segId = (d && d.finalWheel) || mine?.finalWheel || null;
+  if (!segId) {                                   // first spin — lock it in
+    if (!isOpen(m)) { toast("🔒 Predictions are locked!"); render(); return; }
+    if (!d || !d.koWinner || !d.koMethod) { toast("👆 Pick who wins & how first, then spin!"); return; }
+    if (koInconsistent(d)) { toast("⚠️ Make your score match your pick, then spin."); return; }
+    const pick = pickWheelRandom();
+    if (!pick) return;
+    d.finalWheel = pick.id;
+    if (hub) { hub.disabled = true; hub.textContent = "…"; }
+    const ok = await savePrediction(m, { silent: true });
+    if (!ok) { d.finalWheel = null; if (hub) { hub.disabled = false; hub.textContent = "SPIN"; } return; }
+    segId = pick.id;
+    toast("🎡 Bet locked — good luck!");
+  }
+  const seg = wheelSegById(segId);
+  if (!seg) return;
+  animateSpin(wrap, seg, mid);
+}
+
+// Visual spin: reset to 0, then 9 turns + long ease-out to the segment's rest.
+function animateSpin(wrap, seg, mid) {
   const svg = wrap.querySelector(".fg-wheel-svg");
   const hub = wrap.querySelector(".fg-hub");
   const out = wrap.closest(".fg-wheelbox")?.querySelector(".fg-wheel-out");
-  if (!svg || !fg || !me || wrap.classList.contains("spinning")) return;
-  const { seg, rest } = wheelLanding(me.id, mid);
-  if (!seg) return;
+  if (!svg) return;
   wrap.classList.add("spinning");
   wrap.classList.remove("ready", "done");
   if (hub) { hub.disabled = true; hub.textContent = "…"; }
-  // Reset to 0 (clearing any resting rotation from a previous spin), force a
-  // reflow so the reset lands, then animate the full spin in the next frame.
   svg.style.transition = "none";
   svg.style.transform = "rotate(0deg)";
   void svg.getBoundingClientRect();
-  const target = rest + 360 * 9;                 // 9 full turns, then settle
+  const target = wheelRestAngle(seg, mid) + 360 * 9;
   requestAnimationFrame(() => {
     svg.style.transition = `transform ${SPIN_MS}ms cubic-bezier(0.08, 0.62, 0.05, 1)`;
     svg.style.transform = `rotate(${target}deg)`;
   });
+  let done = false;
   const finish = () => {
+    if (done) return; done = true;
     wrap.classList.remove("spinning");
     wrap.classList.add("done");
     if (hub) { hub.disabled = false; hub.textContent = "SPIN"; }
     if (out) { out.innerHTML = wheelResultHtml(seg); out.classList.add("pop"); }
-    fgMarkSpun(mid);
   };
-  let done = false;
-  const once = () => { if (done) return; done = true; finish(); };
-  svg.addEventListener("transitionend", once, { once: true });
-  setTimeout(once, SPIN_MS + 250);               // fallback if transitionend is missed
+  svg.addEventListener("transitionend", finish, { once: true });
+  setTimeout(finish, SPIN_MS + 250);              // fallback if transitionend is missed
 }
 
 function revealBlock(m) {
@@ -2075,20 +2096,24 @@ function onStep(e) {
     x.classList.toggle("sel", x.dataset.winner.split("|")[1] === d.winner));
 }
 
-async function onSave(e) {
-  const matchId = e.currentTarget.dataset.save;
-  const m = matches.find((x) => x.id === matchId);
-  if (!m || !me || !db) return;
-  if (!isOpen(m)) { toast("🔒 Too late — predictions are locked!"); render(); return; }
+const onSave = (e) => savePrediction(matches.find((x) => x.id === e.currentTarget.dataset.save));
+
+// Validate the draft and write the prediction. Returns true on success. Shared
+// by the Save button and the wheel spin (which persists finalWheel atomically).
+// opts.silent suppresses the "Saved" toast (the spin shows its own feedback).
+async function savePrediction(m, opts = {}) {
+  if (!m || !me || !db) return false;
+  const matchId = m.id;
+  if (!isOpen(m)) { toast("🔒 Too late — predictions are locked!"); render(); return false; }
   const d = draft[matchId];
   const ko = isKnockout(m);
-  if (ko && (!d.koWinner || !d.koMethod)) { toast("👆 Tap who wins & how first!"); return; }
+  if (ko && (!d.koWinner || !d.koMethod)) { toast("👆 Tap who wins & how first!"); return false; }
   if (ko && koInconsistent(d)) {
     const team = koDisplayTeam(m, d.koWinner).abbr;
     toast(d.koMethod === "pen"
       ? "⚠️ Penalties means it's level at the end of extra time — make the score a draw."
       : `⚠️ You picked ${team} to win ${d.koMethod === "et" ? "after extra time" : "in 90'"} — the score must show ${team} ahead.`);
-    return;
+    return false;
   }
   // outcome follows the score (level = draw, decisive = that team)
   const winner = resultOf(d.home, d.away);
@@ -2106,14 +2131,19 @@ async function onSave(e) {
   if (ko && isFinalMatch(m)) {
     doc.finalStake = FG().stakes.includes(d.finalStake) ? d.finalStake : 1;
     doc.finalJoker = d.finalJoker || null;
+    // Once the wheel is rolled it's locked forever — never overwrite it to null.
+    const locked = d.finalWheel || predictions[`${matchId}_${me.id}`]?.finalWheel || null;
+    if (locked) doc.finalWheel = locked;
   }
   try {
     await fs.setDoc(fs.doc(db, "predictions", `${matchId}_${me.id}`), doc);
     trackEvent("prediction_saved", { match: `${m.home.abbr}-${m.away.abbr}` });
-    toast(`🎯 Saved: ${pickLabel(doc, m)}`);
+    if (!opts.silent) toast(`🎯 Saved: ${pickLabel(doc, m)}`);
+    return true;
   } catch (err) {
     console.error(err);
     toast("⚠️ Save failed — check your connection.");
+    return false;
   }
 }
 
@@ -2653,8 +2683,8 @@ function rulesHtml() {
       <ul>
         <li>The <b>Final</b> gets three extra layers on top of your normal who + how + exact pick (base ×5). This is where the title swings — big nerve, big luck. 🔥</li>
         <li>🎰 <b>The Stake:</b> bank your base final points at <b>×1 Safe</b>, <b>×2 Bold</b> or <b>×3 All-in</b>. Nail your core pick → it's multiplied. <b>Miss it (0 base) and you PAY:</b> ×2 = <b>−${window.FINAL_GAMBLE.penalty[2]}</b>, ×3 = <b>−${window.FINAL_GAMBLE.penalty[3]}</b>. ×1 never loses.</li>
-        <li>🃏 <b>The Joker:</b> pick ONE side-bet for a flat <b>+${window.FINAL_GAMBLE.jokerPts}</b> — Over/Under 2.5 goals, Both teams to score (or a clean sheet), or Won by 2+ goals vs a 1-goal game/draw. (It's optional — tap again to unpick.)</li>
-        <li>🎡 <b>The Wheel:</b> tap <b>SPIN</b> once for a luck bonus. Your spin is <b>sealed to you</b> — it lands the same on every device, so nobody can re-roll for a better one. Land on <b>+5 / +8 / +10 / 💎 Jackpot +15</b> (straight bonus points), <b>2️⃣ Double</b> your Joker, or <b>🛡️ Insurance</b> that cancels a stake miss. It counts even if you forget to spin.</li>
+        <li>🃏 <b>The Joker:</b> pick ONE side-bet for a flat <b>+${window.FINAL_GAMBLE.jokerPts}</b> — Odd/Even total goals, Both teams to score (or a clean sheet), or Won by 2+ goals vs a 1-goal game/draw. It's a separate bet from your scoreline, so you can even hedge against your own pick. (Optional — tap again to unpick.)</li>
+        <li>🎡 <b>The Wheel:</b> tap <b>SPIN</b> once — it rolls a <b>random</b> luck bonus and <b>locks in</b> when it lands (saved with your bet, so no re-rolls). Land on <b>+5 / +8 / +10 / 💎 Jackpot +15</b> (straight bonus points), <b>2️⃣ Double</b> your Joker, or <b>🛡️ Insurance</b> that cancels a stake miss. ⚠️ No spin = no wheel bonus.</li>
         <li>Everything reveals at full time with the result — check the Final's card and the 🎰 chip on the Knockout table.</li>
       </ul>
     </div>` : ""}

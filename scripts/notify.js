@@ -107,7 +107,9 @@ const matchPoints = (pred, m) =>
   isKnockout(m) ? scoreKnockout(pred, m) : scorePrediction(pred, m.home.score, m.away.score);
 
 // 🎰 THE FINAL GAMBLE (keep in sync with FINAL_GAMBLE in firebase-config.js and
-// the finalGambleDelta/wheelFor/resolveJoker helpers in worldcup/js/app.js).
+// the finalGambleDelta/wheelSegById/resolveJoker helpers in worldcup/js/app.js).
+// The wheel result is randomised in the app and persisted on the prediction as
+// `finalWheel` (a segment id) — the server just looks it up.
 const FINAL_GAMBLE = {
   enabled: true,
   stakes: [1, 2, 3],
@@ -120,24 +122,14 @@ const FINAL_GAMBLE = {
   ],
 };
 const isFinalMatch = (m) => FINAL_GAMBLE.enabled && isKnockout(m) && koRound(m) === "F";
-function fgHash(s) {
-  let h = 2166136261 >>> 0;
-  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
-  return h >>> 0;
-}
-function wheelFor(playerId, matchId) {
-  const segs = FINAL_GAMBLE.wheel, total = segs.reduce((s, x) => s + (x.weight || 1), 0);
-  let r = fgHash(`${playerId}|${matchId}|wheel`) % total;
-  for (const seg of segs) { r -= (seg.weight || 1); if (r < 0) return seg; }
-  return segs[segs.length - 1];
-}
+const wheelSegById = (id) => FINAL_GAMBLE.wheel.find((s) => s.id === id) || null;
 function resolveJoker(pred, m) {
   const jk = pred.finalJoker;
   if (!jk || m.home.score == null) return false;
   const hs = m.home.score, as = m.away.score, total = hs + as, margin = Math.abs(hs - as);
   switch (jk) {
-    case "over": return total >= 3;
-    case "under": return total <= 2;
+    case "odd": return total % 2 === 1;
+    case "even": return total % 2 === 0;
     case "btts_y": return hs > 0 && as > 0;
     case "btts_n": return !(hs > 0 && as > 0);
     case "margin2": return margin >= 2;
@@ -149,7 +141,7 @@ function finalGambleDelta(pred, m, playerId) {
   if (!isFinalMatch(m) || !m.completed || m.home.score == null) return 0;
   const core = scoreKnockout(pred, m);
   const stake = FINAL_GAMBLE.stakes.includes(pred.finalStake) ? pred.finalStake : 1;
-  const seg = wheelFor(playerId || pred.playerId, m.id) || {};
+  const seg = wheelSegById(pred.finalWheel) || {};   // {} when the player never spun
   let delta = 0;
   if (core > 0) delta += core * (stake - 1);
   else { const pen = FINAL_GAMBLE.penalty[stake] || 0; if (pen && seg.kind !== "insure") delta -= pen; }
