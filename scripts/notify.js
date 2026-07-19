@@ -399,6 +399,16 @@ async function main() {
     `${tokens.length} devices registered`
   );
 
+  // 🔎 Live readout of the Final's ESPN status (for tonight's halftime-bonus watch).
+  const finalM = matches.find((m) => isFinalMatch(m));
+  if (finalM) {
+    console.log(
+      `FINAL WATCH: ${finalM.home.abbr} ${finalM.home.score ?? "-"}-${finalM.away.score ?? "-"} ${finalM.away.abbr} | ` +
+      `state=${finalM.state} period=${finalM.period} completed=${finalM.completed} ` +
+      `detail="${finalM.detail}" status="${finalM.statusName}" isHalftime=${isHalftime(finalM)}`
+    );
+  }
+
   // No devices yet? Do nothing, so no event gets burned.
   if (!tokens.length) {
     console.log("No registered devices yet.");
@@ -605,13 +615,13 @@ async function main() {
       body: "Spain 🆚 Argentina just got wild. On top of your pick: 🎰 Stake your points, 🃏 play a Joker, and 🎡 SPIN a Luck Wheel. Open the app for a 30-second guide 👇" },
     { id: "fg-2026-07-19-1700", at: "2026-07-19T14:00:00Z",
       title: "🎯 3 new steps for the Final",
-      body: "1️⃣ Pick who wins, how & the score (base ×5). 2️⃣ Stake it ×1/×2/×3. 3️⃣ Pick a Joker (+5). 4️⃣ SPIN the wheel for up to 💎 +15. Open the app & set your bet!" },
+      body: "1️⃣ Pick who wins, how & the score (base ×5). 2️⃣ Stake it ×1/×2/×3. 3️⃣ Pick a Joker (+5). 4️⃣ SPIN the wheel for up to 💎 +15. Plus a live 🎤 Halftime Show Bonus drops during the concert break! Open & set your bet." },
     { id: "fg-2026-07-19-1900", at: "2026-07-19T16:00:00Z",
       title: "⏳ Don't miss the Final Gamble",
-      body: "Make your Spain–Argentina pick, choose your Stake & Joker, then 🎡 SPIN the wheel to lock your luck. ⚠️ No spin = no wheel bonus! Tap to play." },
+      body: "Make your Spain–Argentina pick, choose your Stake & Joker, then 🎡 SPIN the wheel to lock your luck. ⚠️ No spin = no wheel bonus! And a live 🎤 Halftime bonus lands during the Shakira break — stay tuned. Tap to play." },
     { id: "fg-2026-07-19-2100", at: "2026-07-19T18:00:00Z",
       title: "🚨 LAST CALL before kickoff!",
-      body: "Lock your Final bet NOW — pick, Stake, Joker, and 🎡 SPIN before it locks at kickoff. Biggest points of the tournament are on the line! 🎰⚽" },
+      body: "Lock your Final bet NOW — pick, Stake, Joker, and 🎡 SPIN before it locks at 22:00. Then a live 🎤 Halftime Show Bonus during the concert break for +6 more. Biggest points of the tournament! 🎰⚽" },
   ];
   {
     const nowMs = Date.now();
