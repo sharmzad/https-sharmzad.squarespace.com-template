@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Sharmzad - Pacchetto Combo 80€</title>
+<style>
+@page { size: A4; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Helvetica', 'Arial', sans-serif; color: #2d3142; line-height: 1.45; font-size: 10.5pt; }
+h1, h2, h3, h4 { font-family: 'Georgia', serif; color: #1a1a2e; line-height: 1.15; }
+.page { width: 210mm; height: 297mm; page-break-after: always; position: relative; overflow: hidden; }
+.page:last-child { page-break-after: auto; }
+.p1 { display: flex; flex-direction: column; background: #fdf8f3; }
+.hero { background: linear-gradient(135deg, #1e6091 0%, #144d75 60%, #0a2f4a 100%); color: white; padding: 14mm 18mm 12mm; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -60mm; right: -40mm; width: 180mm; height: 180mm; background: radial-gradient(circle, rgba(212,160,76,0.28), transparent 70%); border-radius: 50%; }
+.hero-top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; padding-bottom: 8mm; border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 8mm; }
+.brand { font-family: 'Georgia', serif; font-size: 22pt; font-weight: 900; color: #d4a04c; letter-spacing: 5px; line-height: 1; }
+.brand-sub { font-size: 7.5pt; letter-spacing: 3px; text-transform: uppercase; opacity: 0.8; margin-top: 3pt; }
+.badge { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.4); padding: 5pt 12pt; border-radius: 20pt; font-size: 8pt; letter-spacing: 2px; text-transform: uppercase; }
+.hero-body { display: flex; align-items: center; justify-content: space-between; gap: 10mm; position: relative; z-index: 1; }
+.hero-text { flex: 1; }
+.hero-title { font-size: 26pt; color: white; font-weight: 900; line-height: 1.1; margin-bottom: 4mm; }
+.hero-title .hl { color: #d4a04c; font-style: italic; }
+.hero-sub { font-size: 11pt; opacity: 0.9; line-height: 1.4; max-width: 110mm; }
+.price-box { background: rgba(255,255,255,0.1); border: 2px solid #d4a04c; padding: 6mm 10mm; border-radius: 5mm; text-align: center; min-width: 45mm; }
+.price-label { font-size: 7pt; letter-spacing: 2px; text-transform: uppercase; opacity: 0.85; margin-bottom: 2pt; }
+.price { font-family: 'Georgia', serif; font-size: 40pt; color: #d4a04c; font-weight: 900; line-height: 1; }
+.price-note { font-size: 8pt; opacity: 0.8; margin-top: 2pt; }
+.experiences { padding: 10mm 18mm 8mm; flex: 1; }
+.exp-title { text-align: center; margin-bottom: 6mm; }
+.exp-tag { color: #d4a04c; font-size: 8pt; text-transform: uppercase; letter-spacing: 3px; font-weight: 600; margin-bottom: 3pt; display: block; }
+.exp-title h2 { font-size: 20pt; color: #1a1a2e; }
+.exp-title h2 .hl { color: #d4a04c; font-style: italic; }
+.exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+.exp-card { background: white; border-radius: 3mm; padding: 5mm 5mm 5mm 4mm; border-left: 4pt solid #d4a04c; display: flex; align-items: flex-start; gap: 4mm; box-shadow: 0 1mm 2mm rgba(0,0,0,0.04); }
+.exp-num { background: linear-gradient(135deg, #d4a04c, #e8743b); color: white; width: 9mm; height: 9mm; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Georgia', serif; font-weight: 900; font-size: 11pt; flex-shrink: 0; }
+.exp-info h3 { font-size: 11.5pt; color: #1a1a2e; margin-bottom: 1mm; line-height: 1.1; }
+.exp-info p { font-size: 8.5pt; color: #6b7280; line-height: 1.4; }
+.cta-strip { background: linear-gradient(135deg, #1a1a2e, #2a2a4a); color: white; padding: 8mm 18mm; display: flex; align-items: center; justify-content: space-between; gap: 8mm; }
+.cta-strip h3 { color: white; font-size: 16pt; line-height: 1.15; margin-bottom: 2mm; }
+.cta-strip h3 .hl { color: #d4a04c; font-style: italic; }
+.cta-strip p { font-size: 9.5pt; opacity: 0.9; }
+.cta-contacts { text-align: right; font-size: 10pt; line-height: 1.6; flex-shrink: 0; }
+.cta-contacts .line { display: flex; align-items: center; gap: 5pt; justify-content: flex-end; margin-bottom: 2pt; }
+.cta-contacts strong { color: #d4a04c; font-weight: 600; }
+.p2 { background: white; padding: 12mm 18mm; display: flex; flex-direction: column; }
+.p2-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 4mm; border-bottom: 2px solid #d4a04c; margin-bottom: 8mm; }
+.p2-header .brand-mini { font-family: 'Georgia', serif; color: #d4a04c; font-weight: 900; font-size: 13pt; letter-spacing: 3px; }
+.p2-header .page-lbl { font-size: 8pt; color: #6b7280; letter-spacing: 2px; text-transform: uppercase; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; margin-bottom: 8mm; }
+.info-block h3 { font-size: 15pt; color: #1a1a2e; margin-bottom: 4mm; padding-bottom: 2mm; border-bottom: 1px solid #f0e6d6; }
+.check-list li { list-style: none; padding: 2mm 0 2mm 8mm; font-size: 10pt; color: #2d3142; position: relative; }
+.check-list li::before { content: '✓'; position: absolute; left: 0; top: 2mm; background: #d4a04c; color: white; width: 5mm; height: 5mm; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 8pt; font-weight: bold; }
+.why-list li { list-style: none; padding: 2mm 0; font-size: 10pt; color: #2d3142; display: flex; align-items: center; gap: 4mm; }
+.why-list li strong { color: #1a1a2e; font-weight: 600; }
+.why-icon { background: #fdf8f3; width: 8mm; height: 8mm; border-radius: 2mm; display: inline-flex; align-items: center; justify-content: center; font-size: 11pt; flex-shrink: 0; }
+.contact-card { background: linear-gradient(135deg, #1e6091, #144d75); color: white; padding: 10mm 12mm; border-radius: 5mm; text-align: center; margin-bottom: 6mm; position: relative; overflow: hidden; }
+.contact-card::before { content: ''; position: absolute; top: -30mm; right: -30mm; width: 100mm; height: 100mm; background: radial-gradient(circle, rgba(212,160,76,0.2), transparent 70%); border-radius: 50%; }
+.contact-card > * { position: relative; z-index: 1; }
+.contact-card h2 { color: white; font-size: 22pt; margin-bottom: 3mm; }
+.contact-card h2 .hl { color: #d4a04c; font-style: italic; }
+.contact-card p { font-size: 11pt; opacity: 0.9; margin-bottom: 6mm; max-width: 130mm; margin-left: auto; margin-right: auto; }
+.contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; max-width: 140mm; margin: 0 auto; }
+.contact-item { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); padding: 5mm; border-radius: 3mm; text-align: left; display: flex; align-items: center; gap: 4mm; }
+.contact-item .ci-icon { background: linear-gradient(135deg, #d4a04c, #e8743b); width: 10mm; height: 10mm; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13pt; flex-shrink: 0; }
+.contact-item .ci-label { font-size: 7.5pt; letter-spacing: 2px; text-transform: uppercase; opacity: 0.85; margin-bottom: 1pt; }
+.contact-item .ci-value { font-size: 12pt; font-weight: 600; color: white; }
+.price-final { background: #fdf8f3; padding: 6mm 8mm; border-radius: 4mm; display: flex; align-items: center; justify-content: space-between; border: 2px dashed #d4a04c; margin-top: auto; }
+.price-final-text { font-size: 12pt; color: #1a1a2e; font-weight: 600; }
+.price-final-text small { display: block; font-size: 9pt; color: #6b7280; font-weight: normal; margin-top: 1pt; }
+.price-final-amount { font-family: 'Georgia', serif; font-size: 32pt; color: #d4a04c; font-weight: 900; line-height: 1; }
+.p2-footer { text-align: center; padding-top: 6mm; margin-top: 6mm; border-top: 1px solid #e5e7eb; font-size: 8.5pt; color: #6b7280; }
+.p2-footer strong { color: #d4a04c; font-family: 'Georgia', serif; letter-spacing: 3px; font-size: 10pt; display: block; margin-bottom: 1mm; }
+</style>
+</head>
+<body>
+<div class="page p1">
+    <div class="hero">
+        <div class="hero-top">
+            <div><div class="brand">SHARMZAD</div><div class="brand-sub">Tours &amp; Experiences · Sharm El Sheikh</div></div>
+            <div class="badge">🇮🇹 Offerta per l'Italia</div>
+        </div>
+        <div class="hero-body">
+            <div class="hero-text">
+                <h1 class="hero-title">Sharm El Sheikh<br><span class="hl">6 esperienze, 1 solo prezzo</span></h1>
+                <p class="hero-sub">Il pacchetto combo che riunisce il meglio del Mar Rosso, del deserto del Sinai e della cultura egiziana. Tutto organizzato, guide in italiano.</p>
+            </div>
+            <div class="price-box"><div class="price-label">Tutto incluso</div><div class="price">80€</div><div class="price-note">a persona</div></div>
+        </div>
+    </div>
+    <div class="experiences">
+        <div class="exp-title"><span class="exp-tag">Il Pacchetto Combo</span><h2>Cosa <span class="hl">include</span></h2></div>
+        <div class="exp-grid">
+            <div class="exp-card"><div class="exp-num">1</div><div class="exp-info"><h3>Ras Mohamed via Terra</h3><p>Parco Nazionale, spiagge incontaminate, snorkeling nel Mar Rosso.</p></div></div>
+            <div class="exp-card"><div class="exp-num">2</div><div class="exp-info"><h3>Isola Bianca</h3><p>Banco di sabbia bianca che emerge dalle acque turchesi.</p></div></div>
+            <div class="exp-card"><div class="exp-num">3</div><div class="exp-info"><h3>Safari in Quad</h3><p>Adrenalina tra le dune del deserto del Sinai al tramonto.</p></div></div>
+            <div class="exp-card"><div class="exp-num">4</div><div class="exp-info"><h3>Cammellata nel Deserto</h3><p>Esperienza beduina autentica con tè tradizionale.</p></div></div>
+            <div class="exp-card"><div class="exp-num">5</div><div class="exp-info"><h3>Giro Città &amp; Old Market</h3><p>Bazar tradizionale, spezie, artigianato locale con guida.</p></div></div>
+            <div class="exp-card"><div class="exp-num">6</div><div class="exp-info"><h3>Farsha Cafe</h3><p>Vista mozzafiato sul Mar Rosso al tramonto, atmosfera magica.</p></div></div>
+        </div>
+    </div>
+    <div class="cta-strip">
+        <div><h3>Prenota il tuo <span class="hl">pacchetto combo</span></h3><p>Contattaci subito · Risposta entro 24 ore · Cancellazione gratuita</p></div>
+        <div class="cta-contacts"><div class="line">📱 <strong>+41 76 556 76 33</strong></div><div class="line">✉️ <strong>info@sharmzad.com</strong></div></div>
+    </div>
+</div>
+<div class="page p2">
+    <div class="p2-header"><span class="brand-mini">SHARMZAD</span><span class="page-lbl">Dettagli &amp; Contatti</span></div>
+    <div class="two-col">
+        <div class="info-block">
+            <h3>Cosa è incluso</h3>
+            <ul class="check-list">
+                <li>Tutte e 6 le escursioni del pacchetto</li>
+                <li>Trasferimenti da e per il tuo hotel</li>
+                <li>Guide che parlano italiano</li>
+                <li>Pranzo e bevande durante le escursioni</li>
+                <li>Assicurazione base inclusa</li>
+                <li>Assistenza 24/7 durante il soggiorno</li>
+                <li>Cancellazione gratuita fino a 24h prima</li>
+                <li>Nessun pagamento anticipato richiesto</li>
+            </ul>
+        </div>
+        <div class="info-block">
+            <h3>Perché scegliere Sharmzad</h3>
+            <ul class="why-list">
+                <li><span class="why-icon">🇮🇹</span><span><strong>Staff italiano</strong> — comunicazione senza barriere</span></li>
+                <li><span class="why-icon">💰</span><span><strong>Miglior prezzo</strong> — 6 esperienze a 80€</span></li>
+                <li><span class="why-icon">🚐</span><span><strong>Trasferimenti inclusi</strong> — pick-up in hotel</span></li>
+                <li><span class="why-icon">🛡️</span><span><strong>Sicurezza garantita</strong> — standard internazionali</span></li>
+                <li><span class="why-icon">⭐</span><span><strong>Recensioni eccellenti</strong> — turisti italiani soddisfatti</span></li>
+                <li><span class="why-icon">📞</span><span><strong>Assistenza 24/7</strong> — sempre al tuo fianco</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="contact-card">
+        <h2>Prenota <span class="hl">ora</span></h2>
+        <p>Posti limitati ogni settimana. Contattaci subito per confermare la disponibilità.</p>
+        <div class="contact-row">
+            <div class="contact-item"><div class="ci-icon">📱</div><div><div class="ci-label">WhatsApp / Tel.</div><div class="ci-value">+41 76 556 76 33</div></div></div>
+            <div class="contact-item"><div class="ci-icon">✉️</div><div><div class="ci-label">Email</div><div class="ci-value">info@sharmzad.com</div></div></div>
+        </div>
+    </div>
+    <div class="price-final">
+        <div class="price-final-text">Pacchetto Combo · Tutto Incluso<small>6 esperienze indimenticabili a Sharm El Sheikh</small></div>
+        <div class="price-final-amount">80€</div>
+    </div>
+    <div class="p2-footer"><strong>SHARMZAD</strong>Il tuo partner di fiducia a Sharm El Sheikh, Egitto<br>© 2026 Sharmzad Tours. Tutti i diritti riservati.</div>
+</div>
+</body>
+</html>
