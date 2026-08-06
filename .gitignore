@@ -1,0 +1,10 @@
+# Generated PDF artifacts (rebuild from *.html via WeasyPrint)
+*.pdf
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
