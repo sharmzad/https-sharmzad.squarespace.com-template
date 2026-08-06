@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Sharmzad - Pacchetto Combo 80€</title>
+<style>
+@page { size: A4; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Helvetica', 'Arial', sans-serif; color: #2d3142; line-height: 1.5; font-size: 11pt; }
+.page { width: 210mm; height: 297mm; padding: 0; page-break-after: always; position: relative; overflow: hidden; }
+.page:last-child { page-break-after: auto; }
+h1, h2, h3, h4 { font-family: 'Georgia', 'Times New Roman', serif; color: #1a1a2e; line-height: 1.2; }
+.cover { background: linear-gradient(135deg, #1e6091 0%, #144d75 50%, #0a2f4a 100%); color: white; padding: 25mm 20mm; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+.cover::before { content: ''; position: absolute; top: -50mm; right: -50mm; width: 200mm; height: 200mm; background: radial-gradient(circle, rgba(212,160,76,0.25), transparent 70%); border-radius: 50%; }
+.cover-top { position: relative; z-index: 1; }
+.cover-logo { font-family: 'Georgia', serif; font-size: 32pt; font-weight: 900; color: #d4a04c; letter-spacing: 6px; margin-bottom: 4pt; }
+.cover-tagline { font-size: 9pt; letter-spacing: 4px; text-transform: uppercase; opacity: 0.8; }
+.cover-badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.4); padding: 6pt 16pt; border-radius: 30pt; font-size: 9pt; letter-spacing: 2px; margin-top: 30mm; text-transform: uppercase; }
+.cover-middle { position: relative; z-index: 1; margin-top: 15mm; }
+.cover-title { font-size: 42pt; color: white; font-weight: 900; line-height: 1.05; margin-bottom: 10mm; }
+.cover-title .highlight { color: #d4a04c; font-style: italic; }
+.cover-subtitle { font-size: 14pt; opacity: 0.9; font-weight: 300; margin-bottom: 15mm; line-height: 1.4; }
+.cover-price-box { background: rgba(255,255,255,0.1); border: 2px solid #d4a04c; padding: 12mm 15mm; border-radius: 6mm; display: inline-block; }
+.cover-price-label { font-size: 10pt; letter-spacing: 3px; text-transform: uppercase; opacity: 0.85; margin-bottom: 4pt; }
+.cover-price { font-family: 'Georgia', serif; font-size: 60pt; color: #d4a04c; font-weight: 900; line-height: 1; }
+.cover-price-note { font-size: 10pt; opacity: 0.8; margin-top: 4pt; }
+.cover-bottom { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10mm; }
+.cover-features { display: flex; gap: 8mm; font-size: 9pt; }
+.cover-features div::before { content: '✓ '; color: #d4a04c; font-weight: bold; }
+.cover-contact { text-align: right; font-size: 9pt; }
+.cover-contact strong { color: #d4a04c; display: block; margin-bottom: 2pt; font-size: 11pt; }
+.intro { padding: 20mm 20mm; background: #fdf8f3; }
+.section-tag { color: #d4a04c; font-size: 9pt; text-transform: uppercase; letter-spacing: 4px; font-weight: 600; margin-bottom: 8pt; }
+.section-title { font-size: 28pt; color: #1a1a2e; margin-bottom: 8mm; line-height: 1.15; }
+.section-title .highlight { color: #d4a04c; font-style: italic; }
+.intro-text { font-size: 12pt; color: #4b5563; line-height: 1.7; margin-bottom: 10mm; max-width: 160mm; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5mm; margin: 15mm 0; }
+.stat-box { background: white; padding: 8mm 4mm; text-align: center; border-radius: 4mm; border: 1px solid #f0e6d6; }
+.stat-number { font-family: 'Georgia', serif; font-size: 26pt; color: #d4a04c; font-weight: 900; line-height: 1; display: block; margin-bottom: 3pt; }
+.stat-label { font-size: 8pt; text-transform: uppercase; letter-spacing: 1.5px; color: #6b7280; font-weight: 600; }
+.experiences-list { background: white; padding: 10mm; border-radius: 4mm; border-left: 5pt solid #d4a04c; margin-top: 8mm; }
+.experiences-list h3 { font-size: 16pt; margin-bottom: 6mm; color: #1a1a2e; }
+.experience-quick { display: flex; align-items: center; padding: 4mm 0; border-bottom: 1px solid #f0e6d6; font-size: 11pt; }
+.experience-quick:last-child { border-bottom: none; }
+.experience-quick .num { background: linear-gradient(135deg, #d4a04c, #e8743b); color: white; width: 10mm; height: 10mm; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 6mm; font-size: 11pt; flex-shrink: 0; }
+.experience-quick strong { color: #1a1a2e; font-size: 12pt; }
+.experience-page { padding: 15mm 20mm; background: white; }
+.page-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 5mm; border-bottom: 2px solid #d4a04c; margin-bottom: 10mm; }
+.page-header .brand { font-family: 'Georgia', serif; color: #d4a04c; font-weight: 900; font-size: 12pt; letter-spacing: 3px; }
+.page-header .page-num { font-size: 9pt; color: #6b7280; letter-spacing: 2px; }
+.exp-detail { margin-bottom: 12mm; page-break-inside: avoid; }
+.exp-detail:last-child { margin-bottom: 0; }
+.exp-header { display: flex; align-items: center; gap: 6mm; margin-bottom: 5mm; }
+.exp-number-big { background: linear-gradient(135deg, #d4a04c, #e8743b); color: white; width: 16mm; height: 16mm; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Georgia', serif; font-weight: 900; font-size: 18pt; flex-shrink: 0; }
+.exp-header-text .exp-tag { display: inline-block; background: #fdf8f3; color: #d4a04c; font-size: 8pt; padding: 2pt 8pt; border-radius: 10pt; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 3pt; }
+.exp-header-text h3 { font-size: 20pt; color: #1a1a2e; line-height: 1.1; }
+.exp-body { padding-left: 22mm; }
+.exp-body p { color: #4b5563; font-size: 11pt; line-height: 1.6; margin-bottom: 4mm; }
+.exp-features { display: flex; gap: 4mm; flex-wrap: wrap; }
+.exp-features span { background: #fdf8f3; padding: 3pt 10pt; border-radius: 12pt; font-size: 9pt; color: #2d3142; }
+.why-us-page { padding: 20mm; background: linear-gradient(135deg, #1e6091, #144d75); color: white; }
+.why-us-page .section-tag { color: #d4a04c; }
+.why-us-page .section-title { color: white; }
+.why-us-page .intro-text { color: rgba(255,255,255,0.85); }
+.features-pdf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-top: 10mm; }
+.feature-pdf { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 7mm; border-radius: 4mm; }
+.feature-pdf-icon { background: linear-gradient(135deg, #d4a04c, #e8743b); width: 12mm; height: 12mm; border-radius: 3mm; display: flex; align-items: center; justify-content: center; font-size: 16pt; margin-bottom: 4mm; }
+.feature-pdf h4 { color: white; font-size: 13pt; margin-bottom: 2mm; }
+.feature-pdf p { color: rgba(255,255,255,0.85); font-size: 9.5pt; line-height: 1.5; }
+.testimonials-pdf { margin-top: 12mm; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10mm; }
+.testimonials-pdf h3 { color: white; font-size: 18pt; text-align: center; margin-bottom: 6mm; }
+.testimonials-pdf-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; }
+.testimonial-pdf { background: rgba(255,255,255,0.08); padding: 5mm; border-radius: 3mm; border: 1px solid rgba(255,255,255,0.15); }
+.testimonial-pdf .stars { color: #d4a04c; font-size: 10pt; letter-spacing: 1px; margin-bottom: 3mm; }
+.testimonial-pdf p { font-style: italic; font-size: 9pt; color: rgba(255,255,255,0.9); line-height: 1.5; margin-bottom: 4mm; }
+.testimonial-pdf strong { color: #d4a04c; display: block; font-size: 10pt; font-style: normal; }
+.testimonial-pdf .location { color: rgba(255,255,255,0.7); font-size: 8pt; font-style: normal; }
+.cta-page { padding: 20mm; background: #fdf8f3; display: flex; flex-direction: column; justify-content: space-between; }
+.cta-hero { text-align: center; padding: 15mm 10mm; background: linear-gradient(135deg, #1a1a2e, #2a2a4a); color: white; border-radius: 6mm; margin-bottom: 10mm; }
+.cta-hero h2 { color: white; font-size: 30pt; margin-bottom: 5mm; }
+.cta-hero .highlight { color: #d4a04c; font-style: italic; }
+.cta-hero p { font-size: 12pt; color: rgba(255,255,255,0.9); margin-bottom: 8mm; max-width: 140mm; margin-left: auto; margin-right: auto; }
+.cta-price-highlight { display: inline-block; background: linear-gradient(135deg, #d4a04c, #e8743b); padding: 6mm 16mm; border-radius: 30pt; font-family: 'Georgia', serif; font-size: 32pt; font-weight: 900; color: white; }
+.included-section { background: white; padding: 8mm 10mm; border-radius: 4mm; margin-bottom: 8mm; border: 1px solid #f0e6d6; }
+.included-section h3 { font-size: 16pt; margin-bottom: 5mm; color: #1a1a2e; text-align: center; }
+.included-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+.included-item { display: flex; align-items: center; gap: 3mm; font-size: 10pt; padding: 2mm 0; }
+.included-item .check { background: #d4a04c; color: white; width: 6mm; height: 6mm; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 8pt; font-weight: bold; flex-shrink: 0; }
+.contact-section { background: white; padding: 10mm; border-radius: 4mm; text-align: center; border: 2px solid #d4a04c; }
+.contact-section h3 { color: #1a1a2e; font-size: 18pt; margin-bottom: 3mm; }
+.contact-section > p { color: #6b7280; margin-bottom: 8mm; font-size: 11pt; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5mm; margin-bottom: 6mm; }
+.contact-item { padding: 5mm; background: #fdf8f3; border-radius: 3mm; text-align: center; }
+.contact-item .icon { font-size: 20pt; margin-bottom: 2mm; }
+.contact-item .label { font-size: 8pt; color: #6b7280; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 2mm; font-weight: 600; }
+.contact-item .value { font-size: 11pt; color: #1a1a2e; font-weight: 600; word-break: break-word; }
+.footer-pdf { text-align: center; padding-top: 8mm; border-top: 1px solid #e5e7eb; font-size: 9pt; color: #6b7280; margin-top: 8mm; }
+.footer-pdf strong { color: #d4a04c; font-family: 'Georgia', serif; letter-spacing: 3px; font-size: 11pt; display: block; margin-bottom: 2mm; }
+</style>
+</head>
+<body>
+
+<div class="page cover">
+  <div class="cover-top">
+    <div class="cover-logo">SHARMZAD</div>
+    <div class="cover-tagline">Tours &amp; Experiences · Sharm El Sheikh</div>
+    <div class="cover-badge">🇮🇹 Offerta Esclusiva per l'Italia</div>
+  </div>
+  <div class="cover-middle">
+    <h1 class="cover-title">Scopri Sharm El Sheikh<br><span class="highlight">come mai prima d'ora</span></h1>
+    <p class="cover-subtitle">6 esperienze indimenticabili in un unico pacchetto combo.<br>Mare cristallino, deserto dorato, cultura autentica.</p>
+    <div class="cover-price-box">
+      <div class="cover-price-label">Tutto incluso a soli</div>
+      <div class="cover-price">80€</div>
+      <div class="cover-price-note">a persona</div>
+    </div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-features">
+      <div>Guide in italiano</div>
+      <div>Trasferimenti inclusi</div>
+      <div>Pranzo incluso</div>
+    </div>
+    <div class="cover-contact">
+      <strong>sharmzad.com</strong>
+      WhatsApp: +20 100 000 0000<br>
+      info@sharmzad.com
+    </div>
+  </div>
+</div>
+
+<div class="page intro">
+  <div class="page-header"><span class="brand">SHARMZAD</span><span class="page-num">02 · IL PACCHETTO</span></div>
+  <div class="section-tag">Pacchetto Combo</div>
+  <h2 class="section-title">Un'avventura completa<br>nel <span class="highlight">cuore dell'Egitto</span></h2>
+  <p class="intro-text">Abbiamo selezionato per te le migliori esperienze di Sharm El Sheikh in un unico pacchetto conveniente. Sei attività autentiche, guide che parlano italiano, trasferimenti dall'hotel inclusi. Un unico prezzo, zero pensieri.</p>
+  <div class="stats-grid">
+    <div class="stat-box"><span class="stat-number">6</span><span class="stat-label">Esperienze</span></div>
+    <div class="stat-box"><span class="stat-number">80€</span><span class="stat-label">Prezzo</span></div>
+    <div class="stat-box"><span class="stat-number">100%</span><span class="stat-label">Soddisfazione</span></div>
+    <div class="stat-box"><span class="stat-number">24/7</span><span class="stat-label">Assistenza</span></div>
+  </div>
+  <div class="experiences-list">
+    <h3>Cosa include il pacchetto</h3>
+    <div class="experience-quick"><span class="num">1</span><strong>Ras Mohamed via terra</strong></div>
+    <div class="experience-quick"><span class="num">2</span><strong>Isola Bianca</strong></div>
+    <div class="experience-quick"><span class="num">3</span><strong>Safari in quad (motorata)</strong></div>
+    <div class="experience-quick"><span class="num">4</span><strong>Cammellata nel deserto</strong></div>
+    <div class="experience-quick"><span class="num">5</span><strong>Giro città &amp; Old Market</strong></div>
+    <div class="experience-quick"><span class="num">6</span><strong>Farsha Cafe</strong></div>
+  </div>
+</div>
+
+<div class="page experience-page">
+  <div class="page-header"><span class="brand">SHARMZAD</span><span class="page-num">03 · LE ESPERIENZE</span></div>
+  <div class="section-tag">Le Esperienze</div>
+  <h2 class="section-title" style="font-size:22pt; margin-bottom:8mm;">Sei avventure da vivere</h2>
+  <div class="exp-detail"><div class="exp-header"><div class="exp-number-big">1</div><div class="exp-header-text"><span class="exp-tag">Natura</span><h3>Ras Mohamed via Terra</h3></div></div><div class="exp-body"><p>Esplora il famoso Parco Nazionale di Ras Mohamed, una delle riserve marine più belle del mondo. Spiagge incantevoli, mangrovie e panorami mozzafiato sul Mar Rosso.</p><div class="exp-features"><span>Spiagge incontaminate</span><span>Snorkeling spettacolare</span><span>Panorami unici</span></div></div></div>
+  <div class="exp-detail"><div class="exp-header"><div class="exp-number-big">2</div><div class="exp-header-text"><span class="exp-tag">Mare</span><h3>Isola Bianca</h3></div></div><div class="exp-body"><p>Una perla nascosta del Mar Rosso: l'Isola Bianca emerge dalle acque turchesi solo con la bassa marea, regalando uno spettacolo naturale unico al mondo.</p><div class="exp-features"><span>Banco di sabbia bianca</span><span>Snorkeling tra coralli</span><span>Acque cristalline</span></div></div></div>
+  <div class="exp-detail"><div class="exp-header"><div class="exp-number-big">3</div><div class="exp-header-text"><span class="exp-tag">Adrenalina</span><h3>Safari in Quad</h3></div></div><div class="exp-body"><p>Vivi l'emozione di guidare un quad nel deserto del Sinai. Un'esperienza adrenalinica tra dune dorate e paesaggi lunari, al tramonto.</p><div class="exp-features"><span>Quad moderni e sicuri</span><span>Tramonto nel deserto</span><span>Briefing in italiano</span></div></div></div>
+</div>
+
+<div class="page experience-page">
+  <div class="page-header"><span class="brand">SHARMZAD</span><span class="page-num">04 · LE ESPERIENZE</span></div>
+  <div class="exp-detail"><div class="exp-header"><div class="exp-number-big">4</div><div class="exp-header-text"><span class="exp-tag">Tradizione</span><h3>Cammellata nel Deserto</h3></div></div><div class="exp-body"><p>Rivivi le antiche tradizioni beduine con una passeggiata in groppa ai cammelli. Un'esperienza autentica nel cuore del deserto del Sinai, con tè tradizionale.</p><div class="exp-features"><span>Cammelli docili e sicuri</span><span>Atmosfera autentica</span><span>Tè beduino tradizionale</span></div></div></div>
+  <div class="exp-detail"><div class="exp-header"><div class="exp-number-big">5</div><div class="exp-header-text"><span class="exp-tag">Cultura</span><h3>Giro Città &amp; Old Market</h3></div></div><div class="exp-body"><p>Immergiti nei colori, profumi e sapori del bazar tradizionale di Sharm. Spezie, artigianato locale e l'autentica ospitalità egiziana, con guida esperta.</p><div class="exp-features"><span>Shopping autentico</span><span>Spezie e profumi</span><span>Guida esperta</span></div></div></div>
+  <div class="exp-detail"><div class="exp-header"><div class="exp-number-big">6</div><div class="exp-header-text"><span class="exp-tag">Relax</span><h3>Farsha Cafe</h3></div></div><div class="exp-body"><p>Il caffè più suggestivo di Sharm El Sheikh: arroccato sulla scogliera, con vista mozzafiato sul Mar Rosso. Atmosfera magica al tramonto, tra cuscini orientali.</p><div class="exp-features"><span>Tramonto indimenticabile</span><span>Cuscini orientali</span><span>Bevande tipiche</span></div></div></div>
+</div>
+
+<div class="page why-us-page">
+  <div class="page-header" style="border-bottom-color: rgba(255,255,255,0.3);"><span class="brand">SHARMZAD</span><span class="page-num" style="color: rgba(255,255,255,0.7);">05 · PERCHÉ NOI</span></div>
+  <div class="section-tag">Perché Sharmzad</div>
+  <h2 class="section-title">L'esperienza <span style="color:#d4a04c; font-style:italic;">che meriti</span></h2>
+  <div class="features-pdf-grid">
+    <div class="feature-pdf"><div class="feature-pdf-icon">🇮🇹</div><h4>Staff Italiano</h4><p>Guide e assistenti che parlano perfettamente italiano.</p></div>
+    <div class="feature-pdf"><div class="feature-pdf-icon">💰</div><h4>Miglior Prezzo</h4><p>6 esperienze a soli 80€: il pacchetto più conveniente di Sharm.</p></div>
+    <div class="feature-pdf"><div class="feature-pdf-icon">🚐</div><h4>Trasferimenti Inclusi</h4><p>Ti veniamo a prendere direttamente in hotel.</p></div>
+    <div class="feature-pdf"><div class="feature-pdf-icon">🛡️</div><h4>Sicurezza Garantita</h4><p>Alti standard di sicurezza internazionali per ogni escursione.</p></div>
+    <div class="feature-pdf"><div class="feature-pdf-icon">⭐</div><h4>Recensioni Eccellenti</h4><p>Migliaia di turisti italiani soddisfatti ci hanno scelto.</p></div>
+    <div class="feature-pdf"><div class="feature-pdf-icon">📞</div><h4>Assistenza 24/7</h4><p>Siamo sempre disponibili durante il tuo soggiorno.</p></div>
+  </div>
+  <div class="testimonials-pdf">
+    <h3>Cosa dicono i nostri ospiti</h3>
+    <div class="testimonials-pdf-grid">
+      <div class="testimonial-pdf"><div class="stars">★★★★★</div><p>"Esperienza fantastica! Il pacchetto combo è davvero conveniente e ben organizzato. Da rifare!"</p><strong>Marco R.</strong><span class="location">Milano, Italia</span></div>
+      <div class="testimonial-pdf"><div class="stars">★★★★★</div><p>"L'isola bianca magica, il safari emozionante e il Farsha Cafe pura poesia. Sharmzad è la scelta giusta!"</p><strong>Giulia M.</strong><span class="location">Roma, Italia</span></div>
+      <div class="testimonial-pdf"><div class="stars">★★★★★</div><p>"Pacchetto pieno di emozioni a un prezzo onestissimo. Organizzazione perfetta. Consiglio vivamente!"</p><strong>Famiglia Bianchi</strong><span class="location">Napoli, Italia</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="page cta-page">
+  <div>
+    <div class="page-header"><span class="brand">SHARMZAD</span><span class="page-num">06 · PRENOTA ORA</span></div>
+    <div class="cta-hero">
+      <h2>Il tuo sogno egiziano<br><span class="highlight">a portata di click</span></h2>
+      <p>Non aspettare oltre! Posti limitati ogni settimana. Prenota ora il tuo pacchetto combo e vivi un'esperienza indimenticabile.</p>
+      <div class="cta-price-highlight">Solo 80€ a persona</div>
+    </div>
+    <div class="included-section">
+      <h3>Cosa è incluso nel prezzo</h3>
+      <div class="included-grid">
+        <div class="included-item"><span class="check">✓</span> Tutte le 6 escursioni</div>
+        <div class="included-item"><span class="check">✓</span> Trasferimenti dall'hotel</div>
+        <div class="included-item"><span class="check">✓</span> Guide in italiano</div>
+        <div class="included-item"><span class="check">✓</span> Pranzo &amp; bevande</div>
+        <div class="included-item"><span class="check">✓</span> Assicurazione base</div>
+        <div class="included-item"><span class="check">✓</span> Assistenza 24/7</div>
+        <div class="included-item"><span class="check">✓</span> Cancellazione gratuita</div>
+        <div class="included-item"><span class="check">✓</span> Nessun pagamento anticipato</div>
+      </div>
+    </div>
+    <div class="contact-section">
+      <h3>Prenota subito</h3>
+      <p>Contattaci per confermare disponibilità e finalizzare la prenotazione.</p>
+      <div class="contact-grid">
+        <div class="contact-item"><div class="icon">📱</div><div class="label">WhatsApp</div><div class="value">+20 100 000 0000</div></div>
+        <div class="contact-item"><div class="icon">✉️</div><div class="label">Email</div><div class="value">info@sharmzad.com</div></div>
+        <div class="contact-item"><div class="icon">🌐</div><div class="label">Sito Web</div><div class="value">sharmzad.com</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-pdf"><strong>SHARMZAD</strong>Il tuo partner di fiducia a Sharm El Sheikh · Sharm El Sheikh, Egitto<br>© 2026 Sharmzad Tours. Tutti i diritti riservati.</div>
+</div>
+
+</body>
+</html>
