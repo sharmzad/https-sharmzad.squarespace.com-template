@@ -1,1511 +1,353 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sharmzad Diving — Immersioni a Sharm El Sheikh | Mar Rosso</title>
-<meta name="description" content="Pacchetti immersioni a Sharm El Sheikh: Ras Mohamed, Straits of Tiran, Thistlegorm wreck, corsi PADI. Prenota ora su WhatsApp.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root {
-    --gold: #d4a04c;
-    --gold-dark: #b8862e;
-    --coral: #e8743b;
-    --deep: #0a2f4a;
-    --sea: #1e6091;
-    --sea-mid: #2596be;
-    --sea-light: #5ec4d4;
-    --dark: #0f1626;
-    --text: #2d3142;
-    --text-light: #6b7280;
-    --cream: #fdf8f3;
-    --white: #fff;
-    --shadow-sm: 0 2px 8px rgba(10,47,74,0.08);
-    --shadow-md: 0 10px 30px rgba(10,47,74,0.12);
-    --shadow-lg: 0 20px 60px rgba(10,47,74,0.2);
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-
-body {
-    font-family: 'Poppins', -apple-system, sans-serif;
-    color: var(--text);
-    line-height: 1.6;
-    overflow-x: hidden;
-    background: var(--white);
-}
-
-h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; line-height: 1.15; color: var(--dark); }
-a { text-decoration: none; color: inherit; }
-ul { list-style: none; }
-img { max-width: 100%; display: block; }
-
-.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-
-/* WhatsApp CTA button */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 32px;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 15px;
-    letter-spacing: 0.3px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    border: none;
-    text-align: center;
-}
-.btn-wa {
-    background: linear-gradient(135deg, #25d366, #128c7e);
-    color: white;
-    box-shadow: 0 8px 24px rgba(37,211,102,0.35);
-}
-.btn-wa:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(37,211,102,0.5); }
-.btn-primary {
-    background: linear-gradient(135deg, var(--gold), var(--coral));
-    color: white;
-    box-shadow: 0 8px 24px rgba(212,160,76,0.35);
-}
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(212,160,76,0.5); }
-.btn-outline {
-    background: transparent;
-    color: white;
-    border: 2px solid rgba(255,255,255,0.5);
-}
-.btn-outline:hover { background: white; color: var(--deep); border-color: white; }
-.btn-large { padding: 18px 40px; font-size: 16px; }
-
-/* Navbar */
-.nav {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    z-index: 1000;
-    background: rgba(10,22,38,0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    transition: all 0.3s;
-}
-.nav.scrolled { background: rgba(10,22,38,0.98); }
-.nav-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 16px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.logo { display: flex; flex-direction: column; line-height: 1; }
-.logo-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    font-weight: 900;
-    color: var(--gold);
-    letter-spacing: 4px;
-}
-.logo-sub {
-    font-size: 9px;
-    color: rgba(255,255,255,0.6);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-top: 2px;
-}
-.nav-menu { display: flex; align-items: center; gap: 32px; }
-.nav-menu a {
-    color: rgba(255,255,255,0.85);
-    font-size: 14px;
-    font-weight: 500;
-    transition: color 0.3s;
-    position: relative;
-}
-.nav-menu a:not(.nav-cta):hover { color: var(--gold); }
-.nav-cta {
-    background: linear-gradient(135deg, #25d366, #128c7e);
-    color: white !important;
-    padding: 10px 22px;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 16px rgba(37,211,102,0.4);
-}
-.nav-cta:hover { transform: translateY(-2px); }
-.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; flex-direction: column; gap: 4px; }
-.nav-toggle span { width: 26px; height: 2px; background: white; border-radius: 2px; transition: all 0.3s; }
-
-/* Hero */
-.hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    color: white;
-    padding: 120px 24px 80px;
-    overflow: hidden;
-    background: linear-gradient(180deg, #0a2f4a 0%, #144d75 40%, #1e6091 70%, #2596be 100%);
-}
-.hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-}
-.hero-bg::before {
-    content: '';
-    position: absolute;
-    top: -20%; right: -10%;
-    width: 60%; height: 80%;
-    background: radial-gradient(circle, rgba(212,160,76,0.25), transparent 60%);
-    border-radius: 50%;
-    filter: blur(40px);
-}
-.hero-bg::after {
-    content: '';
-    position: absolute;
-    bottom: -30%; left: -10%;
-    width: 70%; height: 70%;
-    background: radial-gradient(circle, rgba(94,196,212,0.3), transparent 60%);
-    border-radius: 50%;
-    filter: blur(60px);
-}
-
-/* Animated bubbles */
-.bubbles { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-.bubble {
-    position: absolute;
-    bottom: -50px;
-    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(255,255,255,0.1));
-    border-radius: 50%;
-    animation: rise linear infinite;
-}
-.bubble:nth-child(1) { left: 10%; width: 20px; height: 20px; animation-duration: 15s; }
-.bubble:nth-child(2) { left: 25%; width: 12px; height: 12px; animation-duration: 12s; animation-delay: 1s; }
-.bubble:nth-child(3) { left: 50%; width: 28px; height: 28px; animation-duration: 18s; animation-delay: 3s; }
-.bubble:nth-child(4) { left: 70%; width: 16px; height: 16px; animation-duration: 14s; animation-delay: 5s; }
-.bubble:nth-child(5) { left: 85%; width: 22px; height: 22px; animation-duration: 16s; animation-delay: 2s; }
-.bubble:nth-child(6) { left: 40%; width: 14px; height: 14px; animation-duration: 13s; animation-delay: 6s; }
-.bubble:nth-child(7) { left: 60%; width: 10px; height: 10px; animation-duration: 11s; animation-delay: 4s; }
-
-@keyframes rise {
-    0% { bottom: -50px; transform: translateX(0); opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 0.6; }
-    100% { bottom: 105%; transform: translateX(60px); opacity: 0; }
-}
-
-.hero-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: 1.15fr 1fr;
-    gap: 60px;
-    align-items: center;
-}
-.hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    padding: 8px 18px;
-    border-radius: 50px;
-    border: 1px solid rgba(255,255,255,0.2);
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-weight: 500;
-    margin-bottom: 24px;
-}
-.hero-badge .dot { width: 8px; height: 8px; background: #25d366; border-radius: 50%; box-shadow: 0 0 10px #25d366; }
-.hero h1 {
-    font-size: clamp(2.4rem, 5vw, 4rem);
-    color: white;
-    font-weight: 900;
-    margin-bottom: 20px;
-    text-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-.hero h1 .highlight { color: var(--gold); font-style: italic; }
-.hero-sub {
-    font-size: 18px;
-    line-height: 1.6;
-    color: rgba(255,255,255,0.9);
-    margin-bottom: 32px;
-    max-width: 520px;
-}
-.hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
-.hero-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    max-width: 500px;
-}
-.h-stat {
-    padding: 14px 0;
-    border-left: 2px solid var(--gold);
-    padding-left: 16px;
-}
-.h-stat-num {
-    display: block;
-    font-family: 'Playfair Display', serif;
-    font-size: 26px;
-    font-weight: 900;
-    color: var(--gold);
-    line-height: 1;
-    margin-bottom: 4px;
-}
-.h-stat-lbl {
-    font-size: 12px;
-    color: rgba(255,255,255,0.7);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-}
-
-/* Hero visual (diver illustration) */
-.hero-visual {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.diver-scene {
-    width: 100%;
-    max-width: 420px;
-    aspect-ratio: 1;
-    position: relative;
-    filter: drop-shadow(0 20px 60px rgba(10,47,74,0.4));
-}
-.diver-scene svg { width: 100%; height: 100%; }
-
-/* Sections */
-section { padding: 100px 0; }
-
-.section-header { text-align: center; max-width: 700px; margin: 0 auto 60px; }
-.section-tag {
-    display: inline-block;
-    color: var(--gold);
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    margin-bottom: 14px;
-    position: relative;
-    padding: 0 26px;
-}
-.section-tag::before, .section-tag::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 20px; height: 1px;
-    background: var(--gold);
-}
-.section-tag::before { left: 0; }
-.section-tag::after { right: 0; }
-.section-header h2 { font-size: clamp(2.2rem, 4vw, 3rem); margin-bottom: 16px; }
-.section-header h2 .highlight { color: var(--gold); font-style: italic; }
-.section-sub { color: var(--text-light); font-size: 17px; line-height: 1.7; }
-
-/* Packages */
-.packages { background: var(--cream); position: relative; overflow: hidden; }
-.packages::before {
-    content: '';
-    position: absolute;
-    top: -100px; left: -100px;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(30,96,145,0.06), transparent 60%);
-    border-radius: 50%;
-}
-
-.pkg-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 28px;
-    position: relative;
-}
-.pkg-card {
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    transition: all 0.4s;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgba(0,0,0,0.04);
-    position: relative;
-}
-.pkg-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
-.pkg-card.featured { border: 2px solid var(--gold); }
-.pkg-card.featured::before {
-    content: '⭐ Più richiesto';
-    position: absolute;
-    top: 16px; right: 16px;
-    background: linear-gradient(135deg, var(--gold), var(--coral));
-    color: white;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 5px 12px;
-    border-radius: 20px;
-    letter-spacing: 1px;
-    z-index: 2;
-    box-shadow: 0 4px 12px rgba(212,160,76,0.4);
-}
-.pkg-image {
-    height: 200px;
-    position: relative;
-    overflow: hidden;
-}
-.pkg-image svg { width: 100%; height: 100%; display: block; }
-.pkg-body { padding: 26px 26px 30px; display: flex; flex-direction: column; flex: 1; }
-.pkg-tag {
-    display: inline-block;
-    color: var(--sea);
-    background: rgba(30,96,145,0.08);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    align-self: flex-start;
-}
-.pkg-body h3 { font-size: 22px; margin-bottom: 10px; }
-.pkg-body > p { color: var(--text-light); font-size: 14.5px; margin-bottom: 18px; line-height: 1.6; }
-.pkg-features { margin-bottom: 24px; }
-.pkg-features li {
-    font-size: 13.5px;
-    padding: 5px 0 5px 26px;
-    position: relative;
-    color: var(--text);
-}
-.pkg-features li::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 8px;
-    width: 16px; height: 16px;
-    background: linear-gradient(135deg, var(--gold), var(--coral));
-    border-radius: 50%;
-    box-shadow: 0 2px 6px rgba(212,160,76,0.3);
-}
-.pkg-features li::after {
-    content: '✓';
-    position: absolute;
-    left: 4px; top: 6px;
-    color: white;
-    font-size: 10px;
-    font-weight: bold;
-}
-.pkg-price {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 0;
-    margin: 0 0 20px;
-    border-top: 1px dashed rgba(0,0,0,0.1);
-    border-bottom: 1px dashed rgba(0,0,0,0.1);
-}
-.pkg-price-lbl { font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
-.pkg-price-val { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; color: var(--sea); }
-.pkg-cta {
-    margin-top: auto;
-    width: 100%;
-    justify-content: center;
-    padding: 12px;
-    font-size: 14px;
-}
-
-/* Dive Sites */
-.sites {
-    background: linear-gradient(180deg, var(--dark) 0%, var(--deep) 100%);
-    color: white;
-    position: relative;
-    overflow: hidden;
-}
-.sites::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 200px;
-    background: linear-gradient(180deg, var(--cream), transparent);
-    opacity: 0.03;
-}
-.sites .section-header h2 { color: white; }
-.sites .section-sub { color: rgba(255,255,255,0.75); }
-
-.sites-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-}
-.site-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 18px;
-    padding: 30px 26px;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-}
-.site-card:hover {
-    background: rgba(255,255,255,0.08);
-    transform: translateY(-4px);
-    border-color: var(--gold);
-}
-.site-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, var(--gold), var(--coral));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    font-size: 28px;
-    box-shadow: 0 10px 30px rgba(212,160,76,0.3);
-}
-.site-card h3 { color: white; font-size: 20px; margin-bottom: 10px; }
-.site-card p { color: rgba(255,255,255,0.75); font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
-.site-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-.site-tag {
-    font-size: 11px;
-    padding: 3px 10px;
-    background: rgba(212,160,76,0.15);
-    color: var(--gold);
-    border-radius: 20px;
-    border: 1px solid rgba(212,160,76,0.3);
-}
-
-/* Courses */
-.courses { background: var(--cream); }
-.course-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-}
-.course-card {
-    background: white;
-    padding: 26px 22px;
-    border-radius: 16px;
-    box-shadow: var(--shadow-sm);
-    text-align: center;
-    transition: all 0.3s;
-    border-top: 4px solid var(--gold);
-}
-.course-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.course-level {
-    display: inline-block;
-    font-size: 11px;
-    color: var(--gold);
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    padding: 3px 12px;
-    background: rgba(212,160,76,0.1);
-    border-radius: 20px;
-}
-.course-card h3 { font-size: 20px; margin-bottom: 8px; }
-.course-card p { color: var(--text-light); font-size: 13.5px; line-height: 1.5; margin-bottom: 14px; }
-.course-duration {
-    font-size: 12px;
-    color: var(--sea);
-    font-weight: 600;
-    padding: 8px;
-    background: rgba(30,96,145,0.06);
-    border-radius: 8px;
-}
-
-/* Why Us */
-.why { background: white; }
-.why-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 30px;
-}
-.why-item {
-    text-align: center;
-    padding: 20px;
-}
-.why-icon-lg {
-    width: 70px;
-    height: 70px;
-    margin: 0 auto 20px;
-    background: linear-gradient(135deg, var(--sea-light), var(--sea));
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 32px;
-    box-shadow: 0 15px 40px rgba(30,96,145,0.25);
-}
-.why-item h3 { font-size: 18px; margin-bottom: 8px; }
-.why-item p { color: var(--text-light); font-size: 14px; }
-
-/* Included */
-.included-sec {
-    background: linear-gradient(135deg, var(--deep), var(--sea));
-    color: white;
-    position: relative;
-    overflow: hidden;
-}
-.included-sec::before {
-    content: '';
-    position: absolute;
-    top: -50%; right: -20%;
-    width: 800px; height: 800px;
-    background: radial-gradient(circle, rgba(212,160,76,0.15), transparent 60%);
-    border-radius: 50%;
-}
-.included-sec .section-header h2 { color: white; }
-.included-sec .section-sub { color: rgba(255,255,255,0.8); }
-
-.incl-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    max-width: 900px;
-    margin: 0 auto;
-    position: relative;
-}
-.incl-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 16px 18px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    backdrop-filter: blur(10px);
-}
-.incl-item .ch {
-    background: linear-gradient(135deg, var(--gold), var(--coral));
-    color: white;
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(212,160,76,0.3);
-}
-.incl-item span { font-size: 14px; }
-
-/* Booking / Contact */
-.booking {
-    background: linear-gradient(135deg, var(--dark), #1a2942);
-    color: white;
-    position: relative;
-    overflow: hidden;
-    padding: 100px 0;
-}
-.booking::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at top right, rgba(37,211,102,0.15), transparent 60%);
-}
-
-.booking-wrap {
-    max-width: 900px;
-    margin: 0 auto;
-    text-align: center;
-    position: relative;
-}
-.booking h2 {
-    color: white;
-    font-size: clamp(2rem, 4vw, 3rem);
-    margin-bottom: 20px;
-}
-.booking h2 .highlight { color: var(--gold); font-style: italic; }
-.booking > .container > .booking-wrap > p {
-    color: rgba(255,255,255,0.85);
-    font-size: 17px;
-    max-width: 620px;
-    margin: 0 auto 40px;
-    line-height: 1.7;
-}
-.contact-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    max-width: 700px;
-    margin: 0 auto 40px;
-}
-.contact-c {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    padding: 28px 24px;
-    border-radius: 18px;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    transition: all 0.3s;
-    color: white;
-}
-.contact-c:hover {
-    background: rgba(255,255,255,0.12);
-    border-color: var(--gold);
-    transform: translateY(-3px);
-}
-.contact-c.wa-c { border-color: rgba(37,211,102,0.5); }
-.contact-c.wa-c:hover { background: rgba(37,211,102,0.15); border-color: #25d366; }
-.contact-c .c-icon {
-    width: 50px; height: 50px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    flex-shrink: 0;
-}
-.contact-c.wa-c .c-icon { background: linear-gradient(135deg, #25d366, #128c7e); box-shadow: 0 6px 18px rgba(37,211,102,0.4); }
-.contact-c.mail-c .c-icon { background: linear-gradient(135deg, var(--gold), var(--coral)); box-shadow: 0 6px 18px rgba(212,160,76,0.4); }
-.contact-c .c-lbl { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7; margin-bottom: 4px; }
-.contact-c .c-val { font-size: 17px; font-weight: 600; }
-
-/* Booking form */
-.book-form {
-    background: white;
-    padding: 40px;
-    border-radius: 24px;
-    color: var(--text);
-    text-align: left;
-    max-width: 620px;
-    margin: 20px auto 0;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-}
-.book-form h3 { text-align: center; font-size: 22px; margin-bottom: 8px; }
-.book-form .form-sub { text-align: center; color: var(--text-light); font-size: 14px; margin-bottom: 26px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-.form-field { display: flex; flex-direction: column; }
-.form-field.full { grid-column: 1 / -1; }
-.form-field label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.form-field input, .form-field select, .form-field textarea {
-    padding: 12px 14px;
-    border: 2px solid #e5e7eb;
-    border-radius: 10px;
-    font-size: 14px;
-    font-family: inherit;
-    background: #fafafa;
-    transition: all 0.2s;
-    color: var(--text);
-}
-.form-field input:focus, .form-field select:focus, .form-field textarea:focus {
-    outline: none;
-    border-color: var(--gold);
-    background: white;
-    box-shadow: 0 0 0 4px rgba(212,160,76,0.1);
-}
-.form-field textarea { resize: vertical; min-height: 70px; }
-.form-submit {
-    width: 100%;
-    padding: 16px;
-    font-size: 15px;
-    margin-top: 6px;
-    justify-content: center;
-}
-.form-note { text-align: center; color: var(--text-light); font-size: 12px; margin-top: 12px; }
-
-/* Footer */
-footer {
-    background: var(--dark);
-    color: rgba(255,255,255,0.7);
-    padding: 60px 0 24px;
-}
-.foot-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 40px;
-}
-.foot-col h4 {
-    color: var(--gold);
-    font-size: 14px;
-    letter-spacing: 3px;
-    margin-bottom: 16px;
-    font-family: 'Playfair Display', serif;
-}
-.foot-col p { font-size: 13.5px; line-height: 1.7; margin-bottom: 8px; }
-.foot-col a { display: block; padding: 4px 0; font-size: 13.5px; color: rgba(255,255,255,0.7); transition: color 0.3s; }
-.foot-col a:hover { color: var(--gold); }
-.foot-bottom {
-    text-align: center;
-    padding-top: 24px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    font-size: 12px;
-    color: rgba(255,255,255,0.5);
-}
-
-/* Floating WhatsApp */
-.float-wa {
-    position: fixed;
-    bottom: 24px; right: 24px;
-    width: 62px; height: 62px;
-    background: linear-gradient(135deg, #25d366, #128c7e);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 30px;
-    box-shadow: 0 12px 32px rgba(37,211,102,0.5);
-    z-index: 999;
-    transition: all 0.3s;
-    animation: pulse 2.5s infinite;
-}
-.float-wa:hover { transform: scale(1.1) rotate(-8deg); }
-@keyframes pulse {
-    0%, 100% { box-shadow: 0 12px 32px rgba(37,211,102,0.5); }
-    50% { box-shadow: 0 12px 32px rgba(37,211,102,0.7), 0 0 0 20px rgba(37,211,102,0); }
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-    .nav-menu {
-        position: fixed;
-        top: 68px; left: 0;
-        width: 100%;
-        flex-direction: column;
-        background: rgba(10,22,38,0.98);
-        padding: 24px;
-        gap: 18px;
-        transform: translateY(-150%);
-        transition: transform 0.3s;
-        border-top: 1px solid rgba(255,255,255,0.1);
-    }
-    .nav-menu.open { transform: translateY(0); }
-    .nav-toggle { display: flex; }
-    .hero-inner { grid-template-columns: 1fr; text-align: center; }
-    .hero-visual { order: -1; max-width: 320px; margin: 0 auto; }
-    .h-stat { border-left: none; border-top: 2px solid var(--gold); padding-left: 0; padding-top: 12px; text-align: center; }
-    .hero-stats { max-width: 100%; }
-    .hero-buttons { justify-content: center; }
-    section { padding: 70px 0; }
-    .contact-cards { grid-template-columns: 1fr; }
-    .foot-grid { grid-template-columns: 1fr; gap: 30px; }
-    .form-row { grid-template-columns: 1fr; }
-    .book-form { padding: 28px 20px; }
-}
-
-@media (max-width: 480px) {
-    .hero-badge { font-size: 11px; }
-    .float-wa { width: 54px; height: 54px; font-size: 26px; bottom: 16px; right: 16px; }
-    .btn { padding: 13px 24px; font-size: 14px; }
-    .section-tag::before, .section-tag::after { display: none; }
-}
-</style>
+<link rel="stylesheet" href="assets/site.css">
+<title>Sharmzad Diving — Immersioni Sharm El Sheikh, Marsa Alam &amp; Wadi Lehami | Mar Rosso</title>
+<meta name="description" content="Pacchetti diving da Sharm El Sheikh a Marsa Alam e Wadi Lehami. Ras Mohamed, Thistlegorm, Elphinstone, Dolphin House, dugonghi, safari far south. Corsi PADI/SSI.">
 </head>
 <body>
-
-<!-- NAV -->
-<nav class="nav" id="nav">
-    <div class="nav-inner">
-        <a href="#hero" class="logo">
-            <span class="logo-name">SHARMZAD</span>
-            <span class="logo-sub">Diving · Red Sea</span>
-        </a>
-        <ul class="nav-menu" id="navMenu">
-            <li><a href="#pacchetti">Pacchetti</a></li>
-            <li><a href="#siti">Siti d'Immersione</a></li>
-            <li><a href="#corsi">Corsi</a></li>
-            <li><a href="#perche">Perché Noi</a></li>
-            <li><a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20maggiori%20informazioni%20sui%20pacchetti%20diving" class="nav-cta" target="_blank" rel="noopener">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                +41 76 556 76 33
-            </a></li>
-        </ul>
+<nav class="nav" id="nav"><div class="nav-inner">
+        <a href="index.html" class="logo"><span class="logo-name">SHARMZAD</span><span class="logo-sub">Tours &amp; Diving · Red Sea</span></a>
+        <ul class="nav-menu" id="navMenu"><li><a href="index.html">Home</a></li><li><a href="tours.html">Tour &amp; Escursioni</a></li><li><a href="diving.html" class="active">Diving</a></li><li><a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20maggiori%20informazioni." class="nav-cta" target="_blank" rel="noopener"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>+41 76 556 76 33</a></li></ul>
         <button class="nav-toggle" id="navToggle" aria-label="menu"><span></span><span></span><span></span></button>
-    </div>
-</nav>
+    </div></nav>
 
-<!-- HERO -->
-<section class="hero" id="hero">
+<section class="hero" style="background:linear-gradient(180deg,rgba(10,47,74,0.85) 0%,rgba(20,77,117,0.75) 50%,rgba(30,96,145,0.85) 100%),url('images/dive-turtle-coral.jpg') center/cover no-repeat">
     <div class="hero-bg"></div>
-    <div class="bubbles">
-        <span class="bubble"></span><span class="bubble"></span><span class="bubble"></span>
-        <span class="bubble"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span>
-    </div>
+    <div class="bubbles"><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span></div>
     <div class="hero-inner">
-        <div class="hero-content">
-            <div class="hero-badge"><span class="dot"></span>Prenotazioni aperte · Estate 2026</div>
-            <h1>Immersioni nel <span class="highlight">Mar Rosso</span><br>di Sharm El Sheikh</h1>
-            <p class="hero-sub">Ras Mohamed, Straits of Tiran, il relitto del Thistlegorm. Corsi PADI, uscite giornaliere e pacchetti multi-giorno. Guide certificate, attrezzatura inclusa, staff parlante italiano.</p>
-            <div class="hero-buttons">
-                <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20prenotare%20un%27immersione%20a%20Sharm%20El%20Sheikh." class="btn btn-wa btn-large" target="_blank" rel="noopener">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                    Prenota su WhatsApp
-                </a>
-                <a href="#pacchetti" class="btn btn-outline btn-large">Vedi Pacchetti</a>
-            </div>
-            <div class="hero-stats">
-                <div class="h-stat"><span class="h-stat-num">100+</span><span class="h-stat-lbl">Siti d'immersione</span></div>
-                <div class="h-stat"><span class="h-stat-num">28°C</span><span class="h-stat-lbl">Temp. media acqua</span></div>
-                <div class="h-stat"><span class="h-stat-num">30m+</span><span class="h-stat-lbl">Visibilità</span></div>
-            </div>
-        </div>
-        <div class="hero-visual">
-            <div class="diver-scene">
-                <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <radialGradient id="waterGrad" cx="0.5" cy="0.3" r="0.8">
-                            <stop offset="0" stop-color="#5ec4d4" stop-opacity="0.4"/>
-                            <stop offset="1" stop-color="#0a2f4a" stop-opacity="0.1"/>
-                        </radialGradient>
-                        <linearGradient id="rayGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0" stop-color="#fff2c7" stop-opacity="0.5"/>
-                            <stop offset="1" stop-color="#fff2c7" stop-opacity="0"/>
-                        </linearGradient>
-                    </defs>
-                    <circle cx="200" cy="200" r="180" fill="url(#waterGrad)"/>
-                    <!-- Sun rays from top -->
-                    <path d="M100,20 L110,180 L90,180 Z" fill="url(#rayGrad)" opacity="0.6"/>
-                    <path d="M200,10 L215,190 L185,190 Z" fill="url(#rayGrad)" opacity="0.7"/>
-                    <path d="M300,20 L310,180 L290,180 Z" fill="url(#rayGrad)" opacity="0.6"/>
-                    <!-- Diver -->
-                    <g transform="translate(200 220)">
-                        <!-- tank -->
-                        <rect x="-30" y="-15" width="14" height="35" rx="4" fill="#8fa6b8"/>
-                        <rect x="-30" y="-18" width="14" height="4" rx="2" fill="#5a7180"/>
-                        <!-- body -->
-                        <ellipse cx="0" cy="10" rx="28" ry="16" fill="#0a2f4a"/>
-                        <!-- head + mask -->
-                        <circle cx="15" cy="-5" r="14" fill="#d4a04c"/>
-                        <path d="M8,-10 Q15,-16 22,-10 L22,-2 L8,-2 Z" fill="#2596be" opacity="0.8"/>
-                        <rect x="8" y="-2" width="14" height="2" fill="#0a2f4a"/>
-                        <path d="M20,-2 Q28,-4 32,0 Q28,4 20,4 Z" fill="#0a2f4a"/>
-                        <!-- fins -->
-                        <path d="M-40,20 Q-55,25 -60,35 L-45,32 Z" fill="#e8743b"/>
-                        <path d="M-40,20 Q-55,10 -60,0 L-45,8 Z" fill="#e8743b" opacity="0.85"/>
-                        <!-- arm -->
-                        <path d="M12,5 Q30,-8 42,-12" stroke="#d4a04c" stroke-width="8" stroke-linecap="round" fill="none"/>
-                        <circle cx="44" cy="-13" r="5" fill="#d4a04c"/>
-                        <!-- bubbles -->
-                        <circle cx="30" cy="-25" r="4" fill="#fff" opacity="0.7"/>
-                        <circle cx="38" cy="-40" r="3" fill="#fff" opacity="0.6"/>
-                        <circle cx="26" cy="-55" r="5" fill="#fff" opacity="0.5"/>
-                        <circle cx="42" cy="-70" r="3" fill="#fff" opacity="0.4"/>
-                    </g>
-                    <!-- Fish -->
-                    <g transform="translate(90 160)">
-                        <ellipse cx="0" cy="0" rx="14" ry="7" fill="#e8743b"/>
-                        <path d="M-14,0 L-22,-6 L-22,6 Z" fill="#e8743b"/>
-                        <circle cx="6" cy="-2" r="1.5" fill="#0a2f4a"/>
-                        <path d="M-4,-3 L6,-3" stroke="#f9d976" stroke-width="1"/>
-                    </g>
-                    <g transform="translate(320 260) scale(-1 1)">
-                        <ellipse cx="0" cy="0" rx="12" ry="6" fill="#f9d976"/>
-                        <path d="M-12,0 L-19,-5 L-19,5 Z" fill="#f9d976"/>
-                        <circle cx="5" cy="-1" r="1" fill="#0a2f4a"/>
-                    </g>
-                    <g transform="translate(70 300)">
-                        <ellipse cx="0" cy="0" rx="10" ry="5" fill="#5ec4d4"/>
-                        <path d="M-10,0 L-16,-4 L-16,4 Z" fill="#5ec4d4"/>
-                    </g>
-                    <!-- Coral / reef -->
-                    <g transform="translate(0 340)">
-                        <path d="M0,60 Q30,45 60,55 Q90,40 130,52 Q160,45 200,55 Q240,42 280,54 Q320,45 360,52 Q380,48 400,55 L400,80 L0,80 Z" fill="#7a4a1e"/>
-                        <ellipse cx="80" cy="52" rx="12" ry="18" fill="#e8743b"/>
-                        <ellipse cx="180" cy="48" rx="10" ry="16" fill="#c48b3d"/>
-                        <ellipse cx="320" cy="50" rx="14" ry="20" fill="#a55a2f"/>
-                        <circle cx="120" cy="55" r="6" fill="#f9d976"/>
-                        <circle cx="240" cy="55" r="5" fill="#f9d976"/>
-                    </g>
-                </svg>
-            </div>
+        <div class="hero-badge"><span class="dot"></span>Sharm El Sheikh · Marsa Alam · Wadi Lehami</div>
+        <h1>Immersioni nel<br><span class="highlight">Mar Rosso</span></h1>
+        <p class="hero-sub">Dai reef leggendari di Sharm ai plateau di Elphinstone, dai dugonghi di Marsa Mubarak ai reef incontaminati di Wadi Lehami e St. John's. Guide PADI/SSI parlanti italiano.</p>
+        <div class="hero-buttons">
+            <a href="#sharm" class="btn btn-primary btn-large">Sharm El Sheikh</a>
+            <a href="#marsa" class="btn btn-outline btn-large">Marsa Alam</a>
+            <a href="#wadi-lehami" class="btn btn-primary btn-large" style="background:linear-gradient(135deg,var(--coral),var(--gold))">Wadi Lehami</a>
         </div>
     </div>
 </section>
 
-<!-- PACKAGES -->
-<section class="packages" id="pacchetti">
+<!-- ============ REGION 1: SHARM ============ -->
+<section id="sharm" style="background:var(--cream); padding:90px 0 60px;">
     <div class="container">
         <div class="section-header">
-            <span class="section-tag">Pacchetti Diving</span>
-            <h2>Scegli la tua <span class="highlight">avventura sott'acqua</span></h2>
-            <p class="section-sub">Dai battesimi del mare per principianti fino ai pacchetti multi-giorno per subacquei esperti. Guide brevettate PADI/SSI, tutte le attrezzature incluse, trasferimenti dall'hotel.</p>
+            <div class="region-badge">🌊 Sharm El Sheikh</div>
+            <h2>Le immersioni <span class="highlight">iconiche</span></h2>
+            <p class="section-sub">Sharm El Sheikh — la capitale mondiale del diving. Ras Mohamed National Park, Straits of Tiran, SS Thistlegorm e i reef locali. Uscite giornaliere e pacchetti multi-day.</p>
         </div>
+        <div class="pkg-grid"><article class="pkg-card">
+        <div class="pkg-image"><img src="images/dive-try-orange-fish.jpg" alt="Try Dive Battesimo" loading="lazy" onerror="this.onerror=null;this.src='https://source.unsplash.com/900x600/?try%20dive%20battesimo'"></div>
+        <div class="pkg-body">
+            <span class="pkg-tag ">Principianti</span>
+            <h3>Try Dive · Battesimo</h3>
+            <p>La tua prima immersione nel Mar Rosso. Briefing, attrezzatura e istruttore dedicato — nessun brevetto richiesto.</p>
+            <ul class="pkg-features"><li>1 immersione con istruttore</li>
+<li>Attrezzatura completa</li>
+<li>Briefing in italiano</li></ul>
+            <div class="pkg-price"><span class="pkg-price-lbl">Da persona</span><span class="pkg-price-val">Su richiesta</span></div>
+            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20prenotare%20il%20Try%20Dive%20a%20Sharm." class="btn btn-wa pkg-cta" target="_blank" rel="noopener"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Prenota</a>
+        </div>
+    </article>
+<article class="pkg-card">
+        <div class="pkg-image"><img src="images/dive-reef-boats.jpg" alt="Reef Locali 2 Dives" loading="lazy" onerror="this.onerror=null;this.src='https://source.unsplash.com/900x600/?reef%20locali%202%20dives'"></div>
+        <div class="pkg-body">
+            <span class="pkg-tag ">Certified</span>
+            <h3>Reef Locali · 2 Dives</h3>
+            <p>Uscita in barca ai reef vicini a Sharm: Ras Katy, Ras Umm Sid, Turtle Bay. Ideali per il rientro in acqua.</p>
+            <ul class="pkg-features"><li>2 immersioni guidate</li>
+<li>Barca, pranzo, bevande</li>
+<li>Trasferimento hotel</li></ul>
+            <div class="pkg-price"><span class="pkg-price-lbl">Da persona</span><span class="pkg-price-val">Su richiesta</span></div>
+            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20prenotare%20l%27uscita%20Reef%20Locali%20a%20Sharm." class="btn btn-wa pkg-cta" target="_blank" rel="noopener"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Prenota</a>
+        </div>
+    </article>
+<article class="pkg-card featured"><span class="pkg-star">⭐ Top</span>
+        <div class="pkg-image"><img src="images/dive-anemone-clownfish.jpg" alt="Ras Mohamed Park" loading="lazy" onerror="this.onerror=null;this.src='https://source.unsplash.com/900x600/?ras%20mohamed%20park'"></div>
+        <div class="pkg-body">
+            <span class="pkg-tag ">Iconico</span>
+            <h3>Ras Mohamed Park</h3>
+            <p>Il parco marino più famoso del Mar Rosso. Shark &amp; Yolanda Reef, Anemone City, muri di corallo.</p>
+            <ul class="pkg-features"><li>2 immersioni nel parco</li>
+<li>Shark &amp; Yolanda + Anemone</li>
+<li>Tasse parco incluse</li></ul>
+            <div class="pkg-price"><span class="pkg-price-lbl">Da persona</span><span class="pkg-price-val">Su richiesta</span></div>
+            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20prenotare%20la%20giornata%20a%20Ras%20Mohamed%20National%20Park." class="btn btn-wa pkg-cta" target="_blank" rel="noopener"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Prenota</a>
+        </div>
+    </article>
+<article class="pkg-card">
+        <div class="pkg-image"><img src="images/dive-tiran-boat.jpg" alt="Straits of Tiran" loading="lazy" onerror="this.onerror=null;this.src='https://source.unsplash.com/900x600/?straits%20of%20tiran'"></div>
+        <div class="pkg-body">
+            <span class="pkg-tag ">Reef</span>
+            <h3>Straits of Tiran</h3>
+            <p>I quattro pinnacoli — Jackson, Woodhouse, Thomas, Gordon — tra Sinai e Arabia Saudita.</p>
+            <ul class="pkg-features"><li>2 immersioni in barca</li>
+<li>Pinnacoli iconici</li>
+<li>Ideale per AOWD</li></ul>
+            <div class="pkg-price"><span class="pkg-price-lbl">Da persona</span><span class="pkg-price-val">Su richiesta</span></div>
+            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20prenotare%20la%20giornata%20agli%20Straits%20of%20Tiran." class="btn btn-wa pkg-cta" target="_blank" rel="noopener"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Prenota</a>
+        </div>
+    </article>
+<article class="pkg-card">
+        <div class="pkg-image"><img src="https://source.unsplash.com/900x600/?shipwreck,scuba,wreck" alt="SS Thistlegorm Wreck" loading="lazy" onerror="this.onerror=null;this.src='https://source.unsplash.com/900x600/?ss%20thistlegorm%20wreck'"></div>
+        <div class="pkg-body">
+            <span class="pkg-tag ">Wreck</span>
+            <h3>SS Thistlegorm</h3>
+            <p>Leggendario relitto della WWII. Motociclette, camion, locomotive intatti a 30m.</p>
+            <ul class="pkg-features"><li>2 immersioni sul relitto</li>
+<li>Giornata piena in barca</li>
+<li>Consigliato AOWD+</li></ul>
+            <div class="pkg-price"><span class="pkg-price-lbl">Da persona</span><span class="pkg-price-val">Su richiesta</span></div>
+            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20prenotare%20l%27immersione%20al%20relitto%20SS%20Thistlegorm." class="btn btn-wa pkg-cta" target="_blank" rel="noopener"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Prenota</a>
+        </div>
+    </article>
+<article class="pkg-card">
+        <div class="pkg-image"><img src="images/dive-turtle-coral.jpg" alt="Pacchetto 5 Giorni 10 Dives" loading="lazy" onerror="this.onerror=null;this.src='https://source.unsplash.com/900x600/?pacchetto%205%20giorni%2010%20dives'"></div>
+        <div class="pkg-body">
+            <span class="pkg-tag ">Multi-Day</span>
+            <h3>Pacchetto 5 Giorni · 10 Dives</h3>
+            <p>Cinque giorni sui migliori siti di Sharm: Ras Mohamed, Tiran, Local Reefs. Massimo divertimento.</p>
+            <ul class="pkg-features"><li>10 immersioni totali</li>
+<li>Mix di tutti i siti top</li>
+<li>Attrezzatura 5 giorni</li></ul>
+            <div class="pkg-price"><span class="pkg-price-lbl">Da persona</span><span class="pkg-price-val">Su richiesta</span></div>
+            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20info%20sul%20pacchetto%205%20giorni%20Sharm%20%2810%20immersioni%29." class="btn btn-wa pkg-cta" target="_blank" rel="noopener"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Prenota</a>
+        </div>
+    </article></div>
+    </div>
+</section>
 
-        <div class="pkg-grid">
-            <!-- 1 -->
-            <article class="pkg-card">
-                <div class="pkg-image">
-                    <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                        <defs><linearGradient id="p1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ec4d4"/><stop offset="1" stop-color="#0a2f4a"/></linearGradient></defs>
-                        <rect width="300" height="200" fill="url(#p1)"/>
-                        <path d="M0,50 Q75,30 150,45 T300,40 L300,80 L0,80 Z" fill="#87ceeb" opacity="0.2"/>
-                        <path d="M40,20 L45,180 L35,180 Z" fill="#fff2c7" opacity="0.3"/>
-                        <path d="M120,10 L128,180 L112,180 Z" fill="#fff2c7" opacity="0.4"/>
-                        <path d="M220,15 L228,180 L212,180 Z" fill="#fff2c7" opacity="0.3"/>
-                        <g transform="translate(200 130)">
-                            <ellipse cx="0" cy="0" rx="18" ry="9" fill="#e8743b"/>
-                            <path d="M-18,0 L-28,-8 L-28,8 Z" fill="#e8743b"/>
-                            <circle cx="8" cy="-3" r="2" fill="#0a2f4a"/>
-                        </g>
-                        <g transform="translate(80 90) scale(0.7)">
-                            <ellipse cx="0" cy="0" rx="18" ry="9" fill="#f9d976"/>
-                            <path d="M-18,0 L-28,-8 L-28,8 Z" fill="#f9d976"/>
-                        </g>
-                        <circle cx="230" cy="60" r="4" fill="#fff" opacity="0.6"/>
-                        <circle cx="240" cy="45" r="3" fill="#fff" opacity="0.5"/>
-                        <circle cx="235" cy="30" r="5" fill="#fff" opacity="0.4"/>
-                    </svg>
-                </div>
-                <div class="pkg-body">
-                    <span class="pkg-tag">Principianti</span>
-                    <h3>Try Dive · Battesimo</h3>
-                    <p>La tua prima immersione nel Mar Rosso. Briefing, attrezzatura e istruttore dedicato — non serve alcun brevetto.</p>
-                    <ul class="pkg-features">
-                        <li>Briefing teorico completo</li>
-                        <li>1 immersione con istruttore</li>
-                        <li>Attrezzatura completa inclusa</li>
-                        <li>Foto/video ricordo su richiesta</li>
-                    </ul>
-                    <div class="pkg-price">
-                        <span class="pkg-price-lbl">Prezzo per persona</span>
-                        <span class="pkg-price-val">Su richiesta</span>
-                    </div>
-                    <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20prenotare%20il%20Try%20Dive%20-%20battesimo%20del%20mare." class="btn btn-wa pkg-cta" target="_blank" rel="noopener">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        Prenota su WhatsApp
-                    </a>
-                </div>
-            </article>
+<!-- ============ REGION 2: MARSA ALAM ============ -->
+<section id="marsa" style="background:white; padding:60px 0 90px;">
+    <div class="container">
+        <div class="section-header">
+            <div class="region-badge marsa">🐬 Marsa Alam</div>
+            <h2>Il <span class="highlight">south Red Sea</span></h2>
+            <p class="section-sub">Marsa Alam — il regno di squali oceanici, delfini spinner e dugonghi. Meno affollato, più selvaggio, reef intatti. In collaborazione con Repack Travel.</p>
+        </div>
+        <div class="pkg-grid"><article class="pkg-card">
+        <div class="pkg-image"><img src="https://source.unsplash.com/900x600/?red-sea,house-reef,coral" alt="Marsa Alam Daily Dives" loading="lazy" onerror="this.onerror=null;this.src='https://source.unsplash.com/900x600/?marsa%20alam%20daily%20dives'"></div>
+        <div class="pkg-body">
+            <span class="pkg-tag marsa">Local Reef</span>
+            <h3>Marsa Alam Daily Dives</h3>
+            <p>Giornata di immersioni sui reef locali di Marsa Alam. House reef + siti vicini, ideali per ambientarsi.</p>
+            <ul class="pkg-features"><li>2 immersioni giornaliere</li>
+<li>House reef + local dive</li>
+<li>Attrezzatura + guida</li></ul>
+            <div class="pkg-price"><span class="pkg-price-lbl">Da persona</span><span class="pkg-price-val">Su richiesta</span></div>
+            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20prenotare%20le%20immersioni%20giornaliere%20a%20Marsa%20Alam." class="btn btn-wa pkg-cta" target="_blank" rel="noopener"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Prenota</a>
+        </div>
+    </article>
+<article class="pkg-card featured"><span class="pkg-star">⭐ Top</span>
+        <div class="pkg-image"><img src="https://source.unsplash.com/900x600/?shark,oceanic-whitetip,red-sea" alt="Elphinstone Reef" loading="lazy" onerror="this.onerror=null;this.src='https://source.unsplash.com/900x600/?elphinstone%20reef'"></div>
+        <div class="pkg-body">
+            <span class="pkg-tag marsa">Iconico</span>
+            <h3>Elphinstone Reef</h3>
+            <p>Il reef più famoso di Marsa Alam. Plateau isolato, drop-off vertiginosi, squali oceanici pinna bianca e martello.</p>
+            <ul class="pkg-features"><li>2 immersioni al plateau</li>
+<li>Possibili avvistamenti squali</li>
+<li>Consigliato AOWD+</li></ul>
+            <div class="pkg-price"><span class="pkg-price-lbl">Da persona</span><span class="pkg-price-val">Su richiesta</span></div>
+            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20prenotare%20Elphinstone%20Reef%20a%20Marsa%20Alam." class="btn btn-wa pkg-cta" target="_blank" rel="noopener"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Prenota</a>
+        </div>
+    </article>
+<article class="pkg-card">
+        <div class="pkg-image"><img src="https://source.unsplash.com/900x600/?spinner-dolphin,red-sea" alt="Dolphin House Sha'ab Samadai" loading="lazy" onerror="this.onerror=null;this.src='https://source.unsplash.com/900x600/?dolphin%20house%20sha%27ab%20samadai'"></div>
+        <div class="pkg-body">
+            <span class="pkg-tag marsa">Delfini</span>
+            <h3>Dolphin House · Sha'ab Samadai</h3>
+            <p>Nuota con i delfini spinner nel loro habitat naturale. Atollo protetto con laguna cristallina.</p>
+            <ul class="pkg-features"><li>Snorkel + immersione</li>
+<li>Delfini spinner</li>
+<li>Laguna &amp; giardini corallini</li></ul>
+            <div class="pkg-price"><span class="pkg-price-lbl">Da persona</span><span class="pkg-price-val">Su richiesta</span></div>
+            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20prenotare%20il%20Dolphin%20House%20Sha%27ab%20Samadai." class="btn btn-wa pkg-cta" target="_blank" rel="noopener"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Prenota</a>
+        </div>
+    </article>
+<article class="pkg-card">
+        <div class="pkg-image"><img src="https://source.unsplash.com/900x600/?dugong,sea-cow,marine-life" alt="Marsa Mubarak Dugong" loading="lazy" onerror="this.onerror=null;this.src='https://source.unsplash.com/900x600/?marsa%20mubarak%20dugong'"></div>
+        <div class="pkg-body">
+            <span class="pkg-tag marsa">Dugonghi</span>
+            <h3>Marsa Mubarak · Dugong Bay</h3>
+            <p>Baia protetta famosa per l'incontro con dugonghi (mucca marina) e tartarughe verdi. Snorkeling accessibile a tutti.</p>
+            <ul class="pkg-features"><li>Snorkeling con dugonghi</li>
+<li>Tartarughe verdi</li>
+<li>Baia bassa e sicura</li></ul>
+            <div class="pkg-price"><span class="pkg-price-lbl">Da persona</span><span class="pkg-price-val">Su richiesta</span></div>
+            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20prenotare%20Marsa%20Mubarak%20Dugong%20Bay." class="btn btn-wa pkg-cta" target="_blank" rel="noopener"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Prenota</a>
+        </div>
+    </article>
+<article class="pkg-card">
+        <div class="pkg-image"><img src="https://source.unsplash.com/900x600/?coral-garden,red-sea,tropical-fish" alt="Fury Shoal Sataya Reef" loading="lazy" onerror="this.onerror=null;this.src='https://source.unsplash.com/900x600/?fury%20shoal%20sataya%20reef'"></div>
+        <div class="pkg-body">
+            <span class="pkg-tag marsa">Reef System</span>
+            <h3>Fury Shoal &amp; Sataya</h3>
+            <p>Sistema di reef spettacolare. Giardini di coralli soft, delfini a Sataya Reef, drift tra pinnacoli e canyon.</p>
+            <ul class="pkg-features"><li>Drift dives sui pinnacoli</li>
+<li>Sataya = Dolphin Reef</li>
+<li>Coralli soft mozzafiato</li></ul>
+            <div class="pkg-price"><span class="pkg-price-lbl">Da persona</span><span class="pkg-price-val">Su richiesta</span></div>
+            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20info%20su%20Fury%20Shoal%20e%20Sataya%20Reef." class="btn btn-wa pkg-cta" target="_blank" rel="noopener"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Prenota</a>
+        </div>
+    </article>
+<article class="pkg-card">
+        <div class="pkg-image"><img src="https://source.unsplash.com/900x600/?bedouin-camp,sinai-coast,egypt" alt="Wadi Lehami Safari Camp" loading="lazy" onerror="this.onerror=null;this.src='https://source.unsplash.com/900x600/?wadi%20lehami%20safari%20camp'"></div>
+        <div class="pkg-body">
+            <span class="pkg-tag marsa">Multi-Day</span>
+            <h3>Wadi Lehami Camp</h3>
+            <p>Il vero far south del Mar Rosso. Campo tendato beduino con accesso ai reef remoti: St. John's, Rocky Island, Zabargad, Sataya. 5-7 giorni.</p>
+            <ul class="pkg-features"><li>5-7 giorni all-inclusive</li>
+<li>St. John's + Rocky Island</li>
+<li>Reef incontaminati</li></ul>
+            <div class="pkg-price"><span class="pkg-price-lbl">Da persona</span><span class="pkg-price-val">Su richiesta</span></div>
+            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20info%20sul%20Safari%20Wadi%20Lehami." class="btn btn-wa pkg-cta" target="_blank" rel="noopener"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Prenota</a>
+        </div>
+    </article></div>
+    </div>
+</section>
 
-            <!-- 2 -->
-            <article class="pkg-card">
-                <div class="pkg-image">
-                    <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                        <defs><linearGradient id="p2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38b6c9"/><stop offset="1" stop-color="#144d75"/></linearGradient></defs>
-                        <rect width="300" height="200" fill="url(#p2)"/>
-                        <path d="M0,60 Q75,45 150,55 T300,50 L300,90 L0,90 Z" fill="#87ceeb" opacity="0.15"/>
-                        <g transform="translate(150 130)">
-                            <path d="M-60,0 Q-40,-20 -20,-8 Q0,-20 20,-8 Q40,-20 60,0 L60,15 L-60,15 Z" fill="#e8743b"/>
-                            <path d="M-50,-2 Q-30,-15 -10,-5 Q10,-15 30,-5 Q50,-15 55,-2" fill="none" stroke="#f9d976" stroke-width="2"/>
-                        </g>
-                        <g transform="translate(90 80)">
-                            <ellipse cx="0" cy="0" rx="20" ry="10" fill="#f9d976"/>
-                            <path d="M-20,0 L-30,-8 L-30,8 Z" fill="#f9d976"/>
-                            <circle cx="10" cy="-2" r="2" fill="#0a2f4a"/>
-                        </g>
-                        <g transform="translate(220 60)">
-                            <ellipse cx="0" cy="0" rx="15" ry="7" fill="#e8743b"/>
-                            <path d="M-15,0 L-23,-6 L-23,6 Z" fill="#e8743b"/>
-                            <circle cx="7" cy="-2" r="1.5" fill="#0a2f4a"/>
-                        </g>
-                    </svg>
+<!-- ============ WADI LEHAMI FEATURE BANNER ============ -->
+<section id="wadi-lehami" style="background:var(--cream); padding:60px 0 90px;">
+    <div class="container">
+        <div class="section-header">
+            <div class="region-badge marsa">⚓ Wadi Lehami · Far South</div>
+            <h2>Safari nel <span class="highlight">Mar Rosso più remoto</span></h2>
+            <p class="section-sub">140 km a sud di Marsa Alam. Campo tendato beduino con accesso ai reef più incontaminati del Mar Rosso. Solo per pochi.</p>
+        </div>
+        <div class="wadi-banner">
+            <div class="wadi-banner-content">
+                <span class="wadi-banner-tag">Multi-Day Safari</span>
+                <h2>Wadi Lehami Dive Camp</h2>
+                <p>Il campo diving più a sud dell'Egitto. Tende beduine, cibo tradizionale, jetty privato, accesso diretto in barca a St. John's, Rocky Island, Zabargad, Sataya, Malahi. Un'esperienza per veri subacquei.</p>
+                <ul class="wadi-features">
+                    <li>Pacchetti 5-7 giorni</li>
+                    <li>3-4 immersioni al giorno</li>
+                    <li>St. John's Reef</li>
+                    <li>Rocky &amp; Zabargad Island</li>
+                    <li>Sataya (Dolphin Reef)</li>
+                    <li>Malahi coral garden</li>
+                    <li>Fury Shoal system</li>
+                    <li>Consigliato AOWD + Nitrox</li>
+                </ul>
+                <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                    <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20info%20dettagliate%20sul%20Safari%20Wadi%20Lehami%20%28Far%20South%20Red%20Sea%29." class="btn btn-wa" target="_blank" rel="noopener"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Chiedi il preventivo</a>
+                    <a href="#prenota" class="btn btn-primary">Prenota ora</a>
                 </div>
-                <div class="pkg-body">
-                    <span class="pkg-tag">Certified</span>
-                    <h3>Reef Locali · 2 Immersioni</h3>
-                    <p>Uscita in barca ai reef vicini a Sharm: Ras Katy, Ras Umm Sid, Turtle Bay. Ideali per il rientro in acqua.</p>
-                    <ul class="pkg-features">
-                        <li>2 immersioni guidate</li>
-                        <li>Barca + guida esperta</li>
-                        <li>Bombole, pesi, pranzo, bevande</li>
-                        <li>Trasferimenti dall'hotel</li>
-                    </ul>
-                    <div class="pkg-price">
-                        <span class="pkg-price-lbl">Prezzo per persona</span>
-                        <span class="pkg-price-val">Su richiesta</span>
-                    </div>
-                    <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20prenotare%20l%27uscita%20Reef%20Locali%20-%202%20immersioni." class="btn btn-wa pkg-cta" target="_blank" rel="noopener">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        Prenota su WhatsApp
-                    </a>
-                </div>
-            </article>
-
-            <!-- 3 -->
-            <article class="pkg-card featured">
-                <div class="pkg-image">
-                    <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                        <defs><linearGradient id="p3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ec4d4"/><stop offset="1" stop-color="#0a2f4a"/></linearGradient></defs>
-                        <rect width="300" height="200" fill="url(#p3)"/>
-                        <path d="M0,40 Q75,25 150,35 T300,30 L300,70 L0,70 Z" fill="#fff2c7" opacity="0.15"/>
-                        <!-- Wall / drop-off -->
-                        <path d="M0,150 L120,150 L140,200 L0,200 Z" fill="#7a4a1e"/>
-                        <path d="M0,145 L110,145 L130,150 L0,150 Z" fill="#c48b3d"/>
-                        <ellipse cx="60" cy="140" rx="12" ry="20" fill="#e8743b"/>
-                        <ellipse cx="90" cy="145" rx="10" ry="15" fill="#c48b3d"/>
-                        <!-- Big fish school -->
-                        <g fill="#f9d976">
-                            <ellipse cx="200" cy="80" rx="7" ry="3"/><path d="M193,80 L188,77 L188,83 Z"/>
-                            <ellipse cx="215" cy="90" rx="7" ry="3"/><path d="M208,90 L203,87 L203,93 Z"/>
-                            <ellipse cx="230" cy="75" rx="7" ry="3"/><path d="M223,75 L218,72 L218,78 Z"/>
-                            <ellipse cx="245" cy="85" rx="7" ry="3"/><path d="M238,85 L233,82 L233,88 Z"/>
-                            <ellipse cx="260" cy="95" rx="7" ry="3"/><path d="M253,95 L248,92 L248,98 Z"/>
-                            <ellipse cx="205" cy="110" rx="7" ry="3"/><path d="M198,110 L193,107 L193,113 Z"/>
-                            <ellipse cx="225" cy="115" rx="7" ry="3"/><path d="M218,115 L213,112 L213,118 Z"/>
-                            <ellipse cx="250" cy="120" rx="7" ry="3"/><path d="M243,120 L238,117 L238,123 Z"/>
-                        </g>
-                        <!-- Shark silhouette -->
-                        <g transform="translate(150 130)" fill="#1a1a2e" opacity="0.7">
-                            <ellipse cx="0" cy="0" rx="30" ry="8"/>
-                            <path d="M-30,0 L-45,-6 L-40,0 L-45,6 Z"/>
-                            <path d="M0,-8 L5,-16 L10,-8 Z"/>
-                        </g>
-                    </svg>
-                </div>
-                <div class="pkg-body">
-                    <span class="pkg-tag">Iconico</span>
-                    <h3>Ras Mohamed National Park</h3>
-                    <p>Il parco marino più famoso del Mar Rosso. Shark & Yolanda Reef, Anemone City, il muro di corallo. Un must per ogni sub.</p>
-                    <ul class="pkg-features">
-                        <li>2 immersioni nel parco</li>
-                        <li>Shark & Yolanda + Anemone City</li>
-                        <li>Tasse del parco incluse (€7/giorno)</li>
-                        <li>Barca, pranzo, bevande, guida</li>
-                    </ul>
-                    <div class="pkg-price">
-                        <span class="pkg-price-lbl">Prezzo per persona</span>
-                        <span class="pkg-price-val">Su richiesta</span>
-                    </div>
-                    <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20prenotare%20la%20giornata%20a%20Ras%20Mohamed%20National%20Park." class="btn btn-wa pkg-cta" target="_blank" rel="noopener">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        Prenota su WhatsApp
-                    </a>
-                </div>
-            </article>
-
-            <!-- 4 -->
-            <article class="pkg-card">
-                <div class="pkg-image">
-                    <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                        <defs><linearGradient id="p4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ec4d4"/><stop offset="1" stop-color="#144d75"/></linearGradient></defs>
-                        <rect width="300" height="200" fill="url(#p4)"/>
-                        <!-- Reef pinnacles -->
-                        <path d="M20,200 L20,120 Q30,60 50,120 L50,200 Z" fill="#7a4a1e"/>
-                        <path d="M110,200 L110,90 Q125,40 140,90 L140,200 Z" fill="#8b5e29"/>
-                        <path d="M200,200 L200,110 Q215,60 230,110 L230,200 Z" fill="#a55a2f"/>
-                        <ellipse cx="35" cy="130" rx="10" ry="16" fill="#e8743b"/>
-                        <ellipse cx="125" cy="100" rx="12" ry="18" fill="#c48b3d"/>
-                        <ellipse cx="215" cy="120" rx="10" ry="15" fill="#e8743b"/>
-                        <circle cx="70" cy="55" r="6" fill="#fff" opacity="0.4"/>
-                        <circle cx="180" cy="45" r="5" fill="#fff" opacity="0.5"/>
-                        <g transform="translate(160 80)">
-                            <ellipse cx="0" cy="0" rx="15" ry="7" fill="#f9d976"/>
-                            <path d="M-15,0 L-23,-5 L-23,5 Z" fill="#f9d976"/>
-                            <circle cx="6" cy="-2" r="1.5" fill="#0a2f4a"/>
-                        </g>
-                    </svg>
-                </div>
-                <div class="pkg-body">
-                    <span class="pkg-tag">Reef</span>
-                    <h3>Straits of Tiran · 2 Immersioni</h3>
-                    <p>I quattro pinnacoli di corallo — Jackson, Woodhouse, Thomas, Gordon — sospesi tra Sinai e Arabia Saudita.</p>
-                    <ul class="pkg-features">
-                        <li>2 immersioni in barca</li>
-                        <li>Pinnacoli iconici del Tiran</li>
-                        <li>Corrente moderata, ideale AOWD</li>
-                        <li>Attrezzatura completa inclusa</li>
-                    </ul>
-                    <div class="pkg-price">
-                        <span class="pkg-price-lbl">Prezzo per persona</span>
-                        <span class="pkg-price-val">Su richiesta</span>
-                    </div>
-                    <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20prenotare%20la%20giornata%20agli%20Straits%20of%20Tiran." class="btn btn-wa pkg-cta" target="_blank" rel="noopener">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        Prenota su WhatsApp
-                    </a>
-                </div>
-            </article>
-
-            <!-- 5 -->
-            <article class="pkg-card">
-                <div class="pkg-image">
-                    <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                        <defs><linearGradient id="p5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38b6c9"/><stop offset="1" stop-color="#0a2f4a"/></linearGradient></defs>
-                        <rect width="300" height="200" fill="url(#p5)"/>
-                        <!-- Wreck (ship silhouette) -->
-                        <g transform="translate(150 130)" fill="#3d2410">
-                            <path d="M-90,0 L90,0 L80,25 L-80,25 Z"/>
-                            <rect x="-60" y="-20" width="120" height="20"/>
-                            <rect x="-40" y="-35" width="30" height="15"/>
-                            <rect x="10" y="-40" width="20" height="20"/>
-                            <rect x="-15" y="-45" width="6" height="20" fill="#5c3d1c"/>
-                            <rect x="30" y="-50" width="6" height="25" fill="#5c3d1c"/>
-                            <circle cx="-50" cy="-10" r="3" fill="#f9d976" opacity="0.6"/>
-                            <circle cx="-30" cy="-10" r="3" fill="#f9d976" opacity="0.6"/>
-                            <circle cx="0" cy="-10" r="3" fill="#f9d976" opacity="0.6"/>
-                            <circle cx="30" cy="-10" r="3" fill="#f9d976" opacity="0.6"/>
-                            <circle cx="60" cy="-10" r="3" fill="#f9d976" opacity="0.6"/>
-                        </g>
-                        <path d="M0,180 Q75,175 150,180 T300,180 L300,200 L0,200 Z" fill="#7a4a1e"/>
-                        <circle cx="220" cy="40" r="4" fill="#fff" opacity="0.5"/>
-                        <circle cx="230" cy="30" r="3" fill="#fff" opacity="0.4"/>
-                    </svg>
-                </div>
-                <div class="pkg-body">
-                    <span class="pkg-tag">Wreck</span>
-                    <h3>SS Thistlegorm Wreck</h3>
-                    <p>Il leggendario relitto della Seconda Guerra Mondiale. Motociclette, camion e locomotive ancora intatte a 30m di profondità.</p>
-                    <ul class="pkg-features">
-                        <li>2 immersioni sul relitto</li>
-                        <li>Partenza in barca giornata piena</li>
-                        <li>Consigliato AOWD + Deep Diver</li>
-                        <li>Attrezzatura + guida esperta</li>
-                    </ul>
-                    <div class="pkg-price">
-                        <span class="pkg-price-lbl">Prezzo per persona</span>
-                        <span class="pkg-price-val">Su richiesta</span>
-                    </div>
-                    <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20prenotare%20l%27immersione%20al%20relitto%20SS%20Thistlegorm." class="btn btn-wa pkg-cta" target="_blank" rel="noopener">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        Prenota su WhatsApp
-                    </a>
-                </div>
-            </article>
-
-            <!-- 6 -->
-            <article class="pkg-card">
-                <div class="pkg-image">
-                    <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                        <defs><linearGradient id="p6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ec4d4"/><stop offset="1" stop-color="#144d75"/></linearGradient></defs>
-                        <rect width="300" height="200" fill="url(#p6)"/>
-                        <text x="150" y="80" text-anchor="middle" font-family="Georgia, serif" font-size="60" font-weight="900" fill="#fff" opacity="0.15">5</text>
-                        <text x="150" y="115" text-anchor="middle" font-family="Poppins, sans-serif" font-size="14" font-weight="700" fill="#fff" opacity="0.5" letter-spacing="3">GIORNI</text>
-                        <g transform="translate(60 150)">
-                            <ellipse cx="0" cy="0" rx="15" ry="7" fill="#e8743b"/>
-                            <path d="M-15,0 L-23,-5 L-23,5 Z" fill="#e8743b"/>
-                        </g>
-                        <g transform="translate(240 160)">
-                            <ellipse cx="0" cy="0" rx="12" ry="6" fill="#f9d976"/>
-                            <path d="M-12,0 L-19,-4 L-19,4 Z" fill="#f9d976"/>
-                        </g>
-                        <g transform="translate(150 170)">
-                            <ellipse cx="0" cy="0" rx="18" ry="9" fill="#5ec4d4"/>
-                            <path d="M-18,0 L-27,-6 L-27,6 Z" fill="#5ec4d4"/>
-                        </g>
-                    </svg>
-                </div>
-                <div class="pkg-body">
-                    <span class="pkg-tag">Multi-Day</span>
-                    <h3>Pacchetto 5 Giorni · 10 Dives</h3>
-                    <p>Cinque giorni completi di immersioni sui migliori siti: Ras Mohamed, Tiran, Local Reefs. Massimo divertimento, massimo risparmio.</p>
-                    <ul class="pkg-features">
-                        <li>10 immersioni totali</li>
-                        <li>Mix Ras Mohamed + Tiran + Locali</li>
-                        <li>Attrezzatura completa 5 giorni</li>
-                        <li>Trasferimenti e pranzi inclusi</li>
-                    </ul>
-                    <div class="pkg-price">
-                        <span class="pkg-price-lbl">Prezzo per persona</span>
-                        <span class="pkg-price-val">Su richiesta</span>
-                    </div>
-                    <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20info%20sul%20pacchetto%205%20giorni%20-%2010%20immersioni." class="btn btn-wa pkg-cta" target="_blank" rel="noopener">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        Chiedi Preventivo
-                    </a>
-                </div>
-            </article>
+            </div>
+            <div class="wadi-banner-image">
+                <img src="https://source.unsplash.com/900x900/?bedouin-camp,sinai-coast,tent" alt="Wadi Lehami Camp" loading="lazy"
+                     onerror="this.onerror=null;this.src='images/tour-safari-quad-sunset.jpg'">
+            </div>
         </div>
     </div>
 </section>
 
-<!-- DIVE SITES -->
+<!-- ============ DIVE SITES ============ -->
 <section class="sites" id="siti">
     <div class="container">
         <div class="section-header">
             <span class="section-tag">Siti d'Immersione</span>
-            <h2>I <span class="highlight">siti leggendari</span> del Mar Rosso</h2>
-            <p class="section-sub">Sharm El Sheikh offre alcune delle immersioni più iconiche al mondo. Dai muri di corallo ai relitti storici, dai pinnacoli alle grotte.</p>
+            <h2>I <span class="highlight">siti leggendari</span></h2>
+            <p class="section-sub">Dai muri di Ras Mohamed ai plateau di Elphinstone, dai relitti storici ai reef incontaminati del far south.</p>
         </div>
         <div class="sites-grid">
-            <div class="site-card">
-                <div class="site-icon">🦈</div>
-                <h3>Shark &amp; Yolanda Reef</h3>
-                <p>Nel cuore di Ras Mohamed. Un muro verticale con squali di reef, tonni, barracuda e il famoso relitto del Yolanda con i sanitari sparsi sul fondo.</p>
-                <div class="site-tags"><span class="site-tag">15-30m</span><span class="site-tag">Corrente media</span></div>
-            </div>
-            <div class="site-card">
-                <div class="site-icon">🚢</div>
-                <h3>SS Thistlegorm</h3>
-                <p>Il relitto più famoso del Mar Rosso. Nave britannica affondata nel 1941 con carico intatto: moto Norton, camion Bedford, locomotive.</p>
-                <div class="site-tags"><span class="site-tag">15-30m</span><span class="site-tag">AOWD+</span></div>
-            </div>
-            <div class="site-card">
-                <div class="site-icon">🏝️</div>
-                <h3>Jackson Reef</h3>
-                <p>Il più a nord degli Straits of Tiran. Muro con banchi di pesci pelagici, tartarughe e occasionali avvistamenti di squali martello.</p>
-                <div class="site-tags"><span class="site-tag">5-40m</span><span class="site-tag">Corrente</span></div>
-            </div>
-            <div class="site-card">
-                <div class="site-icon">🐠</div>
-                <h3>Anemone City</h3>
-                <p>Un giardino di anemoni con centinaia di pesci pagliaccio. Colori spettacolari, ideale per foto macro e per subacquei di ogni livello.</p>
-                <div class="site-tags"><span class="site-tag">5-20m</span><span class="site-tag">Easy</span></div>
-            </div>
-            <div class="site-card">
-                <div class="site-icon">🌊</div>
-                <h3>Ras Umm Sid</h3>
-                <p>Immersione dalla riva con giardino di gorgonie e discesa a parete. Punto d'incontro tra due correnti, ricchissimo di vita.</p>
-                <div class="site-tags"><span class="site-tag">10-30m</span><span class="site-tag">Shore</span></div>
-            </div>
-            <div class="site-card">
-                <div class="site-icon">🐢</div>
-                <h3>Woodhouse Reef</h3>
-                <p>Un canyon lungo e stretto tra Jackson e Thomas. Drift dive spettacolare con tartarughe verdi e squali di reef.</p>
-                <div class="site-tags"><span class="site-tag">10-30m</span><span class="site-tag">Drift</span></div>
-            </div>
-        </div>
+    <div class="site-card"><div class="site-icon">🦈</div><h3>Shark &amp; Yolanda Reef</h3><p>Muro verticale nel cuore di Ras Mohamed. Squali di reef, tonni, barracuda + relitto del Yolanda.</p><div class="site-tags"><span class="site-tag">Sharm</span><span class="site-tag">15-30m</span></div></div>
+    <div class="site-card"><div class="site-icon">🚢</div><h3>SS Thistlegorm</h3><p>Nave WWII con moto Norton, camion Bedford, locomotive intatte.</p><div class="site-tags"><span class="site-tag">Sharm</span><span class="site-tag">AOWD+</span></div></div>
+    <div class="site-card"><div class="site-icon">🏝️</div><h3>Jackson Reef</h3><p>Il più a nord degli Straits of Tiran. Pesci pelagici, tartarughe, squali martello.</p><div class="site-tags"><span class="site-tag">Sharm</span><span class="site-tag">Corrente</span></div></div>
+    <div class="site-card"><div class="site-icon">🌊</div><h3>Elphinstone</h3><p>Il reef più iconico di Marsa Alam. Plateau isolato con squali oceanici e martello.</p><div class="site-tags"><span class="site-tag">Marsa Alam</span><span class="site-tag">AOWD+</span></div></div>
+    <div class="site-card"><div class="site-icon">🐬</div><h3>Sha'ab Samadai</h3><p>Il "Dolphin House" — atollo protetto famoso per i delfini spinner in laguna.</p><div class="site-tags"><span class="site-tag">Marsa Alam</span><span class="site-tag">Snorkel &amp; Dive</span></div></div>
+    <div class="site-card"><div class="site-icon">🐢</div><h3>Marsa Mubarak</h3><p>Baia protetta con dugonghi (mucca marina) e tartarughe verdi. Adatto a tutti.</p><div class="site-tags"><span class="site-tag">Marsa Alam</span><span class="site-tag">Easy</span></div></div>
+    <div class="site-card"><div class="site-icon">🐠</div><h3>Fury Shoal</h3><p>Sistema di reef nel sud. Giardini di coralli soft e drift dive tra pinnacoli.</p><div class="site-tags"><span class="site-tag">South</span><span class="site-tag">Drift</span></div></div>
+    <div class="site-card"><div class="site-icon">⚓</div><h3>Sataya Reef</h3><p>Il vero "Dolphin Reef". Grandi pod di spinner dolphins in laguna coralline.</p><div class="site-tags"><span class="site-tag">South</span><span class="site-tag">Delfini</span></div></div>
+    <div class="site-card"><div class="site-icon">🏔️</div><h3>St. John's Reefs</h3><p>Sistema di reef nel far south vicino al confine con il Sudan. Solo safari.</p><div class="site-tags"><span class="site-tag">Wadi Lehami</span><span class="site-tag">Remote</span></div></div>
+</div>
     </div>
 </section>
 
-<!-- COURSES -->
+<!-- ============ COURSES ============ -->
 <section class="courses" id="corsi">
     <div class="container">
         <div class="section-header">
             <span class="section-tag">Corsi Certificati</span>
             <h2>Impara a immergerti <span class="highlight">nel Mar Rosso</span></h2>
-            <p class="section-sub">Istruttori PADI e SSI certificati. Corsi in italiano, inglese, tedesco e francese. Rilascio brevetto internazionale.</p>
+            <p class="section-sub">Istruttori PADI e SSI certificati. Corsi in italiano. Brevetto internazionale.</p>
         </div>
         <div class="course-grid">
-            <div class="course-card">
-                <span class="course-level">Livello 1</span>
-                <h3>Discover Scuba</h3>
-                <p>Prova la subacquea per la prima volta. Nessuna esperienza richiesta.</p>
-                <div class="course-duration">⏱️ ½ giornata</div>
-            </div>
-            <div class="course-card">
-                <span class="course-level">Livello 2</span>
-                <h3>Open Water Diver</h3>
-                <p>Il tuo primo brevetto internazionale PADI/SSI. Immersioni fino a 18m.</p>
-                <div class="course-duration">⏱️ 3-4 giorni</div>
-            </div>
-            <div class="course-card">
-                <span class="course-level">Livello 3</span>
-                <h3>Advanced Open Water</h3>
-                <p>Estendi le tue capacità con 5 immersioni specialità. Fino a 30m.</p>
-                <div class="course-duration">⏱️ 2-3 giorni</div>
-            </div>
-            <div class="course-card">
-                <span class="course-level">Specialità</span>
-                <h3>Nitrox / Deep / Wreck</h3>
-                <p>Corsi specialità per estendere tempo di fondo, profondità e siti wreck.</p>
-                <div class="course-duration">⏱️ 1-2 giorni</div>
-            </div>
+            <div class="course-card"><span class="course-level">Livello 1</span><h4>Discover Scuba</h4><p>La tua prima prova. Nessuna esperienza richiesta.</p><div class="course-duration">⏱️ ½ giornata</div></div>
+            <div class="course-card"><span class="course-level">Livello 2</span><h4>Open Water Diver</h4><p>Primo brevetto internazionale. Fino a 18m.</p><div class="course-duration">⏱️ 3-4 giorni</div></div>
+            <div class="course-card"><span class="course-level">Livello 3</span><h4>Advanced Open Water</h4><p>5 immersioni specialità. Fino a 30m.</p><div class="course-duration">⏱️ 2-3 giorni</div></div>
+            <div class="course-card"><span class="course-level">Specialità</span><h4>Nitrox / Deep / Wreck</h4><p>Corsi specialità per estendere le capacità.</p><div class="course-duration">⏱️ 1-2 giorni</div></div>
         </div>
-        <div style="text-align:center; margin-top:40px;">
-            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20info%20sui%20corsi%20diving." class="btn btn-wa btn-large" target="_blank" rel="noopener">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                Info Corsi su WhatsApp
-            </a>
+        <div style="text-align:center; margin-top:36px;">
+            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20info%20sui%20corsi%20diving." class="btn btn-wa btn-large" target="_blank" rel="noopener"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Info Corsi su WhatsApp</a>
         </div>
     </div>
 </section>
 
-<!-- WHY US -->
-<section class="why" id="perche">
+<!-- ============ WHY ============ -->
+<section class="why">
     <div class="container">
-        <div class="section-header">
-            <span class="section-tag">Perché Sharmzad</span>
-            <h2>Diving <span class="highlight">senza pensieri</span></h2>
-        </div>
+        <div class="section-header"><span class="section-tag">Perché Sharmzad</span><h2>Il tuo <span class="highlight">diving partner</span></h2></div>
         <div class="why-grid">
-            <div class="why-item">
-                <div class="why-icon-lg">🇮🇹</div>
-                <h3>Parlante Italiano</h3>
-                <p>Guide e istruttori che parlano italiano fluentemente.</p>
-            </div>
-            <div class="why-item">
-                <div class="why-icon-lg">🏆</div>
-                <h3>Certificati PADI/SSI</h3>
-                <p>Diving center riconosciuti internazionalmente.</p>
-            </div>
-            <div class="why-item">
-                <div class="why-icon-lg">🛡️</div>
-                <h3>Attrezzatura Nuova</h3>
-                <p>Regolatori, GAV e computer subacquei di ultima generazione.</p>
-            </div>
-            <div class="why-item">
-                <div class="why-icon-lg">🚐</div>
-                <h3>Trasferimenti Inclusi</h3>
-                <p>Pick-up in hotel e ritorno con veicoli climatizzati.</p>
-            </div>
+            <div class="why-item"><div class="why-icon-lg">🇮🇹</div><h3>Parlante Italiano</h3><p>Guide e istruttori che parlano italiano fluentemente.</p></div>
+            <div class="why-item"><div class="why-icon-lg">🏆</div><h3>Certificati PADI/SSI</h3><p>Diving center riconosciuti internazionalmente.</p></div>
+            <div class="why-item"><div class="why-icon-lg">🌊</div><h3>Sharm + Marsa Alam</h3><p>Un solo partner per tutto il Mar Rosso, dal nord al sud.</p></div>
+            <div class="why-item"><div class="why-icon-lg">📞</div><h3>Assistenza 24/7</h3><p>Sempre disponibili durante il tuo soggiorno.</p></div>
         </div>
     </div>
 </section>
 
-<!-- INCLUDED -->
-<section class="included-sec">
-    <div class="container">
-        <div class="section-header">
-            <span class="section-tag" style="color:#d4a04c;">Tutto compreso</span>
-            <h2>Cosa è <span class="highlight">incluso</span></h2>
-            <p class="section-sub">Nessun costo nascosto. Tutto quello che serve per goderti le immersioni.</p>
-        </div>
-        <div class="incl-grid">
-            <div class="incl-item"><div class="ch">✓</div><span>Attrezzatura completa</span></div>
-            <div class="incl-item"><div class="ch">✓</div><span>Bombole &amp; pesi</span></div>
-            <div class="incl-item"><div class="ch">✓</div><span>Guida certificata</span></div>
-            <div class="incl-item"><div class="ch">✓</div><span>Trasferimento hotel</span></div>
-            <div class="incl-item"><div class="ch">✓</div><span>Barca &amp; equipaggio</span></div>
-            <div class="incl-item"><div class="ch">✓</div><span>Pranzo &amp; bevande</span></div>
-            <div class="incl-item"><div class="ch">✓</div><span>Assicurazione base</span></div>
-            <div class="incl-item"><div class="ch">✓</div><span>Assistenza 24/7</span></div>
-        </div>
-    </div>
-</section>
+<section class="qr-section" id="qr"><div class="container"><div class="qr-wrapper">
+    <div class="qr-visual"><div class="qr-card"><svg class="qr-svg" version="1.1" viewBox="0 0 29 29" xmlns="http://www.w3.org/2000/svg"><path fill="#0a2f4a" d="M2,2H3V3H2zM3,2H4V3H3zM4,2H5V3H4zM5,2H6V3H5zM6,2H7V3H6zM7,2H8V3H7zM8,2H9V3H8zM15,2H16V3H15zM16,2H17V3H16zM18,2H19V3H18zM20,2H21V3H20zM21,2H22V3H21zM22,2H23V3H22zM23,2H24V3H23zM24,2H25V3H24zM25,2H26V3H25zM26,2H27V3H26zM2,3H3V4H2zM8,3H9V4H8zM11,3H12V4H11zM14,3H15V4H14zM15,3H16V4H15zM17,3H18V4H17zM18,3H19V4H18zM20,3H21V4H20zM26,3H27V4H26zM2,4H3V5H2zM4,4H5V5H4zM5,4H6V5H5zM6,4H7V5H6zM8,4H9V5H8zM10,4H11V5H10zM14,4H15V5H14zM17,4H18V5H17zM18,4H19V5H18zM20,4H21V5H20zM22,4H23V5H22zM23,4H24V5H23zM24,4H25V5H24zM26,4H27V5H26zM2,5H3V6H2zM4,5H5V6H4zM5,5H6V6H5zM6,5H7V6H6zM8,5H9V6H8zM10,5H11V6H10zM11,5H12V6H11zM12,5H13V6H12zM15,5H16V6H15zM16,5H17V6H16zM20,5H21V6H20zM22,5H23V6H22zM23,5H24V6H23zM24,5H25V6H24zM26,5H27V6H26zM2,6H3V7H2zM4,6H5V7H4zM5,6H6V7H5zM6,6H7V7H6zM8,6H9V7H8zM10,6H11V7H10zM12,6H13V7H12zM13,6H14V7H13zM14,6H15V7H14zM18,6H19V7H18zM20,6H21V7H20zM22,6H23V7H22zM23,6H24V7H23zM24,6H25V7H24zM26,6H27V7H26zM2,7H3V8H2zM8,7H9V8H8zM10,7H11V8H10zM11,7H12V8H11zM12,7H13V8H12zM13,7H14V8H13zM14,7H15V8H14zM17,7H18V8H17zM20,7H21V8H20zM26,7H27V8H26zM2,8H3V9H2zM3,8H4V9H3zM4,8H5V9H4zM5,8H6V9H5zM6,8H7V9H6zM7,8H8V9H7zM8,8H9V9H8zM10,8H11V9H10zM12,8H13V9H12zM14,8H15V9H14zM16,8H17V9H16zM18,8H19V9H18zM20,8H21V9H20zM21,8H22V9H21zM22,8H23V9H22zM23,8H24V9H23zM24,8H25V9H24zM25,8H26V9H25zM26,8H27V9H26zM10,9H11V10H10zM12,9H13V10H12zM14,9H15V10H14zM16,9H17V10H16zM2,10H3V11H2zM4,10H5V11H4zM5,10H6V11H5zM6,10H7V11H6zM7,10H8V11H7zM8,10H9V11H8zM11,10H12V11H11zM12,10H13V11H12zM13,10H14V11H13zM14,10H15V11H14zM15,10H16V11H15zM16,10H17V11H16zM17,10H18V11H17zM18,10H19V11H18zM20,10H21V11H20zM21,10H22V11H21zM22,10H23V11H22zM23,10H24V11H23zM24,10H25V11H24zM2,11H3V12H2zM3,11H4V12H3zM4,11H5V12H4zM9,11H10V12H9zM10,11H11V12H10zM14,11H15V12H14zM18,11H19V12H18zM19,11H20V12H19zM21,11H22V12H21zM25,11H26V12H25zM4,12H5V13H4zM5,12H6V13H5zM7,12H8V13H7zM8,12H9V13H8zM11,12H12V13H11zM16,12H17V13H16zM17,12H18V13H17zM18,12H19V13H18zM19,12H20V13H19zM20,12H21V13H20zM21,12H22V13H21zM22,12H23V13H22zM23,12H24V13H23zM25,12H26V13H25zM26,12H27V13H26zM3,13H4V14H3zM4,13H5V14H4zM5,13H6V14H5zM6,13H7V14H6zM9,13H10V14H9zM12,13H13V14H12zM14,13H15V14H14zM17,13H18V14H17zM19,13H20V14H19zM21,13H22V14H21zM26,13H27V14H26zM2,14H3V15H2zM4,14H5V15H4zM7,14H8V15H7zM8,14H9V15H8zM15,14H16V15H15zM17,14H18V15H17zM19,14H20V15H19zM20,14H21V15H20zM21,14H22V15H21zM22,14H23V15H22zM24,14H25V15H24zM25,14H26V15H25zM26,14H27V15H26zM2,15H3V16H2zM3,15H4V16H3zM4,15H5V16H4zM5,15H6V16H5zM6,15H7V16H6zM7,15H8V16H7zM10,15H11V16H10zM11,15H12V16H11zM12,15H13V16H12zM14,15H15V16H14zM15,15H16V16H15zM18,15H19V16H18zM19,15H20V16H19zM21,15H22V16H21zM23,15H24V16H23zM25,15H26V16H25zM2,16H3V17H2zM6,16H7V17H6zM7,16H8V17H7zM8,16H9V17H8zM9,16H10V17H9zM10,16H11V17H10zM11,16H12V17H11zM15,16H16V17H15zM16,16H17V17H16zM17,16H18V17H17zM19,16H20V17H19zM20,16H21V17H20zM21,16H22V17H21zM22,16H23V17H22zM23,16H24V17H23zM25,16H26V17H25zM26,16H27V17H26zM2,17H3V18H2zM6,17H7V18H6zM7,17H8V18H7zM9,17H10V18H9zM14,17H15V18H14zM17,17H18V18H17zM19,17H20V18H19zM21,17H22V18H21zM22,17H23V18H22zM26,17H27V18H26zM2,18H3V19H2zM4,18H5V19H4zM5,18H6V19H5zM7,18H8V19H7zM8,18H9V19H8zM9,18H10V19H9zM11,18H12V19H11zM12,18H13V19H12zM14,18H15V19H14zM15,18H16V19H15zM16,18H17V19H16zM18,18H19V19H18zM19,18H20V19H19zM20,18H21V19H20zM21,18H22V19H21zM22,18H23V19H22zM24,18H25V19H24zM10,19H11V20H10zM11,19H12V20H11zM12,19H13V20H12zM17,19H18V20H17zM18,19H19V20H18zM22,19H23V20H22zM23,19H24V20H23zM2,20H3V21H2zM3,20H4V21H3zM4,20H5V21H4zM5,20H6V21H5zM6,20H7V21H6zM7,20H8V21H7zM8,20H9V21H8zM13,20H14V21H13zM14,20H15V21H14zM15,20H16V21H15zM18,20H19V21H18zM20,20H21V21H20zM22,20H23V21H22zM24,20H25V21H24zM25,20H26V21H25zM26,20H27V21H26zM2,21H3V22H2zM8,21H9V22H8zM10,21H11V22H10zM11,21H12V22H11zM13,21H14V22H13zM16,21H17V22H16zM18,21H19V22H18zM22,21H23V22H22zM23,21H24V22H23zM26,21H27V22H26zM2,22H3V23H2zM4,22H5V23H4zM5,22H6V23H5zM6,22H7V23H6zM8,22H9V23H8zM10,22H11V23H10zM11,22H12V23H11zM12,22H13V23H12zM13,22H14V23H13zM14,22H15V23H14zM15,22H16V23H15zM16,22H17V23H16zM17,22H18V23H17zM18,22H19V23H18zM19,22H20V23H19zM20,22H21V23H20zM21,22H22V23H21zM22,22H23V23H22zM24,22H25V23H24zM2,23H3V24H2zM4,23H5V24H4zM5,23H6V24H5zM6,23H7V24H6zM8,23H9V24H8zM10,23H11V24H10zM12,23H13V24H12zM14,23H15V24H14zM15,23H16V24H15zM18,23H19V24H18zM20,23H21V24H20zM22,23H23V24H22zM23,23H24V24H23zM24,23H25V24H24zM25,23H26V24H25zM26,23H27V24H26zM2,24H3V25H2zM4,24H5V25H4zM5,24H6V25H5zM6,24H7V25H6zM8,24H9V25H8zM10,24H11V25H10zM12,24H13V25H12zM15,24H16V25H15zM16,24H17V25H16zM17,24H18V25H17zM23,24H24V25H23zM24,24H25V25H24zM26,24H27V25H26zM2,25H3V26H2zM8,25H9V26H8zM12,25H13V26H12zM16,25H17V26H16zM18,25H19V26H18zM19,25H20V26H19zM21,25H22V26H21zM22,25H23V26H22zM23,25H24V26H23zM26,25H27V26H26zM2,26H3V27H2zM3,26H4V27H3zM4,26H5V27H4zM5,26H6V27H5zM6,26H7V27H6zM7,26H8V27H7zM8,26H9V27H8zM10,26H11V27H10zM13,26H14V27H13zM14,26H15V27H14zM15,26H16V27H15zM16,26H17V27H16zM21,26H22V27H21zM22,26H23V27H22zM23,26H24V27H23zM24,26H25V27H24zM25,26H26V27H25zM26,26H27V27H26z"/></svg><div class="qr-brand"><strong>SHARMZAD</strong><span>Tours &amp; Diving · Red Sea</span></div></div></div>
+    <div class="qr-content"><span class="section-tag">Scansiona &amp; Scopri</span><h2>Visita <span class="highlight">sharmzad.com</span></h2><p>Scansiona il codice QR con la fotocamera del tuo smartphone per aprire il sito web.</p><a href="https://www.sharmzad.com" target="_blank" rel="noopener" class="qr-url">🌐 www.sharmzad.com</a><div class="qr-actions"><a href="https://www.sharmzad.com" target="_blank" rel="noopener" class="btn btn-primary">Apri il sito</a><a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21" target="_blank" rel="noopener" class="btn btn-wa"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</a></div></div>
+</div></div></section>
 
-<!-- BOOKING -->
+<!-- ============ BOOKING ============ -->
 <section class="booking" id="prenota">
-    <div class="container">
-        <div class="booking-wrap">
-            <span class="section-tag" style="color:#d4a04c;">Prenota Ora</span>
-            <h2>Il modo più veloce?<br><span class="highlight">WhatsApp diretto</span></h2>
-            <p>Un messaggio, risposta entro 30 minuti. Ti aiutiamo a scegliere il pacchetto giusto, le date migliori e organizziamo tutto per te — dal pick-up in hotel all'ultima immersione.</p>
-
-            <div class="contact-cards">
-                <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20maggiori%20informazioni%20per%20prenotare%20le%20immersioni." class="contact-c wa-c" target="_blank" rel="noopener">
-                    <div class="c-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                    </div>
-                    <div>
-                        <div class="c-lbl">WhatsApp / Tel.</div>
-                        <div class="c-val">+41 76 556 76 33</div>
-                    </div>
-                </a>
-                <a href="mailto:info@sharmzad.com?subject=Richiesta%20Diving%20Sharm%20El%20Sheikh" class="contact-c mail-c">
-                    <div class="c-icon">✉️</div>
-                    <div>
-                        <div class="c-lbl">Email</div>
-                        <div class="c-val">info@sharmzad.com</div>
-                    </div>
-                </a>
-            </div>
-
-            <form class="book-form" id="bookForm">
-                <h3>Oppure compila il modulo</h3>
-                <p class="form-sub">Ti risponderemo su WhatsApp entro 24 ore</p>
-                <div class="form-row">
-                    <div class="form-field"><label for="fName">Nome *</label><input type="text" id="fName" name="fName" required></div>
-                    <div class="form-field"><label for="fEmail">Email *</label><input type="email" id="fEmail" name="fEmail" required></div>
-                </div>
-                <div class="form-row">
-                    <div class="form-field"><label for="fPhone">Telefono / WhatsApp *</label><input type="tel" id="fPhone" name="fPhone" required></div>
-                    <div class="form-field"><label for="fPeople">Persone</label><select id="fPeople" name="fPeople"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5+</option></select></div>
-                </div>
-                <div class="form-row">
-                    <div class="form-field"><label for="fPkg">Pacchetto interesse</label>
-                        <select id="fPkg" name="fPkg">
-                            <option value="Try Dive">Try Dive / Battesimo</option>
-                            <option value="Reef Locali">Reef Locali (2 dives)</option>
-                            <option value="Ras Mohamed">Ras Mohamed National Park</option>
-                            <option value="Tiran">Straits of Tiran</option>
-                            <option value="Thistlegorm">SS Thistlegorm Wreck</option>
-                            <option value="5 giorni">Pacchetto 5 Giorni</option>
-                            <option value="Corso PADI">Corso PADI</option>
-                            <option value="Altro">Altro / Chiedi consiglio</option>
-                        </select>
-                    </div>
-                    <div class="form-field"><label for="fDate">Data preferita</label><input type="date" id="fDate" name="fDate"></div>
-                </div>
-                <div class="form-field full" style="margin-bottom:14px;"><label for="fCert">Livello certificazione</label>
-                    <select id="fCert" name="fCert">
-                        <option>Nessuna esperienza</option>
-                        <option>Open Water (OWD)</option>
-                        <option>Advanced (AOWD)</option>
-                        <option>Rescue / Divemaster</option>
-                        <option>Istruttore</option>
-                    </select>
-                </div>
-                <div class="form-field full"><label for="fMsg">Note (opzionale)</label><textarea id="fMsg" name="fMsg" placeholder="Numero di immersioni, richieste speciali..."></textarea></div>
-                <button type="submit" class="btn btn-wa form-submit">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                    Invia richiesta su WhatsApp
-                </button>
-                <p class="form-note">Cliccando "Invia" verrai reindirizzato a WhatsApp con il tuo messaggio precompilato</p>
-            </form>
+    <div class="container"><div class="booking-wrap">
+        <span class="section-tag" style="color:var(--gold)">Prenota Ora</span>
+        <h2>Un messaggio, e sei in <span class="highlight">Mar Rosso</span></h2>
+        <p>Compila il modulo o scrivici direttamente su WhatsApp. Risposta entro 30 minuti, cancellazione gratuita, nessun pagamento anticipato.</p>
+        <div class="contact-cards">
+            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20info%20sulle%20immersioni." class="contact-c wa-c" target="_blank" rel="noopener">
+                <div class="c-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+                <div><div class="c-lbl">WhatsApp / Tel.</div><div class="c-val">+41 76 556 76 33</div></div>
+            </a>
+            <a href="mailto:info@sharmzad.com" class="contact-c mail-c"><div class="c-icon">✉️</div><div><div class="c-lbl">Email</div><div class="c-val">info@sharmzad.com</div></div></a>
         </div>
-    </div>
+        <form class="book-form" id="bookForm">
+            <h3>Oppure compila il modulo</h3>
+            <p class="form-sub">Ti risponderemo su WhatsApp entro 24 ore</p>
+            <div class="form-row"><div class="form-field"><label>Nome *</label><input type="text" name="Nome" data-label="Nome" required></div><div class="form-field"><label>Email *</label><input type="email" name="Email" data-label="Email" required></div></div>
+            <div class="form-row"><div class="form-field"><label>Telefono *</label><input type="tel" name="Telefono" data-label="Telefono" required></div><div class="form-field"><label>Persone</label><select name="Persone" data-label="Persone"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5+</option></select></div></div>
+            <div class="form-field full" style="margin-bottom:12px"><label>Pacchetto interesse *</label>
+                <select name="Pacchetto" data-label="Pacchetto" required>
+                    <optgroup label="Sharm El Sheikh"><option>Try Dive Sharm</option><option>Reef Locali Sharm</option><option>Ras Mohamed Park</option><option>Straits of Tiran</option><option>SS Thistlegorm Wreck</option><option>Pacchetto 5gg Sharm</option></optgroup>
+                    <optgroup label="Marsa Alam"><option>Marsa Alam Daily</option><option>Elphinstone Reef</option><option>Dolphin House (Sha'ab Samadai)</option><option>Marsa Mubarak Dugong</option><option>Fury Shoal / Sataya</option></optgroup>
+                    <optgroup label="Wadi Lehami / Far South"><option>Wadi Lehami Safari (5-7gg)</option><option>St. John's Reef</option><option>Rocky &amp; Zabargad Island</option></optgroup>
+                    <option>Corso PADI / SSI</option>
+                    <option>Combo Multi-regione</option>
+                    <option>Altro / Chiedi consiglio</option>
+                </select>
+            </div>
+            <div class="form-row"><div class="form-field"><label for="fDate">Data preferita</label><input type="date" id="fDate" name="Data" data-label="Data"></div><div class="form-field"><label>Livello subacqueo</label><select name="Livello" data-label="Livello"><option>Nessuna esperienza</option><option>Open Water (OWD)</option><option>Advanced (AOWD)</option><option>Rescue / DM</option><option>Istruttore</option></select></div></div>
+            <div class="form-field full"><label>Note</label><textarea name="Note" data-label="Note" placeholder="Numero immersioni, richieste speciali..."></textarea></div>
+            <button type="submit" class="btn btn-wa form-submit"><svg class="wa-svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Invia richiesta su WhatsApp</button>
+            <p class="form-note">Cliccando "Invia" verrai reindirizzato a WhatsApp</p>
+        </form>
+    </div></div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-    <div class="container">
-        <div class="foot-grid">
-            <div class="foot-col">
-                <h4>SHARMZAD</h4>
-                <p>Il tuo partner di fiducia per esplorare i tesori sottomarini di Sharm El Sheikh. Diving, tour ed esperienze indimenticabili nel Mar Rosso.</p>
-                <p style="margin-top:16px;">📍 Sharm El Sheikh, Egitto</p>
-            </div>
-            <div class="foot-col">
-                <h4>Contatti</h4>
-                <p>📱 +41 76 556 76 33</p>
-                <p>✉️ info@sharmzad.com</p>
-                <p>🕐 Assistenza 24/7</p>
-            </div>
-            <div class="foot-col">
-                <h4>Link</h4>
-                <a href="#pacchetti">Pacchetti Diving</a>
-                <a href="#siti">Siti d'Immersione</a>
-                <a href="#corsi">Corsi PADI/SSI</a>
-                <a href="#prenota">Prenota Ora</a>
-            </div>
-        </div>
-        <div class="foot-bottom">
-            © 2026 Sharmzad Tours &amp; Diving. Tutti i diritti riservati.
-        </div>
+<footer><div class="container">
+    <div class="foot-grid">
+        <div class="foot-col"><h4>SHARMZAD</h4><p>Il tuo partner di fiducia in Egitto. Tour ed escursioni a Sharm El Sheikh, immersioni nel Mar Rosso da Sharm a Marsa Alam e Wadi Lehami.</p><p style="margin-top:14px;">📍 Sharm El Sheikh · Marsa Alam · Egitto</p></div>
+        <div class="foot-col"><h4>Contatti</h4><p>📱 +41 76 556 76 33</p><p>✉️ info@sharmzad.com</p><p>🌐 www.sharmzad.com</p><p>🕐 Assistenza 24/7</p></div>
+        <div class="foot-col"><h4>Link</h4><a href="index.html">Home</a><a href="tours.html">Tour &amp; Escursioni</a><a href="diving.html">Diving Sharm &amp; Marsa Alam</a><a href="diving.html#wadi-lehami">Wadi Lehami Safari</a><a href="diving.html#prenota">Prenota</a></div>
     </div>
-</footer>
-
-<!-- Floating WhatsApp -->
-<a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20info%20sui%20pacchetti%20diving." class="float-wa" target="_blank" rel="noopener" aria-label="WhatsApp">
-    <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
-
-<script>
-// Mobile menu
-const navToggle = document.getElementById('navToggle');
-const navMenu = document.getElementById('navMenu');
-navToggle.addEventListener('click', () => navMenu.classList.toggle('open'));
-navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navMenu.classList.remove('open')));
-
-// Navbar scroll effect
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 50);
-});
-
-// Booking form -> WhatsApp
-document.getElementById('bookForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const fd = new FormData(this);
-    const msg = `Ciao Sharmzad! Vorrei prenotare le immersioni:%0A%0A` +
-        `*Nome:* ${fd.get('fName')}%0A` +
-        `*Email:* ${fd.get('fEmail')}%0A` +
-        `*Telefono:* ${fd.get('fPhone')}%0A` +
-        `*Persone:* ${fd.get('fPeople')}%0A` +
-        `*Pacchetto:* ${fd.get('fPkg')}%0A` +
-        `*Data:* ${fd.get('fDate') || 'da definire'}%0A` +
-        `*Livello:* ${fd.get('fCert')}%0A` +
-        `*Note:* ${fd.get('fMsg') || '-'}`;
-    window.open(`https://wa.me/41765567633?text=${msg}`, '_blank');
-});
-
-// Set min date to today
-const dateInput = document.getElementById('fDate');
-if (dateInput) dateInput.min = new Date().toISOString().split('T')[0];
-</script>
-
-</body>
-</html>
+    <div class="foot-bottom">© 2026 Sharmzad Tours &amp; Diving. Tutti i diritti riservati.</div>
+</div></footer>
+<a href="https://wa.me/41765567633?text=Ciao%20Sharmzad%21%20Vorrei%20info%20sui%20pacchetti%20diving." class="float-wa" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" style="fill:white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+<script src="assets/site.js"></script>
+</body></html>
