@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sharmzad Diving — Immersioni a Sharm El Sheikh | Mar Rosso</title>
+<meta name="description" content="Pacchetti immersioni a Sharm El Sheikh: Ras Mohamed, Straits of Tiran, Thistlegorm wreck, corsi PADI. Prenota ora su WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --gold: #d4a04c;
+    --gold-dark: #b8862e;
+    --coral: #e8743b;
+    --deep: #0a2f4a;
+    --sea: #1e6091;
+    --sea-mid: #2596be;
+    --sea-light: #5ec4d4;
+    --dark: #0f1626;
+    --text: #2d3142;
+    --text-light: #6b7280;
+    --cream: #fdf8f3;
+    --white: #fff;
+    --shadow-sm: 0 2px 8px rgba(10,47,74,0.08);
+    --shadow-md: 0 10px 30px rgba(10,47,74,0.12);
+    --shadow-lg: 0 20px 60px rgba(10,47,74,0.2);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+    font-family: 'Poppins', -apple-system, sans-serif;
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    background: var(--white);
+}
+
+h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; line-height: 1.15; color: var(--dark); }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* WhatsApp CTA button */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 32px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border: none;
+    text-align: center;
+}
+.btn-wa {
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    color: white;
+    box-shadow: 0 8px 24px rgba(37,211,102,0.35);
+}
+.btn-wa:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(37,211,102,0.5); }
+.btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--coral));
+    color: white;
+    box-shadow: 0 8px 24px rgba(212,160,76,0.35);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(212,160,76,0.5); }
+.btn-outline {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.5);
+}
+.btn-outline:hover { background: white; color: var(--deep); border-color: white; }
+.btn-large { padding: 18px 40px; font-size: 16px; }
+
+/* Navbar */
+.nav {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(10,22,38,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.3s;
+}
+.nav.scrolled { background: rgba(10,22,38,0.98); }
+.nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo { display: flex; flex-direction: column; line-height: 1; }
+.logo-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--gold);
+    letter-spacing: 4px;
+}
+.logo-sub {
+    font-size: 9px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+.nav-menu { display: flex; align-items: center; gap: 32px; }
+.nav-menu a {
+    color: rgba(255,255,255,0.85);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+}
+.nav-menu a:not(.nav-cta):hover { color: var(--gold); }
+.nav-cta {
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    color: white !important;
+    padding: 10px 22px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+}
+.nav-cta:hover { transform: translateY(-2px); }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; flex-direction: column; gap: 4px; }
+.nav-toggle span { width: 26px; height: 2px; background: white; border-radius: 2px; transition: all 0.3s; }
+
+/* Hero */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 120px 24px 80px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #0a2f4a 0%, #144d75 40%, #1e6091 70%, #2596be 100%);
+}
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+.hero-bg::before {
+    content: '';
+    position: absolute;
+    top: -20%; right: -10%;
+    width: 60%; height: 80%;
+    background: radial-gradient(circle, rgba(212,160,76,0.25), transparent 60%);
+    border-radius: 50%;
+    filter: blur(40px);
+}
+.hero-bg::after {
+    content: '';
+    position: absolute;
+    bottom: -30%; left: -10%;
+    width: 70%; height: 70%;
+    background: radial-gradient(circle, rgba(94,196,212,0.3), transparent 60%);
+    border-radius: 50%;
+    filter: blur(60px);
+}
+
+/* Animated bubbles */
+.bubbles { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.bubble {
+    position: absolute;
+    bottom: -50px;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(255,255,255,0.1));
+    border-radius: 50%;
+    animation: rise linear infinite;
+}
+.bubble:nth-child(1) { left: 10%; width: 20px; height: 20px; animation-duration: 15s; }
+.bubble:nth-child(2) { left: 25%; width: 12px; height: 12px; animation-duration: 12s; animation-delay: 1s; }
+.bubble:nth-child(3) { left: 50%; width: 28px; height: 28px; animation-duration: 18s; animation-delay: 3s; }
+.bubble:nth-child(4) { left: 70%; width: 16px; height: 16px; animation-duration: 14s; animation-delay: 5s; }
+.bubble:nth-child(5) { left: 85%; width: 22px; height: 22px; animation-duration: 16s; animation-delay: 2s; }
+.bubble:nth-child(6) { left: 40%; width: 14px; height: 14px; animation-duration: 13s; animation-delay: 6s; }
+.bubble:nth-child(7) { left: 60%; width: 10px; height: 10px; animation-duration: 11s; animation-delay: 4s; }
+
+@keyframes rise {
+    0% { bottom: -50px; transform: translateX(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 0.6; }
+    100% { bottom: 105%; transform: translateX(60px); opacity: 0; }
+}
+
+.hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 8px 18px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.2);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 24px;
+}
+.hero-badge .dot { width: 8px; height: 8px; background: #25d366; border-radius: 50%; box-shadow: 0 0 10px #25d366; }
+.hero h1 {
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    color: white;
+    font-weight: 900;
+    margin-bottom: 20px;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.hero h1 .highlight { color: var(--gold); font-style: italic; }
+.hero-sub {
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 32px;
+    max-width: 520px;
+}
+.hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 500px;
+}
+.h-stat {
+    padding: 14px 0;
+    border-left: 2px solid var(--gold);
+    padding-left: 16px;
+}
+.h-stat-num {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+}
+.h-stat-lbl {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Hero visual (diver illustration) */
+.hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.diver-scene {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 1;
+    position: relative;
+    filter: drop-shadow(0 20px 60px rgba(10,47,74,0.4));
+}
+.diver-scene svg { width: 100%; height: 100%; }
+
+/* Sections */
+section { padding: 100px 0; }
+
+.section-header { text-align: center; max-width: 700px; margin: 0 auto 60px; }
+.section-tag {
+    display: inline-block;
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 14px;
+    position: relative;
+    padding: 0 26px;
+}
+.section-tag::before, .section-tag::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 20px; height: 1px;
+    background: var(--gold);
+}
+.section-tag::before { left: 0; }
+.section-tag::after { right: 0; }
+.section-header h2 { font-size: clamp(2.2rem, 4vw, 3rem); margin-bottom: 16px; }
+.section-header h2 .highlight { color: var(--gold); font-style: italic; }
+.section-sub { color: var(--text-light); font-size: 17px; line-height: 1.7; }
+
+/* Packages */
+.packages { background: var(--cream); position: relative; overflow: hidden; }
+.packages::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(30,96,145,0.06), transparent 60%);
+    border-radius: 50%;
+}
+
+.pkg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+    position: relative;
+}
+.pkg-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0,0,0,0.04);
+    position: relative;
+}
+.pkg-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+.pkg-card.featured { border: 2px solid var(--gold); }
+.pkg-card.featured::before {
+    content: '⭐ Più richiesto';
+    position: absolute;
+    top: 16px; right: 16px;
+    background: linear-gradient(135deg, var(--gold), var(--coral));
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(212,160,76,0.4);
+}
+.pkg-image {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+}
+.pkg-image svg { width: 100%; height: 100%; display: block; }
+.pkg-body { padding: 26px 26px 30px; display: flex; flex-direction: column; flex: 1; }
+.pkg-tag {
+    display: inline-block;
+    color: var(--sea);
+    background: rgba(30,96,145,0.08);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    align-self: flex-start;
+}
+.pkg-body h3 { font-size: 22px; margin-bottom: 10px; }
+.pkg-body > p { color: var(--text-light); font-size: 14.5px; margin-bottom: 18px; line-height: 1.6; }
+.pkg-features { margin-bottom: 24px; }
+.pkg-features li {
+    font-size: 13.5px;
+    padding: 5px 0 5px 26px;
+    position: relative;
+    color: var(--text);
+}
+.pkg-features li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px;
+    width: 16px; height: 16px;
+    background: linear-gradient(135deg, var(--gold), var(--coral));
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(212,160,76,0.3);
+}
+.pkg-features li::after {
+    content: '✓';
+    position: absolute;
+    left: 4px; top: 6px;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+}
+.pkg-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    margin: 0 0 20px;
+    border-top: 1px dashed rgba(0,0,0,0.1);
+    border-bottom: 1px dashed rgba(0,0,0,0.1);
+}
+.pkg-price-lbl { font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
+.pkg-price-val { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; color: var(--sea); }
+.pkg-cta {
+    margin-top: auto;
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+    font-size: 14px;
+}
+
+/* Dive Sites */
+.sites {
+    background: linear-gradient(180deg, var(--dark) 0%, var(--deep) 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+.sites::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 200px;
+    background: linear-gradient(180deg, var(--cream), transparent);
+    opacity: 0.03;
+}
+.sites .section-header h2 { color: white; }
+.sites .section-sub { color: rgba(255,255,255,0.75); }
+
+.sites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+.site-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
+    padding: 30px 26px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+.site-card:hover {
+    background: rgba(255,255,255,0.08);
+    transform: translateY(-4px);
+    border-color: var(--gold);
+}
+.site-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--gold), var(--coral));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    box-shadow: 0 10px 30px rgba(212,160,76,0.3);
+}
+.site-card h3 { color: white; font-size: 20px; margin-bottom: 10px; }
+.site-card p { color: rgba(255,255,255,0.75); font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+.site-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.site-tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    background: rgba(212,160,76,0.15);
+    color: var(--gold);
+    border-radius: 20px;
+    border: 1px solid rgba(212,160,76,0.3);
+}
+
+/* Courses */
+.courses { background: var(--cream); }
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+.course-card {
+    background: white;
+    padding: 26px 22px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    transition: all 0.3s;
+    border-top: 4px solid var(--gold);
+}
+.course-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.course-level {
+    display: inline-block;
+    font-size: 11px;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding: 3px 12px;
+    background: rgba(212,160,76,0.1);
+    border-radius: 20px;
+}
+.course-card h3 { font-size: 20px; margin-bottom: 8px; }
+.course-card p { color: var(--text-light); font-size: 13.5px; line-height: 1.5; margin-bottom: 14px; }
+.course-duration {
+    font-size: 12px;
+    color: var(--sea);
+    font-weight: 600;
+    padding: 8px;
+    background: rgba(30,96,145,0.06);
+    border-radius: 8px;
+}
+
+/* Why Us */
+.why { background: white; }
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+}
+.why-item {
+    text-align: center;
+    padding: 20px;
+}
+.why-icon-lg {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, var(--sea-light), var(--sea));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 32px;
+    box-shadow: 0 15px 40px rgba(30,96,145,0.25);
+}
+.why-item h3 { font-size: 18px; margin-bottom: 8px; }
+.why-item p { color: var(--text-light); font-size: 14px; }
+
+/* Included */
+.included-sec {
+    background: linear-gradient(135deg, var(--deep), var(--sea));
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+.included-sec::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(212,160,76,0.15), transparent 60%);
+    border-radius: 50%;
+}
+.included-sec .section-header h2 { color: white; }
+.included-sec .section-sub { color: rgba(255,255,255,0.8); }
+
+.incl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+}
+.incl-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+.incl-item .ch {
+    background: linear-gradient(135deg, var(--gold), var(--coral));
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(212,160,76,0.3);
+}
+.incl-item span { font-size: 14px; }
+
+/* Booking / Contact */
+.booking {
+    background: linear-gradient(135deg, var(--dark), #1a2942);
+    color: white;
+    position: relative;
+    overflow: hidden;
+    padding: 100px 0;
+}
+.booking::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top right, rgba(37,211,102,0.15), transparent 60%);
+}
+
+.booking-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+}
+.booking h2 {
+    color: white;
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 20px;
+}
+.booking h2 .highlight { color: var(--gold); font-style: italic; }
+.booking > .container > .booking-wrap > p {
+    color: rgba(255,255,255,0.85);
+    font-size: 17px;
+    max-width: 620px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+}
+.contact-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 700px;
+    margin: 0 auto 40px;
+}
+.contact-c {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 28px 24px;
+    border-radius: 18px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    transition: all 0.3s;
+    color: white;
+}
+.contact-c:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: var(--gold);
+    transform: translateY(-3px);
+}
+.contact-c.wa-c { border-color: rgba(37,211,102,0.5); }
+.contact-c.wa-c:hover { background: rgba(37,211,102,0.15); border-color: #25d366; }
+.contact-c .c-icon {
+    width: 50px; height: 50px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+.contact-c.wa-c .c-icon { background: linear-gradient(135deg, #25d366, #128c7e); box-shadow: 0 6px 18px rgba(37,211,102,0.4); }
+.contact-c.mail-c .c-icon { background: linear-gradient(135deg, var(--gold), var(--coral)); box-shadow: 0 6px 18px rgba(212,160,76,0.4); }
+.contact-c .c-lbl { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7; margin-bottom: 4px; }
+.contact-c .c-val { font-size: 17px; font-weight: 600; }
+
+/* Booking form */
+.book-form {
+    background: white;
+    padding: 40px;
+    border-radius: 24px;
+    color: var(--text);
+    text-align: left;
+    max-width: 620px;
+    margin: 20px auto 0;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+}
+.book-form h3 { text-align: center; font-size: 22px; margin-bottom: 8px; }
+.book-form .form-sub { text-align: center; color: var(--text-light); font-size: 14px; margin-bottom: 26px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.form-field { display: flex; flex-direction: column; }
+.form-field.full { grid-column: 1 / -1; }
+.form-field label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.form-field input, .form-field select, .form-field textarea {
+    padding: 12px 14px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #fafafa;
+    transition: all 0.2s;
+    color: var(--text);
+}
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(212,160,76,0.1);
+}
+.form-field textarea { resize: vertical; min-height: 70px; }
+.form-submit {
+    width: 100%;
+    padding: 16px;
+    font-size: 15px;
+    margin-top: 6px;
+    justify-content: center;
+}
+.form-note { text-align: center; color: var(--text-light); font-size: 12px; margin-top: 12px; }
+
+/* Footer */
+footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.7);
+    padding: 60px 0 24px;
+}
+.foot-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+.foot-col h4 {
+    color: var(--gold);
+    font-size: 14px;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+    font-family: 'Playfair Display', serif;
+}
+.foot-col p { font-size: 13.5px; line-height: 1.7; margin-bottom: 8px; }
+.foot-col a { display: block; padding: 4px 0; font-size: 13.5px; color: rgba(255,255,255,0.7); transition: color 0.3s; }
+.foot-col a:hover { color: var(--gold); }
+.foot-bottom {
+    text-align: center;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+}
+
+/* Floating WhatsApp */
+.float-wa {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    width: 62px; height: 62px;
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 30px;
+    box-shadow: 0 12px 32px rgba(37,211,102,0.5);
+    z-index: 999;
+    transition: all 0.3s;
+    animation: pulse 2.5s infinite;
+}
+.float-wa:hover { transform: scale(1.1) rotate(-8deg); }
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 12px 32px rgba(37,211,102,0.5); }
+    50% { box-shadow: 0 12px 32px rgba(37,211,102,0.7), 0 0 0 20px rgba(37,211,102,0); }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .nav-menu {
+        position: fixed;
+        top: 68px; left: 0;
+        width: 100%;
+        flex-direction: column;
+        background: rgba(10,22,38,0.98);
+        padding: 24px;
+        gap: 18px;
+        transform: translateY(-150%);
+        transition: transform 0.3s;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .nav-menu.open { transform: translateY(0); }
+    .nav-toggle { display: flex; }
+    .hero-inner { grid-template-columns: 1fr; text-align: center; }
+    .hero-visual { order: -1; max-width: 320px; margin: 0 auto; }
+    .h-stat { border-left: none; border-top: 2px solid var(--gold); padding-left: 0; padding-top: 12px; text-align: center; }
+    .hero-stats { max-width: 100%; }
+    .hero-buttons { justify-content: center; }
+    section { padding: 70px 0; }
+    .contact-cards { grid-template-columns: 1fr; }
+    .foot-grid { grid-template-columns: 1fr; gap: 30px; }
+    .form-row { grid-template-columns: 1fr; }
+    .book-form { padding: 28px 20px; }
+}
+
+@media (max-width: 480px) {
+    .hero-badge { font-size: 11px; }
+    .float-wa { width: 54px; height: 54px; font-size: 26px; bottom: 16px; right: 16px; }
+    .btn { padding: 13px 24px; font-size: 14px; }
+    .section-tag::before, .section-tag::after { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+    <div class="nav-inner">
+        <a href="#hero" class="logo">
+            <span class="logo-name">SHARMZAD</span>
+            <span class="logo-sub">Diving · Red Sea</span>
+        </a>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="#pacchetti">Pacchetti</a></li>
+            <li><a href="#siti">Siti d'Immersione</a></li>
+            <li><a href="#corsi">Corsi</a></li>
+            <li><a href="#perche">Perché Noi</a></li>
+            <li><a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20maggiori%20informazioni%20sui%20pacchetti%20diving" class="nav-cta" target="_blank" rel="noopener">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                +41 76 556 76 33
+            </a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="menu"><span></span><span></span><span></span></button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="bubbles">
+        <span class="bubble"></span><span class="bubble"></span><span class="bubble"></span>
+        <span class="bubble"></span><span class="bubble"></span><span class="bubble"></span><span class="bubble"></span>
+    </div>
+    <div class="hero-inner">
+        <div class="hero-content">
+            <div class="hero-badge"><span class="dot"></span>Prenotazioni aperte · Estate 2026</div>
+            <h1>Immersioni nel <span class="highlight">Mar Rosso</span><br>di Sharm El Sheikh</h1>
+            <p class="hero-sub">Ras Mohamed, Straits of Tiran, il relitto del Thistlegorm. Corsi PADI, uscite giornaliere e pacchetti multi-giorno. Guide certificate, attrezzatura inclusa, staff parlante italiano.</p>
+            <div class="hero-buttons">
+                <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20prenotare%20un%27immersione%20a%20Sharm%20El%20Sheikh." class="btn btn-wa btn-large" target="_blank" rel="noopener">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Prenota su WhatsApp
+                </a>
+                <a href="#pacchetti" class="btn btn-outline btn-large">Vedi Pacchetti</a>
+            </div>
+            <div class="hero-stats">
+                <div class="h-stat"><span class="h-stat-num">100+</span><span class="h-stat-lbl">Siti d'immersione</span></div>
+                <div class="h-stat"><span class="h-stat-num">28°C</span><span class="h-stat-lbl">Temp. media acqua</span></div>
+                <div class="h-stat"><span class="h-stat-num">30m+</span><span class="h-stat-lbl">Visibilità</span></div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="diver-scene">
+                <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="waterGrad" cx="0.5" cy="0.3" r="0.8">
+                            <stop offset="0" stop-color="#5ec4d4" stop-opacity="0.4"/>
+                            <stop offset="1" stop-color="#0a2f4a" stop-opacity="0.1"/>
+                        </radialGradient>
+                        <linearGradient id="rayGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#fff2c7" stop-opacity="0.5"/>
+                            <stop offset="1" stop-color="#fff2c7" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="200" cy="200" r="180" fill="url(#waterGrad)"/>
+                    <!-- Sun rays from top -->
+                    <path d="M100,20 L110,180 L90,180 Z" fill="url(#rayGrad)" opacity="0.6"/>
+                    <path d="M200,10 L215,190 L185,190 Z" fill="url(#rayGrad)" opacity="0.7"/>
+                    <path d="M300,20 L310,180 L290,180 Z" fill="url(#rayGrad)" opacity="0.6"/>
+                    <!-- Diver -->
+                    <g transform="translate(200 220)">
+                        <!-- tank -->
+                        <rect x="-30" y="-15" width="14" height="35" rx="4" fill="#8fa6b8"/>
+                        <rect x="-30" y="-18" width="14" height="4" rx="2" fill="#5a7180"/>
+                        <!-- body -->
+                        <ellipse cx="0" cy="10" rx="28" ry="16" fill="#0a2f4a"/>
+                        <!-- head + mask -->
+                        <circle cx="15" cy="-5" r="14" fill="#d4a04c"/>
+                        <path d="M8,-10 Q15,-16 22,-10 L22,-2 L8,-2 Z" fill="#2596be" opacity="0.8"/>
+                        <rect x="8" y="-2" width="14" height="2" fill="#0a2f4a"/>
+                        <path d="M20,-2 Q28,-4 32,0 Q28,4 20,4 Z" fill="#0a2f4a"/>
+                        <!-- fins -->
+                        <path d="M-40,20 Q-55,25 -60,35 L-45,32 Z" fill="#e8743b"/>
+                        <path d="M-40,20 Q-55,10 -60,0 L-45,8 Z" fill="#e8743b" opacity="0.85"/>
+                        <!-- arm -->
+                        <path d="M12,5 Q30,-8 42,-12" stroke="#d4a04c" stroke-width="8" stroke-linecap="round" fill="none"/>
+                        <circle cx="44" cy="-13" r="5" fill="#d4a04c"/>
+                        <!-- bubbles -->
+                        <circle cx="30" cy="-25" r="4" fill="#fff" opacity="0.7"/>
+                        <circle cx="38" cy="-40" r="3" fill="#fff" opacity="0.6"/>
+                        <circle cx="26" cy="-55" r="5" fill="#fff" opacity="0.5"/>
+                        <circle cx="42" cy="-70" r="3" fill="#fff" opacity="0.4"/>
+                    </g>
+                    <!-- Fish -->
+                    <g transform="translate(90 160)">
+                        <ellipse cx="0" cy="0" rx="14" ry="7" fill="#e8743b"/>
+                        <path d="M-14,0 L-22,-6 L-22,6 Z" fill="#e8743b"/>
+                        <circle cx="6" cy="-2" r="1.5" fill="#0a2f4a"/>
+                        <path d="M-4,-3 L6,-3" stroke="#f9d976" stroke-width="1"/>
+                    </g>
+                    <g transform="translate(320 260) scale(-1 1)">
+                        <ellipse cx="0" cy="0" rx="12" ry="6" fill="#f9d976"/>
+                        <path d="M-12,0 L-19,-5 L-19,5 Z" fill="#f9d976"/>
+                        <circle cx="5" cy="-1" r="1" fill="#0a2f4a"/>
+                    </g>
+                    <g transform="translate(70 300)">
+                        <ellipse cx="0" cy="0" rx="10" ry="5" fill="#5ec4d4"/>
+                        <path d="M-10,0 L-16,-4 L-16,4 Z" fill="#5ec4d4"/>
+                    </g>
+                    <!-- Coral / reef -->
+                    <g transform="translate(0 340)">
+                        <path d="M0,60 Q30,45 60,55 Q90,40 130,52 Q160,45 200,55 Q240,42 280,54 Q320,45 360,52 Q380,48 400,55 L400,80 L0,80 Z" fill="#7a4a1e"/>
+                        <ellipse cx="80" cy="52" rx="12" ry="18" fill="#e8743b"/>
+                        <ellipse cx="180" cy="48" rx="10" ry="16" fill="#c48b3d"/>
+                        <ellipse cx="320" cy="50" rx="14" ry="20" fill="#a55a2f"/>
+                        <circle cx="120" cy="55" r="6" fill="#f9d976"/>
+                        <circle cx="240" cy="55" r="5" fill="#f9d976"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="packages" id="pacchetti">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Pacchetti Diving</span>
+            <h2>Scegli la tua <span class="highlight">avventura sott'acqua</span></h2>
+            <p class="section-sub">Dai battesimi del mare per principianti fino ai pacchetti multi-giorno per subacquei esperti. Guide brevettate PADI/SSI, tutte le attrezzature incluse, trasferimenti dall'hotel.</p>
+        </div>
+
+        <div class="pkg-grid">
+            <!-- 1 -->
+            <article class="pkg-card">
+                <div class="pkg-image">
+                    <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <defs><linearGradient id="p1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ec4d4"/><stop offset="1" stop-color="#0a2f4a"/></linearGradient></defs>
+                        <rect width="300" height="200" fill="url(#p1)"/>
+                        <path d="M0,50 Q75,30 150,45 T300,40 L300,80 L0,80 Z" fill="#87ceeb" opacity="0.2"/>
+                        <path d="M40,20 L45,180 L35,180 Z" fill="#fff2c7" opacity="0.3"/>
+                        <path d="M120,10 L128,180 L112,180 Z" fill="#fff2c7" opacity="0.4"/>
+                        <path d="M220,15 L228,180 L212,180 Z" fill="#fff2c7" opacity="0.3"/>
+                        <g transform="translate(200 130)">
+                            <ellipse cx="0" cy="0" rx="18" ry="9" fill="#e8743b"/>
+                            <path d="M-18,0 L-28,-8 L-28,8 Z" fill="#e8743b"/>
+                            <circle cx="8" cy="-3" r="2" fill="#0a2f4a"/>
+                        </g>
+                        <g transform="translate(80 90) scale(0.7)">
+                            <ellipse cx="0" cy="0" rx="18" ry="9" fill="#f9d976"/>
+                            <path d="M-18,0 L-28,-8 L-28,8 Z" fill="#f9d976"/>
+                        </g>
+                        <circle cx="230" cy="60" r="4" fill="#fff" opacity="0.6"/>
+                        <circle cx="240" cy="45" r="3" fill="#fff" opacity="0.5"/>
+                        <circle cx="235" cy="30" r="5" fill="#fff" opacity="0.4"/>
+                    </svg>
+                </div>
+                <div class="pkg-body">
+                    <span class="pkg-tag">Principianti</span>
+                    <h3>Try Dive · Battesimo</h3>
+                    <p>La tua prima immersione nel Mar Rosso. Briefing, attrezzatura e istruttore dedicato — non serve alcun brevetto.</p>
+                    <ul class="pkg-features">
+                        <li>Briefing teorico completo</li>
+                        <li>1 immersione con istruttore</li>
+                        <li>Attrezzatura completa inclusa</li>
+                        <li>Foto/video ricordo su richiesta</li>
+                    </ul>
+                    <div class="pkg-price">
+                        <span class="pkg-price-lbl">Prezzo per persona</span>
+                        <span class="pkg-price-val">Su richiesta</span>
+                    </div>
+                    <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20prenotare%20il%20Try%20Dive%20-%20battesimo%20del%20mare." class="btn btn-wa pkg-cta" target="_blank" rel="noopener">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Prenota su WhatsApp
+                    </a>
+                </div>
+            </article>
+
+            <!-- 2 -->
+            <article class="pkg-card">
+                <div class="pkg-image">
+                    <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <defs><linearGradient id="p2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38b6c9"/><stop offset="1" stop-color="#144d75"/></linearGradient></defs>
+                        <rect width="300" height="200" fill="url(#p2)"/>
+                        <path d="M0,60 Q75,45 150,55 T300,50 L300,90 L0,90 Z" fill="#87ceeb" opacity="0.15"/>
+                        <g transform="translate(150 130)">
+                            <path d="M-60,0 Q-40,-20 -20,-8 Q0,-20 20,-8 Q40,-20 60,0 L60,15 L-60,15 Z" fill="#e8743b"/>
+                            <path d="M-50,-2 Q-30,-15 -10,-5 Q10,-15 30,-5 Q50,-15 55,-2" fill="none" stroke="#f9d976" stroke-width="2"/>
+                        </g>
+                        <g transform="translate(90 80)">
+                            <ellipse cx="0" cy="0" rx="20" ry="10" fill="#f9d976"/>
+                            <path d="M-20,0 L-30,-8 L-30,8 Z" fill="#f9d976"/>
+                            <circle cx="10" cy="-2" r="2" fill="#0a2f4a"/>
+                        </g>
+                        <g transform="translate(220 60)">
+                            <ellipse cx="0" cy="0" rx="15" ry="7" fill="#e8743b"/>
+                            <path d="M-15,0 L-23,-6 L-23,6 Z" fill="#e8743b"/>
+                            <circle cx="7" cy="-2" r="1.5" fill="#0a2f4a"/>
+                        </g>
+                    </svg>
+                </div>
+                <div class="pkg-body">
+                    <span class="pkg-tag">Certified</span>
+                    <h3>Reef Locali · 2 Immersioni</h3>
+                    <p>Uscita in barca ai reef vicini a Sharm: Ras Katy, Ras Umm Sid, Turtle Bay. Ideali per il rientro in acqua.</p>
+                    <ul class="pkg-features">
+                        <li>2 immersioni guidate</li>
+                        <li>Barca + guida esperta</li>
+                        <li>Bombole, pesi, pranzo, bevande</li>
+                        <li>Trasferimenti dall'hotel</li>
+                    </ul>
+                    <div class="pkg-price">
+                        <span class="pkg-price-lbl">Prezzo per persona</span>
+                        <span class="pkg-price-val">Su richiesta</span>
+                    </div>
+                    <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20prenotare%20l%27uscita%20Reef%20Locali%20-%202%20immersioni." class="btn btn-wa pkg-cta" target="_blank" rel="noopener">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Prenota su WhatsApp
+                    </a>
+                </div>
+            </article>
+
+            <!-- 3 -->
+            <article class="pkg-card featured">
+                <div class="pkg-image">
+                    <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <defs><linearGradient id="p3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ec4d4"/><stop offset="1" stop-color="#0a2f4a"/></linearGradient></defs>
+                        <rect width="300" height="200" fill="url(#p3)"/>
+                        <path d="M0,40 Q75,25 150,35 T300,30 L300,70 L0,70 Z" fill="#fff2c7" opacity="0.15"/>
+                        <!-- Wall / drop-off -->
+                        <path d="M0,150 L120,150 L140,200 L0,200 Z" fill="#7a4a1e"/>
+                        <path d="M0,145 L110,145 L130,150 L0,150 Z" fill="#c48b3d"/>
+                        <ellipse cx="60" cy="140" rx="12" ry="20" fill="#e8743b"/>
+                        <ellipse cx="90" cy="145" rx="10" ry="15" fill="#c48b3d"/>
+                        <!-- Big fish school -->
+                        <g fill="#f9d976">
+                            <ellipse cx="200" cy="80" rx="7" ry="3"/><path d="M193,80 L188,77 L188,83 Z"/>
+                            <ellipse cx="215" cy="90" rx="7" ry="3"/><path d="M208,90 L203,87 L203,93 Z"/>
+                            <ellipse cx="230" cy="75" rx="7" ry="3"/><path d="M223,75 L218,72 L218,78 Z"/>
+                            <ellipse cx="245" cy="85" rx="7" ry="3"/><path d="M238,85 L233,82 L233,88 Z"/>
+                            <ellipse cx="260" cy="95" rx="7" ry="3"/><path d="M253,95 L248,92 L248,98 Z"/>
+                            <ellipse cx="205" cy="110" rx="7" ry="3"/><path d="M198,110 L193,107 L193,113 Z"/>
+                            <ellipse cx="225" cy="115" rx="7" ry="3"/><path d="M218,115 L213,112 L213,118 Z"/>
+                            <ellipse cx="250" cy="120" rx="7" ry="3"/><path d="M243,120 L238,117 L238,123 Z"/>
+                        </g>
+                        <!-- Shark silhouette -->
+                        <g transform="translate(150 130)" fill="#1a1a2e" opacity="0.7">
+                            <ellipse cx="0" cy="0" rx="30" ry="8"/>
+                            <path d="M-30,0 L-45,-6 L-40,0 L-45,6 Z"/>
+                            <path d="M0,-8 L5,-16 L10,-8 Z"/>
+                        </g>
+                    </svg>
+                </div>
+                <div class="pkg-body">
+                    <span class="pkg-tag">Iconico</span>
+                    <h3>Ras Mohamed National Park</h3>
+                    <p>Il parco marino più famoso del Mar Rosso. Shark & Yolanda Reef, Anemone City, il muro di corallo. Un must per ogni sub.</p>
+                    <ul class="pkg-features">
+                        <li>2 immersioni nel parco</li>
+                        <li>Shark & Yolanda + Anemone City</li>
+                        <li>Tasse del parco incluse (€7/giorno)</li>
+                        <li>Barca, pranzo, bevande, guida</li>
+                    </ul>
+                    <div class="pkg-price">
+                        <span class="pkg-price-lbl">Prezzo per persona</span>
+                        <span class="pkg-price-val">Su richiesta</span>
+                    </div>
+                    <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20prenotare%20la%20giornata%20a%20Ras%20Mohamed%20National%20Park." class="btn btn-wa pkg-cta" target="_blank" rel="noopener">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Prenota su WhatsApp
+                    </a>
+                </div>
+            </article>
+
+            <!-- 4 -->
+            <article class="pkg-card">
+                <div class="pkg-image">
+                    <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <defs><linearGradient id="p4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ec4d4"/><stop offset="1" stop-color="#144d75"/></linearGradient></defs>
+                        <rect width="300" height="200" fill="url(#p4)"/>
+                        <!-- Reef pinnacles -->
+                        <path d="M20,200 L20,120 Q30,60 50,120 L50,200 Z" fill="#7a4a1e"/>
+                        <path d="M110,200 L110,90 Q125,40 140,90 L140,200 Z" fill="#8b5e29"/>
+                        <path d="M200,200 L200,110 Q215,60 230,110 L230,200 Z" fill="#a55a2f"/>
+                        <ellipse cx="35" cy="130" rx="10" ry="16" fill="#e8743b"/>
+                        <ellipse cx="125" cy="100" rx="12" ry="18" fill="#c48b3d"/>
+                        <ellipse cx="215" cy="120" rx="10" ry="15" fill="#e8743b"/>
+                        <circle cx="70" cy="55" r="6" fill="#fff" opacity="0.4"/>
+                        <circle cx="180" cy="45" r="5" fill="#fff" opacity="0.5"/>
+                        <g transform="translate(160 80)">
+                            <ellipse cx="0" cy="0" rx="15" ry="7" fill="#f9d976"/>
+                            <path d="M-15,0 L-23,-5 L-23,5 Z" fill="#f9d976"/>
+                            <circle cx="6" cy="-2" r="1.5" fill="#0a2f4a"/>
+                        </g>
+                    </svg>
+                </div>
+                <div class="pkg-body">
+                    <span class="pkg-tag">Reef</span>
+                    <h3>Straits of Tiran · 2 Immersioni</h3>
+                    <p>I quattro pinnacoli di corallo — Jackson, Woodhouse, Thomas, Gordon — sospesi tra Sinai e Arabia Saudita.</p>
+                    <ul class="pkg-features">
+                        <li>2 immersioni in barca</li>
+                        <li>Pinnacoli iconici del Tiran</li>
+                        <li>Corrente moderata, ideale AOWD</li>
+                        <li>Attrezzatura completa inclusa</li>
+                    </ul>
+                    <div class="pkg-price">
+                        <span class="pkg-price-lbl">Prezzo per persona</span>
+                        <span class="pkg-price-val">Su richiesta</span>
+                    </div>
+                    <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20prenotare%20la%20giornata%20agli%20Straits%20of%20Tiran." class="btn btn-wa pkg-cta" target="_blank" rel="noopener">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Prenota su WhatsApp
+                    </a>
+                </div>
+            </article>
+
+            <!-- 5 -->
+            <article class="pkg-card">
+                <div class="pkg-image">
+                    <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <defs><linearGradient id="p5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38b6c9"/><stop offset="1" stop-color="#0a2f4a"/></linearGradient></defs>
+                        <rect width="300" height="200" fill="url(#p5)"/>
+                        <!-- Wreck (ship silhouette) -->
+                        <g transform="translate(150 130)" fill="#3d2410">
+                            <path d="M-90,0 L90,0 L80,25 L-80,25 Z"/>
+                            <rect x="-60" y="-20" width="120" height="20"/>
+                            <rect x="-40" y="-35" width="30" height="15"/>
+                            <rect x="10" y="-40" width="20" height="20"/>
+                            <rect x="-15" y="-45" width="6" height="20" fill="#5c3d1c"/>
+                            <rect x="30" y="-50" width="6" height="25" fill="#5c3d1c"/>
+                            <circle cx="-50" cy="-10" r="3" fill="#f9d976" opacity="0.6"/>
+                            <circle cx="-30" cy="-10" r="3" fill="#f9d976" opacity="0.6"/>
+                            <circle cx="0" cy="-10" r="3" fill="#f9d976" opacity="0.6"/>
+                            <circle cx="30" cy="-10" r="3" fill="#f9d976" opacity="0.6"/>
+                            <circle cx="60" cy="-10" r="3" fill="#f9d976" opacity="0.6"/>
+                        </g>
+                        <path d="M0,180 Q75,175 150,180 T300,180 L300,200 L0,200 Z" fill="#7a4a1e"/>
+                        <circle cx="220" cy="40" r="4" fill="#fff" opacity="0.5"/>
+                        <circle cx="230" cy="30" r="3" fill="#fff" opacity="0.4"/>
+                    </svg>
+                </div>
+                <div class="pkg-body">
+                    <span class="pkg-tag">Wreck</span>
+                    <h3>SS Thistlegorm Wreck</h3>
+                    <p>Il leggendario relitto della Seconda Guerra Mondiale. Motociclette, camion e locomotive ancora intatte a 30m di profondità.</p>
+                    <ul class="pkg-features">
+                        <li>2 immersioni sul relitto</li>
+                        <li>Partenza in barca giornata piena</li>
+                        <li>Consigliato AOWD + Deep Diver</li>
+                        <li>Attrezzatura + guida esperta</li>
+                    </ul>
+                    <div class="pkg-price">
+                        <span class="pkg-price-lbl">Prezzo per persona</span>
+                        <span class="pkg-price-val">Su richiesta</span>
+                    </div>
+                    <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20prenotare%20l%27immersione%20al%20relitto%20SS%20Thistlegorm." class="btn btn-wa pkg-cta" target="_blank" rel="noopener">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Prenota su WhatsApp
+                    </a>
+                </div>
+            </article>
+
+            <!-- 6 -->
+            <article class="pkg-card">
+                <div class="pkg-image">
+                    <svg viewBox="0 0 300 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <defs><linearGradient id="p6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ec4d4"/><stop offset="1" stop-color="#144d75"/></linearGradient></defs>
+                        <rect width="300" height="200" fill="url(#p6)"/>
+                        <text x="150" y="80" text-anchor="middle" font-family="Georgia, serif" font-size="60" font-weight="900" fill="#fff" opacity="0.15">5</text>
+                        <text x="150" y="115" text-anchor="middle" font-family="Poppins, sans-serif" font-size="14" font-weight="700" fill="#fff" opacity="0.5" letter-spacing="3">GIORNI</text>
+                        <g transform="translate(60 150)">
+                            <ellipse cx="0" cy="0" rx="15" ry="7" fill="#e8743b"/>
+                            <path d="M-15,0 L-23,-5 L-23,5 Z" fill="#e8743b"/>
+                        </g>
+                        <g transform="translate(240 160)">
+                            <ellipse cx="0" cy="0" rx="12" ry="6" fill="#f9d976"/>
+                            <path d="M-12,0 L-19,-4 L-19,4 Z" fill="#f9d976"/>
+                        </g>
+                        <g transform="translate(150 170)">
+                            <ellipse cx="0" cy="0" rx="18" ry="9" fill="#5ec4d4"/>
+                            <path d="M-18,0 L-27,-6 L-27,6 Z" fill="#5ec4d4"/>
+                        </g>
+                    </svg>
+                </div>
+                <div class="pkg-body">
+                    <span class="pkg-tag">Multi-Day</span>
+                    <h3>Pacchetto 5 Giorni · 10 Dives</h3>
+                    <p>Cinque giorni completi di immersioni sui migliori siti: Ras Mohamed, Tiran, Local Reefs. Massimo divertimento, massimo risparmio.</p>
+                    <ul class="pkg-features">
+                        <li>10 immersioni totali</li>
+                        <li>Mix Ras Mohamed + Tiran + Locali</li>
+                        <li>Attrezzatura completa 5 giorni</li>
+                        <li>Trasferimenti e pranzi inclusi</li>
+                    </ul>
+                    <div class="pkg-price">
+                        <span class="pkg-price-lbl">Prezzo per persona</span>
+                        <span class="pkg-price-val">Su richiesta</span>
+                    </div>
+                    <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20info%20sul%20pacchetto%205%20giorni%20-%2010%20immersioni." class="btn btn-wa pkg-cta" target="_blank" rel="noopener">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Chiedi Preventivo
+                    </a>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- DIVE SITES -->
+<section class="sites" id="siti">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Siti d'Immersione</span>
+            <h2>I <span class="highlight">siti leggendari</span> del Mar Rosso</h2>
+            <p class="section-sub">Sharm El Sheikh offre alcune delle immersioni più iconiche al mondo. Dai muri di corallo ai relitti storici, dai pinnacoli alle grotte.</p>
+        </div>
+        <div class="sites-grid">
+            <div class="site-card">
+                <div class="site-icon">🦈</div>
+                <h3>Shark &amp; Yolanda Reef</h3>
+                <p>Nel cuore di Ras Mohamed. Un muro verticale con squali di reef, tonni, barracuda e il famoso relitto del Yolanda con i sanitari sparsi sul fondo.</p>
+                <div class="site-tags"><span class="site-tag">15-30m</span><span class="site-tag">Corrente media</span></div>
+            </div>
+            <div class="site-card">
+                <div class="site-icon">🚢</div>
+                <h3>SS Thistlegorm</h3>
+                <p>Il relitto più famoso del Mar Rosso. Nave britannica affondata nel 1941 con carico intatto: moto Norton, camion Bedford, locomotive.</p>
+                <div class="site-tags"><span class="site-tag">15-30m</span><span class="site-tag">AOWD+</span></div>
+            </div>
+            <div class="site-card">
+                <div class="site-icon">🏝️</div>
+                <h3>Jackson Reef</h3>
+                <p>Il più a nord degli Straits of Tiran. Muro con banchi di pesci pelagici, tartarughe e occasionali avvistamenti di squali martello.</p>
+                <div class="site-tags"><span class="site-tag">5-40m</span><span class="site-tag">Corrente</span></div>
+            </div>
+            <div class="site-card">
+                <div class="site-icon">🐠</div>
+                <h3>Anemone City</h3>
+                <p>Un giardino di anemoni con centinaia di pesci pagliaccio. Colori spettacolari, ideale per foto macro e per subacquei di ogni livello.</p>
+                <div class="site-tags"><span class="site-tag">5-20m</span><span class="site-tag">Easy</span></div>
+            </div>
+            <div class="site-card">
+                <div class="site-icon">🌊</div>
+                <h3>Ras Umm Sid</h3>
+                <p>Immersione dalla riva con giardino di gorgonie e discesa a parete. Punto d'incontro tra due correnti, ricchissimo di vita.</p>
+                <div class="site-tags"><span class="site-tag">10-30m</span><span class="site-tag">Shore</span></div>
+            </div>
+            <div class="site-card">
+                <div class="site-icon">🐢</div>
+                <h3>Woodhouse Reef</h3>
+                <p>Un canyon lungo e stretto tra Jackson e Thomas. Drift dive spettacolare con tartarughe verdi e squali di reef.</p>
+                <div class="site-tags"><span class="site-tag">10-30m</span><span class="site-tag">Drift</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- COURSES -->
+<section class="courses" id="corsi">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Corsi Certificati</span>
+            <h2>Impara a immergerti <span class="highlight">nel Mar Rosso</span></h2>
+            <p class="section-sub">Istruttori PADI e SSI certificati. Corsi in italiano, inglese, tedesco e francese. Rilascio brevetto internazionale.</p>
+        </div>
+        <div class="course-grid">
+            <div class="course-card">
+                <span class="course-level">Livello 1</span>
+                <h3>Discover Scuba</h3>
+                <p>Prova la subacquea per la prima volta. Nessuna esperienza richiesta.</p>
+                <div class="course-duration">⏱️ ½ giornata</div>
+            </div>
+            <div class="course-card">
+                <span class="course-level">Livello 2</span>
+                <h3>Open Water Diver</h3>
+                <p>Il tuo primo brevetto internazionale PADI/SSI. Immersioni fino a 18m.</p>
+                <div class="course-duration">⏱️ 3-4 giorni</div>
+            </div>
+            <div class="course-card">
+                <span class="course-level">Livello 3</span>
+                <h3>Advanced Open Water</h3>
+                <p>Estendi le tue capacità con 5 immersioni specialità. Fino a 30m.</p>
+                <div class="course-duration">⏱️ 2-3 giorni</div>
+            </div>
+            <div class="course-card">
+                <span class="course-level">Specialità</span>
+                <h3>Nitrox / Deep / Wreck</h3>
+                <p>Corsi specialità per estendere tempo di fondo, profondità e siti wreck.</p>
+                <div class="course-duration">⏱️ 1-2 giorni</div>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:40px;">
+            <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20info%20sui%20corsi%20diving." class="btn btn-wa btn-large" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Info Corsi su WhatsApp
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="perche">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Perché Sharmzad</span>
+            <h2>Diving <span class="highlight">senza pensieri</span></h2>
+        </div>
+        <div class="why-grid">
+            <div class="why-item">
+                <div class="why-icon-lg">🇮🇹</div>
+                <h3>Parlante Italiano</h3>
+                <p>Guide e istruttori che parlano italiano fluentemente.</p>
+            </div>
+            <div class="why-item">
+                <div class="why-icon-lg">🏆</div>
+                <h3>Certificati PADI/SSI</h3>
+                <p>Diving center riconosciuti internazionalmente.</p>
+            </div>
+            <div class="why-item">
+                <div class="why-icon-lg">🛡️</div>
+                <h3>Attrezzatura Nuova</h3>
+                <p>Regolatori, GAV e computer subacquei di ultima generazione.</p>
+            </div>
+            <div class="why-item">
+                <div class="why-icon-lg">🚐</div>
+                <h3>Trasferimenti Inclusi</h3>
+                <p>Pick-up in hotel e ritorno con veicoli climatizzati.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- INCLUDED -->
+<section class="included-sec">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag" style="color:#d4a04c;">Tutto compreso</span>
+            <h2>Cosa è <span class="highlight">incluso</span></h2>
+            <p class="section-sub">Nessun costo nascosto. Tutto quello che serve per goderti le immersioni.</p>
+        </div>
+        <div class="incl-grid">
+            <div class="incl-item"><div class="ch">✓</div><span>Attrezzatura completa</span></div>
+            <div class="incl-item"><div class="ch">✓</div><span>Bombole &amp; pesi</span></div>
+            <div class="incl-item"><div class="ch">✓</div><span>Guida certificata</span></div>
+            <div class="incl-item"><div class="ch">✓</div><span>Trasferimento hotel</span></div>
+            <div class="incl-item"><div class="ch">✓</div><span>Barca &amp; equipaggio</span></div>
+            <div class="incl-item"><div class="ch">✓</div><span>Pranzo &amp; bevande</span></div>
+            <div class="incl-item"><div class="ch">✓</div><span>Assicurazione base</span></div>
+            <div class="incl-item"><div class="ch">✓</div><span>Assistenza 24/7</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="prenota">
+    <div class="container">
+        <div class="booking-wrap">
+            <span class="section-tag" style="color:#d4a04c;">Prenota Ora</span>
+            <h2>Il modo più veloce?<br><span class="highlight">WhatsApp diretto</span></h2>
+            <p>Un messaggio, risposta entro 30 minuti. Ti aiutiamo a scegliere il pacchetto giusto, le date migliori e organizziamo tutto per te — dal pick-up in hotel all'ultima immersione.</p>
+
+            <div class="contact-cards">
+                <a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20maggiori%20informazioni%20per%20prenotare%20le%20immersioni." class="contact-c wa-c" target="_blank" rel="noopener">
+                    <div class="c-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    </div>
+                    <div>
+                        <div class="c-lbl">WhatsApp / Tel.</div>
+                        <div class="c-val">+41 76 556 76 33</div>
+                    </div>
+                </a>
+                <a href="mailto:info@sharmzad.com?subject=Richiesta%20Diving%20Sharm%20El%20Sheikh" class="contact-c mail-c">
+                    <div class="c-icon">✉️</div>
+                    <div>
+                        <div class="c-lbl">Email</div>
+                        <div class="c-val">info@sharmzad.com</div>
+                    </div>
+                </a>
+            </div>
+
+            <form class="book-form" id="bookForm">
+                <h3>Oppure compila il modulo</h3>
+                <p class="form-sub">Ti risponderemo su WhatsApp entro 24 ore</p>
+                <div class="form-row">
+                    <div class="form-field"><label for="fName">Nome *</label><input type="text" id="fName" name="fName" required></div>
+                    <div class="form-field"><label for="fEmail">Email *</label><input type="email" id="fEmail" name="fEmail" required></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-field"><label for="fPhone">Telefono / WhatsApp *</label><input type="tel" id="fPhone" name="fPhone" required></div>
+                    <div class="form-field"><label for="fPeople">Persone</label><select id="fPeople" name="fPeople"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-field"><label for="fPkg">Pacchetto interesse</label>
+                        <select id="fPkg" name="fPkg">
+                            <option value="Try Dive">Try Dive / Battesimo</option>
+                            <option value="Reef Locali">Reef Locali (2 dives)</option>
+                            <option value="Ras Mohamed">Ras Mohamed National Park</option>
+                            <option value="Tiran">Straits of Tiran</option>
+                            <option value="Thistlegorm">SS Thistlegorm Wreck</option>
+                            <option value="5 giorni">Pacchetto 5 Giorni</option>
+                            <option value="Corso PADI">Corso PADI</option>
+                            <option value="Altro">Altro / Chiedi consiglio</option>
+                        </select>
+                    </div>
+                    <div class="form-field"><label for="fDate">Data preferita</label><input type="date" id="fDate" name="fDate"></div>
+                </div>
+                <div class="form-field full" style="margin-bottom:14px;"><label for="fCert">Livello certificazione</label>
+                    <select id="fCert" name="fCert">
+                        <option>Nessuna esperienza</option>
+                        <option>Open Water (OWD)</option>
+                        <option>Advanced (AOWD)</option>
+                        <option>Rescue / Divemaster</option>
+                        <option>Istruttore</option>
+                    </select>
+                </div>
+                <div class="form-field full"><label for="fMsg">Note (opzionale)</label><textarea id="fMsg" name="fMsg" placeholder="Numero di immersioni, richieste speciali..."></textarea></div>
+                <button type="submit" class="btn btn-wa form-submit">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Invia richiesta su WhatsApp
+                </button>
+                <p class="form-note">Cliccando "Invia" verrai reindirizzato a WhatsApp con il tuo messaggio precompilato</p>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="foot-grid">
+            <div class="foot-col">
+                <h4>SHARMZAD</h4>
+                <p>Il tuo partner di fiducia per esplorare i tesori sottomarini di Sharm El Sheikh. Diving, tour ed esperienze indimenticabili nel Mar Rosso.</p>
+                <p style="margin-top:16px;">📍 Sharm El Sheikh, Egitto</p>
+            </div>
+            <div class="foot-col">
+                <h4>Contatti</h4>
+                <p>📱 +41 76 556 76 33</p>
+                <p>✉️ info@sharmzad.com</p>
+                <p>🕐 Assistenza 24/7</p>
+            </div>
+            <div class="foot-col">
+                <h4>Link</h4>
+                <a href="#pacchetti">Pacchetti Diving</a>
+                <a href="#siti">Siti d'Immersione</a>
+                <a href="#corsi">Corsi PADI/SSI</a>
+                <a href="#prenota">Prenota Ora</a>
+            </div>
+        </div>
+        <div class="foot-bottom">
+            © 2026 Sharmzad Tours &amp; Diving. Tutti i diritti riservati.
+        </div>
+    </div>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/41765567633?text=Ciao%20Sharmzad!%20Vorrei%20info%20sui%20pacchetti%20diving." class="float-wa" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// Mobile menu
+const navToggle = document.getElementById('navToggle');
+const navMenu = document.getElementById('navMenu');
+navToggle.addEventListener('click', () => navMenu.classList.toggle('open'));
+navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navMenu.classList.remove('open')));
+
+// Navbar scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Booking form -> WhatsApp
+document.getElementById('bookForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const fd = new FormData(this);
+    const msg = `Ciao Sharmzad! Vorrei prenotare le immersioni:%0A%0A` +
+        `*Nome:* ${fd.get('fName')}%0A` +
+        `*Email:* ${fd.get('fEmail')}%0A` +
+        `*Telefono:* ${fd.get('fPhone')}%0A` +
+        `*Persone:* ${fd.get('fPeople')}%0A` +
+        `*Pacchetto:* ${fd.get('fPkg')}%0A` +
+        `*Data:* ${fd.get('fDate') || 'da definire'}%0A` +
+        `*Livello:* ${fd.get('fCert')}%0A` +
+        `*Note:* ${fd.get('fMsg') || '-'}`;
+    window.open(`https://wa.me/41765567633?text=${msg}`, '_blank');
+});
+
+// Set min date to today
+const dateInput = document.getElementById('fDate');
+if (dateInput) dateInput.min = new Date().toISOString().split('T')[0];
+</script>
+
+</body>
+</html>
