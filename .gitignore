@@ -1,6 +1,10 @@
 # Generated PDF artifacts (rebuild from *.html via WeasyPrint)
 *.pdf
 
+# Deploy bundles (rebuild via the packaging step)
+sharmzad-website.zip
+*.zip
+
 # OS junk
 .DS_Store
 Thumbs.db
