@@ -1,0 +1,70 @@
+name: Deploy to Bluehost
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - claude/sharmzad-landing-page-italian-xI290
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-bluehost
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: FTP deploy to public_html
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Assemble deploy bundle
+        run: |
+          set -euxo pipefail
+          rm -rf dist
+          mkdir -p dist
+          cp index.html tours.html diving.html qr-sharmzad.svg dist/
+          cp -r assets dist/
+          cp -r images dist/
+          # .htaccess for HTTPS + cache + gzip
+          cat > dist/.htaccess <<'HTACCESS'
+          <IfModule mod_rewrite.c>
+              RewriteEngine On
+              RewriteCond %{HTTPS} !=on
+              RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+          </IfModule>
+          <IfModule mod_expires.c>
+              ExpiresActive On
+              ExpiresByType image/jpeg    "access plus 1 month"
+              ExpiresByType image/png     "access plus 1 month"
+              ExpiresByType image/svg+xml "access plus 1 month"
+              ExpiresByType text/css      "access plus 1 week"
+              ExpiresByType application/javascript "access plus 1 week"
+              ExpiresByType text/html     "access plus 1 hour"
+          </IfModule>
+          <IfModule mod_deflate.c>
+              AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml
+          </IfModule>
+          DirectoryIndex index.html
+          HTACCESS
+          echo "Bundle contents:"
+          find dist -type f | sort
+          echo "Size:"
+          du -sh dist
+
+      - name: Deploy over FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.BLUEHOST_FTP_HOST }}
+          username: ${{ secrets.BLUEHOST_FTP_USER }}
+          password: ${{ secrets.BLUEHOST_FTP_PASSWORD }}
+          server-dir: ${{ secrets.BLUEHOST_FTP_PATH }}
+          local-dir: ./dist/
+          protocol: ${{ vars.BLUEHOST_FTP_PROTOCOL || 'ftps' }}
+          port: ${{ vars.BLUEHOST_FTP_PORT || 21 }}
+          dry-run: false
+          log-level: standard
+          # Delete stale files on the server that were removed locally
+          dangerous-clean-slate: false
