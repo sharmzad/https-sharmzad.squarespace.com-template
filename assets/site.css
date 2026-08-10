@@ -93,7 +93,7 @@ section { padding: 90px 0; }
 .pkg-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
 .pkg-card.featured { border: 2px solid var(--gold); }
 .pkg-card.featured .pkg-star { position: absolute; top: 14px; right: 14px; background: linear-gradient(135deg, var(--gold), var(--coral)); color: white; font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 20px; letter-spacing: 1px; z-index: 2; box-shadow: 0 4px 12px rgba(212,160,76,0.4); }
-.pkg-image { height: 200px; position: relative; overflow: hidden; }
+.pkg-image { height: 260px; position: relative; overflow: hidden; }
 .pkg-image img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform 0.5s; }
 .pkg-card:hover .pkg-image img { transform: scale(1.05); }
 .pkg-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(10,47,74,0.35)); pointer-events: none; }
@@ -197,7 +197,8 @@ section { padding: 90px 0; }
 .booking-wrap { max-width: 900px; margin: 0 auto; text-align: center; position: relative; }
 .booking h2 { color: white; font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 20px; }
 .booking > .container > .booking-wrap > p { color: rgba(255,255,255,0.85); font-size: 17px; max-width: 620px; margin: 0 auto 40px; line-height: 1.7; }
-.contact-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 700px; margin: 0 auto 40px; }
+.contact-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 780px; margin: 0 auto 40px; }
+@media (max-width: 600px) { .contact-cards { grid-template-columns: 1fr; } }
 .contact-c { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 24px 22px; border-radius: 18px; text-align: left; display: flex; align-items: center; gap: 16px; transition: all 0.3s; color: white; }
 .contact-c:hover { background: rgba(255,255,255,0.12); transform: translateY(-3px); }
 .contact-c.wa-c { border-color: rgba(37,211,102,0.5); }
