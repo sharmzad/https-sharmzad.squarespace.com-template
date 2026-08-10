@@ -32,8 +32,23 @@ jobs:
           cat > dist/.htaccess <<'HTACCESS'
           <IfModule mod_rewrite.c>
               RewriteEngine On
+
+              # Force HTTPS
               RewriteCond %{HTTPS} !=on
               RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+              # Redirect /index.html to / (clean home URL)
+              RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+              RewriteRule ^index\.html$ / [R=301,L]
+
+              # Drop .html extension on canonical URLs (tours.html -> tours, diving.html -> diving)
+              RewriteCond %{THE_REQUEST} \s/+(.+)\.html[\s?] [NC]
+              RewriteRule ^(.+)\.html$ /%1 [R=301,L]
+
+              # Internally serve extensionless URLs from their .html file
+              RewriteCond %{REQUEST_FILENAME} !-d
+              RewriteCond %{REQUEST_FILENAME}.html -f
+              RewriteRule ^(.+?)/?$ $1.html [L]
           </IfModule>
           <IfModule mod_expires.c>
               ExpiresActive On
