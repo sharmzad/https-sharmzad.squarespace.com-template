@@ -12,3 +12,7 @@ Thumbs.db
 # Editor
 .vscode/
 .idea/
+
+# Word doc build artifacts
+sharmzad-tours-combo.docx
+sharmzad-diving.docx
