@@ -1,0 +1,186 @@
+<title>Manga Panel Etsy Launch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;800&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a single reading column of numbered stages (a real sequence), each a checklist; sticky progress at top. Dark-first manga look with a light mirror. */
+:root {
+  color-scheme: dark;
+  --bg: #141216; --panel: #1e1b21; --fg: #ece8ef; --muted: #a39cab; --line: #322d37; --hot: #ff4d6d; --ok: #3ddc97; --warnbg: #2a161c; --code: #2a2530;
+  --display: "Dela Gothic One", "Arial Black", sans-serif; --body: "M PLUS Rounded 1c", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --bg: #f4f1ea; --panel: #fffdf8; --fg: #16131a; --muted: #625b69; --line: #ddd6cc; --hot: #d42a4c; --ok: #13865a; --warnbg: #fde9ec; --code: #efe9df; color-scheme: light; } }
+:root[data-theme="light"] { --bg: #f4f1ea; --panel: #fffdf8; --fg: #16131a; --muted: #625b69; --line: #ddd6cc; --hot: #d42a4c; --ok: #13865a; --warnbg: #fde9ec; --code: #efe9df; color-scheme: light; }
+body { background: var(--bg); color: var(--fg); font: 15.5px/1.65 var(--body); }
+main { max-width: 760px; margin: 0 auto; padding: 28px 16px 64px; }
+h1 { font: 400 2.3rem/1.08 var(--display); margin: 6px 0 10px; text-wrap: balance; }
+.kick { font-weight: 800; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--hot); }
+p { margin: 0 0 12px; max-width: 65ch; }
+.lede { color: var(--muted); font-size: 1.05rem; }
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding: 12px 0; border-bottom: 1px solid var(--line); margin: 18px 0 10px; display: flex; gap: 14px; align-items: center; }
+.track { flex: 1; height: 8px; background: var(--line); border-radius: 9px; overflow: hidden; }
+.track span { display: block; height: 100%; width: 0; background: var(--ok); transition: width .3s; }
+.bar b { font: 600 .85rem var(--mono); white-space: nowrap; }
+section { margin-top: 38px; }
+.stage { display: flex; gap: 14px; align-items: baseline; margin-bottom: 6px; }
+.stage .n { font: 400 2.2rem/1 var(--display); color: var(--hot); min-width: 1.4em; }
+.stage h2 { font: 400 1.35rem/1.2 var(--display); margin: 0; }
+.stage small { display: block; font: 800 .74rem var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+ol.steps { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 10px; }
+ol.steps li { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: start; }
+ol.steps input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--ok); cursor: pointer; }
+ol.steps li.done { opacity: .6; }
+ol.steps li > div { min-width: 0; }
+ol.steps strong { display: block; }
+code { font: .86em var(--mono); background: var(--code); padding: 1px 6px; border-radius: 5px; overflow-wrap: anywhere; }
+a { color: var(--hot); }
+.warn { background: var(--warnbg); border: 1px solid var(--hot); border-radius: 12px; padding: 14px 16px; margin: 16px 0; }
+.warn strong { color: var(--hot); }
+.files { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-top: 14px; }
+.file { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.file b { display: block; font: 600 .85rem var(--mono); overflow-wrap: anywhere; }
+.file span { color: var(--muted); font-size: .88rem; }
+.tbl { overflow-x: auto; margin-top: 12px; border: 1px solid var(--line); border-radius: 12px; }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: .88rem; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+th { font-weight: 800; font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); background: var(--panel); }
+td.n { font: .86rem var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.paste { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-top: 10px; }
+.paste .hd { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-weight: 800; font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.paste pre { margin: 0; font: .84rem/1.55 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+button.copy { font: 600 .75rem var(--mono); color: var(--fg); background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--hot); outline-offset: 2px; }
+.kv { display: grid; grid-template-columns: minmax(0, 11em) minmax(0, 1fr); gap: 6px 14px; margin-top: 8px; font-size: .92rem; }
+.kv dt { color: var(--muted); } .kv dd { margin: 0; }
+@media (max-width: 520px) { .kv { grid-template-columns: minmax(0, 1fr); } .kv dd { margin-bottom: 8px; } }
+@media (prefers-reduced-motion: reduce) { .track span { transition: none; } }
+</style>
+
+<main>
+  <div class="kick">Redmi Watch 5 Lite · Etsy</div>
+  <h1>Launch Manga Panel on Etsy</h1>
+  <p class="lede">Everything for your first listing is ready. Work through the five stages in order and tick each step as you go. Your ticks are saved in this browser.</p>
+
+  <div class="bar"><div class="track"><span id="prog"></span></div><b id="count">0 / 0</b></div>
+
+  <section>
+    <div class="stage"><span class="n">0</span><h2>What's ready for you<small>Made for you already</small></h2></div>
+    <p>All files are in your GitHub repo, in the <code>claude/watchface-field-radio</code> branch, folder <a href="https://github.com/sharmzad/https-sharmzad.squarespace.com-template/tree/claude/watchface-field-radio/watchfaces/manga-panel" target="_blank" rel="noopener">watchfaces/manga-panel</a>. To download a file on GitHub, click it, then click the download button (↓) at the top right.</p>
+    <div class="files">
+      <div class="file"><b>Manga-Panel-EasyFace-Assets.zip</b><span>261 PNG parts for 3 colorways, plus a layout file with every position</span></div>
+      <div class="file"><b>Manga-Panel-Etsy-Photos.zip</b><span>6 listing photos, 3000 × 2250 px</span></div>
+      <div class="file"><b>Manga-Panel-Install-Guide.pdf</b><span>Buyer guide. Step 4 still needs your exact taps</span></div>
+      <div class="file"><b>Listing text</b><span>Title, tags and description are in Stage 4 below</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="stage"><span class="n">1</span><h2>Build the face file<small>Windows PC · about 1–2 hours the first time</small></h2></div>
+    <ol class="steps">
+      <li><input type="checkbox" id="s1a"><div><strong>Download and unzip the asset kit</strong>Download <code>Manga-Panel-EasyFace-Assets.zip</code> to your PC and unzip it. There's one folder per colorway. Each has <code>background.png</code>, <code>preview.png</code>, a <code>parts</code> folder and <code>layout.json</code>.</div></li>
+      <li><input type="checkbox" id="s1b"><div><strong>Install EasyFace</strong>From <a href="https://github.com/m0tral/EasyFace" target="_blank" rel="noopener">github.com/m0tral/EasyFace</a>: install the <code>.msi</code>, install the Visual C++ 2015 x86 redistributable linked there, then copy in the replacement files from the latest release archive. The README says newer watches, including the Watch 5 Lite, need them. Run EasyFace as administrator.</div></li>
+      <li><input type="checkbox" id="s1c"><div><strong>Start a new face for the Redmi Watch 5 Lite</strong>Choose the Watch 5 Active/Lite model (410 × 502). Add <code>background.png</code> as the background image and <code>preview.png</code> as the preview.</div></li>
+      <li><input type="checkbox" id="s1d"><div><strong>Add each widget at its position</strong>Use the table below. The numbers are pixels from the top-left corner of the screen. For number widgets, load the 10 digit images (0–9) in order. Right-aligned numbers end at the right-edge value. Name transparent parts with <code>_RGBA</code> and the background with <code>_RGB</code>; the EasyFace wiki uses these suffixes to pick the image format.</div></li>
+      <li><input type="checkbox" id="s1e"><div><strong>Export the .bin and repeat for the other two colorways</strong>Name them <code>manga-panel-classic-ink.bin</code>, <code>manga-panel-sakura.bin</code> and <code>manga-panel-neon-night.bin</code>. The positions are identical for all three, so you can duplicate the project and swap the images.</div></li>
+    </ol>
+    <div class="tbl"><table>
+      <thead><tr><th>Widget</th><th>Images</th><th>x, y</th><th>Align</th></tr></thead>
+      <tbody><tr><td>Battery %</td><td><code>battery_temp_0–9</code></td><td class=n>39, 55</td><td>left</td></tr><tr><td>Battery bar</td><td><code>battery_bar_0–5</code></td><td class=n>39, 93</td><td>—</td></tr><tr><td>Temperature</td><td><code>battery_temp_0–9 + minus</code></td><td class=n>288, 55</td><td>right (right edge 350)</td></tr><tr><td>Hour</td><td><code>time_0–9</code></td><td class=n>31, 185</td><td>left</td></tr><tr><td>Minute</td><td><code>time_0–9</code></td><td class=n>185, 185</td><td>left</td></tr><tr><td>Second</td><td><code>seconds_0–9</code></td><td class=n>327, 221</td><td>left</td></tr><tr><td>Month</td><td><code>date_0–9</code></td><td class=n>54, 142</td><td>left</td></tr><tr><td>Day</td><td><code>date_0–9</code></td><td class=n>90, 142</td><td>left</td></tr><tr><td>Weekday</td><td><code>weekday_0_sun … 6_sat</code></td><td class=n>129, 142</td><td>—</td></tr><tr><td>Heart rate</td><td><code>heart_0–9</code></td><td class=n>39, 372</td><td>left</td></tr><tr><td>Steps</td><td><code>small_0–9</code></td><td class=n>271, 331</td><td>right (right edge 371)</td></tr><tr><td>Steps goal bar</td><td><code>steps_bar_000–100</code></td><td class=n>213, 368</td><td>—</td></tr><tr><td>Calories</td><td><code>small_0–9</code></td><td class=n>197, 427</td><td>left</td></tr><tr><td>Stress</td><td><code>small_0–9</code></td><td class=n>290, 427</td><td>left</td></tr></tbody>
+    </table></div>
+    <p style="margin-top:10px;color:var(--muted);font-size:.9rem">The colon, labels, sun icon, % and ° signs are already part of the background. If EasyFace wants a different digit format (for example, separate tens and ones for hours), tell me and I'll re-export the parts.</p>
+  </section>
+
+  <section>
+    <div class="stage"><span class="n">2</span><h2>Test on your own watch<small>Don't skip this one</small></h2></div>
+    <div class="warn"><strong>The big unknown.</strong> According to the EasyFace README, custom faces reach the watch through a modified Mi Fitness app and an online database. Access to that database is given by Telegram admins, based on your watch's MAC address. I couldn't confirm that a buyer can install a <code>.bin</code> file from Etsy on their own. Find this out before you list. If buyers can't install it themselves, selling files on Etsy won't work as planned.</div>
+    <ol class="steps">
+      <li><input type="checkbox" id="s2a"><div><strong>Join the creator community</strong>The README sends watch-face creators to a Telegram chat. Contact <code>@mi_watch_int</code>, get the latest Mi Fitness mod (Android only), and ask for editor access. You'll need your watch's MAC address, shown in Mi Fitness → Device → About, or on the watch in Settings → About.</div></li>
+      <li><input type="checkbox" id="s2b"><div><strong>Install your face and use it for a day</strong>Check that the time, date, weekday, battery, weather, heart rate, steps, calories and stress all update. Check the digits line up, then try all three colorways.</div></li>
+      <li><input type="checkbox" id="s2c"><div><strong>Ask the community how buyers install paid faces</strong>Ask exactly this: "Can someone who bought my .bin install it themselves, and how?" Write down every tap.</div></li>
+      <li><input type="checkbox" id="s2d"><div><strong>Finish the buyer guide</strong>Send me those exact steps. I'll put them into Step 4 of the install guide PDF and remove the red placeholder box.</div></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="stage"><span class="n">3</span><h2>Open your Etsy shop<small>About 30 minutes · skip if you have one</small></h2></div>
+    <ol class="steps">
+      <li><input type="checkbox" id="s3a"><div><strong>Go to etsy.com/sell and click "Get started"</strong>Sign in with your Etsy account or create one.</div></li>
+      <li><input type="checkbox" id="s3b"><div><strong>Set shop preferences and a shop name</strong>Pick your language, country and currency, then a name (4–20 characters, no spaces). Make it something you can reuse for future faces, not just this one.</div></li>
+      <li><input type="checkbox" id="s3c"><div><strong>Add payment and billing details</strong>Etsy needs a bank account for payouts, a card for fees, and usually identity verification. In many countries, Etsy also charges new shops a one-time setup fee. Etsy shows the amount during signup.</div></li>
+      <li><input type="checkbox" id="s3d"><div><strong>Turn on two-factor sign-in</strong>Etsy asks for this before your shop opens.</div></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="stage"><span class="n">4</span><h2>Create the listing<small>Shop Manager → Listings → Add a listing</small></h2></div>
+    <ol class="steps">
+      <li><input type="checkbox" id="s4a"><div><strong>Upload the photos</strong>Unzip <code>Manga-Panel-Etsy-Photos.zip</code> and upload all 6 in order. <code>01-hero</code> becomes the thumbnail, so check its crop in the preview.</div></li>
+      <li><input type="checkbox" id="s4b"><div><strong>Paste the title</strong></div></li>
+      <li><input type="checkbox" id="s4c"><div><strong>Fill in "About this listing"</strong><dl class="kv"><dt>Who made it?</dt><dd>I did</dd><dt>What is it?</dt><dd>A finished product</dd><dt>When was it made?</dt><dd>The newest range on the list (e.g. 2020–2026)</dd><dt>Type</dt><dd><b>Digital files</b>. This removes shipping.</dd></dl></div></li>
+      <li><input type="checkbox" id="s4d"><div><strong>Category</strong>Type "watch face" in the category box and pick the closest suggestion. Etsy changes its category list from time to time, so go with what it suggests.</div></li>
+      <li><input type="checkbox" id="s4e"><div><strong>Paste the description and the 13 tags</strong>Paste the tags one at a time, or paste the comma-separated list into the tags box. Etsy usually splits them for you. Leave Materials empty.</div></li>
+      <li><input type="checkbox" id="s4f"><div><strong>Price and quantity</strong>Price <code>3.99</code> (USD). Set quantity to <code>999</code>; it's a digital file and never runs out.</div></li>
+      <li><input type="checkbox" id="s4g"><div><strong>Upload the digital files</strong>Put the three <code>.bin</code> files and the finished PDF into one zip called <code>Manga-Panel-Watch-Face.zip</code> and upload that. Etsy may not accept <code>.bin</code> files on their own, and a single zip is simpler for buyers. Etsy allows up to 5 files of 20 MB each.</div></li>
+      <li><input type="checkbox" id="s4h"><div><strong>Settings</strong>Renewal: automatic. Personalization: off. Returns: Etsy doesn't take returns on digital downloads; offer help in messages instead.</div></li>
+      <li><input type="checkbox" id="s4i"><div><strong>Preview, then Publish</strong>Etsy charges US$0.20 to publish, and another $0.20 each time it sells.</div></li>
+    </ol>
+
+    <div class="paste"><div class="hd">Title<button class="copy" type="button" data-copy="t-title">Copy</button></div><pre id="t-title">Anime Manga Watch Face for Redmi Watch 5 Lite | Japanese Manga Panel Smartwatch Face | 3 Colorways | Digital Download</pre></div>
+    <div class="paste"><div class="hd">Tags (13)<button class="copy" type="button" data-copy="t-tags">Copy</button></div><pre id="t-tags">redmi watch face, anime watch face, manga watch face, redmi watch 5 lite, xiaomi watch face, smartwatch face, japanese watch face, digital watch face, kawaii watch face, custom watch face, anime gift, manga gift, otaku gift</pre></div>
+    <div class="paste"><div class="hd">Description<button class="copy" type="button" data-copy="t-desc">Copy</button></div><pre id="t-desc">Bring manga energy to your wrist. MANGA PANEL is an original anime-style watch face for the Redmi Watch 5 Lite, laid out like a page from a Japanese comic: bold panels, screentone dots, speed lines and a speech-bubble date.
+
+WHAT YOU GET
+• 3 colorways: Classic Ink, Sakura, Neon Night
+• 3 watch face files (.bin), one per colorway
+• Step-by-step install guide (PDF)
+
+SHOWS
+Time with seconds · date and weekday (in Japanese) · battery · weather · heart rate · steps with goal bar · calories · stress
+
+COMPATIBILITY
+Made for the Redmi Watch 5 Lite (410 × 502 screen). Not tested on other watches.
+
+PLEASE READ BEFORE BUYING
+This face is installed by sideloading, not through the official Mi Fitness store. Installing it requires an Android phone and a modified version of the Mi Fitness app. The guide walks you through it. iPhone is not supported. If you get stuck, message me and I'll help.
+
+This is a digital download. Nothing is shipped.
+
+All artwork is original. No characters from any existing anime or manga are used. Not affiliated with Xiaomi or Redmi.</pre></div>
+  </section>
+
+  <section>
+    <div class="stage"><span class="n">5</span><h2>After it's live<small>First week</small></h2></div>
+    <ol class="steps">
+      <li><input type="checkbox" id="s5a"><div><strong>Message every buyer</strong>Send the message below through Etsy Messages after each sale, with the app link filled in.</div></li>
+      <li><input type="checkbox" id="s5b"><div><strong>Post a short video</strong>Film 10 seconds of the face on your wrist in each colorway and post it to TikTok or Instagram Reels with a link to your shop. Etsy also lets you add a 5–15 second video to the listing.</div></li>
+      <li><input type="checkbox" id="s5c"><div><strong>Check your stats after 7 days</strong>Shop Manager → Stats. Lots of views but no sales usually means the price or photos need work. Few views means the title or tags need work. Send me the numbers and I'll adjust them.</div></li>
+    </ol>
+    <div class="paste"><div class="hd">Message to buyers<button class="copy" type="button" data-copy="t-msg">Copy</button></div><pre id="t-msg">Hi! Thanks so much for buying Manga Panel 🙏
+
+Your files are in Etsy → You → Purchases and reviews → Download files. The zip has 3 faces (Classic Ink, Sakura, Neon Night) and an install guide.
+
+You'll need the community Mi Fitness app for custom faces (Android only): [PASTE LINK HERE]
+
+If anything doesn't work, reply here with your phone model and a screenshot and I'll help you get it running.
+
+Enjoy!</pre></div>
+  </section>
+</main>
+
+<script>
+const boxes = [...document.querySelectorAll('ol.steps input[type=checkbox]')];
+let saved = {}; try { saved = JSON.parse(localStorage.getItem('mp-launch') || '{}'); } catch (e) {}
+function update() {
+  const done = boxes.filter(b => b.checked).length;
+  document.getElementById('prog').style.width = (done / boxes.length * 100) + '%';
+  document.getElementById('count').textContent = done + ' / ' + boxes.length + ' steps';
+  boxes.forEach(b => b.closest('li').classList.toggle('done', b.checked));
+}
+boxes.forEach(b => { b.checked = !!saved[b.id]; b.addEventListener('change', () => { saved[b.id] = b.checked; try { localStorage.setItem('mp-launch', JSON.stringify(saved)); } catch (e) {} update(); }); });
+update();
+document.querySelectorAll('button.copy').forEach(btn => btn.addEventListener('click', () => {
+  const el = document.getElementById(btn.dataset.copy);
+  const sel = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Press Ctrl+C'; };
+  if (!navigator.clipboard) return sel();
+  navigator.clipboard.writeText(el.textContent).then(() => { btn.textContent = 'Copied'; setTimeout(() => btn.textContent = 'Copy', 1500); }).catch(sel);
+}));
+</script>

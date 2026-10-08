@@ -1,0 +1,159 @@
+{
+  "face": "Manga Panel",
+  "colorway": "sakura",
+  "screen": [
+    410,
+    502
+  ],
+  "digit_sets": {
+    "T": "time",
+    "S": "seconds",
+    "B": "date",
+    "L": "battery_temp",
+    "H": "heart",
+    "M": "small"
+  },
+  "widgets": {
+    "battery": {
+      "x": 39,
+      "y": 55,
+      "w": 62,
+      "h": 33,
+      "digit_set": "L",
+      "digit_w": 31,
+      "digit_h": 33,
+      "max_digits": 3,
+      "align": "left"
+    },
+    "battery_bar": {
+      "x": 39,
+      "y": 93,
+      "w": 123,
+      "h": 10
+    },
+    "temperature": {
+      "x": 288,
+      "y": 55,
+      "w": 62,
+      "h": 33,
+      "digit_set": "L",
+      "digit_w": 31,
+      "digit_h": 33,
+      "max_digits": 2,
+      "align": "right",
+      "right_edge_x": 350
+    },
+    "hour": {
+      "x": 31,
+      "y": 185,
+      "w": 138,
+      "h": 73,
+      "digit_set": "T",
+      "digit_w": 69,
+      "digit_h": 73,
+      "max_digits": 2,
+      "align": "left"
+    },
+    "minute": {
+      "x": 185,
+      "y": 185,
+      "w": 138,
+      "h": 73,
+      "digit_set": "T",
+      "digit_w": 69,
+      "digit_h": 73,
+      "max_digits": 2,
+      "align": "left"
+    },
+    "second": {
+      "x": 327,
+      "y": 221,
+      "w": 52,
+      "h": 28,
+      "digit_set": "S",
+      "digit_w": 26,
+      "digit_h": 28,
+      "max_digits": 2,
+      "align": "left"
+    },
+    "month": {
+      "x": 54,
+      "y": 142,
+      "w": 26,
+      "h": 23,
+      "digit_set": "B",
+      "digit_w": 13,
+      "digit_h": 23,
+      "max_digits": 2,
+      "align": "left"
+    },
+    "day": {
+      "x": 90,
+      "y": 142,
+      "w": 26,
+      "h": 23,
+      "digit_set": "B",
+      "digit_w": 13,
+      "digit_h": 23,
+      "max_digits": 2,
+      "align": "left"
+    },
+    "weekday": {
+      "x": 129,
+      "y": 142,
+      "w": 19,
+      "h": 23
+    },
+    "heart_rate": {
+      "x": 39,
+      "y": 372,
+      "w": 100,
+      "h": 53,
+      "digit_set": "H",
+      "digit_w": 50,
+      "digit_h": 53,
+      "max_digits": 3,
+      "align": "left"
+    },
+    "steps": {
+      "x": 271,
+      "y": 331,
+      "w": 100,
+      "h": 27,
+      "digit_set": "M",
+      "digit_w": 25,
+      "digit_h": 27,
+      "max_digits": 5,
+      "align": "right",
+      "right_edge_x": 371
+    },
+    "steps_goal_bar": {
+      "x": 213,
+      "y": 368,
+      "w": 139,
+      "h": 11
+    },
+    "calories": {
+      "x": 197,
+      "y": 427,
+      "w": 75,
+      "h": 27,
+      "digit_set": "M",
+      "digit_w": 25,
+      "digit_h": 27,
+      "max_digits": 4,
+      "align": "left"
+    },
+    "stress": {
+      "x": 290,
+      "y": 427,
+      "w": 50,
+      "h": 27,
+      "digit_set": "M",
+      "digit_w": 25,
+      "digit_h": 27,
+      "max_digits": 3,
+      "align": "left"
+    }
+  }
+}

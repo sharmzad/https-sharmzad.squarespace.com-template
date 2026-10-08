@@ -1,0 +1,114 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;800&display=swap">
+<style>
+/* Render source for the Manga Panel face. 410x502 = Redmi Watch 5 Lite screen. 1cqw = 4.1px. */
+html, body { margin: 0; background: transparent; }
+:root { --paper:#f4f1ea; --ink:#111; --tone:#11111133; --accent:#e8322f; --gutter:#000; }
+.face { container-type: inline-size; width: 410px; height: 502px; position: relative; overflow: hidden; background: var(--gutter); color: var(--ink); font-family: "M PLUS Rounded 1c", sans-serif; }
+.face * { box-sizing: border-box; }
+.pn { position: absolute; background: var(--paper); overflow: hidden; }
+.tone { background-image: radial-gradient(var(--tone) 28%, transparent 30%); background-size: 1.8cqw 1.8cqw; }
+.jp { font-weight: 800; font-size: 3.2cqw; letter-spacing: .08em; }
+.disp { font-family: "Dela Gothic One", sans-serif; line-height: 1; }
+.pA { left: 6%; top: 5%; width: 45%; height: 17%; clip-path: polygon(0 0,100% 0,88% 100%,0 100%); padding: 2.6cqw 3.4cqw; }
+.pB { right: 6%; top: 5%; width: 45%; height: 17%; clip-path: polygon(12% 0,100% 0,100% 100%,0 100%); padding: 2.6cqw 3.4cqw 2.6cqw 9cqw; text-align: right; }
+.batt { display: flex; gap: .8cqw; margin-top: 1.4cqw; width: 30cqw; }
+.batt i { flex: 1; height: 2.4cqw; border: .45cqw solid var(--ink); }
+.batt i.on { background: var(--ink); }
+.sun { display: inline-block; width: 5cqw; height: 5cqw; border-radius: 50%; background: var(--accent); margin-right: 1.4cqw; box-shadow: 0 0 0 .8cqw var(--paper), 0 0 0 1.3cqw var(--ink); }
+.pC { left: 4%; right: 4%; top: 24.5%; height: 36%; display: grid; place-items: center; }
+.speed { position: absolute; inset: -40%; background: repeating-conic-gradient(from 0deg at 50% 50%, var(--ink) 0deg .9deg, transparent .9deg 5.5deg); opacity: .9; }
+.burst { position: absolute; width: 74%; height: 62%; background: var(--paper); border-radius: 50%; filter: blur(2.4cqw); }
+.timeRow { position: relative; display: flex; align-items: flex-end; margin-top: 4cqw; }
+.colon { font-family: "Dela Gothic One", sans-serif; font-size: 16.5cqw; line-height: 1; color: var(--ink); -webkit-text-stroke: .5cqw var(--paper); paint-order: stroke fill; text-shadow: 1.4cqw 1.4cqw 0 var(--accent); padding-bottom: 1.4cqw; margin: 0 -.4cqw; }
+.bubble { position: absolute; left: 5%; top: 6%; background: var(--paper); border: .7cqw solid var(--ink); border-radius: 50%; padding: 1.4cqw 4cqw; font-weight: 800; font-size: 4.6cqw; white-space: nowrap; display: flex; align-items: center; line-height: 1.2; }
+.bubble::after { content: ""; position: absolute; left: 62%; bottom: -3.2cqw; border: 1.8cqw solid transparent; border-top: 2.6cqw solid var(--ink); }
+.vert { position: absolute; right: 5%; top: 8%; writing-mode: vertical-rl; font-weight: 800; font-size: 3.6cqw; background: var(--ink); color: var(--paper); padding: 1.6cqw .8cqw; letter-spacing: .2em; }
+.pD { left: 6%; top: 63%; width: 40%; bottom: 6.5%; clip-path: polygon(0 0,100% 0,86% 100%,0 100%); padding: 3cqw 3.4cqw; }
+.pE { right: 6%; top: 63%; width: 50%; height: 14%; clip-path: polygon(11% 0,100% 0,100% 100%,4% 100%); padding: 2.2cqw 3.4cqw 2.2cqw 8cqw; }
+.pF { right: 6%; top: 79%; width: 52%; bottom: 6.5%; clip-path: polygon(4% 0,100% 0,100% 100%,0 100%); padding: 2.2cqw 3.4cqw 2.2cqw 6cqw; }
+.sfx { position: absolute; left: 10%; top: 76%; font-family: "Dela Gothic One", sans-serif; font-size: 5.6cqw; color: var(--accent); transform: rotate(-12deg); -webkit-text-stroke: .35cqw var(--ink); paint-order: stroke fill; }
+.heart { color: var(--accent); }
+.rowx { display: flex; justify-content: space-between; align-items: center; gap: 2cqw; }
+.meter { height: 2.6cqw; width: 34cqw; border: .45cqw solid var(--ink); margin-top: 1.2cqw; }
+.meter span { display: block; height: 100%; background: var(--ink); }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 3cqw; height: 100%; align-content: center; }
+.unit { font-family: "Dela Gothic One", sans-serif; line-height: 1; }
+
+/* digit sets: each digit sits in a fixed-width box so the face can be rebuilt from 0-9 images */
+.num { display: inline-flex; line-height: 1; }
+.d { display: inline-block; text-align: center; }
+.setT { font-family: "Dela Gothic One", sans-serif; font-size: 16.5cqw; color: var(--ink); -webkit-text-stroke: .5cqw var(--paper); paint-order: stroke fill; text-shadow: 1.4cqw 1.4cqw 0 var(--accent); }
+.setT .d { padding: 0 1.4cqw 1.4cqw 0; }
+.setS { font-family: "Dela Gothic One", sans-serif; font-size: 6cqw; color: var(--ink); text-shadow: .8cqw .8cqw 0 var(--accent); }
+.setS .d { padding: 0 .8cqw .8cqw 0; }
+.setB { font-weight: 800; font-size: 4.6cqw; line-height: 1.2; }
+.setW { font-weight: 800; font-size: 4.6cqw; line-height: 1.2; }
+.setL { font-family: "Dela Gothic One", sans-serif; font-size: 8cqw; }
+.setH { font-family: "Dela Gothic One", sans-serif; font-size: 13cqw; }
+.setM { font-family: "Dela Gothic One", sans-serif; font-size: 6.6cqw; }
+.mode-bg .dyn { visibility: hidden; }
+.sprite { display: inline-block; color: var(--ink); }
+</style></head>
+<body>
+<div class="face" id="face">
+  <div class="pn pA">
+    <div class="jp">電池 BATTERY</div>
+    <div class="rowx" style="justify-content:flex-start"><span class="num setL dyn" data-w="battery" data-set="L" data-v="72" data-digits="3"></span><span class="unit" style="font-size:8cqw">%</span></div>
+    <div class="batt dyn" id="batt" data-w="battery_bar"></div>
+  </div>
+  <div class="pn pB tone">
+    <div class="jp">天気 WEATHER</div>
+    <div class="rowx" style="justify-content:flex-end"><span class="sun"></span><span class="num setL dyn" data-w="temperature" data-set="L" data-v="28" data-digits="2"></span><span class="unit" style="font-size:8cqw">°</span></div>
+  </div>
+  <div class="pn pC">
+    <div class="speed"></div><div class="burst"></div>
+    <div class="timeRow">
+      <span class="num setT dyn" data-w="hour" data-set="T" data-v="05" data-digits="2"></span>
+      <span class="colon">:</span>
+      <span class="num setT dyn" data-w="minute" data-set="T" data-v="00" data-digits="2"></span>
+      <span class="num setS dyn" data-w="second" data-set="S" data-v="26" data-digits="2" style="margin-left:1cqw;margin-bottom:2.2cqw"></span>
+    </div>
+    <div class="bubble"><span class="num setB dyn" data-w="month" data-set="B" data-v="10" data-digits="2"></span>/<span class="num setB dyn" data-w="day" data-set="B" data-v="08" data-digits="2"></span>&nbsp;(<span class="sprite setW dyn" data-w="weekday" id="wd">木</span>)</div>
+    <div class="vert">いくぞ!</div>
+  </div>
+  <div class="pn pD tone">
+    <div class="jp">心拍 <span class="heart">♥</span> BPM</div>
+    <div class="sfx">ドクン</div>
+    <div style="margin-top:6cqw"><span class="num setH dyn" data-w="heart_rate" data-set="H" data-v="66" data-digits="3"></span></div>
+  </div>
+  <div class="pn pE">
+    <div class="rowx"><span class="jp">歩数 STEPS</span><span class="num setM dyn" data-w="steps" data-set="M" data-v="5904" data-digits="5"></span></div>
+    <div class="meter dyn" id="meter" data-w="steps_goal_bar"><span style="width:59%"></span></div>
+  </div>
+  <div class="pn pF tone">
+    <div class="split">
+      <div><div class="jp">カロリー</div><span class="num setM dyn" data-w="calories" data-set="M" data-v="177" data-digits="4"></span></div>
+      <div><div class="jp">ストレス</div><span class="num setM dyn" data-w="stress" data-set="M" data-v="36" data-digits="3"></span></div>
+    </div>
+  </div>
+</div>
+<script>
+window.WAYS = {
+  "classic-ink": { paper:"#f4f1ea", ink:"#111111", tone:"#11111133", accent:"#e8322f", gutter:"#000000" },
+  "sakura":      { paper:"#ffe6ee", ink:"#3a1426", tone:"#3a142633", accent:"#ff4f8b", gutter:"#1a0610" },
+  "neon-night":  { paper:"#141026", ink:"#e9e4ff", tone:"#e9e4ff26", accent:"#25e6ff", gutter:"#000000" },
+};
+window.setWay = k => { const w = WAYS[k]; for (const p in w) document.documentElement.style.setProperty("--" + p, w[p]); };
+window.W = {};
+window.measure = set => {
+  const s = document.createElement("span"); s.className = "num set" + set; s.style.position = "absolute"; s.style.visibility = "hidden";
+  document.getElementById("face").appendChild(s); let m = 0;
+  for (let i = 0; i < 10; i++) { s.innerHTML = `<span class="d">${i}</span>`; m = Math.max(m, s.firstChild.getBoundingClientRect().width); }
+  s.remove(); return Math.ceil(m);
+};
+window.digitBox = (set, ch) => `<span class="d" style="width:${W[set]}px">${ch}</span>`;
+window.fill = () => {
+  for (const set of ["T","S","B","L","H","M"]) W[set] = measure(set);
+  document.querySelectorAll(".num[data-v]").forEach(el => { el.innerHTML = [...el.dataset.v].map(c => digitBox(el.dataset.set, c)).join(""); });
+  const b = document.getElementById("batt"); b.innerHTML = ""; for (let i = 0; i < 5; i++) { const c = document.createElement("i"); if (i < 4) c.className = "on"; b.appendChild(c); }
+};
+window.ready = (async () => { await document.fonts.ready; await document.fonts.load('40px "Dela Gothic One"'); await document.fonts.load('800 20px "M PLUS Rounded 1c"', "電池木"); fill(); })();
+</script>
+</body></html>
