@@ -1,0 +1,193 @@
+<title>Field Radio Watch Face</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one live watch face on the left, its build sheet on the right; stacks at phone width. Single dark look, chosen on purpose (a watch is viewed dark). */
+:root {
+  color-scheme: dark;
+  --page: #121410;
+  --panel: #1b1e18;
+  --ink: #e6e8df;
+  --muted: #9aa08f;
+  --line: #2c3127;
+  --display: "Chakra Petch", "Arial Narrow", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  /* face colorway (swapped by JS) */
+  --body: #3b4130; --plate: #2a2f22; --well: #10130c; --lcd: #ffb43a; --lcd-dim: #4a3a1c; --rivet: #5a6247; --label: #b9bfa6;
+}
+body { background: var(--page); color: var(--ink); font: 15px/1.55 var(--mono); }
+.wrap { max-width: 980px; margin: 0 auto; padding: 32px 16px 48px; display: grid; grid-template-columns: minmax(0, 410px) minmax(0, 1fr); gap: 40px; align-items: start; }
+@media (max-width: 760px) { .wrap { grid-template-columns: minmax(0, 1fr); gap: 28px; } }
+h1 { font: 700 2rem/1.1 var(--display); margin: 0 0 6px; letter-spacing: .01em; text-wrap: balance; }
+h2 { font: 700 .78rem/1 var(--display); text-transform: uppercase; letter-spacing: .14em; color: var(--muted); margin: 28px 0 10px; }
+p { margin: 0 0 10px; max-width: 62ch; color: var(--ink); }
+.sub { color: var(--muted); }
+
+/* ---------- watch ---------- */
+.stage { display: grid; gap: 16px; justify-items: center; }
+.bezel { width: 100%; max-width: 410px; padding: 3.2%; background: #050505; border-radius: 26% / 21%; box-shadow: 0 0 0 2px #2a2a2a, 0 20px 50px #0008; }
+.face { container-type: inline-size; aspect-ratio: 410 / 502; width: 100%; max-width: 100%; border-radius: 22% / 18%; overflow: hidden; position: relative;
+  background:
+    repeating-linear-gradient(135deg, #0000 0 6px, #ffffff06 6px 7px),
+    radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--body) 80%, white 12%), var(--body));
+  font-family: var(--display); color: var(--label); }
+.face * { box-sizing: border-box; }
+.plate { position: absolute; background: var(--plate); border-radius: 3.5cqw; box-shadow: inset 0 .5cqw 0 #ffffff10, inset 0 -.6cqw 0 #0005; }
+.well { background: var(--well); border-radius: 2.4cqw; box-shadow: inset 0 .8cqw 1.4cqw #000c; }
+.rivet { position: absolute; width: 2.2cqw; height: 2.2cqw; border-radius: 50%; background: radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--rivet) 60%, white), var(--rivet) 60%, #0006); }
+.lbl { font-size: 3.1cqw; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; }
+.lcd { color: var(--lcd); text-shadow: 0 0 2cqw color-mix(in srgb, var(--lcd) 45%, transparent); font-variant-numeric: tabular-nums; }
+
+/* top strip */
+.top { left: 6%; right: 6%; top: 6.5%; height: 15%; display: grid; grid-template-columns: 1.15fr 1fr; gap: 3cqw; padding: 2.6cqw; }
+.top .well { display: flex; flex-direction: column; justify-content: center; padding: 0 3cqw; gap: 1.2cqw; }
+.cells { display: flex; gap: .9cqw; }
+.cells i { flex: 1; height: 2.6cqw; border-radius: .5cqw; background: var(--lcd-dim); }
+.cells i.on { background: var(--lcd); box-shadow: 0 0 1.4cqw color-mix(in srgb, var(--lcd) 50%, transparent); }
+.row { display: flex; align-items: baseline; justify-content: space-between; }
+.val { font-size: 6.4cqw; font-weight: 700; line-height: 1; }
+
+/* date + time */
+.date { position: absolute; left: 8%; right: 8%; top: 25.5%; display: flex; justify-content: space-between; align-items: center; }
+.date .lcd { font-size: 6cqw; font-weight: 700; letter-spacing: .06em; }
+.freq { display: flex; gap: .7cqw; align-items: flex-end; height: 4cqw; }
+.freq b { width: 1.1cqw; background: var(--label); opacity: .55; border-radius: .3cqw; }
+.time { left: 4.5%; right: 4.5%; top: 33%; height: 27%; padding: 2.4cqw; }
+.time .well { height: 100%; position: relative; display: flex; align-items: center; justify-content: center; gap: 1cqw; overflow: hidden; }
+.ghost, .hm { font-family: var(--mono); font-weight: 600; font-size: 25cqw; line-height: 1; letter-spacing: -.04em; }
+.ghost { position: absolute; color: var(--lcd-dim); opacity: .45; }
+.hm { position: relative; }
+.sec { position: relative; align-self: flex-end; margin-bottom: 4.5cqw; font-family: var(--mono); font-weight: 600; font-size: 7.5cqw; }
+.colon { animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: .15; } }
+@media (prefers-reduced-motion: reduce) { .colon { animation: none; } }
+
+/* bottom grid */
+.grid { left: 6%; right: 6%; top: 63.5%; bottom: 7%; padding: 2.6cqw; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2.4cqw; }
+.grid .well { padding: 2cqw 3cqw; display: flex; flex-direction: column; justify-content: center; gap: .8cqw; }
+.bar { height: 1.6cqw; background: var(--lcd-dim); border-radius: 1cqw; overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--lcd); }
+.ticks { position: absolute; left: 50%; transform: translateX(-50%); bottom: 2.4%; display: flex; gap: 1.6cqw; }
+.ticks i { width: 1cqw; height: 1cqw; border-radius: 50%; background: var(--label); opacity: .4; }
+.ticks i.on { opacity: 1; background: var(--lcd); }
+
+/* controls + sheet */
+.swatches { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.swatches button { font: 600 .8rem var(--mono); color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px 7px 10px; display: flex; gap: 8px; align-items: center; cursor: pointer; }
+.swatches button[aria-pressed="true"] { border-color: var(--ink); }
+.swatches button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #0008; }
+table { width: 100%; border-collapse: collapse; font-size: .86rem; }
+td { padding: 7px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+td:first-child { color: var(--muted); width: 38%; padding-right: 12px; }
+ol { margin: 0; padding-left: 1.3em; max-width: 62ch; }
+ol li { margin-bottom: 8px; }
+.note { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-size: .86rem; color: var(--muted); }
+.note strong { color: var(--ink); }
+</style>
+
+<div class="wrap">
+  <div class="stage">
+    <div class="bezel">
+      <div class="face" id="face" role="img" aria-label="Field Radio watch face preview showing live time">
+        <div class="rivet" style="left:3%;top:2.8%"></div><div class="rivet" style="right:3%;top:2.8%"></div>
+        <div class="rivet" style="left:3%;bottom:2.8%"></div><div class="rivet" style="right:3%;bottom:2.8%"></div>
+
+        <div class="plate top">
+          <div class="well">
+            <div class="row"><span class="lbl">PWR</span><span class="val lcd" id="bat">72%</span></div>
+            <div class="cells" id="cells"></div>
+          </div>
+          <div class="well">
+            <div class="row"><span class="lbl">WX</span><span class="val lcd">28°</span></div>
+            <div class="row"><span class="lbl" style="font-size:2.6cqw">SUNNY</span><span class="lbl" style="font-size:2.6cqw">H31 L22</span></div>
+          </div>
+        </div>
+
+        <div class="date">
+          <span class="lcd" id="date">THU 10·08</span>
+          <span class="freq" aria-hidden="true"><b style="height:40%"></b><b style="height:70%"></b><b style="height:55%"></b><b style="height:100%"></b><b style="height:65%"></b><b style="height:85%"></b></span>
+          <span class="lbl">CH-05</span>
+        </div>
+
+        <div class="plate time">
+          <div class="well">
+            <span class="ghost" aria-hidden="true">88:88</span>
+            <span class="hm lcd"><span id="hh">05</span><span class="colon">:</span><span id="mm">00</span></span>
+            <span class="sec lcd" id="ss">26</span>
+          </div>
+        </div>
+
+        <div class="plate grid">
+          <div class="well"><div class="row"><span class="lbl">HR</span><span class="lbl" style="font-size:2.4cqw">BPM</span></div><span class="val lcd">66</span></div>
+          <div class="well"><div class="row"><span class="lbl">STEP</span><span class="val lcd" style="font-size:5.4cqw">5,904</span></div><div class="bar"><span style="width:59%"></span></div></div>
+          <div class="well"><div class="row"><span class="lbl">STRS</span><span class="lbl" style="font-size:2.4cqw">LOW</span></div><span class="val lcd">36</span></div>
+          <div class="well"><div class="row"><span class="lbl">KCAL</span><span class="val lcd" style="font-size:5.4cqw">177</span></div><div class="bar"><span style="width:44%"></span></div></div>
+        </div>
+        <div class="ticks" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+      </div>
+    </div>
+    <div class="swatches" id="swatches" aria-label="Colorway"></div>
+  </div>
+
+  <div>
+    <h1>Field Radio</h1>
+    <p class="sub">An original face for the Redmi Watch 5 Lite, styled after a military field radio with an amber LCD. The time shown is your device's live time. Health numbers are sample values.</p>
+
+    <h2>Build sheet</h2>
+    <table>
+      <tr><td>Target</td><td>Redmi Watch 5 Lite, 1.96" AMOLED</td></tr>
+      <tr><td>Canvas</td><td>410 × 502 px, square with rounded corners</td></tr>
+      <tr><td>Data slots</td><td>Time (HH:MM:SS), date, weekday, battery, weather, heart rate, steps + goal bar, stress, calories</td></tr>
+      <tr><td>Image assets</td><td>Background, digits 0–9 in two sizes, colon, battery cells, 2 progress bars, labels</td></tr>
+      <tr><td>Colorways</td><td>3 (each sold as one pack)</td></tr>
+      <tr><td>AMOLED note</td><td>Dark wells keep most pixels off, which saves battery</td></tr>
+    </table>
+
+    <h2>Getting it onto the watch</h2>
+    <ol>
+      <li>Export each part above as a PNG at exact pixel size.</li>
+      <li>Assemble them in <strong>EasyFace</strong>, a community Xiaomi face editor for Windows. Its list includes the Redmi Watch 5 Active/Lite. Export a <code>.bin</code> face file.</li>
+      <li>Install the <code>.bin</code> on the watch. For the Watch 5 Lite this currently goes through a modified Mi Fitness app, so test on your own watch first.</li>
+    </ol>
+
+    <div class="note" style="margin-top:18px"><strong>Selling:</strong> sell each pack as a download with a preview image, the <code>.bin</code> file and an install guide. Faces you sideload can't be listed in Xiaomi's official store.</div>
+  </div>
+</div>
+
+<script>
+const ways = [
+  { name: "Olive / Amber", body:"#3b4130", plate:"#2a2f22", well:"#10130c", lcd:"#ffb43a", dim:"#4a3a1c", rivet:"#5a6247", label:"#b9bfa6" },
+  { name: "Arctic / Cyan", body:"#3a4450", plate:"#28313b", well:"#0b1016", lcd:"#4fe3ff", dim:"#173a44", rivet:"#5d6b7a", label:"#b4c2cf" },
+  { name: "Desert / Red",  body:"#6b5a43", plate:"#4d402f", well:"#140f0a", lcd:"#ff5a3c", dim:"#4a1d14", rivet:"#8a7658", label:"#e2d3b8" },
+];
+const root = document.documentElement.style, sw = document.getElementById("swatches");
+function apply(i) {
+  const w = ways[i];
+  root.setProperty("--body", w.body); root.setProperty("--plate", w.plate); root.setProperty("--well", w.well);
+  root.setProperty("--lcd", w.lcd); root.setProperty("--lcd-dim", w.dim); root.setProperty("--rivet", w.rivet); root.setProperty("--label", w.label);
+  [...sw.children].forEach((b, j) => b.setAttribute("aria-pressed", j === i));
+  document.querySelectorAll(".ticks i").forEach((t, j) => t.classList.toggle("on", j === i));
+  try { localStorage.setItem("fr-way", i); } catch (e) {}
+}
+ways.forEach((w, i) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.id = "way-" + i;
+  b.innerHTML = `<span class="dot" style="background:${w.lcd}"></span>${w.name}`;
+  b.onclick = () => apply(i);
+  sw.appendChild(b);
+});
+let start = 0; try { start = +localStorage.getItem("fr-way") || 0; } catch (e) {}
+apply(start >= 0 && start < ways.length ? start : 0);
+
+const cells = document.getElementById("cells");
+for (let i = 0; i < 10; i++) { const c = document.createElement("i"); if (i < 7) c.className = "on"; cells.appendChild(c); }
+
+const days = ["SUN","MON","TUE","WED","THU","FRI","SAT"], p = n => String(n).padStart(2, "0");
+function tick() {
+  const d = new Date();
+  hh.textContent = p(d.getHours()); mm.textContent = p(d.getMinutes()); ss.textContent = p(d.getSeconds());
+  date.textContent = `${days[d.getDay()]} ${p(d.getMonth() + 1)}·${p(d.getDate())}`;
+}
+tick(); setInterval(tick, 1000);
+</script>
