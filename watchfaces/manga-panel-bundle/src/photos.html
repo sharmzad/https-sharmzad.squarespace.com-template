@@ -1,0 +1,99 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;800&display=swap">
+<style>
+/* Etsy photos 1500x1125 css @2x = 3000x2250 */
+html, body { margin: 0; background: #333; }
+:root { --ink:#111; --paper:#f4f1ea; --red:#e8322f; --pink:#ff4f8b; --cyan:#25e6ff; --night:#141026; }
+.ph { width:1500px; height:1125px; position:relative; overflow:hidden; background:var(--paper); color:var(--ink); font-family:"M PLUS Rounded 1c",sans-serif; margin-bottom:20px; }
+.dots { position:absolute; inset:0; background-image:radial-gradient(#11111122 28%,transparent 30%); background-size:14px 14px; }
+.lines { position:absolute; inset:-50%; background:repeating-conic-gradient(from 0deg at 50% 50%,#11111116 0deg 1deg,transparent 1deg 6deg); }
+.disp { font-family:"Dela Gothic One",sans-serif; line-height:1; }
+.tag { display:inline-block; background:var(--ink); color:var(--paper); font-weight:800; padding:12px 22px; font-size:26px; letter-spacing:.06em; }
+.title { position:absolute; left:0; right:0; top:0; height:170px; display:grid; place-items:center; background:var(--paper); border-bottom:8px solid var(--ink); z-index:3; }
+.title .disp { font-size:66px; }
+/* phone */
+.phone { position:absolute; background:#0b0b0b; border-radius:58px; padding:14px; box-shadow:0 30px 60px #0006, inset 0 0 0 2px #333; }
+.phone .scr { position:relative; border-radius:46px; overflow:hidden; aspect-ratio:1290/2796; }
+.phone img { display:block; width:100%; height:100%; object-fit:cover; }
+.phone .island { position:absolute; top:14px; left:50%; transform:translateX(-50%); width:30%; height:3.2%; background:#000; border-radius:20px; z-index:2; }
+.phone .lock { position:absolute; top:9%; left:0; right:0; text-align:center; color:#fff; text-shadow:0 2px 10px #0008; z-index:2; }
+.phone .lock .d { font-weight:800; font-size:.075em; }
+.phone .lock .t { font-family:"Dela Gothic One"; font-size:.23em; line-height:1; }
+/* watch */
+.watch { position:absolute; }
+.strap { position:absolute; left:15%; width:70%; height:330px; background:linear-gradient(90deg,#1a1a1a,#2e2e2e 50%,#1a1a1a); border-radius:30px; }
+.strap.t { bottom:88%; } .strap.b { top:88%; }
+.case { position:relative; background:linear-gradient(145deg,#3a3a3a,#0c0c0c 60%); border-radius:27%/22%; padding:5.5%; box-shadow:0 30px 60px #0007; }
+.case .scr { position:relative; border-radius:22%/18%; overflow:hidden; }
+.case img { display:block; width:100%; }
+.case .t { position:absolute; top:8%; right:10%; color:#fff; font-family:"Dela Gothic One"; text-shadow:0 2px 8px #0009; }
+/* poster frame */
+.frame { position:absolute; background:#151515; padding:18px; box-shadow:0 30px 50px #0005; }
+.frame .mat { background:#fff; padding:7%; }
+.frame img { display:block; width:100%; }
+.wall { position:absolute; inset:0; background:linear-gradient(#d9d2c6,#cfc7b9); }
+.floor { position:absolute; left:0; right:0; bottom:0; height:22%; background:linear-gradient(#8a6a4c,#6d5239); }
+.shelf { position:absolute; height:22px; background:#5b4330; box-shadow:0 10px 20px #0004; }
+.list { font-size:34px; font-weight:800; line-height:1.8; margin:0; padding:0; list-style:none; }
+.list li::before { content:"■ "; color:var(--red); }
+.panel { position:absolute; background:#fff; border:8px solid var(--ink); padding:30px 38px; }
+.foot { position:absolute; left:70px; bottom:46px; font-size:24px; font-weight:800; letter-spacing:.1em; opacity:.7; }
+</style></head><body>
+<script>
+const F = "../files/";
+const phone = (c, x, y, w, rot = 0, time = true) => `<div class="phone" style="left:${x}px;top:${y}px;width:${w}px;transform:rotate(${rot}deg);font-size:${w}px"><div class="scr"><div class="island"></div>${time ? `<div class="lock" style="${c === "neon-night" ? "" : "color:#111;text-shadow:0 0 12px #fff"}"><div class="d">Friday 16 October</div><div class="t">9:41</div></div>` : ""}<img src="${F}phone/manga-panel-${c}-iphone-1290x2796.png"></div></div>`;
+const watch = (c, x, y, w) => `<div class="watch" style="left:${x}px;top:${y}px;width:${w}px"><div class="strap t"></div><div class="strap b"></div><div class="case"><div class="scr"><img src="${F}watch/manga-panel-${c}-watch-hd-820x1004.png"><div class="t" style="font-size:${w * .16}px;${c === "neon-night" ? "" : "color:#111;text-shadow:0 0 10px #fff"}">10:09</div></div></div></div>`;
+const frame = (c, x, y, w, rot = 0) => `<div class="frame" style="left:${x}px;top:${y}px;width:${w}px;transform:rotate(${rot}deg)"><div class="mat"><img src="${F}poster/manga-panel-${c}-poster-8x10-2400x3000.jpg"></div></div>`;
+const P = {
+  // ---------- Listing A: bundle ----------
+  "A1-bundle-hero": `<div class="lines"></div>
+    <div style="position:absolute;left:70px;top:90px;width:560px;z-index:2"><span class="tag">ANIME WALLPAPER BUNDLE</span>
+      <div class="disp" style="font-size:100px;margin-top:28px">MANGA<br>PANEL</div>
+      <div style="font-size:34px;font-weight:800;margin-top:20px">Phone · Watch · Poster</div>
+      <div style="margin-top:34px;display:flex;gap:14px;flex-wrap:wrap"><span class="tag" style="background:var(--red)">3 COLORWAYS</span><span class="tag">INSTANT DOWNLOAD</span></div></div>
+    ${frame("classic-ink", 1040, 100, 360, 2)}${phone("sakura", 660, 250, 300, -4)}${watch("neon-night", 1150, 700, 200)}
+    <div class="foot">ORIGINAL ARTWORK</div>`,
+  "A2-colorways": `<div class="lines"></div><div class="title"><div class="disp">3 COLORWAYS INCLUDED</div></div>
+    ${phone("classic-ink", 180, 230, 300)}${phone("sakura", 600, 230, 300)}${phone("neon-night", 1020, 230, 300)}
+    <div style="position:absolute;left:0;right:0;bottom:30px;display:flex;justify-content:space-around;padding:0 120px;z-index:3"><span class="tag">CLASSIC INK</span><span class="tag" style="background:var(--pink)">SAKURA</span><span class="tag" style="background:var(--night);color:var(--cyan)">NEON NIGHT</span></div>`,
+  "A3-whats-included": `<div class="dots"></div><div class="title"><div class="disp">WHAT YOU GET · 18 FILES</div></div>
+    <div class="panel" style="left:90px;top:340px;width:330px;transform:rotate(-1.5deg)"><div class="disp" style="font-size:40px;margin-bottom:14px">PHONE</div><ul class="list" style="font-size:28px"><li>iPhone 1290×2796</li><li>Android 1440×3200</li><li>×3 colorways</li></ul></div>
+    <div class="panel" style="left:560px;top:340px;width:330px;transform:rotate(1deg)"><div class="disp" style="font-size:40px;margin-bottom:14px">WATCH</div><ul class="list" style="font-size:28px"><li>410×502</li><li>HD 820×1004</li><li>×3 colorways</li></ul></div>
+    <div class="panel" style="left:1030px;top:340px;width:330px;transform:rotate(-1deg)"><div class="disp" style="font-size:40px;margin-bottom:14px">POSTER</div><ul class="list" style="font-size:28px"><li>A4 / A3 (300 dpi)</li><li>8×10 in</li><li>×3 colorways</li></ul></div>
+    <div style="position:absolute;left:0;right:0;bottom:90px;text-align:center"><span class="tag" style="font-size:30px">DIGITAL DOWNLOAD · NOTHING IS SHIPPED</span></div>`,
+  "A4-poster-wall": `<div class="wall"></div><div class="floor"></div><div class="shelf" style="left:260px;width:980px;top:860px"></div>
+    ${frame("classic-ink", 560, 110, 380)}${frame("sakura", 260, 330, 250, -1)}${frame("neon-night", 990, 330, 250, 1)}`,
+  "A5-watch": `<div class="lines"></div>
+    <div style="position:absolute;left:80px;top:220px;width:640px"><span class="tag">WATCH BACKGROUNDS</span>
+      <div class="disp" style="font-size:78px;margin-top:26px">FOR YOUR<br>PHOTO FACE</div>
+      <div style="font-size:31px;font-weight:500;margin-top:24px;line-height:1.5">Set it as the background on the Apple Watch <b>Photos</b> face or the Redmi Watch <b>Custom</b> face. No extra apps needed.</div></div>
+    ${watch("classic-ink", 900, 200, 230)}${watch("neon-night", 1170, 420, 230)}`,
+  // ---------- Listing B: phone ----------
+  "B1-phone-hero": `<div class="lines"></div>
+    <div style="position:absolute;left:70px;top:150px;width:520px;z-index:2"><span class="tag">ANIME PHONE WALLPAPER</span>
+      <div class="disp" style="font-size:96px;margin-top:28px">MANGA<br>PANEL</div>
+      <div style="font-size:32px;font-weight:800;margin-top:20px">iPhone + Android · 3 colorways</div></div>
+    ${phone("neon-night", 590, 160, 270, -6)}${phone("classic-ink", 850, 120, 290, 0)}${phone("sakura", 1130, 160, 270, 6)}`,
+  "B2-lockscreen": `<div style="position:absolute;inset:0;background:var(--night)"></div>
+    <div style="position:absolute;left:90px;top:300px;width:640px;color:#e9e4ff"><span class="tag" style="background:var(--cyan);color:var(--night)">MADE FOR THE LOCK SCREEN</span>
+      <div class="disp" style="font-size:80px;margin-top:26px;color:var(--cyan)">CLOCK SITS<br>IN THE CALM<br>TOP PANEL</div></div>
+    ${phone("neon-night", 920, 40, 470)}`,
+  "B3-sizes": `<div class="dots"></div><div class="title"><div class="disp">WHAT YOU GET · 6 FILES</div></div>
+    <div class="panel" style="left:150px;top:300px;width:540px;transform:rotate(-1.5deg)"><div class="disp" style="font-size:42px;margin-bottom:14px">SIZES</div><ul class="list"><li>iPhone 1290 × 2796</li><li>Android 1440 × 3200</li><li>Fits any modern phone</li></ul></div>
+    <div class="panel" style="left:800px;top:300px;width:540px;transform:rotate(1.2deg)"><div class="disp" style="font-size:42px;margin-bottom:14px">COLORWAYS</div><ul class="list"><li>Classic Ink</li><li>Sakura</li><li>Neon Night</li></ul></div>
+    <div style="position:absolute;left:0;right:0;bottom:110px;text-align:center"><span class="tag" style="font-size:30px">INSTANT DOWNLOAD · PNG</span></div>`,
+  // ---------- Listing C: poster ----------
+  "C1-poster-hero": `<div class="wall"></div><div class="floor"></div>
+    ${frame("classic-ink", 540, 90, 420)}
+    <div style="position:absolute;left:70px;top:120px;width:420px"><span class="tag">PRINTABLE ANIME ART</span><div class="disp" style="font-size:80px;margin-top:24px">MANGA<br>PANEL</div><div style="font-size:30px;font-weight:800;margin-top:16px">A4 · A3 · 8×10</div></div>`,
+  "C2-poster-colorways": `<div class="wall"></div><div class="floor"></div>
+    ${frame("classic-ink", 130, 160, 360)}${frame("sakura", 570, 160, 360)}${frame("neon-night", 1010, 160, 360)}`,
+  "C3-print-info": `<div class="dots"></div><div class="title"><div class="disp">PRINT AT HOME OR IN A SHOP</div></div>
+    <div class="panel" style="left:150px;top:290px;width:560px;transform:rotate(-1.2deg)"><div class="disp" style="font-size:42px;margin-bottom:14px">FILES</div><ul class="list"><li>A4 / A3, 300 dpi</li><li>8 × 10 in, 300 dpi</li><li>3 colorways · JPG</li></ul></div>
+    <div class="panel" style="left:800px;top:290px;width:560px;transform:rotate(1deg)"><div class="disp" style="font-size:42px;margin-bottom:14px">TIPS</div><ul class="list"><li>Matte paper, 200 gsm+</li><li>Print at "actual size"</li><li>Frame not included</li></ul></div>`,
+};
+document.body.innerHTML = Object.entries(P).map(([k, v]) => `<div class="ph" id="${k}">${v}</div>`).join("");
+window.NAMES = Object.keys(P);
+</script>
+</body></html>

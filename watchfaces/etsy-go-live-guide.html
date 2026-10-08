@@ -1,0 +1,224 @@
+<title>Manga Panel Go-Live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;800&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Go-live guide. Layout: a single reading column of numbered stages (a real sequence), each a checklist; sticky progress at top. Dark-first manga look with a light mirror. */
+:root {
+  color-scheme: dark;
+  --bg: #141216; --panel: #1e1b21; --fg: #ece8ef; --muted: #a39cab; --line: #322d37; --hot: #ff4d6d; --ok: #3ddc97; --warnbg: #2a161c; --code: #2a2530;
+  --display: "Dela Gothic One", "Arial Black", sans-serif; --body: "M PLUS Rounded 1c", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --bg: #f4f1ea; --panel: #fffdf8; --fg: #16131a; --muted: #625b69; --line: #ddd6cc; --hot: #d42a4c; --ok: #13865a; --warnbg: #fde9ec; --code: #efe9df; color-scheme: light; } }
+:root[data-theme="light"] { --bg: #f4f1ea; --panel: #fffdf8; --fg: #16131a; --muted: #625b69; --line: #ddd6cc; --hot: #d42a4c; --ok: #13865a; --warnbg: #fde9ec; --code: #efe9df; color-scheme: light; }
+body { background: var(--bg); color: var(--fg); font: 15.5px/1.65 var(--body); }
+main { max-width: 760px; margin: 0 auto; padding: 28px 16px 64px; }
+h1 { font: 400 2.3rem/1.08 var(--display); margin: 6px 0 10px; text-wrap: balance; }
+.kick { font-weight: 800; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--hot); }
+p { margin: 0 0 12px; max-width: 65ch; }
+.lede { color: var(--muted); font-size: 1.05rem; }
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding: 12px 0; border-bottom: 1px solid var(--line); margin: 18px 0 10px; display: flex; gap: 14px; align-items: center; }
+.track { flex: 1; height: 8px; background: var(--line); border-radius: 9px; overflow: hidden; }
+.track span { display: block; height: 100%; width: 0; background: var(--ok); transition: width .3s; }
+.bar b { font: 600 .85rem var(--mono); white-space: nowrap; }
+section { margin-top: 38px; }
+.stage { display: flex; gap: 14px; align-items: baseline; margin-bottom: 6px; }
+.stage .n { font: 400 2.2rem/1 var(--display); color: var(--hot); min-width: 1.4em; }
+.stage h2 { font: 400 1.35rem/1.2 var(--display); margin: 0; }
+.stage small { display: block; font: 800 .74rem var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+ol.steps { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 10px; }
+ol.steps li { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: start; }
+ol.steps input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--ok); cursor: pointer; }
+ol.steps li.done { opacity: .6; }
+ol.steps li > div { min-width: 0; }
+ol.steps strong { display: block; }
+code { font: .86em var(--mono); background: var(--code); padding: 1px 6px; border-radius: 5px; overflow-wrap: anywhere; }
+a { color: var(--hot); }
+.warn { background: var(--warnbg); border: 1px solid var(--hot); border-radius: 12px; padding: 14px 16px; margin: 16px 0; }
+.warn strong { color: var(--hot); }
+.files { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-top: 14px; }
+.file { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.file b { display: block; font: 600 .85rem var(--mono); overflow-wrap: anywhere; }
+.file span { color: var(--muted); font-size: .88rem; }
+.tbl { overflow-x: auto; margin-top: 12px; border: 1px solid var(--line); border-radius: 12px; }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: .88rem; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+th { font-weight: 800; font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); background: var(--panel); }
+td.n { font: .86rem var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.paste { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-top: 10px; }
+.paste .hd { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-weight: 800; font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.paste pre { margin: 0; font: .84rem/1.55 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+button.copy { font: 600 .75rem var(--mono); color: var(--fg); background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--hot); outline-offset: 2px; }
+.kv { display: grid; grid-template-columns: minmax(0, 11em) minmax(0, 1fr); gap: 6px 14px; margin-top: 8px; font-size: .92rem; }
+.kv dt { color: var(--muted); } .kv dd { margin: 0; }
+@media (max-width: 520px) { .kv { grid-template-columns: minmax(0, 1fr); } .kv dd { margin-bottom: 8px; } }
+@media (prefers-reduced-motion: reduce) { .track span { transition: none; } }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-top: 14px; }
+.card h3 { font: 400 1.15rem/1.2 var(--display); margin: 0 0 4px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 4px; }
+.meta span { font: 600 .78rem var(--mono); background: var(--code); border-radius: 999px; padding: 3px 10px; }
+.len { font: 600 .72rem var(--mono); color: var(--muted); margin-left: 6px; }
+</style>
+<main>
+  <div class="kick">Etsy · UK company · 3 listings</div>
+  <h1>Take Manga Panel live on Etsy</h1>
+  <p class="lede">Work through the stages in order and tick each step as you go; your ticks are saved in this browser. When the last box is ticked, all three products are live. Etsy changes its screens from time to time, so a button may be worded slightly differently.</p>
+  <div class="bar"><div class="track"><span id="prog"></span></div><b id="count">0 / 0</b></div>
+
+  <section>
+    <div class="stage"><span class="n">0</span><h2>Get your files<small>5 minutes</small></h2></div>
+    <p>I sent these to you in our chat. They're also in your GitHub repo under <code>watchfaces/manga-panel-bundle/upload</code> and <code>shop-branding</code>. Download them to the computer you'll use for Etsy.</p>
+    <div class="files">
+      <div class="file"><b>Manga-Panel-Bundle.zip</b><span>Digital file for Listing 1</span></div>
+      <div class="file"><b>Manga-Panel-Phone-Wallpapers.zip</b><span>Digital file for Listing 2</span></div>
+      <div class="file"><b>Manga-Panel-Posters.zip</b><span>Digital file for Listing 3</span></div>
+      <div class="file"><b>photos-1/2/3 … .zip</b><span>Listing photos, 3000 × 2250. Unzip these</span></div>
+      <div class="file"><b>shop-banner / shop-icon</b><span>Your shop's banner and profile picture</span></div>
+    </div>
+    <div class="warn"><strong>Don't unzip the three product zips.</strong> Upload them to Etsy as they are, one per listing. Only unzip the photo zips.</div>
+  </section>
+
+  <section>
+    <div class="stage"><span class="n">1</span><h2>Open your shop as a UK company<small>About 30 minutes · have your company details ready</small></h2></div>
+    <ol class="steps">
+      <li><input type="checkbox" id="a1"><div><strong>Start at etsy.com/sell</strong>Click <b>Get started</b>, then sign in or register with your business email.</div></li>
+      <li><input type="checkbox" id="a2"><div><strong>Shop preferences</strong>Language: English. Country: <b>United Kingdom</b>. Currency: <b>British Pound (GBP)</b>. Pricing in pounds avoids the 2.5% currency conversion fee on your payouts.</div></li>
+      <li><input type="checkbox" id="a3"><div><strong>Name your shop</strong>4–20 characters, no spaces. Pick a name that fits more anime art later, not just this one design.</div></li>
+      <li><input type="checkbox" id="a4"><div><strong>Stock your shop</strong>Etsy asks for your first listing here. Create <b>Listing 1</b> by following Stage 2 below, then come back to this step.</div></li>
+      <li><input type="checkbox" id="a5"><div><strong>How you'll get paid</strong>Choose seller type <b>Business</b>. Enter the company name and number exactly as on Companies House, the registered office address, your details as director (name, date of birth, home address), and the company's UK bank account (sort code and account number). If the company is VAT-registered, add the VAT number so Etsy doesn't add 20% VAT to its fees.</div></li>
+      <li><input type="checkbox" id="a6"><div><strong>Billing</strong>Add a card for Etsy's fees.</div></li>
+      <li><input type="checkbox" id="a7"><div><strong>Shop security</strong>Turn on two-step sign-in. Etsy requires it.</div></li>
+      <li><input type="checkbox" id="a8"><div><strong>Open your shop</strong>Pay the one-time setup fee if Etsy shows it (£ amount varies). Etsy may ask for ID to verify you. New shops are sometimes reviewed for a day or two before listings appear in search.</div></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="stage"><span class="n">2</span><h2>Listing 1: the bundle<small>Done inside the shop setup · about 15 minutes</small></h2></div>
+    <ol class="steps"><li><input type="checkbox" id="b1"><div><strong>Photos</strong>Unzip <code>photos-1-bundle.zip</code> and upload the photos in number order. Photo 1 is your thumbnail; when Etsy asks, adjust the crop so the whole design shows.</div></li><li><input type="checkbox" id="b2"><div><strong>Title</strong>Paste the title from the card below.</div></li><li><input type="checkbox" id="b3"><div><strong>Item details</strong><dl class='kv'><dt>Who made it?</dt><dd>I did</dd><dt>What is it?</dt><dd>A finished product</dd><dt>When was it made?</dt><dd>The newest range in the list</dd></dl></div></li><li><input type="checkbox" id="b4"><div><strong>Category</strong>Type <code>anime wallpaper</code> in the category box and pick Etsy's closest suggestion. Then fill any extra attributes it shows (for example orientation: portrait, subject: anime and cartoon).</div></li><li><input type="checkbox" id="b5"><div><strong>Type: Digital</strong>Choose <b>Digital files</b>. This removes shipping from the listing.</div></li><li><input type="checkbox" id="b6"><div><strong>Description and tags</strong>Paste the description, then the tags. Pasting the comma-separated list into the tags box usually adds all 13 at once. Leave Materials empty.</div></li><li><input type="checkbox" id="b7"><div><strong>Price and quantity</strong>Price <code>5.49</code>. Quantity <code>999</code>.</div></li><li><input type="checkbox" id="b8"><div><strong>Digital file</strong>Upload <code>Manga-Panel-Bundle.zip</code>. This is what buyers download.</div></li><li><input type="checkbox" id="b9"><div><strong>Shop section</strong>Add it to a section called <code>Anime Wallpapers & Art</code>. Create the section if Etsy asks.</div></li><li><input type="checkbox" id="b10"><div><strong>Renewal and personalization</strong>Renewal: Automatic. Personalization: off. No variations.</div></li></ol>
+    <div class="card"><h3>Listing 1: Manga Panel Bundle</h3>
+  <div class="meta"><span>Price £5.49</span><span>Photos: photos-1-bundle.zip (5 photos)</span><span>Digital file: Manga-Panel-Bundle.zip (11.6 MB)</span></div>
+  <div class="paste"><div class="hd"><span>Title<span class="len">129 / 140</span></span><button class="copy" type="button" data-copy="b-t">Copy</button></div><pre id="b-t">Anime Wallpaper Bundle | Manga Panel Phone Wallpaper, Watch Background &amp; Printable Poster | Japanese Manga Art | Digital Download</pre></div>
+  <div class="paste"><div class="hd"><span>Tags<span class="len">13 / 13</span></span><button class="copy" type="button" data-copy="b-g">Copy</button></div><pre id="b-g">anime wallpaper, manga wallpaper, phone wallpaper, iphone wallpaper, apple watch face, watch wallpaper, anime poster, manga poster, printable wall art, japanese art print, anime gift, manga art, otaku gift</pre></div>
+  <div class="paste"><div class="hd">Description<button class="copy" type="button" data-copy="b-d">Copy</button></div><pre id="b-d">Bring manga energy to your phone, your watch and your wall. MANGA PANEL is an original anime-style design laid out like a page from a Japanese comic: bold panels, screentone dots, speed lines and classic manga sound effects.
+
+WHAT YOU GET (18 files + guide)
+• Phone wallpapers: iPhone (1290 × 2796) and Android (1440 × 3200)
+• Watch backgrounds: 410 × 502 and HD 820 × 1004, for the Apple Watch Photos face or the Redmi/Xiaomi Custom face
+• Printable posters: A4/A3 (300 dpi) and 8 × 10 in
+• Every file in 3 colorways: Classic Ink, Sakura and Neon Night
+• Start Here PDF with set-up and printing steps
+
+HOW IT WORKS
+1. Buy, then download the zip from Etsy (You → Purchases and reviews).
+2. Unzip it and open the Start Here guide.
+3. Set your wallpaper, add your watch background or print your poster.
+
+GOOD TO KNOW
+• Digital download. Nothing is shipped.
+• Frame not included.
+• Colours can look slightly different on different screens and printers.
+• For personal use only.
+
+All artwork is original. No characters from any existing anime or manga are used.</pre></div>
+</div>
+  </section>
+
+  <section>
+    <div class="stage"><span class="n">3</span><h2>Finish your shop page<small>About 15 minutes</small></h2></div>
+    <ol class="steps">
+      <li><input type="checkbox" id="c1"><div><strong>Banner and icon</strong>Shop Manager → your shop name → Edit shop. Upload <code>shop-banner-3360x840.png</code> as the big banner and <code>shop-icon-500x500.png</code> as the shop icon.</div></li>
+      <li><input type="checkbox" id="c2"><div><strong>Shop announcement</strong>Paste: <i>Original anime-style wallpapers, watch backgrounds and printable art. Instant download. New designs every month.</i></div></li>
+      <li><input type="checkbox" id="c3"><div><strong>Policies</strong>Shop Manager → Settings → Policies. Choose Etsy's standard policy. Digital downloads can't be returned, so offer help by message instead.</div></li>
+      <li><input type="checkbox" id="c4"><div><strong>Offsite Ads</strong>Shop Manager → Settings → Offsite Ads. Under £10,000 a year in sales you can opt out. Etsy takes 15% of any sale from those ads, which is a lot at these prices. I suggest opting out for now and trying it later.</div></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="stage"><span class="n">4</span><h2>Listings 2 and 3<small>About 10 minutes each</small></h2></div>
+    <p>The quickest way: Shop Manager → Listings, tick Listing 1, click <b>Copy</b>. Etsy makes a draft copy. Then replace the photos, title, description, tags, price and digital file with the ones below, and publish. Or start fresh with <b>+ Add a listing</b> and follow the same steps.</p>
+    <ol class="steps"><li><input type="checkbox" id="p1"><div><strong>Photos</strong>Unzip <code>photos-2-phone-wallpaper.zip</code> and upload the photos in number order. Photo 1 is your thumbnail; when Etsy asks, adjust the crop so the whole design shows.</div></li><li><input type="checkbox" id="p2"><div><strong>Title</strong>Paste the title from the card below.</div></li><li><input type="checkbox" id="p3"><div><strong>Item details</strong><dl class='kv'><dt>Who made it?</dt><dd>I did</dd><dt>What is it?</dt><dd>A finished product</dd><dt>When was it made?</dt><dd>The newest range in the list</dd></dl></div></li><li><input type="checkbox" id="p4"><div><strong>Category</strong>Type <code>phone wallpaper</code> in the category box and pick Etsy's closest suggestion. Then fill any extra attributes it shows (for example orientation: portrait, subject: anime and cartoon).</div></li><li><input type="checkbox" id="p5"><div><strong>Type: Digital</strong>Choose <b>Digital files</b>. This removes shipping from the listing.</div></li><li><input type="checkbox" id="p6"><div><strong>Description and tags</strong>Paste the description, then the tags. Pasting the comma-separated list into the tags box usually adds all 13 at once. Leave Materials empty.</div></li><li><input type="checkbox" id="p7"><div><strong>Price and quantity</strong>Price <code>2.49</code>. Quantity <code>999</code>.</div></li><li><input type="checkbox" id="p8"><div><strong>Digital file</strong>Upload <code>Manga-Panel-Phone-Wallpapers.zip</code>. This is what buyers download.</div></li><li><input type="checkbox" id="p9"><div><strong>Shop section</strong>Add it to a section called <code>Anime Wallpapers & Art</code>. Create the section if Etsy asks.</div></li><li><input type="checkbox" id="p10"><div><strong>Renewal and personalization</strong>Renewal: Automatic. Personalization: off. No variations.</div></li>
+      <li><input type="checkbox" id="p11"><div><strong>Publish Listing 2</strong>Click <b>Publish</b>. Etsy charges $0.20 (about £0.16).</div></li></ol>
+    <div class="card"><h3>Listing 2: Manga Panel Phone Wallpapers</h3>
+  <div class="meta"><span>Price £2.49</span><span>Photos: photos-2-phone-wallpaper.zip (3 photos)</span><span>Digital file: Manga-Panel-Phone-Wallpapers.zip (3.9 MB)</span></div>
+  <div class="paste"><div class="hd"><span>Title<span class="len">128 / 140</span></span><button class="copy" type="button" data-copy="p-t">Copy</button></div><pre id="p-t">Anime Phone Wallpaper | Manga Panel Lock Screen for iPhone &amp; Android | Japanese Manga Aesthetic | 3 Colorways | Digital Download</pre></div>
+  <div class="paste"><div class="hd"><span>Tags<span class="len">13 / 13</span></span><button class="copy" type="button" data-copy="p-g">Copy</button></div><pre id="p-g">anime wallpaper, manga wallpaper, phone wallpaper, iphone wallpaper, android wallpaper, lock screen, lockscreen wallpaper, aesthetic wallpaper, cute phone wallpaper, japanese wallpaper, anime gift, otaku gift, manga aesthetic</pre></div>
+  <div class="paste"><div class="hd">Description<button class="copy" type="button" data-copy="p-d">Copy</button></div><pre id="p-d">Turn your lock screen into a manga page. MANGA PANEL is an original anime-style phone wallpaper with bold comic panels, screentone dots, speed lines and manga sound effects. The calm top panel leaves room for your clock.
+
+WHAT YOU GET (6 files + guide)
+• iPhone size: 1290 × 2796
+• Android size: 1440 × 3200
+• 3 colorways: Classic Ink, Sakura and Neon Night
+• Start Here PDF with set-up steps
+
+HOW IT WORKS
+1. Buy, then download the zip from Etsy (You → Purchases and reviews).
+2. Save the image to your phone&#x27;s photos.
+3. Set it as your lock screen or home screen.
+
+GOOD TO KNOW
+• Digital download. Nothing is shipped.
+• Fits any modern phone; your phone may crop the edges slightly.
+• For personal use only.
+
+Want the matching watch backgrounds and posters too? See the Manga Panel Bundle in my shop.
+
+All artwork is original. No characters from any existing anime or manga are used.</pre></div>
+</div>
+    <ol class="steps" style="margin-top:22px"><li><input type="checkbox" id="o1"><div><strong>Photos</strong>Unzip <code>photos-3-poster.zip</code> and upload the photos in number order. Photo 1 is your thumbnail; when Etsy asks, adjust the crop so the whole design shows.</div></li><li><input type="checkbox" id="o2"><div><strong>Title</strong>Paste the title from the card below.</div></li><li><input type="checkbox" id="o3"><div><strong>Item details</strong><dl class='kv'><dt>Who made it?</dt><dd>I did</dd><dt>What is it?</dt><dd>A finished product</dd><dt>When was it made?</dt><dd>The newest range in the list</dd></dl></div></li><li><input type="checkbox" id="o4"><div><strong>Category</strong>Type <code>printable poster</code> in the category box and pick Etsy's closest suggestion. Then fill any extra attributes it shows (for example orientation: portrait, subject: anime and cartoon).</div></li><li><input type="checkbox" id="o5"><div><strong>Type: Digital</strong>Choose <b>Digital files</b>. This removes shipping from the listing.</div></li><li><input type="checkbox" id="o6"><div><strong>Description and tags</strong>Paste the description, then the tags. Pasting the comma-separated list into the tags box usually adds all 13 at once. Leave Materials empty.</div></li><li><input type="checkbox" id="o7"><div><strong>Price and quantity</strong>Price <code>3.49</code>. Quantity <code>999</code>.</div></li><li><input type="checkbox" id="o8"><div><strong>Digital file</strong>Upload <code>Manga-Panel-Posters.zip</code>. This is what buyers download.</div></li><li><input type="checkbox" id="o9"><div><strong>Shop section</strong>Add it to a section called <code>Anime Wall Art</code>. Create the section if Etsy asks.</div></li><li><input type="checkbox" id="o10"><div><strong>Renewal and personalization</strong>Renewal: Automatic. Personalization: off. No variations.</div></li>
+      <li><input type="checkbox" id="o11"><div><strong>Publish Listing 3</strong>Click <b>Publish</b>.</div></li></ol>
+    <div class="card"><h3>Listing 3: Manga Panel Printable Poster</h3>
+  <div class="meta"><span>Price £3.49</span><span>Photos: photos-3-poster.zip (3 photos)</span><span>Digital file: Manga-Panel-Posters.zip (7.2 MB)</span></div>
+  <div class="paste"><div class="hd"><span>Title<span class="len">111 / 140</span></span><button class="copy" type="button" data-copy="o-t">Copy</button></div><pre id="o-t">Manga Panel Printable Poster | Anime Wall Art Print | Japanese Manga Comic Page | A4 A3 8x10 | Instant Download</pre></div>
+  <div class="paste"><div class="hd"><span>Tags<span class="len">13 / 13</span></span><button class="copy" type="button" data-copy="o-g">Copy</button></div><pre id="o-g">anime poster, manga poster, printable wall art, anime wall art, manga wall art, japanese art print, anime print, comic wall art, printable poster, digital print, anime room decor, otaku gift, manga gift</pre></div>
+  <div class="paste"><div class="hd">Description<button class="copy" type="button" data-copy="o-d">Copy</button></div><pre id="o-d">Add a bold manga page to your wall. MANGA PANEL is an original anime-style printable poster with comic panels, screentone dots, speed lines and Japanese sound effects.
+
+WHAT YOU GET (6 files + guide)
+• A4 / A3 file: 3508 × 4960 px, 300 dpi
+• 8 × 10 in file: 2400 × 3000 px, 300 dpi
+• 3 colorways: Classic Ink, Sakura and Neon Night
+• Start Here PDF with printing tips
+
+HOW IT WORKS
+1. Buy, then download the zip from Etsy (You → Purchases and reviews).
+2. Print at home, at a print shop or with an online printer.
+3. Frame it and hang it up.
+
+GOOD TO KNOW
+• Digital download. Nothing is shipped.
+• Frame not included.
+• Colours can look slightly different on different printers.
+• For personal use only.
+
+All artwork is original. No characters from any existing anime or manga are used.</pre></div>
+</div>
+  </section>
+
+  <section>
+    <div class="stage"><span class="n">5</span><h2>Check they're live<small>Same day, then after 7 days</small></h2></div>
+    <ol class="steps">
+      <li><input type="checkbox" id="d1"><div><strong>See your shop as a buyer</strong>Open your shop link (etsy.com/shop/yourshopname) in a private browser window. All 3 listings should show with the bundle photo first.</div></li>
+      <li><input type="checkbox" id="d2"><div><strong>Check search</strong>Search Etsy for <code>manga panel wallpaper</code>. New listings can take a few hours to a couple of days to appear in search.</div></li>
+      <li><input type="checkbox" id="d3"><div><strong>Check the download</strong>Open each listing in Shop Manager and confirm the right zip is attached. You can't buy from your own shop; a friend's test purchase is the only way to see the buyer side.</div></li>
+      <li><input type="checkbox" id="d4"><div><strong>Share it</strong>Post your shop link with a short video of the wallpaper on your phone to TikTok, Instagram or Pinterest. Outside visitors help a new shop start ranking.</div></li>
+      <li><input type="checkbox" id="d5"><div><strong>After 7 days</strong>Shop Manager → Stats. Send me the views, visits and orders and I'll suggest changes to titles, tags or prices.</div></li>
+    </ol>
+  </section>
+</main>
+<script>
+const boxes = [...document.querySelectorAll('ol.steps input[type=checkbox]')];
+let saved = {}; try { saved = JSON.parse(localStorage.getItem('mp-launch') || '{}'); } catch (e) {}
+function update() {
+  const done = boxes.filter(b => b.checked).length;
+  document.getElementById('prog').style.width = (done / boxes.length * 100) + '%';
+  document.getElementById('count').textContent = done + ' / ' + boxes.length + ' steps';
+  boxes.forEach(b => b.closest('li').classList.toggle('done', b.checked));
+}
+boxes.forEach(b => { b.checked = !!saved[b.id]; b.addEventListener('change', () => { saved[b.id] = b.checked; try { localStorage.setItem('mp-launch', JSON.stringify(saved)); } catch (e) {} update(); }); });
+update();
+document.querySelectorAll('button.copy').forEach(btn => btn.addEventListener('click', () => {
+  const el = document.getElementById(btn.dataset.copy);
+  const sel = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Press Ctrl+C'; };
+  if (!navigator.clipboard) return sel();
+  navigator.clipboard.writeText(el.textContent).then(() => { btn.textContent = 'Copied'; setTimeout(() => btn.textContent = 'Copy', 1500); }).catch(sel);
+}));
+</script>

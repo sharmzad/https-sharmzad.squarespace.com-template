@@ -1,0 +1,94 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;800&display=swap">
+<style>
+/* Manga Panel artwork. All sizes in cqw so one layout scales to any pixel size. */
+html, body { margin: 0; background: #000; }
+:root { --paper:#f4f1ea; --ink:#111; --tone:#11111133; --accent:#e8322f; --gutter:#000; }
+.art { container-type: size; position: relative; overflow: hidden; background: var(--gutter); color: var(--ink); font-family: "M PLUS Rounded 1c", sans-serif; }
+.art * { box-sizing: border-box; }
+.pn { position: absolute; background: var(--paper); overflow: hidden; }
+.tone { background-image: radial-gradient(var(--tone) 28%, transparent 30%); background-size: 1.6cqw 1.6cqw; }
+.fade { background-image: radial-gradient(var(--tone) 28%, transparent 30%), linear-gradient(transparent, var(--paper) 85%); background-size: 1.6cqw 1.6cqw, 100% 100%; }
+.speed { position: absolute; inset: -60%; background: repeating-conic-gradient(from 0deg at 50% 50%, var(--ink) 0deg .8deg, transparent .8deg 5deg); }
+.burst { position: absolute; border-radius: 50%; background: var(--paper); filter: blur(3cqw); }
+.sfx { position: absolute; font-family: "Dela Gothic One", sans-serif; line-height: .95; color: var(--ink); -webkit-text-stroke: .9cqw var(--paper); paint-order: stroke fill; text-shadow: 1.6cqw 1.6cqw 0 var(--accent); white-space: nowrap; }
+.bubble { position: absolute; background: var(--paper); border: 1cqw solid var(--ink); border-radius: 50%; font-weight: 800; display: grid; place-items: center; white-space: nowrap; }
+.bubble::after { content: ""; position: absolute; left: 60%; bottom: -5cqw; border: 2.6cqw solid transparent; border-top: 4cqw solid var(--ink); }
+.vert { position: absolute; writing-mode: vertical-rl; font-weight: 800; background: var(--ink); color: var(--paper); letter-spacing: .2em; }
+.disp { font-family: "Dela Gothic One", sans-serif; line-height: 1; }
+.cap { position: absolute; font-weight: 800; letter-spacing: .16em; }
+.heart { color: var(--accent); }
+
+/* phone: top third stays calm for the lock-screen clock */
+.phone .p1 { left: 3cqw; right: 3cqw; top: 3cqw; height: 34%; }
+.phone .p2 { left: 3cqw; right: 3cqw; top: calc(34% + 6cqw); height: 30%; clip-path: polygon(0 4%, 100% 0, 100% 96%, 0 100%); }
+.phone .p3 { left: 3cqw; width: 52cqw; top: calc(64% + 9cqw); bottom: 3cqw; clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%); }
+.phone .p4 { right: 3cqw; width: 44cqw; top: calc(64% + 9cqw); bottom: 3cqw; clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%); }
+
+/* watch: open bright centre for the time */
+.watch .p1 { inset: 0; }
+.watch .p2 { left: 4cqw; width: 44cqw; bottom: 4cqw; height: 28%; clip-path: polygon(0 0, 100% 10%, 88% 100%, 0 100%); }
+.watch .p3 { right: 4cqw; width: 46cqw; bottom: 4cqw; height: 28%; clip-path: polygon(10% 10%, 100% 0, 100% 100%, 0 100%); }
+
+/* poster: a manga page */
+.poster .p1 { left: 4cqw; right: 4cqw; top: 4cqw; height: 25%; }
+.poster .p2 { left: 4cqw; width: 50cqw; top: calc(25% + 6cqw); height: 36%; clip-path: polygon(0 0, 100% 0, 86% 100%, 0 100%); }
+.poster .p3 { right: 4cqw; width: 46cqw; top: calc(25% + 6cqw); height: 36%; clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%); }
+.poster .p4 { left: 4cqw; right: 4cqw; top: calc(61% + 8cqw); bottom: 9cqw; clip-path: polygon(0 6%, 100% 0, 100% 100%, 0 100%); }
+</style></head>
+<body>
+<div class="art" id="art"></div>
+<script>
+const WAYS = {
+  "classic-ink": { paper:"#f4f1ea", ink:"#111111", tone:"#11111133", accent:"#e8322f", gutter:"#000000" },
+  "sakura":      { paper:"#ffe6ee", ink:"#3a1426", tone:"#3a142633", accent:"#ff4f8b", gutter:"#1a0610" },
+  "neon-night":  { paper:"#141026", ink:"#e9e4ff", tone:"#e9e4ff26", accent:"#25e6ff", gutter:"#000000" },
+};
+const LAYOUT = {
+  banner: `
+    <div class="pn" style="left:1cqw;top:4%;width:30cqw;bottom:4%;clip-path:polygon(0 0,100% 0,92% 100%,0 100%)"><div class="speed"></div><div class="burst" style="left:15%;right:15%;top:20%;bottom:20%"></div>
+      <div class="sfx" style="left:50%;top:50%;transform:translate(-50%,-50%) rotate(-8deg);font-size:7cqw;-webkit-text-stroke:.35cqw var(--paper);text-shadow:.6cqw .6cqw 0 var(--accent)">ドドド</div></div>
+    <div class="pn" style="background-image:radial-gradient(var(--tone) 28%,transparent 30%);background-size:.6cqw .6cqw;left:30cqw;right:24cqw;top:4%;bottom:4%;clip-path:polygon(3% 0,100% 0,97% 100%,0 100%)">
+      <div class="disp" style="position:absolute;left:5cqw;top:50%;transform:translateY(-50%);font-size:2.9cqw;line-height:1.08;white-space:nowrap">ORIGINAL ANIME<br>WALLPAPERS & ART</div></div>
+    <div class="pn" style="right:1cqw;width:24cqw;top:4%;bottom:4%;clip-path:polygon(10% 0,100% 0,100% 100%,0 100%)">
+      <div class="cap" style="left:5cqw;top:16%;font-size:1.1cqw">MANGA PANEL · 01</div>
+      <div class="sfx" style="right:4cqw;top:50%;transform:translateY(-45%);font-size:8cqw;-webkit-text-stroke:.4cqw var(--paper);text-shadow:.7cqw .7cqw 0 var(--accent)">!?</div></div>`,
+  icon: `
+    <div class="pn" style="inset:0"><div class="speed"></div><div class="burst" style="left:12%;right:12%;top:12%;bottom:12%"></div>
+      <div class="sfx" style="left:50%;top:52%;transform:translate(-50%,-50%);font-size:56cqw">!?</div></div>`,
+  phone: `
+    <div class="pn p1 fade"><div class="vert" style="right:5cqw;bottom:6cqw;font-size:4.4cqw;padding:3cqw 1.6cqw">第一話</div>
+      <div class="cap" style="left:6cqw;bottom:7cqw;font-size:3.2cqw">MANGA PANEL · 01</div></div>
+    <div class="pn p2"><div class="speed"></div><div class="burst" style="left:12%;right:12%;top:22%;bottom:22%"></div>
+      <div class="sfx" style="left:9cqw;top:50%;transform:translateY(-50%) rotate(-8deg);font-size:24cqw">ドドド</div></div>
+    <div class="pn p3 tone"><div class="bubble" style="left:6cqw;top:12%;width:38cqw;height:22cqw;font-size:7cqw">いくぞ!</div>
+      <div class="sfx" style="left:6cqw;bottom:8%;font-size:9cqw;transform:rotate(-10deg)">ドクン</div></div>
+    <div class="pn p4"><div class="sfx" style="right:6cqw;top:12%;font-size:30cqw">!?</div>
+      <div class="cap" style="right:6cqw;bottom:10%;font-size:2.8cqw;text-align:right">つづく<br><span class="heart">■</span> TO BE CONTINUED</div></div>`,
+  watch: `
+    <div class="pn p1"><div class="speed"></div><div class="burst" style="left:8%;right:8%;top:8%;bottom:34%"></div></div>
+    <div class="pn p2 tone"><div class="bubble" style="left:5cqw;top:16%;width:32cqw;height:17cqw;font-size:6.4cqw">いくぞ!</div></div>
+    <div class="pn p3"><div class="sfx" style="right:6cqw;top:18%;font-size:17cqw;transform:rotate(-8deg)">ドン</div></div>`,
+  poster: `
+    <div class="pn p1 tone">
+      <div class="disp" style="position:absolute;left:6cqw;top:50%;transform:translateY(-50%);font-size:min(12.5cqw,7.4cqh);line-height:.9;letter-spacing:-.01em">MANGA<br>PANEL</div>
+      <div class="vert" style="right:5cqw;top:10%;font-size:min(3.6cqw,2.1cqh);padding:2cqw 1.4cqw">マンガパネル</div>
+      <div class="cap" style="left:6cqw;bottom:6%;font-size:2.2cqw">第一話 — 始まり · EPISODE 01</div></div>
+    <div class="pn p2"><div class="speed"></div><div class="burst" style="left:10%;right:10%;top:22%;bottom:22%"></div>
+      <div class="sfx" style="left:5cqw;top:50%;transform:translateY(-50%) rotate(-10deg);font-size:min(12cqw,7cqh)">ドドド</div></div>
+    <div class="pn p3 tone"><div class="bubble" style="left:9cqw;top:14%;width:32cqw;height:18cqw;font-size:6.4cqw">いくぞ!</div>
+      <div class="sfx" style="right:5cqw;bottom:8%;font-size:8cqw;transform:rotate(-8deg)">ドクン</div></div>
+    <div class="pn p4"><div class="speed" style="opacity:.55"></div><div class="burst" style="left:20%;right:20%;top:15%;bottom:15%"></div>
+      <div class="sfx" style="left:50%;top:52%;transform:translate(-50%,-50%);font-size:min(28cqw,15cqh)">!?</div></div>
+    <div class="cap" style="left:4cqw;bottom:3.4cqw;font-size:2cqw;color:#ffffffc0">ORIGINAL ARTWORK</div>
+    <div class="cap" style="right:4cqw;bottom:3.4cqw;font-size:2cqw;color:#ffffffc0">01</div>`,
+};
+window.render = (v, c, w, h) => {
+  const a = document.getElementById("art"); const W = WAYS[c];
+  for (const k in W) document.documentElement.style.setProperty("--" + k, W[k]);
+  a.className = "art " + v; a.style.width = w + "px"; a.style.height = h + "px"; a.innerHTML = LAYOUT[v];
+};
+window.ready = (async () => { await document.fonts.ready; await document.fonts.load('40px "Dela Gothic One"', "ドドド!?MANGA"); await document.fonts.load('800 20px "M PLUS Rounded 1c"', "いくぞ第一話マンガパネル始まりつづく"); })();
+</script>
+</body></html>
