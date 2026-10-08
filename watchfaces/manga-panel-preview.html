@@ -1,0 +1,254 @@
+<title>Manga Panel Watch Face</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;800&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: live watch face + colorway picker on the left; Etsy listing kit on the right; stacks on phones. Single dark look on purpose so the AMOLED face reads true. */
+:root {
+  color-scheme: dark;
+  --page: #141216;
+  --panel: #1e1b21;
+  --ink-ui: #ece8ef;
+  --muted: #a39cab;
+  --line: #322d37;
+  --hot: #ff4d6d;
+  --display: "Dela Gothic One", "Arial Black", sans-serif;
+  --round: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  /* face colorway, swapped by JS */
+  --paper: #f4f1ea; --ink: #111; --tone: #11111133; --accent: #e8322f; --gutter: #000;
+}
+body { background: var(--page); color: var(--ink-ui); font: 15px/1.55 var(--round); }
+.wrap { max-width: 1020px; margin: 0 auto; padding: 32px 16px 56px; display: grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); gap: 44px; align-items: start; }
+@media (max-width: 780px) { .wrap { grid-template-columns: minmax(0, 1fr); gap: 32px; } }
+h1 { font: 400 2.1rem/1.1 var(--display); margin: 0 0 8px; text-wrap: balance; }
+h1 small { display: block; font: 800 .8rem var(--round); color: var(--hot); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 6px; }
+h2 { font: 800 .78rem/1 var(--round); text-transform: uppercase; letter-spacing: .14em; color: var(--muted); margin: 30px 0 10px; }
+p { margin: 0 0 10px; max-width: 62ch; }
+.sub { color: var(--muted); }
+
+/* ---------- watch ---------- */
+.stage { display: grid; gap: 16px; justify-items: center; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); }
+@media (max-width: 780px) { .stage { position: static; } }
+.bezel { width: 100%; max-width: 400px; padding: 3.2%; background: #050505; border-radius: 26% / 21%; box-shadow: 0 0 0 2px #2b2b2b, 0 20px 50px #0009; }
+.face { container-type: inline-size; aspect-ratio: 410 / 502; width: 100%; max-width: 100%; border-radius: 22% / 18%; overflow: hidden; position: relative; background: var(--gutter); color: var(--ink); font-family: var(--round); }
+.pn { position: absolute; background: var(--paper); overflow: hidden; }
+.tone { background-image: radial-gradient(var(--tone) 28%, transparent 30%); background-size: 1.8cqw 1.8cqw; }
+.jp { font-weight: 800; font-size: 3.2cqw; letter-spacing: .08em; }
+.num { font-family: var(--display); line-height: 1; font-variant-numeric: tabular-nums; }
+
+/* top panels, slanted cut */
+.pA { left: 6%; top: 5%; width: 45%; height: 17%; clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%); padding: 2.6cqw 3.4cqw; }
+.pB { right: 6%; top: 5%; width: 45%; height: 17%; clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%); padding: 2.6cqw 3.4cqw 2.6cqw 9cqw; text-align: right; }
+.pA .num, .pB .num { font-size: 8cqw; }
+.batt { display: flex; gap: .8cqw; margin-top: 1.4cqw; width: 80%; }
+.batt i { flex: 1; height: 2.4cqw; border: .45cqw solid var(--ink); }
+.batt i.on { background: var(--ink); }
+.sun { display: inline-block; width: 5cqw; height: 5cqw; border-radius: 50%; background: var(--accent); vertical-align: -.4cqw; margin-right: 1cqw; box-shadow: 0 0 0 .8cqw var(--paper), 0 0 0 1.3cqw var(--ink); }
+
+/* hero panel */
+.pC { left: 4%; right: 4%; top: 24.5%; height: 36%; display: grid; place-items: center; }
+.speed { position: absolute; inset: -40%; background: repeating-conic-gradient(from 0deg at 50% 50%, var(--ink) 0deg .9deg, transparent .9deg 5.5deg); opacity: .9; }
+.burst { position: absolute; width: 74%; height: 62%; background: var(--paper); border-radius: 50%; filter: blur(2.4cqw); }
+.time { position: relative; font-size: 19cqw; color: var(--ink); letter-spacing: -.02em; -webkit-text-stroke: .5cqw var(--paper); paint-order: stroke fill; text-shadow: 1.4cqw 1.4cqw 0 var(--accent); display: flex; align-items: baseline; }
+.time .c { animation: blink 1s steps(1) infinite; margin: 0 -.6cqw; }
+.secs { font-size: 6cqw; margin-left: 1.6cqw; text-shadow: .8cqw .8cqw 0 var(--accent); }
+@keyframes blink { 50% { opacity: .2; } }
+@media (prefers-reduced-motion: reduce) { .time .c { animation: none; } }
+.bubble { position: absolute; left: 5%; top: 6%; background: var(--paper); border: .7cqw solid var(--ink); border-radius: 50%; padding: 1.6cqw 4cqw; font-weight: 800; font-size: 4.6cqw; white-space: nowrap; }
+.bubble::after { content: ""; position: absolute; left: 62%; bottom: -3.2cqw; border: 1.8cqw solid transparent; border-top: 2.6cqw solid var(--ink); }
+.vert { position: absolute; right: 5%; top: 8%; writing-mode: vertical-rl; font-weight: 800; font-size: 3.6cqw; background: var(--ink); color: var(--paper); padding: 1.6cqw .8cqw; letter-spacing: .2em; }
+
+/* bottom panels */
+.pD { left: 6%; top: 63%; width: 40%; bottom: 6.5%; clip-path: polygon(0 0, 100% 0, 86% 100%, 0 100%); padding: 3cqw 3.4cqw; }
+.pE { right: 6%; top: 63%; width: 50%; height: 14%; clip-path: polygon(11% 0, 100% 0, 100% 100%, 4% 100%); padding: 2.2cqw 3.4cqw 2.2cqw 8cqw; }
+.pF { right: 6%; top: 79%; width: 52%; bottom: 6.5%; clip-path: polygon(4% 0, 100% 0, 100% 100%, 0 100%); padding: 2.2cqw 3.4cqw 2.2cqw 6cqw; }
+.sfx { position: absolute; left: 34%; top: 30%; font-family: var(--display); font-size: 5.6cqw; color: var(--accent); transform: rotate(-12deg); -webkit-text-stroke: .35cqw var(--ink); paint-order: stroke fill; }
+.pD .num { font-size: 13cqw; margin-top: 5cqw; }
+.heart { color: var(--accent); }
+.rowx { display: flex; justify-content: space-between; align-items: baseline; gap: 2cqw; }
+.pE .num, .pF .num { font-size: 6.6cqw; }
+.meter { height: 1.8cqw; border: .45cqw solid var(--ink); margin-top: 1.2cqw; }
+.meter span { display: block; height: 100%; background: var(--ink); }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 3cqw; height: 100%; align-content: center; }
+
+/* ---------- controls + kit ---------- */
+.swatches { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.swatches button { font: 800 .8rem var(--round); color: var(--ink-ui); background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px 7px 9px; display: flex; gap: 8px; align-items: center; cursor: pointer; }
+.swatches button[aria-pressed="true"] { border-color: var(--ink-ui); }
+button:focus-visible { outline: 2px solid var(--ink-ui); outline-offset: 2px; }
+.dot { width: 16px; height: 16px; border-radius: 50%; border: 3px solid; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.kv { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; }
+.kv span { font-weight: 800; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.copy { font: 600 .75rem var(--mono); color: var(--ink-ui); background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.copy:hover { border-color: var(--muted); }
+.txt { font-family: var(--mono); font-size: .84rem; white-space: pre-wrap; overflow-wrap: anywhere; user-select: all; margin: 0; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags b { font: 400 .78rem var(--mono); background: #2a2530; border: 1px solid var(--line); padding: 3px 9px; border-radius: 999px; }
+.tags b em { font-style: normal; color: var(--muted); margin-left: 5px; }
+table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+td { padding: 7px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+td:first-child { color: var(--muted); width: 42%; padding-right: 12px; }
+td.r { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--mono); }
+ul { margin: 0; padding-left: 1.2em; max-width: 62ch; }
+li { margin-bottom: 7px; }
+.warn { border-color: #5a2a35; background: #24161b; }
+.warn strong { color: var(--hot); }
+.stack { display: grid; gap: 12px; }
+</style>
+
+<div class="wrap">
+  <div class="stage">
+    <div class="bezel">
+      <div class="face" role="img" aria-label="Manga Panel watch face showing the live time">
+        <div class="pn pA">
+          <div class="jp">電池 BATTERY</div>
+          <div class="num" id="bat">72%</div>
+          <div class="batt" id="batt"></div>
+        </div>
+        <div class="pn pB tone">
+          <div class="jp">天気 WEATHER</div>
+          <div class="num"><span class="sun"></span>28°</div>
+        </div>
+
+        <div class="pn pC">
+          <div class="speed"></div>
+          <div class="burst"></div>
+          <div class="time num"><span id="hh">05</span><span class="c">:</span><span id="mm">00</span><span class="secs" id="ss">26</span></div>
+          <div class="bubble" id="date">10/08 (木)</div>
+          <div class="vert">いくぞ!</div>
+        </div>
+
+        <div class="pn pD tone">
+          <div class="jp">心拍 <span class="heart">♥</span> BPM</div>
+          <div class="sfx">ドクン</div>
+          <div class="num">66</div>
+        </div>
+        <div class="pn pE">
+          <div class="rowx"><span class="jp">歩数 STEPS</span><span class="num">5,904</span></div>
+          <div class="meter"><span style="width:59%"></span></div>
+        </div>
+        <div class="pn pF tone">
+          <div class="split">
+            <div><div class="jp">カロリー</div><div class="num">177</div></div>
+            <div><div class="jp">ストレス</div><div class="num">36</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="swatches" id="swatches" aria-label="Colorway"></div>
+  </div>
+
+  <div>
+    <h1><small>Watch face #2 · Redmi Watch 5 Lite</small>Manga Panel</h1>
+    <p class="sub">An original anime face laid out like a manga page: slanted panels, screentone dots, speed lines behind the time, a speech bubble for the date and a ドクン heartbeat sound effect. The time is live. Health numbers are sample values.</p>
+
+    <h2>Etsy listing kit</h2>
+    <div class="stack">
+      <div class="card">
+        <div class="kv"><span>Title · <i id="tlen"></i> / 140</span><button class="copy" data-copy="title" type="button">Copy</button></div>
+        <p class="txt" id="title">Anime Manga Watch Face for Redmi Watch 5 Lite | Japanese Manga Panel Smartwatch Face | 3 Colorways | Digital Download</p>
+      </div>
+
+      <div class="card">
+        <div class="kv"><span>13 tags · max 20 characters each</span><button class="copy" data-copy="tagtext" type="button">Copy</button></div>
+        <div class="tags" id="tags"></div>
+        <p class="txt" id="tagtext" hidden></p>
+      </div>
+
+      <div class="card">
+        <div class="kv"><span>Description</span><button class="copy" data-copy="desc" type="button">Copy</button></div>
+        <p class="txt" id="desc">Bring manga energy to your wrist. MANGA PANEL is an original anime-style watch face for the Redmi Watch 5 Lite, laid out like a page from a Japanese comic: bold panels, screentone dots, speed lines and a speech-bubble date.
+
+WHAT YOU GET
+• 3 colorways: Classic Ink, Sakura, Neon Night
+• 3 watch face files (.bin), one per colorway
+• Step-by-step install guide (PDF)
+
+SHOWS
+Time with seconds · date and weekday (in Japanese) · battery · weather · heart rate · steps with goal bar · calories · stress
+
+COMPATIBILITY
+Made for the Redmi Watch 5 Lite (410 × 502 screen). Not tested on other watches.
+
+PLEASE READ BEFORE BUYING
+This face is installed by sideloading, not through the official Mi Fitness store. Installing it requires an Android phone and a modified version of the Mi Fitness app. The guide walks you through it. iPhone is not supported. If you get stuck, message me and I'll help.
+
+This is a digital download. Nothing is shipped.
+
+All artwork is original. No characters from any existing anime or manga are used.</p>
+      </div>
+    </div>
+
+    <h2>Price and fees (example)</h2>
+    <table>
+      <tr><td>Suggested price</td><td class="r">$3.99 single · $7.99 bundle of 3 faces</td></tr>
+      <tr><td>Etsy listing fee</td><td class="r">$0.20 per listing</td></tr>
+      <tr><td>Transaction fee</td><td class="r">6.5% of sale</td></tr>
+      <tr><td>Payment processing</td><td class="r">≈3% + $0.25 (US; varies by country)</td></tr>
+      <tr><td>You keep on a $3.99 sale</td><td class="r">≈ $3.16</td></tr>
+    </table>
+
+    <h2>Before you list</h2>
+    <div class="stack">
+      <div class="card warn"><strong>Stay original.</strong> Etsy removes listings that use characters, logos or names from real anime (Naruto, One Piece, Studio Ghibli and so on), and repeat takedowns can close your shop. Keep every face original, like this one.</div>
+      <div class="card">
+        <ul>
+          <li><strong>Test the install yourself.</strong> Install every .bin on your own watch before you list it. A face that won't install means refunds and bad reviews.</li>
+          <li><strong>Listing photos.</strong> Etsy allows up to 10. Use the face on a wrist, all 3 colorways side by side, a close-up of the details and one image of the install steps.</li>
+          <li><strong>AI disclosure.</strong> If you use AI to make any artwork, Etsy requires you to say so in the listing.</li>
+          <li><strong>Battery.</strong> Bright paper backgrounds use more power on AMOLED. Neon Night is the battery-friendly colorway, so mention that.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ways = [
+  { name: "Classic Ink", paper:"#f4f1ea", ink:"#111111", tone:"#11111133", accent:"#e8322f", gutter:"#000000" },
+  { name: "Sakura",      paper:"#ffe6ee", ink:"#3a1426", tone:"#3a142633", accent:"#ff4f8b", gutter:"#1a0610" },
+  { name: "Neon Night",  paper:"#141026", ink:"#e9e4ff", tone:"#e9e4ff26", accent:"#25e6ff", gutter:"#000000" },
+];
+const rs = document.documentElement.style, sw = document.getElementById("swatches");
+function apply(i) {
+  const w = ways[i];
+  for (const k of ["paper","ink","tone","accent","gutter"]) rs.setProperty("--" + k, w[k]);
+  [...sw.children].forEach((b, j) => b.setAttribute("aria-pressed", j === i));
+  try { localStorage.setItem("mp-way", i); } catch (e) {}
+}
+ways.forEach((w, i) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.id = "way-" + i;
+  b.innerHTML = `<span class="dot" style="background:${w.paper};border-color:${w.accent}"></span>${w.name}`;
+  b.onclick = () => apply(i);
+  sw.appendChild(b);
+});
+let s = 0; try { s = +localStorage.getItem("mp-way") || 0; } catch (e) {}
+apply(s >= 0 && s < ways.length ? s : 0);
+
+const batt = document.getElementById("batt");
+for (let i = 0; i < 5; i++) { const c = document.createElement("i"); if (i < 4) c.className = "on"; batt.appendChild(c); }
+
+const tags = ["redmi watch face","anime watch face","manga watch face","redmi watch 5 lite","xiaomi watch face","smartwatch face","japanese watch face","digital watch face","kawaii watch face","custom watch face","anime gift","manga gift","otaku gift"];
+document.getElementById("tags").innerHTML = tags.map(t => `<b>${t}<em>${t.length}</em></b>`).join("");
+document.getElementById("tagtext").textContent = tags.join(", ");
+document.getElementById("tlen").textContent = document.getElementById("title").textContent.length;
+
+document.querySelectorAll(".copy").forEach(btn => btn.addEventListener("click", () => {
+  const el = document.getElementById(btn.dataset.copy);
+  const done = () => { btn.textContent = "Copied"; setTimeout(() => btn.textContent = "Copy", 1500); };
+  navigator.clipboard?.writeText(el.textContent).then(done).catch(() => {
+    el.hidden = false; const r = document.createRange(); r.selectNodeContents(el);
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); btn.textContent = "Press Ctrl+C";
+  }) ?? (btn.textContent = "Select text to copy");
+}));
+
+const jd = ["日","月","火","水","木","金","土"], p = n => String(n).padStart(2, "0");
+function tick() {
+  const d = new Date();
+  hh.textContent = p(d.getHours()); mm.textContent = p(d.getMinutes()); ss.textContent = p(d.getSeconds());
+  date.textContent = `${p(d.getMonth() + 1)}/${p(d.getDate())} (${jd[d.getDay()]})`;
+}
+tick(); setInterval(tick, 1000);
+</script>
