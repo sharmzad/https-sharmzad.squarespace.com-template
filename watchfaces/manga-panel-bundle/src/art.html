@@ -41,11 +41,34 @@ html, body { margin: 0; background: #000; }
 <div class="art" id="art"></div>
 <script>
 const WAYS = {
+  "pumpkin":     { paper:"#ff8a1f", ink:"#140a1c", tone:"#140a1c40", accent:"#7b2cff", gutter:"#000000" },
+  "ghost-night": { paper:"#140a1c", ink:"#f3ecff", tone:"#f3ecff22", accent:"#ff7a1a", gutter:"#000000" },
   "classic-ink": { paper:"#f4f1ea", ink:"#111111", tone:"#11111133", accent:"#e8322f", gutter:"#000000" },
   "sakura":      { paper:"#ffe6ee", ink:"#3a1426", tone:"#3a142633", accent:"#ff4f8b", gutter:"#1a0610" },
   "neon-night":  { paper:"#141026", ink:"#e9e4ff", tone:"#e9e4ff26", accent:"#25e6ff", gutter:"#000000" },
 };
 const LAYOUT = {
+  tee: `
+    <div style="position:absolute;inset:0;display:grid;place-items:center">
+      <div style="position:relative;width:92cqw;height:92cqw;clip-path:polygon(4% 8%,96% 0,100% 92%,0 100%);background:var(--paper);overflow:hidden">
+        <div class="speed"></div><div class="burst" style="left:14%;right:14%;top:22%;bottom:22%"></div>
+        <div class="sfx" style="left:50%;top:50%;transform:translate(-50%,-50%) rotate(-8deg);font-size:26cqw">ドドド</div>
+      </div>
+      <div class="cap" style="position:absolute;left:6cqw;bottom:2cqw;font-size:3.4cqw;color:var(--ink);background:var(--paper);padding:1cqw 2cqw">MANGA PANEL · 01</div>
+    </div>`,
+  mug: `
+    <div class="pn tone" style="left:1cqw;top:3%;width:31cqw;bottom:3%;clip-path:polygon(0 0,100% 0,94% 100%,0 100%)">
+      <div class="bubble" style="left:4cqw;top:22%;width:22cqw;height:12cqw;font-size:4.2cqw;border-width:.7cqw">いくぞ!</div></div>
+    <div class="pn" style="left:31cqw;width:38cqw;top:3%;bottom:3%;clip-path:polygon(4% 0,100% 0,96% 100%,0 100%)"><div class="speed"></div><div class="burst" style="left:12%;right:12%;top:18%;bottom:18%"></div>
+      <div class="sfx" style="left:50%;top:50%;transform:translate(-50%,-50%) rotate(-8deg);font-size:10cqw;-webkit-text-stroke:.5cqw var(--paper);text-shadow:.9cqw .9cqw 0 var(--accent)">ドドド</div></div>
+    <div class="pn" style="right:1cqw;width:31cqw;top:3%;bottom:3%;clip-path:polygon(6% 0,100% 0,100% 100%,0 100%)">
+      <div class="sfx" style="left:50%;top:50%;transform:translate(-50%,-50%);font-size:15cqw;-webkit-text-stroke:.5cqw var(--paper);text-shadow:.9cqw .9cqw 0 var(--accent)">!?</div></div>`,
+  case: `
+    <div class="pn fade" style="left:3cqw;right:3cqw;top:3cqw;height:30%"><div class="vert" style="right:6cqw;bottom:6cqw;font-size:5cqw;padding:3cqw 1.6cqw">第一話</div></div>
+    <div class="pn" style="left:3cqw;right:3cqw;top:calc(30% + 6cqw);height:34%;clip-path:polygon(0 4%,100% 0,100% 96%,0 100%)"><div class="speed"></div><div class="burst" style="left:12%;right:12%;top:22%;bottom:22%"></div>
+      <div class="sfx" style="left:8cqw;top:50%;transform:translateY(-50%) rotate(-8deg);font-size:24cqw">ドドド</div></div>
+    <div class="pn tone" style="left:3cqw;width:52cqw;top:calc(64% + 9cqw);bottom:3cqw;clip-path:polygon(0 0,100% 0,88% 100%,0 100%)"><div class="bubble" style="left:6cqw;top:16%;width:38cqw;height:22cqw;font-size:7cqw">いくぞ!</div></div>
+    <div class="pn" style="right:3cqw;width:44cqw;top:calc(64% + 9cqw);bottom:3cqw;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%)"><div class="sfx" style="right:6cqw;top:14%;font-size:28cqw">!?</div></div>`,
   banner: `
     <div class="pn" style="left:1cqw;top:4%;width:30cqw;bottom:4%;clip-path:polygon(0 0,100% 0,92% 100%,0 100%)"><div class="speed"></div><div class="burst" style="left:15%;right:15%;top:20%;bottom:20%"></div>
       <div class="sfx" style="left:50%;top:50%;transform:translate(-50%,-50%) rotate(-8deg);font-size:7cqw;-webkit-text-stroke:.35cqw var(--paper);text-shadow:.6cqw .6cqw 0 var(--accent)">ドドド</div></div>
@@ -84,11 +107,12 @@ const LAYOUT = {
     <div class="cap" style="left:4cqw;bottom:3.4cqw;font-size:2cqw;color:#ffffffc0">ORIGINAL ARTWORK</div>
     <div class="cap" style="right:4cqw;bottom:3.4cqw;font-size:2cqw;color:#ffffffc0">01</div>`,
 };
+const HALLOWEEN = [["ドドド","ゴゴゴ"],["いくぞ!","ばあ!"],["ドクン","ギャー!"],["第一話 — 始まり · EPISODE 01","第十三話 — 呪い · EPISODE 13"],["第一話","ハロウィン"],["MANGA<br>PANEL","HALLO<br>WEEN"],["マンガパネル","ハロウィンの夜"],["MANGA PANEL · 01","HALLOWEEN · 13"],["TO BE CONTINUED","IF YOU SURVIVE"],[">01<",">13<"]];
 window.render = (v, c, w, h) => {
   const a = document.getElementById("art"); const W = WAYS[c];
   for (const k in W) document.documentElement.style.setProperty("--" + k, W[k]);
-  a.className = "art " + v; a.style.width = w + "px"; a.style.height = h + "px"; a.innerHTML = LAYOUT[v];
+  a.className = "art " + v; a.style.width = w + "px"; a.style.height = h + "px"; let html = LAYOUT[v]; if (WAYS[c] && (c === "pumpkin" || c === "ghost-night")) for (const [x, y] of HALLOWEEN) html = html.split(x).join(y); a.innerHTML = html;
 };
-window.ready = (async () => { await document.fonts.ready; await document.fonts.load('40px "Dela Gothic One"', "ドドド!?MANGA"); await document.fonts.load('800 20px "M PLUS Rounded 1c"', "いくぞ第一話マンガパネル始まりつづく"); })();
+window.ready = (async () => { await document.fonts.ready; await document.fonts.load('40px "Dela Gothic One"', "ドドド!?MANGA"); await document.fonts.load('800 20px "M PLUS Rounded 1c"', "いくぞ第一話マンガパネル始まりつづくばあハロウィンの夜十三話呪いギャー"); await document.fonts.load('40px "Dela Gothic One"', "ゴゴゴギャー!"); })();
 </script>
 </body></html>
