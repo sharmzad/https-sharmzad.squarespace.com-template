@@ -1,0 +1,28 @@
+{
+  "name": "youtube-studio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts",
+    "render:demo": "remotion render src/index.ts Demo out/demo.mp4"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
+    "@remotion/captions": "^4.0.545",
+    "@remotion/cli": "^4.0.545",
+    "@remotion/media-utils": "^4.0.545",
+    "@remotion/three": "^4.0.545",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.545",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.31",
+    "@types/three": "^0.187.0",
+    "typescript": "^7.0.2"
+  }
+}

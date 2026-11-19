@@ -1,0 +1,14 @@
+[
+  { "text": "For",       "startMs": 0,    "endMs": 300,  "timestampMs": 150,  "confidence": 1 },
+  { "text": " years,",   "startMs": 300,  "endMs": 800,  "timestampMs": 550,  "confidence": 1 },
+  { "text": " one",      "startMs": 800,  "endMs": 1100, "timestampMs": 950,  "confidence": 1 },
+  { "text": " number",   "startMs": 1100, "endMs": 1600, "timestampMs": 1350, "confidence": 1 },
+  { "text": " explained", "startMs": 1600, "endMs": 2200, "timestampMs": 1900, "confidence": 1 },
+  { "text": " happiness.", "startMs": 2200, "endMs": 3000, "timestampMs": 2600, "confidence": 1 },
+  { "text": " $75,000",  "startMs": 3200, "endMs": 4200, "timestampMs": 3700, "confidence": 1 },
+  { "text": " a",        "startMs": 4200, "endMs": 4400, "timestampMs": 4300, "confidence": 1 },
+  { "text": " year.",    "startMs": 4400, "endMs": 5200, "timestampMs": 4800, "confidence": 1 },
+  { "text": " Then",     "startMs": 5600, "endMs": 6000, "timestampMs": 5800, "confidence": 1 },
+  { "text": " someone",  "startMs": 6000, "endMs": 6500, "timestampMs": 6250, "confidence": 1 },
+  { "text": " checked.", "startMs": 6500, "endMs": 7600, "timestampMs": 7050, "confidence": 1 }
+]
